@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>С чего начать — подготовка (Ubuntu)</title>
+<link rel="stylesheet" href="shared.css">
+<script src="theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="index.html">🎮 Все игры</a>
+  <a class="home" href="start.html">🚀 Подготовка</a>
+</div>
+
+<div class="hero">
+  <h1>🚀 С чего начать</h1>
+  <p>Настроим компьютер (Ubuntu) и разберёмся, что такое терминал, VS&nbsp;Code и venv — и зачем они нужны.</p>
+</div>
+
+<div class="wrap">
+
+  <div class="goal">
+    <span class="label">Что нам понадобится</span>
+    Четыре вещи. Не пугайся незнакомых слов — ниже разберём каждое по порядку.
+    <div class="pipe" style="margin-top:12px">
+      <span class="pill">⌨️ Терминал</span>
+      <span class="pill">🐍 Python</span>
+      <span class="pill">📝 VS Code</span>
+      <span class="pill">📦 pygame (через venv)</span>
+    </div>
+  </div>
+
+  <!-- ТЕРМИНАЛ -->
+  <h2>⌨️ 1. Терминал</h2>
+  <p><b>Терминал</b> — это окно, где компьютеру дают команды <b>текстом</b>, а не
+     мышкой. Пишешь команду, жмёшь Enter — компьютер её выполняет. Программисты
+     любят терминал, потому что так быстрее и точнее, чем кликать.</p>
+
+  <div class="box idea">
+    <span class="label">💡 Как открыть на Ubuntu</span>
+    Нажми <b>Ctrl + Alt + T</b>. Откроется чёрное (или тёмное) окошко с мигающим
+    курсором — это и есть терминал.
+  </div>
+
+  <h3>Пять команд, которых хватит на старте</h3>
+  <table>
+    <tr><th>Команда</th><th>Что делает</th></tr>
+    <tr><td><code>pwd</code></td><td>показать, в какой папке я сейчас («где я?»)</td></tr>
+    <tr><td><code>ls</code></td><td>показать список файлов в этой папке</td></tr>
+    <tr><td><code>cd games</code></td><td>зайти в папку <code>games</code></td></tr>
+    <tr><td><code>cd ..</code></td><td>выйти на папку выше</td></tr>
+    <tr><td><code>mkdir моя_игра</code></td><td>создать новую папку</td></tr>
+  </table>
+  <p>Попробуй прямо сейчас: набери <code>pwd</code> и нажми Enter. Потом
+     <code>ls</code>. Видишь, как компьютер отвечает текстом?</p>
+
+  <div class="box idea">
+    <span class="label">💡 Хитрость: Tab дополняет</span>
+    Начни писать имя папки и нажми <b>Tab</b> — терминал сам допишет остальное.
+    Стрелка <b>вверх</b> повторяет прошлую команду. Это экономит кучу времени.
+  </div>
+
+  <!-- PYTHON -->
+  <h2>🐍 2. Python</h2>
+  <p><b>Python</b> — язык, на котором мы пишем игры. На Ubuntu он обычно уже
+     установлен. Проверим — набери в терминале:</p>
+  <pre>python3 --version</pre>
+  <p>Должно ответить что-то вроде <code>Python 3.12.3</code>. Если число есть —
+     отлично, Python на месте.</p>
+
+  <div class="box warn">
+    <span class="label">⚠️ python или python3?</span>
+    На Ubuntu команда называется <code>python3</code> (просто <code>python</code>
+    может не сработать). Это нормально. Но <b>внутри venv</b> (про него ниже)
+    заработает короткое <code>python</code> — так удобнее.
+  </div>
+
+  <!-- VS CODE -->
+  <h2>📝 3. VS Code — редактор кода</h2>
+  <p>Код можно писать хоть в «Блокноте», но в <b>VS&nbsp;Code</b> удобнее: он
+     подсвечивает код цветами, подсказывает ошибки и умеет запускать программы.</p>
+
+  <h3>Установка на Ubuntu</h3>
+  <p>Самый простой способ — через «Центр приложений Ubuntu»: найди там
+     <b>Visual Studio Code</b> и нажми «Установить». Или одной командой в терминале:</p>
+  <pre>sudo snap install --classic code</pre>
+  <p>(<code>sudo</code> = «от имени администратора», компьютер попросит пароль —
+     это нормально.)</p>
+
+  <h3>Три вещи, которые надо сделать в VS Code</h3>
+  <ol>
+    <li><b>Поставить расширение Python.</b> Слева — значок кубиков (Extensions,
+        <code>Ctrl+Shift+X</code>), найди <b>Python</b> от Microsoft → Install.
+        Оно подсвечивает код и помогает запускать.</li>
+    <li><b>Открыть папку проекта.</b> Меню <i>File → Open Folder</i> и выбери папку
+        с играми. Слева появится дерево файлов.</li>
+    <li><b>Открыть встроенный терминал.</b> Меню <i>Terminal → New Terminal</i>
+        (или <code>Ctrl + ё/`</code>). Терминал прямо внутри редактора — удобно!</li>
+  </ol>
+
+  <div class="box idea">
+    <span class="label">💡 Запуск файла одной кнопкой</span>
+    Открыл <code>.py</code>-файл — вверху справа есть кнопка <b>▶ (Run)</b>. Нажал —
+    программа запустилась. То же самое можно сделать в терминале:
+    <code>python имя_файла.py</code>.
+  </div>
+
+  <!-- VENV -->
+  <h2>📦 4. venv — «коробка» для библиотек</h2>
+  <p>Чтобы рисовать игры, нужен <b>pygame</b> — это <b>библиотека</b> (чужой готовый
+     код, который мы используем). Но устанавливать библиотеки прямо в систему —
+     грязно: у разных проектов разные версии, всё перемешается.</p>
+
+  <div class="box idea">
+    <span class="label">💡 Зачем venv</span>
+    <b>venv</b> (виртуальное окружение) — это отдельная <b>коробка</b> для одного
+    проекта. Внутри неё ставим pygame, и она не мешает остальной системе. У каждого
+    проекта — своя коробка. Чисто и аккуратно.
+  </div>
+
+  <h3>Шаг за шагом (в терминале, в папке проекта)</h3>
+  <p>На Ubuntu один раз поставь инструмент для venv (если ругается):</p>
+  <pre>sudo apt install python3-venv python3-pip</pre>
+
+  <p>Создаём коробку (делается один раз):</p>
+  <pre>python3 -m venv .venv</pre>
+  <p>Появится скрытая папка <code>.venv</code> — это и есть наша коробка.</p>
+
+  <p>Входим в коробку (это надо делать каждый раз, когда садишься работать):</p>
+  <pre>source .venv/bin/activate</pre>
+  <p>Слева в строке терминала появится <code>(.venv)</code> — значит ты внутри.
+     Теперь ставим pygame:</p>
+  <pre>pip install pygame-ce</pre>
+
+  <div class="box warn">
+    <span class="label">⚠️ Как понять, что я «в коробке»</span>
+    Если в начале строки терминала есть <code>(.venv)</code> — ты внутри, всё ок.
+    Если нет — снова набери <code>source .venv/bin/activate</code>. Выйти из
+    коробки можно командой <code>deactivate</code>.
+  </div>
+
+  <!-- ЗАПУСК -->
+  <h2>🎮 5. Запускаем игру</h2>
+  <p>Когда ты в папке проекта и в коробке <code>(.venv)</code> — запусти игру:</p>
+  <pre>python games/snake/code/snake.py</pre>
+  <p>Откроется окно игры. Закрыть — крестиком или клавишей <b>ESC</b> (в готовых
+     играх). А <b>F</b> разворачивает игру на весь экран!</p>
+
+  <div class="box idea">
+    <span class="label">💡 Каждый раз перед работой — два шага</span>
+    <div class="pipe" style="margin-top:8px">
+      <span class="pill">1. cd в папку проекта</span><span class="arrow">→</span>
+      <span class="pill">2. source .venv/bin/activate</span><span class="arrow">→</span>
+      <span class="pill">3. запускай python …</span>
+    </div>
+  </div>
+
+  <!-- ПРОБЛЕМЫ -->
+  <h2>🛟 Если что-то пошло не так</h2>
+  <table>
+    <tr><th>Сообщение</th><th>Что делать</th></tr>
+    <tr><td><code>python: command not found</code></td><td>пиши <code>python3</code> (или войди в venv — там работает <code>python</code>)</td></tr>
+    <tr><td><code>No module named pygame</code></td><td>ты не в коробке или не поставил pygame: <code>source .venv/bin/activate</code>, потом <code>pip install pygame-ce</code></td></tr>
+    <tr><td><code>No module named venv</code></td><td><code>sudo apt install python3-venv</code></td></tr>
+    <tr><td>окно игры не открывается</td><td>проверь, что запускаешь из правильной папки (рядом должен быть файл игры)</td></tr>
+  </table>
+
+  <!-- СЛОВАРИК -->
+  <h2>📖 Мини-словарик</h2>
+  <table>
+    <tr><th>Слово</th><th>Простыми словами</th></tr>
+    <tr><td>Терминал</td><td>окно, где даёшь компьютеру команды текстом</td></tr>
+    <tr><td>Команда</td><td>одна строчка-приказ компьютеру (например <code>ls</code>)</td></tr>
+    <tr><td>Папка / директория</td><td>место, где лежат файлы (как папка в шкафу)</td></tr>
+    <tr><td>Python</td><td>язык программирования, на нём пишем игры</td></tr>
+    <tr><td>Библиотека</td><td>чужой готовый код, который мы используем (например pygame)</td></tr>
+    <tr><td>pip</td><td>программа, которая ставит библиотеки</td></tr>
+    <tr><td>venv</td><td>отдельная «коробка» с библиотеками для одного проекта</td></tr>
+    <tr><td>VS Code</td><td>редактор, в котором пишем и запускаем код</td></tr>
+  </table>
+
+  <div class="box idea">
+    <span class="label">🎉 Готово!</span>
+    Теперь ты понимаешь, что такое терминал, Python, VS Code и venv — и зачем они.
+    Можно браться за первую игру. Начни со «Змейки».
+  </div>
+
+  <div class="pager">
+    <a href="index.html"><span class="dir">← Назад</span><span class="ttl">Все игры</span></a>
+    <a class="next" href="games/snake/index.html"><span class="dir">Поехали →</span><span class="ttl">Игра 1 — Змейка</span></a>
+  </div>
+
+</div>
+
+<footer>Подготовка · Игры на Python · Ubuntu 🚀</footer>
+</body>
+</html>
