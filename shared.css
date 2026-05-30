@@ -255,20 +255,43 @@ footer { text-align: center; color: var(--muted); padding: 30px; font-size: .9re
 .dl-list .fname { font-family: "SF Mono", Menlo, monospace; font-size: .88rem; }
 .dl-list .ficon { color: var(--green); font-weight: 800; }
 
-/* ---- Переключатель темы ---- */
-.theme-toggle {
-  position: fixed;
-  bottom: 18px;
-  right: 18px;
-  z-index: 30;
-  width: 48px; height: 48px;
-  border-radius: 50%;
+/* ---- Переключатель темы (тумблер в шапке) ---- */
+.theme-switch {
+  margin-left: auto;          /* прижимает тумблер к правому краю шапки */
+  flex: none;
+  position: relative;
+  width: 58px; height: 28px;
+  padding: 0;
+  border-radius: 999px;
   border: 1px solid var(--line);
-  background: var(--panel);
-  color: var(--text);
-  font-size: 1.3rem;
+  background: var(--panel2);
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(0,0,0,.25);
-  transition: transform .12s, background .2s;
+  transition: background .2s;
 }
-.theme-toggle:hover { transform: scale(1.1); }
+.theme-switch .icons {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 7px;
+  font-size: .8rem; line-height: 1;
+  pointer-events: none;
+  opacity: .8;
+}
+.theme-switch .thumb {
+  position: absolute; top: 50%; left: 3px;
+  transform: translateY(-50%);
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 1px 3px rgba(0,0,0,.4);
+  transition: left .18s ease;
+  z-index: 1;
+}
+/* светлая тема — ползунок вправо (на солнышко) */
+:root[data-theme="light"] .theme-switch .thumb { left: 33px; }
+.theme-switch:hover { border-color: var(--green); }
+
+/* запасной вариант, если на странице нет шапки */
+.theme-switch.floating {
+  position: fixed; bottom: 18px; right: 18px; margin: 0; z-index: 30;
+  box-shadow: 0 4px 14px rgba(0,0,0,.25);
+}

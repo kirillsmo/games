@@ -1,7 +1,7 @@
-// Переключатель тёмной/светлой темы. Запоминает выбор в localStorage.
+// Переключатель тёмной/светлой темы — тумблер в шапке. Запоминает выбор.
 (function () {
   var saved = localStorage.getItem("theme");
-  // По умолчанию — тёмная тема (как у игры). Уважаем системную, если не выбрано.
+  // По умолчанию — тёмная. Если выбора ещё не было — уважаем системную.
   if (!saved && window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: light)").matches) {
     saved = "light";
@@ -10,19 +10,28 @@
     document.documentElement.setAttribute("data-theme", "light");
   }
 
-  function makeButton() {
-    var btn = document.createElement("button");
-    btn.className = "theme-toggle";
-    btn.type = "button";
-    btn.setAttribute("aria-label", "Сменить тему");
+  function isLight() {
+    return document.documentElement.getAttribute("data-theme") === "light";
+  }
+
+  function makeSwitch() {
+    var sw = document.createElement("button");
+    sw.className = "theme-switch";
+    sw.type = "button";
+    sw.setAttribute("role", "switch");
+    sw.setAttribute("aria-label", "Сменить тему");
+    sw.innerHTML =
+      '<span class="icons"><span>🌙</span><span>☀️</span></span>' +
+      '<span class="thumb"></span>';
+
     function refresh() {
-      var light = document.documentElement.getAttribute("data-theme") === "light";
-      btn.textContent = light ? "🌙" : "☀️";
-      btn.title = light ? "Включить тёмную тему" : "Включить светлую тему";
+      var light = isLight();
+      sw.setAttribute("aria-checked", light ? "true" : "false");
+      sw.title = light ? "Включить тёмную тему" : "Включить светлую тему";
     }
-    btn.addEventListener("click", function () {
-      var light = document.documentElement.getAttribute("data-theme") === "light";
-      if (light) {
+
+    sw.addEventListener("click", function () {
+      if (isLight()) {
         document.documentElement.removeAttribute("data-theme");
         localStorage.setItem("theme", "dark");
       } else {
@@ -32,12 +41,20 @@
       refresh();
     });
     refresh();
-    document.body.appendChild(btn);
+
+    // В шапку, если она есть; иначе — плавающим в углу.
+    var bar = document.querySelector(".topbar");
+    if (bar) {
+      bar.appendChild(sw);
+    } else {
+      sw.classList.add("floating");
+      document.body.appendChild(sw);
+    }
   }
 
-  if (document.body) {
-    makeButton();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", makeSwitch);
   } else {
-    document.addEventListener("DOMContentLoaded", makeButton);
+    makeSwitch();
   }
 })();
