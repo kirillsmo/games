@@ -34,6 +34,14 @@ body {
   gap: 10px;
   flex-wrap: wrap;
 }
+.topbar .back {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: .92rem;
+  font-weight: 600;
+}
+.topbar .back:hover { color: var(--text); }
+.topbar .back::after { content: "›"; margin: 0 4px 0 8px; color: var(--line); }
 .topbar .home {
   color: var(--green);
   text-decoration: none;
@@ -162,6 +170,14 @@ th { color: var(--muted); font-size: .85rem; text-transform: uppercase; }
 }
 .card h3 { margin: 0 0 4px; color: var(--text); }
 .card p { margin: 0; color: var(--muted); font-size: .9rem; }
+.card .emoji { font-size: 2rem; line-height: 1; margin-bottom: 10px; display: block; }
+.card .meta { display: inline-block; margin-top: 10px; font-size: .78rem; color: var(--green);
+              background: rgba(22,196,127,.14); padding: 2px 10px; border-radius: 20px; }
+
+/* карточка игры, которой ещё нет */
+.card.soon { opacity: .55; pointer-events: none; border-style: dashed; }
+.card.soon .meta { color: var(--muted); background: var(--panel2); }
+.card.soon:hover { transform: none; border-color: var(--line); }
 
 /* ---- Нижняя навигация ---- */
 .pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 50px; }

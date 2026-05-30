@@ -13,7 +13,7 @@ source .venv/bin/activate     # Windows:  .venv\Scripts\activate
 pip install pygame-ce
 ```
 
-Каждый урок — это один файл в папке `lessons/`. Дети открывают его, читают,
+Каждый урок — это один файл в папке `games/snake/code/`. Дети открывают его, читают,
 запускают, потом копируют в следующий файл и добавляют новый кусочек. **Не**
 заставляйте их начинать с пустого файла — у них всегда должна быть работающая
 программа, которую они расширяют.
@@ -21,14 +21,14 @@ pip install pygame-ce
 Запуск файла:
 
 ```
-python lessons/step1_window.py
+python games/snake/code/step1_window.py
 ```
 
 ---
 
 ## Урок 1 — Окно, которое открывается и закрывается
 
-**Файл:** `lessons/step1_window.py`
+**Файл:** `games/snake/code/step1_window.py`
 **Что видят дети:** тёмное окно. Закрывается крестиком.
 **Новые понятия:** `import`, цвета RGB как кортежи, `while True`, цикл событий, FPS.
 
@@ -51,7 +51,7 @@ python lessons/step1_window.py
 
 ## Урок 2 — Рисуем один квадрат на сетке
 
-**Файл:** `lessons/step2_square.py`
+**Файл:** `games/snake/code/step2_square.py`
 **Что видят дети:** один зелёный квадрат стоит на колонке 5, строке 10.
 **Новые понятия:** координаты в клетках против пикселей, `pygame.Rect`, `pygame.draw.rect`.
 
@@ -75,7 +75,7 @@ python lessons/step1_window.py
 
 ## Урок 3 — Змейка — это список
 
-**Файл:** `lessons/step3_snake.py`
+**Файл:** `games/snake/code/step3_snake.py`
 **Что видят дети:** три зелёных квадрата в ряд. Первый ярче — это голова.
 **Новые понятия:** список кортежей, `snake[0]` = голова, `snake[1:]` = хвост, `for` по списку.
 
@@ -90,7 +90,7 @@ python lessons/step1_window.py
 
 ## Урок 4 — Змейка двигается сама
 
-**Файл:** `lessons/step4_move.py`
+**Файл:** `games/snake/code/step4_move.py`
 **Что видят дети:** змейка скользит вправо и уходит за край экрана.
 **Новые понятия:** `direction` как кортеж `(dx, dy)`, `insert(0, ...)` + `pop()`, `clock.tick(10)`.
 
@@ -117,7 +117,7 @@ python lessons/step1_window.py
 
 ## Урок 5 — Стрелки
 
-**Файл:** `lessons/step5_keys.py`
+**Файл:** `games/snake/code/step5_keys.py`
 **Что видят дети:** настоящая игра-змейка (пока без еды). Стрелки её поворачивают.
 **Новые понятия:** `pygame.KEYDOWN`, `if / elif`, защита от разворота на 180°.
 
@@ -137,7 +137,7 @@ python lessons/step1_window.py
 
 ## Урок 6 — Еда и рост
 
-**Файл:** `lessons/step6_food.py`
+**Файл:** `games/snake/code/step6_food.py`
 **Что видят дети:** красное яблоко. Змейка растёт на 1, когда ест.
 **Новые понятия:** определение функции (`def`), `random.randint`, условный `pop()`, f-строки для заголовка.
 
@@ -158,7 +158,7 @@ python lessons/step1_window.py
 
 ## Урок 7 — Проигрыш и рестарт
 
-**Файл:** `lessons/step7_gameover.py`
+**Файл:** `games/snake/code/step7_gameover.py`
 **Что видят дети:** удар об стену или о себя заканчивает игру. Пробел — заново.
 **Новые понятия:** булев флаг (`game_over`), оператор `in` для списков, вывод текста, упаковка состояния в функцию (`new_game`).
 
