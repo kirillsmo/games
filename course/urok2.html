@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 2 — Квадрат</title>
+<link rel="stylesheet" href="course.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🐍 Змейка</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html">1</a>
+    <a class="dot active" href="urok2.html">2</a>
+    <a class="dot" href="urok3.html">3</a>
+    <a class="dot" href="urok4.html">4</a>
+    <a class="dot" href="urok5.html">5</a>
+    <a class="dot" href="urok6.html">6</a>
+    <a class="dot" href="urok7.html">7</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 2</span>
+    <h1>Квадрат на сетке</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Один зелёный квадрат на тёмном фоне. Файл: <span class="run">lessons/step2_square.py</span>
+  </div>
+
+  <h2>🔍 Сначала разберёмся: клетки и пиксели</h2>
+  <p>Экран измеряется в <b>пикселях</b> — крошечных точках. Но думать об игре в
+     пикселях неудобно. Поэтому мы делим поле на <b>клетки</b>, как тетрадь в
+     клеточку. Одна клетка у нас 20 пикселей:</p>
+  <pre>CELL = <span class="num">20</span>          <span class="com"># размер одной клетки</span>
+COLS = <span class="num">30</span>          <span class="com"># 30 клеток в ширину</span>
+ROWS = <span class="num">20</span>          <span class="com"># 20 клеток в высоту</span></pre>
+
+  <p>Змейка «думает» в клетках: квадрат стоит в клетке <code>(5, 10)</code> — это
+     колонка 5, строка 10. А <b>рисовать</b> надо в пикселях. Чтобы перевести
+     клетку в пиксели — <b>умножаем на размер клетки</b>:</p>
+  <div class="grid-demo">
+клетка (0, 0)  → пиксель (0,   0)
+клетка (1, 0)  → пиксель (20,  0)     ← 1 × 20
+клетка (5, 10) → пиксель (100, 200)   ← 5 × 20  и  10 × 20</div>
+
+  <div class="box idea">
+    <span class="label">💡 Запомни это навсегда</span>
+    Клетки — для логики игры. Пиксели — для рисования. Мостик между ними —
+    умножение на <code>CELL</code>.
+  </div>
+
+  <h2>📝 Код урока (только новое)</h2>
+  <pre><span class="com"># Координаты квадрата В КЛЕТКАХ (не в пикселях!)</span>
+x = <span class="num">5</span>
+y = <span class="num">10</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="com"># ... события и screen.fill(BLACK) как в уроке 1 ...</span>
+
+    <span class="com"># Превращаем клетки в пиксели: умножаем на размер клетки</span>
+    rect = pygame.<span class="fn">Rect</span>(x * CELL, y * CELL, CELL, CELL)
+    pygame.draw.<span class="fn">rect</span>(screen, GREEN, rect)
+
+    pygame.display.<span class="fn">flip</span>()
+    clock.<span class="fn">tick</span>(<span class="num">60</span>)</pre>
+
+  <h2>🔍 Что такое Rect</h2>
+  <p><code>Rect</code> (от английского <i>rectangle</i> — прямоугольник) — это рамка,
+     которая говорит pygame <b>где</b> и <b>какого размера</b> нарисовать квадрат.
+     У неё ровно четыре числа:</p>
+  <pre>pygame.<span class="fn">Rect</span>(  x,        y,        ширина,  высота )
+pygame.<span class="fn">Rect</span>( x*CELL,   y*CELL,   CELL,    CELL  )</pre>
+  <table>
+    <tr><th>Число</th><th>Что значит</th><th>Для клетки (5, 10)</th></tr>
+    <tr><td><code>x * CELL</code></td><td>левый край в пикселях</td><td>5 × 20 = <b>100</b></td></tr>
+    <tr><td><code>y * CELL</code></td><td>верхний край в пикселях</td><td>10 × 20 = <b>200</b></td></tr>
+    <tr><td><code>CELL</code></td><td>ширина</td><td><b>20</b></td></tr>
+    <tr><td><code>CELL</code></td><td>высота</td><td><b>20</b></td></tr>
+  </table>
+  <p>А рисует квадрат уже следующая строка:</p>
+  <pre>pygame.draw.<span class="fn">rect</span>(screen, GREEN, rect)
+<span class="com">#            куда     цвет   рамка</span></pre>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Поставь квадрат в угол: <code>x = 0</code>, <code>y = 0</code>.<br>
+    2. Поставь в правый нижний угол. Подсказка: последняя колонка — это
+       <code>COLS - 1</code>, последняя строка — <code>ROWS - 1</code>.<br>
+    3. Сделай клетку крупнее: <code>CELL = 40</code>. Что изменилось?
+  </div>
+
+  <div class="pager">
+    <a href="urok1.html"><span class="dir">← Назад</span><span class="ttl">Урок 1 — Окно</span></a>
+    <a class="next" href="urok3.html"><span class="dir">Дальше →</span><span class="ttl">Урок 3 — Змейка-список</span></a>
+  </div>
+</div>
+
+<footer>Урок 2 из 7 · Змейка на Python 🐍</footer>
+</body>
+</html>

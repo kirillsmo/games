@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 6 — Еда и рост</title>
+<link rel="stylesheet" href="course.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🐍 Змейка</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html">1</a>
+    <a class="dot" href="urok2.html">2</a>
+    <a class="dot" href="urok3.html">3</a>
+    <a class="dot" href="urok4.html">4</a>
+    <a class="dot" href="urok5.html">5</a>
+    <a class="dot active" href="urok6.html">6</a>
+    <a class="dot" href="urok7.html">7</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 6</span>
+    <h1>Еда и рост</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Красное яблоко. Когда змейка его съедает — растёт на 1 и в заголовке окна
+    растут очки. Файл: <span class="run">lessons/step6_food.py</span>
+  </div>
+
+  <h2>🔍 Функция — это твоя собственная команда</h2>
+  <p>Нам нужно ставить яблоко в случайное место. Чтобы не писать это дважды,
+     заведём <b>функцию</b> — кусок кода с именем, который можно вызывать.</p>
+  <pre><span class="kw">def</span> <span class="fn">spawn_food</span>(snake):
+    <span class="str">"""Случайная клетка, в которой НЕТ змейки."""</span>
+    <span class="kw">while</span> <span class="kw">True</span>:
+        pos = (random.<span class="fn">randint</span>(<span class="num">0</span>, COLS - <span class="num">1</span>), random.<span class="fn">randint</span>(<span class="num">0</span>, ROWS - <span class="num">1</span>))
+        <span class="kw">if</span> pos <span class="kw">not</span> <span class="kw">in</span> snake:
+            <span class="kw">return</span> pos</pre>
+  <ul>
+    <li><code>def spawn_food(snake):</code> — создаём команду с именем
+        <code>spawn_food</code>, ей нужна змейка.</li>
+    <li><code>random.randint(0, COLS - 1)</code> — случайное число (колонка).</li>
+    <li><code>if pos not in snake</code> — а вдруг выпало прямо на змейку? Тогда
+        крутим ещё раз. Возвращаем место, только если оно свободно.</li>
+    <li><code>return pos</code> — отдаём найденное место наружу.</li>
+  </ul>
+
+  <h2>📝 Код урока</h2>
+  <pre>food = <span class="fn">spawn_food</span>(snake)   <span class="com"># первое яблоко</span>
+score = <span class="num">0</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="com"># ... события, новая голова ...</span>
+    snake.<span class="fn">insert</span>(<span class="num">0</span>, new_head)
+
+    <span class="com"># Съели яблоко? Растём — хвост НЕ убираем.</span>
+    <span class="kw">if</span> new_head == food:
+        score += <span class="num">1</span>
+        food = <span class="fn">spawn_food</span>(snake)
+        pygame.display.<span class="fn">set_caption</span>(<span class="str">f"Змейка — {score}"</span>)
+    <span class="kw">else</span>:
+        snake.<span class="fn">pop</span>()     <span class="com"># не съели — убираем хвост как обычно</span>
+
+    <span class="com"># Рисуем яблоко красным</span>
+    food_rect = pygame.<span class="fn">Rect</span>(food[<span class="num">0</span>] * CELL, food[<span class="num">1</span>] * CELL, CELL, CELL)
+    pygame.draw.<span class="fn">rect</span>(screen, RED, food_rect)
+    <span class="com"># ... потом рисуем змейку ...</span></pre>
+
+  <h2>⭐ Трюк роста — он очень простой</h2>
+  <p>Помнишь урок 4? Обычный шаг = вставить голову + убрать хвост (длина не
+     меняется). А чтобы змейка <b>выросла</b>, мы просто <b>не убираем хвост</b> в
+     тот кадр, когда съели яблоко.</p>
+  <div class="pipe">
+    <span class="pill">обычный шаг: insert + pop</span>
+    <span class="arrow">→</span>
+    <span class="pill">длина та же</span>
+  </div>
+  <div class="pipe">
+    <span class="pill">съели яблоко: только insert</span>
+    <span class="arrow">→</span>
+    <span class="pill">длина +1 🎉</span>
+  </div>
+  <p>То есть «съесть яблоко» = «пропустить один <code>pop()</code>». Вот и весь
+     секрет роста.</p>
+
+  <h3>f-строка для заголовка</h3>
+  <p><code>f"Змейка — {score}"</code> — это «форматированная строка». То, что в
+     фигурных скобках <code>{score}</code>, заменяется на значение переменной.
+     Если <code>score = 3</code>, получится <code>"Змейка — 3"</code>. Мы пишем
+     счёт прямо в заголовок окна — это проще, чем рисовать текст.</p>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Сделай яблоко дороже: <code>score += 5</code>.<br>
+    2. Добавь второе яблоко — заведи переменную <code>food2</code> и нарисуй его
+       тоже. Не забудь проверять оба!
+  </div>
+
+  <div class="pager">
+    <a href="urok5.html"><span class="dir">← Назад</span><span class="ttl">Урок 5 — Стрелки</span></a>
+    <a class="next" href="urok7.html"><span class="dir">Дальше →</span><span class="ttl">Урок 7 — Игра окончена</span></a>
+  </div>
+</div>
+
+<footer>Урок 6 из 7 · Змейка на Python 🐍</footer>
+</body>
+</html>

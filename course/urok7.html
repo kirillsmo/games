@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 7 — Игра окончена</title>
+<link rel="stylesheet" href="course.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🐍 Змейка</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html">1</a>
+    <a class="dot" href="urok2.html">2</a>
+    <a class="dot" href="urok3.html">3</a>
+    <a class="dot" href="urok4.html">4</a>
+    <a class="dot" href="urok5.html">5</a>
+    <a class="dot" href="urok6.html">6</a>
+    <a class="dot active" href="urok7.html">7</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 7 · финал</span>
+    <h1>Игра окончена и рестарт</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Готовую игру! Врезался в стену или в себя — «Игра окончена». Пробел —
+    начать заново. Файл: <span class="run">lessons/step7_gameover.py</span>
+    (то же, что итоговый <span class="run">snake.py</span>)
+  </div>
+
+  <h2>🔍 Флаг — переключатель «да / нет»</h2>
+  <p>Заведём переменную <code>game_over</code>, которая хранит <code>True</code>
+     или <code>False</code> — «игра закончилась или нет». Это называется
+     <b>флаг</b>. Пока <code>game_over = False</code>, змейка двигается. Как только
+     стало <code>True</code> — движение замирает и появляется надпись.</p>
+
+  <h2>📝 Главная часть кода</h2>
+  <pre><span class="kw">if</span> <span class="kw">not</span> game_over:
+    head_x, head_y = snake[<span class="num">0</span>]
+    new_head = (head_x + direction[<span class="num">0</span>], head_y + direction[<span class="num">1</span>])
+
+    <span class="com"># Врезались в стену?</span>
+    hit_wall = (
+        new_head[<span class="num">0</span>] &lt; <span class="num">0</span> <span class="kw">or</span> new_head[<span class="num">0</span>] &gt;= COLS
+        <span class="kw">or</span> new_head[<span class="num">1</span>] &lt; <span class="num">0</span> <span class="kw">or</span> new_head[<span class="num">1</span>] &gt;= ROWS
+    )
+    <span class="com"># Врезались в себя?</span>
+    hit_self = new_head <span class="kw">in</span> snake
+
+    <span class="kw">if</span> hit_wall <span class="kw">or</span> hit_self:
+        game_over = <span class="kw">True</span>
+    <span class="kw">else</span>:
+        snake.<span class="fn">insert</span>(<span class="num">0</span>, new_head)
+        <span class="kw">if</span> new_head == food:
+            score += <span class="num">1</span>
+            food = <span class="fn">spawn_food</span>(snake)
+        <span class="kw">else</span>:
+            snake.<span class="fn">pop</span>()</pre>
+
+  <h2>🔍 Две проверки конца игры</h2>
+  <h3>1. Стена</h3>
+  <p>Голова вышла за поле, если её x меньше 0 или больше-равно числу колонок
+     (а также по y). Поле — это клетки от 0 до <code>COLS-1</code>.</p>
+
+  <h3>2. Сама в себя — оператор <code>in</code></h3>
+  <p><code>new_head in snake</code> проверяет: «есть ли такая клетка где-нибудь в
+     теле змейки?» Одна короткая строчка делает всю работу. Вот за такое любят
+     Python!</p>
+
+  <h2>📝 Рестарт по пробелу</h2>
+  <pre><span class="kw">if</span> event.type == pygame.KEYDOWN:
+    <span class="kw">if</span> game_over <span class="kw">and</span> event.key == pygame.K_SPACE:
+        snake, direction, score, food = <span class="fn">new_game</span>()
+        game_over = <span class="kw">False</span></pre>
+  <p>Функция <code>new_game()</code> просто возвращает всё в начальное состояние —
+     короткую змейку, направление вправо, ноль очков и новое яблоко.</p>
+
+  <h2>📝 Надпись на экране</h2>
+  <pre><span class="kw">if</span> game_over:
+    text = font.<span class="fn">render</span>(<span class="str">"Игра окончена! Пробел — заново"</span>, <span class="kw">True</span>, WHITE)
+    text_rect = text.<span class="fn">get_rect</span>(center=(WIDTH // <span class="num">2</span>, HEIGHT // <span class="num">2</span>))
+    screen.<span class="fn">blit</span>(text, text_rect)</pre>
+  <p><code>font.render</code> превращает текст в картинку, а <code>blit</code>
+     «приклеивает» её на экран по центру.</p>
+
+  <div class="box idea">
+    <span class="label">🏆 Поздравляю!</span>
+    Ты написал полную игру: окно, сетку, змейку-список, движение, управление,
+    еду, рост, очки, проигрыш и рестарт. Это всё те же простые кубики —
+    списки, <code>if</code> и цикл.
+  </div>
+
+  <h2>🚀 Что дальше — выбери задание со звёздочкой</h2>
+  <table>
+    <tr><th>Идея</th><th>Чему научишься</th></tr>
+    <tr><td>Сохранять рекорд в файл</td><td>работа с файлами</td></tr>
+    <tr><td>Стены, через которые можно «пройти насквозь»</td><td>остаток от деления <code>%</code></td></tr>
+    <tr><td>Звук при поедании яблока</td><td><code>pygame.mixer</code></td></tr>
+    <tr><td>Препятствия-камни на поле</td><td>ещё один список</td></tr>
+    <tr><td>Ускорение каждые 5 яблок</td><td><code>clock.tick(10 + score // 5)</code></td></tr>
+  </table>
+
+  <div class="pager">
+    <a href="urok6.html"><span class="dir">← Назад</span><span class="ttl">Урок 6 — Еда и рост</span></a>
+    <a class="next" href="index.html"><span class="dir">Готово →</span><span class="ttl">На главную</span></a>
+  </div>
+</div>
+
+<footer>Урок 7 из 7 · Змейка на Python 🐍 · Молодец!</footer>
+</body>
+</html>

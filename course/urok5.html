@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 5 — Стрелки</title>
+<link rel="stylesheet" href="course.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🐍 Змейка</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html">1</a>
+    <a class="dot" href="urok2.html">2</a>
+    <a class="dot" href="urok3.html">3</a>
+    <a class="dot" href="urok4.html">4</a>
+    <a class="dot active" href="urok5.html">5</a>
+    <a class="dot" href="urok6.html">6</a>
+    <a class="dot" href="urok7.html">7</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 5</span>
+    <h1>Управляем стрелками</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Уже настоящую змейку (пока без еды), которая поворачивает по стрелкам.
+    Файл: <span class="run">lessons/step5_keys.py</span>
+  </div>
+
+  <h2>📝 Код урока (новое — внутри цикла событий)</h2>
+  <pre>    <span class="kw">for</span> event <span class="kw">in</span> pygame.event.<span class="fn">get</span>():
+        <span class="kw">if</span> event.type == pygame.QUIT:
+            pygame.<span class="fn">quit</span>()
+            sys.<span class="fn">exit</span>()
+
+        <span class="kw">if</span> event.type == pygame.KEYDOWN:
+            <span class="com"># Меняем направление, но НЕ даём развернуться на 180°</span>
+            <span class="kw">if</span> event.key == pygame.K_UP <span class="kw">and</span> direction != (<span class="num">0</span>, <span class="num">1</span>):
+                direction = (<span class="num">0</span>, <span class="num">-1</span>)
+            <span class="kw">elif</span> event.key == pygame.K_DOWN <span class="kw">and</span> direction != (<span class="num">0</span>, <span class="num">-1</span>):
+                direction = (<span class="num">0</span>, <span class="num">1</span>)
+            <span class="kw">elif</span> event.key == pygame.K_LEFT <span class="kw">and</span> direction != (<span class="num">1</span>, <span class="num">0</span>):
+                direction = (<span class="num">-1</span>, <span class="num">0</span>)
+            <span class="kw">elif</span> event.key == pygame.K_RIGHT <span class="kw">and</span> direction != (<span class="num">-1</span>, <span class="num">0</span>):
+                direction = (<span class="num">1</span>, <span class="num">0</span>)</pre>
+
+  <h2>🔍 Что тут происходит</h2>
+  <h3>KEYDOWN — «клавишу нажали»</h3>
+  <p><code>event.type == pygame.KEYDOWN</code> срабатывает в момент, когда нажали
+     любую клавишу. А <code>event.key</code> говорит, какую именно:
+     <code>K_UP</code>, <code>K_DOWN</code>, <code>K_LEFT</code>,
+     <code>K_RIGHT</code> — это стрелки.</p>
+
+  <h3>if / elif — «или то, или другое»</h3>
+  <p><code>if</code> проверяет первое условие. Если оно не подошло — <code>elif</code>
+     (это «else if», иначе если) проверяет следующее. Сработает только один из них.</p>
+
+  <h2>⭐ Защита от разворота на 180°</h2>
+  <p>Зачем рядом стоит <code>and direction != (0, 1)</code>? Представь: змейка едет
+     <b>вниз</b>, и ты нажал <b>вверх</b>. Новая голова окажется прямо на месте
+     первого сегмента тела — змейка сразу врежется сама в себя!</p>
+  <div class="grid-demo">
+едем вниз:   [.][Г]
+                [#]   ← тело прямо под головой
+нажали вверх → новая голова попадёт В тело = смерть</div>
+  <p>Поэтому мы запрещаем поворот, если он противоположен текущему направлению.
+     <code>direction != (0, 1)</code> читается как «если сейчас НЕ едем вниз».</p>
+
+  <div class="box warn">
+    <span class="label">⚠️ Это был баг в самой первой версии</span>
+    Если поставить цикл событий <b>вне</b> <code>while True</code>, клавиши вообще
+    не будут работать. Весь <code>for event ...</code> должен быть <b>внутри</b>
+    главного цикла.
+  </div>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    Добавь управление на буквах WASD (для второй руки):<br>
+    <code>elif event.key == pygame.K_w and direction != (0, 1):</code> → вверх, и
+    так далее для <code>K_s</code>, <code>K_a</code>, <code>K_d</code>.
+  </div>
+
+  <div class="pager">
+    <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Движение</span></a>
+    <a class="next" href="urok6.html"><span class="dir">Дальше →</span><span class="ttl">Урок 6 — Еда и рост</span></a>
+  </div>
+</div>
+
+<footer>Урок 5 из 7 · Змейка на Python 🐍</footer>
+</body>
+</html>

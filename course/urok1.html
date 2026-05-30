@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 1 — Окно</title>
+<link rel="stylesheet" href="course.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🐍 Змейка</a>
+  <div class="dots">
+    <a class="dot active" href="urok1.html">1</a>
+    <a class="dot" href="urok2.html">2</a>
+    <a class="dot" href="urok3.html">3</a>
+    <a class="dot" href="urok4.html">4</a>
+    <a class="dot" href="urok5.html">5</a>
+    <a class="dot" href="urok6.html">6</a>
+    <a class="dot" href="urok7.html">7</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 1</span>
+    <h1>Окно, которое открывается</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Тёмное окно игры. Пока пустое — но это уже настоящая программа, которую можно
+    закрыть крестиком. Файл: <span class="run">lessons/step1_window.py</span>
+  </div>
+
+  <h2>📝 Весь код урока</h2>
+  <pre><span class="kw">import</span> pygame, sys
+
+<span class="com"># Размер окна в пикселях</span>
+WIDTH = <span class="num">600</span>
+HEIGHT = <span class="num">400</span>
+
+<span class="com"># Цвет фона (Red, Green, Blue) — числа от 0 до 255</span>
+BLACK = (<span class="num">30</span>, <span class="num">30</span>, <span class="num">46</span>)
+
+<span class="com"># Готовим pygame и создаём окно</span>
+pygame.<span class="fn">init</span>()
+screen = pygame.display.<span class="fn">set_mode</span>((WIDTH, HEIGHT))
+pygame.display.<span class="fn">set_caption</span>(<span class="str">"Змейка"</span>)
+clock = pygame.time.<span class="fn">Clock</span>()
+
+<span class="com"># Главный цикл игры — повторяется, пока окно открыто</span>
+<span class="kw">while</span> <span class="kw">True</span>:
+
+    <span class="com"># 1. Смотрим, что нажал пользователь</span>
+    <span class="kw">for</span> event <span class="kw">in</span> pygame.event.<span class="fn">get</span>():
+        <span class="kw">if</span> event.type == pygame.QUIT:
+            pygame.<span class="fn">quit</span>()
+            sys.<span class="fn">exit</span>()
+
+    <span class="com"># 2. Заливаем экран фоном</span>
+    screen.<span class="fn">fill</span>(BLACK)
+
+    <span class="com"># 3. Показываем нарисованное</span>
+    pygame.display.<span class="fn">flip</span>()
+
+    <span class="com"># 4. Ждём, чтобы было 60 кадров в секунду</span>
+    clock.<span class="fn">tick</span>(<span class="num">60</span>)</pre>
+
+  <h2>🔍 Что тут происходит</h2>
+
+  <h3>Цвет — это три числа</h3>
+  <p><code>BLACK = (30, 30, 46)</code> — это не «чёрный», а тёмно-синий. Любой цвет
+     задаётся тремя числами от 0 до 255: сколько <b>красного</b>, <b>зелёного</b>,
+     <b>синего</b>. <code>(255, 0, 0)</code> — ярко-красный, <code>(0, 0, 0)</code> —
+     полностью чёрный.</p>
+
+  <h3>Три строчки подготовки</h3>
+  <table>
+    <tr><td><code>pygame.init()</code></td><td>включает pygame</td></tr>
+    <tr><td><code>set_mode((600, 400))</code></td><td>создаёт окно 600×400 пикселей</td></tr>
+    <tr><td><code>Clock()</code></td><td>«часы», чтобы игра не была слишком быстрой</td></tr>
+  </table>
+
+  <h3>Главный цикл <code>while True:</code></h3>
+  <p>Игра не выполняется один раз и заканчивается. Она крутится в кругу. Каждый
+     круг (его называют <b>кадр</b>) делает 4 шага:</p>
+  <div class="pipe">
+    <span class="pill">1. читаем клавиши</span><span class="arrow">→</span>
+    <span class="pill">2. (обновляем мир)</span><span class="arrow">→</span>
+    <span class="pill">3. рисуем</span><span class="arrow">→</span>
+    <span class="pill">4. ждём</span><span class="arrow">↺</span>
+  </div>
+  <p>Строчка <code>for event in pygame.event.get()</code> читает всё, что сделал
+     игрок: нажал клавишу, кликнул мышкой, нажал крестик. Если событие — это
+     <code>QUIT</code> (крестик), мы закрываем игру.</p>
+
+  <div class="box idea">
+    <span class="label">💡 Зачем нужен flip()</span>
+    pygame рисует «втихаря» на невидимом холсте. <code>pygame.display.flip()</code>
+    показывает готовую картинку на экране. Без неё окно так и останется серым!
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ Если забыть цикл событий</span>
+    Без <code>for event in pygame.event.get()</code> окно зависнет, и компьютер
+    напишет «программа не отвечает». Цикл событий обязателен в каждой игре.
+  </div>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Поменяй <code>BLACK</code> на другой цвет, например <code>(60, 20, 80)</code>
+       — фиолетовый.<br>
+    2. Сделай окно больше: <code>WIDTH = 800</code>, <code>HEIGHT = 600</code>.
+  </div>
+
+  <div class="pager">
+    <a class="disabled" href="index.html"><span class="dir">← Назад</span><span class="ttl">Главная</span></a>
+    <a class="next" href="urok2.html"><span class="dir">Дальше →</span><span class="ttl">Урок 2 — Квадрат</span></a>
+  </div>
+</div>
+
+<footer>Урок 1 из 7 · Змейка на Python 🐍</footer>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 4 — Движение</title>
+<link rel="stylesheet" href="course.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🐍 Змейка</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html">1</a>
+    <a class="dot" href="urok2.html">2</a>
+    <a class="dot" href="urok3.html">3</a>
+    <a class="dot active" href="urok4.html">4</a>
+    <a class="dot" href="urok5.html">5</a>
+    <a class="dot" href="urok6.html">6</a>
+    <a class="dot" href="urok7.html">7</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 4 · самый важный</span>
+    <h1>Змейка двигается сама</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Змейка едет вправо и уезжает за край экрана. Файл:
+    <span class="run">lessons/step4_move.py</span>
+  </div>
+
+  <h2>🔍 Направление — это тоже пара чисел</h2>
+  <p>Куда ползёт змейка, мы храним в переменной <code>direction</code> — паре
+     <code>(dx, dy)</code>: насколько сдвинуться по x и по y за один шаг.</p>
+  <table>
+    <tr><th>direction</th><th>Куда</th></tr>
+    <tr><td><code>(1, 0)</code></td><td>вправо (x +1)</td></tr>
+    <tr><td><code>(-1, 0)</code></td><td>влево (x −1)</td></tr>
+    <tr><td><code>(0, 1)</code></td><td>вниз (y +1)</td></tr>
+    <tr><td><code>(0, -1)</code></td><td>вверх (y −1)</td></tr>
+  </table>
+  <p>Помни: в играх ось y смотрит <b>вниз</b>. Поэтому «вверх» — это y минус один.</p>
+
+  <h2>⭐ Самый красивый трюк в игре</h2>
+  <p>Змейка <b>не двигается целиком</b>. Каждый кадр мы добавляем <b>новую голову
+     спереди</b> и убираем <b>хвост сзади</b>. Со стороны это выглядит как
+     движение!</p>
+  <div class="grid-demo">
+Было:    [Г][.][.][.]
+Шаг 1:   [Н][Г][.][.][.]   ← snake.insert(0, new_head)   добавили голову
+Шаг 2:   [Н][Г][.][.]      ← snake.pop()                 убрали хвост</div>
+
+  <h2>📝 Код урока</h2>
+  <pre>direction = (<span class="num">1</span>, <span class="num">0</span>)   <span class="com"># едем вправо</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="com"># ... события ...</span>
+
+    <span class="com"># Считаем новую голову: старая голова + направление</span>
+    head_x, head_y = snake[<span class="num">0</span>]
+    new_head = (head_x + direction[<span class="num">0</span>], head_y + direction[<span class="num">1</span>])
+
+    snake.<span class="fn">insert</span>(<span class="num">0</span>, new_head)  <span class="com"># новая голова в начало</span>
+    snake.<span class="fn">pop</span>()                <span class="com"># убираем последний (хвост)</span>
+
+    <span class="com"># ... рисуем змейку как в уроке 3 ...</span>
+
+    clock.<span class="fn">tick</span>(<span class="num">10</span>)  <span class="com"># 10 кадров в секунду!</span></pre>
+
+  <h2>🔍 Разбор</h2>
+  <h3>Считаем новую голову</h3>
+  <p>Берём координаты головы и прибавляем направление:</p>
+  <pre>new_head = (head_x + direction[<span class="num">0</span>], head_y + direction[<span class="num">1</span>])
+<span class="com">#           5 + 1 = 6          10 + 0 = 10   →  (6, 10)</span></pre>
+
+  <h3>insert и pop</h3>
+  <ul>
+    <li><code>snake.insert(0, new_head)</code> — вставить <code>new_head</code> в
+        позицию 0, то есть в самое начало списка.</li>
+    <li><code>snake.pop()</code> — убрать <b>последний</b> элемент. (А
+        <code>pop(0)</code> убрал бы первый — не перепутай!)</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="label">⚠️ Самая частая ошибка</span>
+    Если забыть <code>clock.tick(10)</code>, змейка будет лететь 60 клеток в
+    секунду — ты даже не успеешь моргнуть. Число 10 значит «10 шагов в секунду».
+  </div>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Пусти змейку вверх: <code>direction = (0, -1)</code>.<br>
+    2. По диагонали: <code>direction = (1, 1)</code>. Странно ползёт, да?<br>
+    3. Сделай быстрее или медленнее: поменяй <code>10</code> в <code>tick</code>.
+  </div>
+
+  <div class="pager">
+    <a href="urok3.html"><span class="dir">← Назад</span><span class="ttl">Урок 3 — Змейка-список</span></a>
+    <a class="next" href="urok5.html"><span class="dir">Дальше →</span><span class="ttl">Урок 5 — Стрелки</span></a>
+  </div>
+</div>
+
+<footer>Урок 4 из 7 · Змейка на Python 🐍</footer>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Змейка на Python — курс</title>
+<link rel="stylesheet" href="course.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🐍 Змейка</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html">1</a>
+    <a class="dot" href="urok2.html">2</a>
+    <a class="dot" href="urok3.html">3</a>
+    <a class="dot" href="urok4.html">4</a>
+    <a class="dot" href="urok5.html">5</a>
+    <a class="dot" href="urok6.html">6</a>
+    <a class="dot" href="urok7.html">7</a>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>🐍 Змейка на Python</h1>
+  <p>Ты напишешь настоящую игру за 7 шагов. Поехали!</p>
+</div>
+
+<div class="wrap">
+
+  <div class="goal">
+    <span class="label">Что у тебя получится</span>
+    Зелёная змейка ползает по полю, ест красные яблоки, растёт и не должна
+    врезаться в стену или в саму себя. Управление — стрелками. Прямо как старая
+    игра из телефонов Nokia!
+  </div>
+
+  <h2>Как устроен курс</h2>
+  <p>Каждый урок — это <b>один файл с кодом</b>, который сразу работает. Ты его
+     открываешь, читаешь, запускаешь и видишь результат. Потом копируешь в
+     следующий файл и добавляешь новый кусочек. <b>Не нужно</b> начинать с
+     пустого листа — у тебя всегда есть рабочая игра.</p>
+
+  <h3>Как запустить урок</h3>
+  <p>Открой терминал в папке проекта и напечатай:</p>
+  <pre><span class="fn">python</span> lessons/step1_window.py</pre>
+  <p>Закрыть окно игры — крестиком в углу.</p>
+
+  <div class="box idea">
+    <span class="label">💡 Главный секрет всех игр</span>
+    Игра — это <b>бесконечный цикл</b>. Много раз в секунду он делает одно и то же:
+    читает клавиши → двигает всё → рисует → ждёт чуть-чуть → повторяет. Этот круг
+    называется «кадр». В кино 24 кадра в секунду, у нас будет 10.
+  </div>
+
+  <h2>Уроки</h2>
+  <div class="cards">
+    <a class="card" href="urok1.html"><div class="n">1</div><h3>Окно</h3><p>Открываем окно игры и учимся его закрывать.</p></a>
+    <a class="card" href="urok2.html"><div class="n">2</div><h3>Квадрат</h3><p>Рисуем зелёный квадрат на сетке из клеток.</p></a>
+    <a class="card" href="urok3.html"><div class="n">3</div><h3>Змейка-список</h3><p>Змейка — это просто список клеток.</p></a>
+    <a class="card" href="urok4.html"><div class="n">4</div><h3>Движение</h3><p>Учим змейку ползти самой. Самый важный трюк!</p></a>
+    <a class="card" href="urok5.html"><div class="n">5</div><h3>Стрелки</h3><p>Управляем змейкой с клавиатуры.</p></a>
+    <a class="card" href="urok6.html"><div class="n">6</div><h3>Еда и рост</h3><p>Появляется яблоко, змейка растёт, идут очки.</p></a>
+    <a class="card" href="urok7.html"><div class="n">7</div><h3>Игра окончена</h3><p>Стены, столкновения и рестарт по пробелу.</p></a>
+  </div>
+
+  <div class="pager">
+    <span class="pager-spacer" style="flex:1"></span>
+    <a class="next" href="urok1.html"><span class="dir">Начать →</span><span class="ttl">Урок 1 — Окно</span></a>
+  </div>
+
+</div>
+
+<footer>Учебный проект «Змейка» · Python + pygame 🐍</footer>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 3 — Змейка-список</title>
+<link rel="stylesheet" href="course.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🐍 Змейка</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html">1</a>
+    <a class="dot" href="urok2.html">2</a>
+    <a class="dot active" href="urok3.html">3</a>
+    <a class="dot" href="urok4.html">4</a>
+    <a class="dot" href="urok5.html">5</a>
+    <a class="dot" href="urok6.html">6</a>
+    <a class="dot" href="urok7.html">7</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 3</span>
+    <h1>Змейка — это список</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Три квадрата в ряд. Первый — ярко-зелёный (голова), остальные тёмные (хвост).
+    Файл: <span class="run">lessons/step3_snake.py</span>
+  </div>
+
+  <h2>🔍 Главная идея</h2>
+  <p>Змейка — это просто <b>список клеток</b>. Каждая клетка — пара чисел
+     <code>(x, y)</code>, которая называется <b>кортеж</b>.</p>
+  <pre>snake = [(<span class="num">5</span>, <span class="num">10</span>), (<span class="num">4</span>, <span class="num">10</span>), (<span class="num">3</span>, <span class="num">10</span>)]
+<span class="com">#         ↑ голова    ↑ хвост…</span></pre>
+  <p>Первый элемент списка, <code>snake[0]</code>, — это <b>голова</b>. Всё
+     остальное — хвост. Запомни: в Python счёт идёт с нуля, поэтому первый
+     элемент — это номер <code>0</code>.</p>
+
+  <h2>📝 Код урока</h2>
+  <pre>snake = [(<span class="num">5</span>, <span class="num">10</span>), (<span class="num">4</span>, <span class="num">10</span>), (<span class="num">3</span>, <span class="num">10</span>)]
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="com"># ... события, screen.fill(BLACK) ...</span>
+
+    <span class="com"># Рисуем голову ярко-зелёным</span>
+    head_x, head_y = snake[<span class="num">0</span>]
+    head_rect = pygame.<span class="fn">Rect</span>(head_x * CELL, head_y * CELL, CELL, CELL)
+    pygame.draw.<span class="fn">rect</span>(screen, GREEN, head_rect)
+
+    <span class="com"># Рисуем хвост тёмным. snake[1:] — все клетки КРОМЕ первой.</span>
+    <span class="kw">for</span> segment <span class="kw">in</span> snake[<span class="num">1</span>:]:
+        seg_x, seg_y = segment
+        rect = pygame.<span class="fn">Rect</span>(seg_x * CELL, seg_y * CELL, CELL, CELL)
+        pygame.draw.<span class="fn">rect</span>(screen, DARK_GREEN, rect)
+
+    pygame.display.<span class="fn">flip</span>()
+    clock.<span class="fn">tick</span>(<span class="num">60</span>)</pre>
+
+  <h2>🔍 Две важные строчки</h2>
+
+  <h3><code>head_x, head_y = snake[0]</code> — распаковка</h3>
+  <p><code>snake[0]</code> — это голова, кортеж <code>(5, 10)</code>. Эта запись
+     берёт пару и раскладывает её по двум переменным сразу:</p>
+  <div class="pipe">
+    <span class="pill">snake[0] = (5, 10)</span>
+    <span class="arrow">→</span>
+    <span class="pill">head_x = 5</span>
+    <span class="pill">head_y = 10</span>
+  </div>
+  <p>Это короткая запись. Длинный вариант выглядел бы так:</p>
+  <pre>head_x = snake[<span class="num">0</span>][<span class="num">0</span>]   <span class="com"># x головы</span>
+head_y = snake[<span class="num">0</span>][<span class="num">1</span>]   <span class="com"># y головы</span></pre>
+
+  <h3><code>snake[1:]</code> — «всё, кроме первого»</h3>
+  <p>Двоеточие в квадратных скобках называется <b>срез</b>. <code>snake[1:]</code>
+     значит «возьми список начиная с элемента номер 1 и до конца» — то есть весь
+     хвост без головы. Поэтому голову мы рисуем отдельно (ярко), а хвост — в
+     цикле (тёмным).</p>
+
+  <div class="box idea">
+    <span class="label">💡 Почему это круто</span>
+    Всё, что мы будем делать дальше — двигать, растить, проверять столкновения —
+    это просто действия со списком: добавить элемент, убрать элемент, проверить
+    «есть ли в списке». Никакой магии.
+  </div>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Добавь змейке ещё два сегмента: <code>(2, 10)</code> и <code>(1, 10)</code>.<br>
+    2. Сделай змейку вертикальной: <code>[(5, 10), (5, 9), (5, 8)]</code>.
+  </div>
+
+  <div class="pager">
+    <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Квадрат</span></a>
+    <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Движение</span></a>
+  </div>
+</div>
+
+<footer>Урок 3 из 7 · Змейка на Python 🐍</footer>
+</body>
+</html>
