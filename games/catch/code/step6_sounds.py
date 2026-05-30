@@ -1,6 +1,7 @@
 """
 Ловкий кот — лови падающие яблоки!
 Стрелки влево/вправо — двигать кота. Пробел — заново после проигрыша.
+F — полный экран, ESC — выход.
 """
 import pygame, sys, random, os
 
@@ -13,7 +14,7 @@ RED = (255, 107, 107)
 
 pygame.init()
 pygame.mixer.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.SCALED)
 pygame.display.set_caption("Ловкий кот")
 clock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 36)
@@ -50,6 +51,12 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_f:
+                pygame.display.toggle_fullscreen()   # F — полный экран
+            elif event.key == pygame.K_ESCAPE:
+                pygame.quit()
+                sys.exit()
         if event.type == pygame.KEYDOWN and game_over and event.key == pygame.K_SPACE:
             cat_x, apple_x, apple_y, score, lives, speed = new_game()
             game_over = False

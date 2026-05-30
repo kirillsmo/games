@@ -112,6 +112,21 @@
     <tr><td>Ускорение каждые 5 яблок</td><td><code>clock.tick(10 + score // 5)</code></td></tr>
   </table>
 
+  <h2>🖥️ Полный экран</h2>
+  <p>Чтобы игра ощущалась как настоящая — разверни её на весь монитор. Мы добавили
+     флаг <code>pygame.SCALED</code> и две клавиши:</p>
+  <pre>screen = pygame.display.<span class="fn">set_mode</span>((WIDTH, HEIGHT), pygame.SCALED)
+
+<span class="com"># ... в цикле событий ...</span>
+<span class="kw">if</span> event.type == pygame.KEYDOWN:
+    <span class="kw">if</span> event.key == pygame.K_f:
+        pygame.display.<span class="fn">toggle_fullscreen</span>()   <span class="com"># F — полный экран</span>
+    <span class="kw">elif</span> event.key == pygame.K_ESCAPE:
+        pygame.<span class="fn">quit</span>(); sys.<span class="fn">exit</span>()             <span class="com"># ESC — выход</span></pre>
+  <p><code>pygame.SCALED</code> сам растягивает картинку 600×400 на весь экран —
+     координаты в игре остаются те же, ничего пересчитывать не надо. <b>F</b> —
+     включить/выключить полный экран, <b>ESC</b> — выйти.</p>
+
   <div class="pager">
     <a href="urok6.html"><span class="dir">← Назад</span><span class="ttl">Урок 6 — Еда и рост</span></a>
     <a class="next" href="index.html"><span class="dir">Готово ✓</span><span class="ttl">Ко всем урокам</span></a>

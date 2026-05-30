@@ -17,7 +17,7 @@ RED = (255, 107, 107)
 WHITE = (234, 234, 234)
 
 pygame.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.SCALED)
 pygame.display.set_caption("Змейка")
 clock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 48)
@@ -47,6 +47,12 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_f:
+                pygame.display.toggle_fullscreen()   # F — полный экран
+            elif event.key == pygame.K_ESCAPE:
+                pygame.quit()
+                sys.exit()
         if event.type == pygame.KEYDOWN:
             if game_over and event.key == pygame.K_SPACE:
                 snake, direction, score, food = new_game()
