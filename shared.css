@@ -115,6 +115,7 @@ h2 { color: var(--green); margin-top: 34px; font-size: 1.4rem; }
 h3 { color: var(--heading); margin-top: 24px; font-size: 1.1rem; }
 
 pre {
+  position: relative;
   background: var(--code-bg);
   color: var(--code-text);
   border: 1px solid var(--line);
@@ -125,6 +126,22 @@ pre {
   font-size: .9rem;
   line-height: 1.55;
 }
+/* кнопка «Копировать» на блоке кода */
+.copy-btn {
+  position: absolute;
+  top: 8px; right: 8px;
+  background: var(--panel2);
+  color: var(--code-text);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  font: 600 .72rem -apple-system, "Segoe UI", system-ui, sans-serif;
+  padding: 4px 10px;
+  cursor: pointer;
+  opacity: .55;
+  transition: opacity .12s, background .12s;
+}
+pre:hover .copy-btn { opacity: 1; }
+.copy-btn.copied { background: var(--green); color: #06281a; border-color: var(--green); opacity: 1; }
 code { font-family: "SF Mono", Menlo, Consolas, monospace; }
 p code, li code, td code, .box code, .goal code {
   background: var(--code-bg);

@@ -52,9 +52,57 @@
     }
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", makeSwitch);
-  } else {
+  // --- Кнопки «Копировать» на блоках кода ---
+  function copyText(text, done) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { legacyCopy(text); done(); });
+    } else {
+      legacyCopy(text);
+      done();
+    }
+  }
+  function legacyCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+  function addCopyButtons() {
+    var blocks = document.querySelectorAll("pre");
+    for (var i = 0; i < blocks.length; i++) {
+      (function (pre) {
+        var text = pre.innerText;   // берём код ДО добавления кнопки
+        var btn = document.createElement("button");
+        btn.className = "copy-btn";
+        btn.type = "button";
+        btn.textContent = "Копировать";
+        btn.addEventListener("click", function () {
+          copyText(text, function () {
+            btn.textContent = "Скопировано ✓";
+            btn.classList.add("copied");
+            setTimeout(function () {
+              btn.textContent = "Копировать";
+              btn.classList.remove("copied");
+            }, 1500);
+          });
+        });
+        pre.appendChild(btn);
+      })(blocks[i]);
+    }
+  }
+
+  function init() {
     makeSwitch();
+    addCopyButtons();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
   }
 })();
