@@ -76,13 +76,18 @@ cp -r games/snake games/arkanoid
 не меняются, `pygame.SCALED` всё растягивает сам:
 
 ```python
-# 1) при создании окна добавь флаг SCALED:
+# 1) при создании окна — флаг SCALED и переменная-флаг:
 screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.SCALED)
+fullscreen = False
 
-# 2) в цикле событий — клавиши F (полный экран) и ESC (выход):
+# 2) в цикле событий — F (полный экран) и ESC (выход).
+#    Пересоздаём окно с FULLSCREEN — это надёжно работает на macOS/Windows
+#    (toggle_fullscreen() на маке часто не срабатывает).
 if event.type == pygame.KEYDOWN:
     if event.key == pygame.K_f:
-        pygame.display.toggle_fullscreen()
+        fullscreen = not fullscreen
+        flags = pygame.SCALED | (pygame.FULLSCREEN if fullscreen else 0)
+        screen = pygame.display.set_mode((WIDTH, HEIGHT), flags)
     elif event.key == pygame.K_ESCAPE:
         pygame.quit()
         sys.exit()

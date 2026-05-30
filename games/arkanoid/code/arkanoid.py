@@ -16,6 +16,7 @@ BRICK_COLORS = [(255, 107, 107), (255, 165, 89), (255, 209, 102),
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.SCALED)
+fullscreen = False
 pygame.display.set_caption("Арканоид")
 clock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 36)
@@ -59,8 +60,10 @@ while True:
             pygame.quit()
             sys.exit()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_f:
-                pygame.display.toggle_fullscreen()   # F — полный экран
+            if event.key == pygame.K_f:                 # F — полный экран вкл/выкл
+                fullscreen = not fullscreen
+                flags = pygame.SCALED | (pygame.FULLSCREEN if fullscreen else 0)
+                screen = pygame.display.set_mode((WIDTH, HEIGHT), flags)
             elif event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 sys.exit()

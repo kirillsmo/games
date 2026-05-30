@@ -98,11 +98,14 @@ miss_sound = pygame.mixer.<span class="fn">Sound</span>(os.path.<span class="fn"
   <p>Чтобы игра ощущалась как настоящая — разверни её на весь монитор. Мы добавили
      флаг <code>pygame.SCALED</code> и две клавиши:</p>
   <pre>screen = pygame.display.<span class="fn">set_mode</span>((WIDTH, HEIGHT), pygame.SCALED)
+fullscreen = <span class="kw">False</span>
 
 <span class="com"># ... в цикле событий ...</span>
 <span class="kw">if</span> event.type == pygame.KEYDOWN:
-    <span class="kw">if</span> event.key == pygame.K_f:
-        pygame.display.<span class="fn">toggle_fullscreen</span>()   <span class="com"># F — полный экран</span>
+    <span class="kw">if</span> event.key == pygame.K_f:                 <span class="com"># F — вкл/выкл полный экран</span>
+        fullscreen = <span class="kw">not</span> fullscreen
+        flags = pygame.SCALED | (pygame.FULLSCREEN <span class="kw">if</span> fullscreen <span class="kw">else</span> <span class="num">0</span>)
+        screen = pygame.display.<span class="fn">set_mode</span>((WIDTH, HEIGHT), flags)
     <span class="kw">elif</span> event.key == pygame.K_ESCAPE:
         pygame.<span class="fn">quit</span>(); sys.<span class="fn">exit</span>()             <span class="com"># ESC — выход</span></pre>
   <p><code>pygame.SCALED</code> сам растягивает картинку 600×400 на весь экран —
