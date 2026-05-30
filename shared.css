@@ -215,7 +215,9 @@ th { color: var(--muted); font-size: .85rem; text-transform: uppercase; }
 .pager .dir { display: block; font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
 .pager .ttl { font-weight: 700; }
 
-footer { text-align: center; color: var(--muted); padding: 30px; font-size: .9rem; }
+footer { text-align: center; color: var(--muted); padding: 30px; font-size: .9rem; line-height: 1.8; }
+footer a { color: var(--green); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
 
 .run {
   display: inline-block;
