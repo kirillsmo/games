@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 3 — Враги</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🚀 Космос</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Корабль">1</a>
+    <a class="dot" href="urok2.html" title="Выстрел">2</a>
+    <a class="dot active" href="urok3.html" title="Враги">3</a>
+    <a class="dot" href="urok4.html" title="Попадания">4</a>
+    <a class="dot" href="urok5.html" title="Жизни и конец">5</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 3</span>
+    <h1>Появляются враги</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Сверху, в случайных местах, появляются красные пришельцы и медленно падают
+    вниз. Это <b>второй список</b> — точно такой же приём, как с пулями. Файл:
+    <span class="run">step3_enemies.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/step3_enemies.py" download>⬇️ Скачать код урока</a>
+  </div>
+
+  <h2>🆕 Новое: враги появляются по таймеру</h2>
+  <p>Пулю добавлял <b>ты</b> — нажатием пробела. Врагов добавляет <b>сама игра</b>
+     каждые несколько кадров. Для этого заводим счётчик кадров
+     <code>spawn_timer</code>: он растёт каждый кадр, и когда дорастёт до
+     <code>SPAWN_EVERY</code> — добавляем врага и обнуляем счётчик.</p>
+
+  <h2>📝 Что добавилось (про врагов)</h2>
+  <pre><span class="kw">import</span> pygame, sys, random      <span class="com"># random — для случайного места</span>
+
+ENEMY_SIZE = <span class="num">32</span>
+ENEMY_SPEED = <span class="num">2</span>
+SPAWN_EVERY = <span class="num">45</span>                   <span class="com"># через сколько кадров новый враг</span>
+enemies = []                      <span class="com"># СПИСОК врагов</span>
+spawn_timer = <span class="num">0</span>
+
+<span class="kw">def</span> <span class="fn">draw_enemy</span>(e):
+    <span class="str">"""Пришелец — красный кружок с глазками."""</span>
+    ex, ey = e.center
+    pygame.draw.<span class="fn">circle</span>(screen, ENEMY_COLOR, (ex, ey), ENEMY_SIZE // <span class="num">2</span>)
+    pygame.draw.<span class="fn">circle</span>(screen, WHITE, (ex - <span class="num">6</span>, ey - <span class="num">3</span>), <span class="num">4</span>)
+    pygame.draw.<span class="fn">circle</span>(screen, WHITE, (ex + <span class="num">6</span>, ey - <span class="num">3</span>), <span class="num">4</span>)
+    pygame.draw.<span class="fn">circle</span>(screen, BG, (ex - <span class="num">6</span>, ey - <span class="num">3</span>), <span class="num">2</span>)
+    pygame.draw.<span class="fn">circle</span>(screen, BG, (ex + <span class="num">6</span>, ey - <span class="num">3</span>), <span class="num">2</span>)
+
+<span class="com"># --- в игровом цикле ---</span>
+
+    <span class="com"># каждые SPAWN_EVERY кадров ДОБАВЛЯЕМ нового врага сверху</span>
+    spawn_timer += <span class="num">1</span>
+    <span class="kw">if</span> spawn_timer &gt;= SPAWN_EVERY:
+        spawn_timer = <span class="num">0</span>
+        x = random.<span class="fn">randint</span>(<span class="num">0</span>, WIDTH - ENEMY_SIZE)
+        enemies.<span class="fn">append</span>(pygame.<span class="fn">Rect</span>(x, -ENEMY_SIZE, ENEMY_SIZE, ENEMY_SIZE))
+
+    <span class="com"># враги летят вниз; улетевших за низ УБИРАЕМ</span>
+    <span class="kw">for</span> e <span class="kw">in</span> enemies[:]:
+        e.y += ENEMY_SPEED
+        <span class="kw">if</span> e.top &gt; HEIGHT:
+            enemies.<span class="fn">remove</span>(e)
+
+    <span class="com"># рисуем каждого врага из списка</span>
+    <span class="kw">for</span> e <span class="kw">in</span> enemies:
+        <span class="fn">draw_enemy</span>(e)</pre>
+
+  <h2>🔍 Мелочи, которые важно понять</h2>
+
+  <h3>Почему враг рождается с <code>y = -ENEMY_SIZE</code>?</h3>
+  <p>Чтобы он «выезжал» из-за верхнего края плавно, а не появлялся резко. Минус
+     высота — значит он сначала весь над экраном, потом постепенно вползает.</p>
+
+  <h3>Снова та же тройка: append → for → remove</h3>
+  <p>Сравни с пулями — код почти одинаковый! Это и есть сила приёма «список
+     объектов»: один и тот же шаблон работает и для пуль, и для врагов, и для чего
+     угодно ещё.</p>
+  <div class="pipe">
+    <span class="pill">bullets: append / for / remove</span>
+    <span class="arrow">≈</span>
+    <span class="pill">enemies: append / for / remove</span>
+  </div>
+
+  <h3>Функция <code>draw_enemy(e)</code></h3>
+  <p>Рисовать пришельца — несколько строк (кружок + глазки). Чтобы не повторять их,
+     завернули в функцию, как <code>make_bricks()</code> в Арканоиде. Вызвал
+     <code>draw_enemy(e)</code> — нарисовался один враг.</p>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Сделай врагов чаще: <code>SPAWN_EVERY = 25</code>.<br>
+    2. Сделай их быстрее: <code>ENEMY_SPEED = 4</code>.<br>
+    3. Поменяй размер <code>ENEMY_SIZE</code> — глазки сдвинутся сами.
+  </div>
+
+  <div class="pager">
+    <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Выстрел</span></a>
+    <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Попадания</span></a>
+  </div>
+</div>
+
+<footer>Урок 3 из 5 · Космос 🚀</footer>
+</body>
+</html>

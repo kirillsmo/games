@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 4 — Попадания</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🚀 Космос</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Корабль">1</a>
+    <a class="dot" href="urok2.html" title="Выстрел">2</a>
+    <a class="dot" href="urok3.html" title="Враги">3</a>
+    <a class="dot active" href="urok4.html" title="Попадания">4</a>
+    <a class="dot" href="urok5.html" title="Жизни и конец">5</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 4</span>
+    <h1>Пуля сбивает врага</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Лазер долетел до пришельца — оба исчезают, а в углу растут очки. Наконец-то
+    можно по-настоящему стрелять! Файл:
+    <span class="run">step4_hits.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/step4_hits.py" download>⬇️ Скачать код урока</a>
+  </div>
+
+  <h2>🆕 Новое: проверяем каждую пулю с каждым врагом</h2>
+  <p>У нас два списка. Чтобы понять, кто в кого попал, надо сравнить <b>каждую</b>
+     пулю с <b>каждым</b> врагом. Это <b>цикл в цикле</b> (двойной <code>for</code>):
+     берём пулю → пробегаем всех врагов → если пересеклись, убираем обоих.</p>
+  <div class="grid-demo">пуля 1 → враг A? враг B? враг C?
+пуля 2 → враг A? враг B? враг C?
+пуля 3 → враг A? враг B? враг C?</div>
+
+  <h2>📝 Что добавилось (попадания и очки)</h2>
+  <pre>font = pygame.font.<span class="fn">SysFont</span>(<span class="kw">None</span>, <span class="num">36</span>)
+score = <span class="num">0</span>
+
+<span class="com"># --- в игровом цикле, после движения пуль и врагов ---</span>
+
+    <span class="com"># ПОПАДАНИЯ: для каждой пули проверяем каждого врага</span>
+    <span class="kw">for</span> b <span class="kw">in</span> bullets[:]:
+        <span class="kw">for</span> e <span class="kw">in</span> enemies[:]:
+            <span class="kw">if</span> b.<span class="fn">colliderect</span>(e):
+                bullets.<span class="fn">remove</span>(b)
+                enemies.<span class="fn">remove</span>(e)
+                score += <span class="num">1</span>
+                <span class="kw">break</span>          <span class="com"># пуля исчезла — дальше врагов не смотрим</span>
+
+    <span class="com"># счёт в углу</span>
+    hud = font.<span class="fn">render</span>(<span class="str">f"Очки: {score}"</span>, <span class="kw">True</span>, WHITE)
+    screen.<span class="fn">blit</span>(hud, (<span class="num">12</span>, <span class="num">8</span>))</pre>
+
+  <h2>🔍 Мелочи, которые важно понять</h2>
+
+  <h3><code>colliderect</code> — уже знакомый</h3>
+  <p>Тот же приём, что в «Ловком коте» и «Арканоиде»: два прямоугольника
+     пересеклись или нет. <code>b.colliderect(e)</code> возвращает
+     <code>True</code>, если пуля задела врага.</p>
+
+  <h3>Зачем <code>break</code> после попадания?</h3>
+  <p>Как только пуля сбила врага, мы её <b>удалили</b> — больше сравнивать её не с
+     кем. <code>break</code> выходит из внутреннего цикла (по врагам) и переходит к
+     следующей пуле. Без него можно случайно «убить» одной пулей двух врагов и
+     получить ошибку.</p>
+
+  <h3>Снова идём по копиям</h3>
+  <p><code>bullets[:]</code> и <code>enemies[:]</code> — копии, потому что внутри
+     мы из обоих списков удаляем. Тот же приём, что и в прошлых уроках.</p>
+
+  <div class="box warn">
+    <span class="label">⚠️ Частая ошибка</span>
+    Если убрать <code>break</code> и не идти по копиям — Python начнёт спотыкаться:
+    «list index out of range» или враги будут исчезать через одного. Попробуй
+    сломать специально и увидишь баг своими глазами.
+  </div>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Давай за врага больше очков: <code>score += 10</code>.<br>
+    2. Сделай врагов крупнее <code>ENEMY_SIZE = 44</code> — попадать легче.<br>
+    3. Покажи рядом число врагов на экране: <code>len(enemies)</code>.
+  </div>
+
+  <div class="pager">
+    <a href="urok3.html"><span class="dir">← Назад</span><span class="ttl">Урок 3 — Враги</span></a>
+    <a class="next" href="urok5.html"><span class="dir">Дальше →</span><span class="ttl">Урок 5 — Жизни и конец</span></a>
+  </div>
+</div>
+
+<footer>Урок 4 из 5 · Космос 🚀</footer>
+</body>
+</html>

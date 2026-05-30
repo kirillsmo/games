@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 5 — Жизни и конец</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🚀 Космос</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Корабль">1</a>
+    <a class="dot" href="urok2.html" title="Выстрел">2</a>
+    <a class="dot" href="urok3.html" title="Враги">3</a>
+    <a class="dot" href="urok4.html" title="Попадания">4</a>
+    <a class="dot active" href="urok5.html" title="Жизни и конец">5</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 5 · финал</span>
+    <h1>Жизни, конец игры и рестарт</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Пропустил врага вниз или столкнулся с ним — минус жизнь. Жизни кончились —
+    «Игра окончена», пробел запускает заново. Это готовая игра. Файл:
+    <span class="run">space.py</span> (он же <span class="run">step5_lives.py</span>)
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/space.py" download>⬇️ Скачать готовую игру</a>
+  </div>
+
+  <h2>🆕 Новое: жизни и состояние игры</h2>
+  <p>Как в Арканоиде, заводим <code>lives</code> и <code>state</code>. Только тут
+     состояния два: <code>"play"</code> (играем) и <code>"over"</code> (конец).
+     Когда жизни кончились — переключаем <code>state</code> и показываем надпись.</p>
+
+  <h2>📝 Что добавилось (жизни и конец)</h2>
+  <pre><span class="kw">def</span> <span class="fn">new_game</span>():
+    ship_x = WIDTH // <span class="num">2</span>
+    bullets = []
+    enemies = []
+    <span class="kw">return</span> ship_x, bullets, enemies, <span class="num">0</span>, <span class="num">3</span>, <span class="num">0</span>
+
+ship_x, bullets, enemies, score, lives, spawn_timer = <span class="fn">new_game</span>()
+state = <span class="str">"play"</span>            <span class="com"># "play" | "over"</span>
+
+<span class="com"># --- враги: теперь отнимают жизнь ---</span>
+    <span class="kw">for</span> e <span class="kw">in</span> enemies[:]:
+        e.y += ENEMY_SPEED
+        <span class="kw">if</span> e.top &gt; HEIGHT:                  <span class="com"># прорвался вниз</span>
+            enemies.<span class="fn">remove</span>(e)
+            lives -= <span class="num">1</span>
+        <span class="kw">elif</span> e.<span class="fn">colliderect</span>(ship_rect):      <span class="com"># врезался в корабль</span>
+            enemies.<span class="fn">remove</span>(e)
+            lives -= <span class="num">1</span>
+
+    <span class="kw">if</span> lives &lt;= <span class="num">0</span>:
+        state = <span class="str">"over"</span>
+
+<span class="com"># --- пробел: стреляет в игре, перезапускает после конца ---</span>
+        <span class="kw">elif</span> event.key == pygame.K_SPACE:
+            <span class="kw">if</span> state == <span class="str">"play"</span>:
+                bullets.<span class="fn">append</span>(pygame.<span class="fn">Rect</span>(ship_x - BULLET_W // <span class="num">2</span>, ship_y, BULLET_W, BULLET_H))
+            <span class="kw">else</span>:
+                ship_x, bullets, enemies, score, lives, spawn_timer = <span class="fn">new_game</span>()
+                state = <span class="str">"play"</span></pre>
+
+  <h2>🔍 Мелочи, которые важно понять</h2>
+
+  <h3>Пробел делает <b>два</b> разных дела</h3>
+  <p>Пока играем — пробел стреляет. После «Игра окончена» — тот же пробел
+     запускает заново. Поэтому проверяем <code>state</code>: <code>if state ==
+     "play"</code> → выстрел, <code>else</code> → новая игра.</p>
+
+  <h3><code>new_game()</code> — чистый старт</h3>
+  <p>Функция возвращает всё «как в начале»: корабль по центру, пустые списки, очки
+     и таймер в ноль, три жизни. Один вызов — и игра свежая.</p>
+
+  <h3>Весь игровой код — внутри <code>if state == "play"</code></h3>
+  <p>Когда игра окончена, корабль, пули и враги замирают: мы просто не выполняем
+     обновление. Рисуем последний кадр и поверх — надпись.</p>
+
+  <div class="box idea">
+    <span class="label">🖥️ Полный экран</span>
+    В готовой игре нажми <b>F</b> — окно развернётся на весь экран как в настоящей
+    игре. <b>ESC</b> — выход. Размеры игры (600×400) при этом не меняются,
+    <code>pygame.SCALED</code> всё растягивает сам.
+  </div>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам — сделай игру своей</span>
+    1. <b>Сложнее со временем:</b> постепенно уменьшай <code>SPAWN_EVERY</code> —
+       враги пойдут чаще.<br>
+    2. <b>Больше жизней:</b> верни <code>5</code> в <code>new_game()</code>.<br>
+    3. <b>Звук выстрела:</b> загляни в «Ловкого кота» — там есть
+       <code>pygame.mixer</code> и звуки.<br>
+    4. <b>Рекорд:</b> запоминай лучший счёт в отдельной переменной.
+  </div>
+
+  <div class="box idea">
+    <span class="label">🎉 Готово!</span>
+    Ты собрал четвёртую игру и освоил <b>список объектов</b> — приём, на котором
+    держатся почти все настоящие игры: пули, враги, монетки, частицы. Теперь ты
+    умеешь управлять <b>множеством</b> предметов сразу.
+  </div>
+
+  <div class="pager">
+    <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Попадания</span></a>
+    <a class="next" href="index.html"><span class="dir">К курсу →</span><span class="ttl">Все уроки Космоса</span></a>
+  </div>
+</div>
+
+<footer>Урок 5 из 5 · Космос 🚀</footer>
+</body>
+</html>

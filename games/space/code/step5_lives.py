@@ -1,0 +1,152 @@
+"""
+Космос — стреляй по падающим пришельцам!
+Стрелки влево/вправо — двигать корабль. Пробел — стрелять.
+Когда игра окончена — пробел запускает заново.
+F — полный экран, ESC — выход.
+"""
+import pygame, sys, random
+
+WIDTH, HEIGHT = 600, 400
+BG = (15, 16, 38)
+WHITE = (234, 234, 234)
+GREEN = (22, 196, 127)
+RED = (255, 107, 107)
+SHIP_COLOR = (108, 178, 255)
+BULLET_COLOR = (255, 209, 102)
+ENEMY_COLOR = (255, 107, 107)
+
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+fullscreen = False
+pygame.display.set_caption("Космос")
+clock = pygame.time.Clock()
+font = pygame.font.SysFont(None, 36)
+big_font = pygame.font.SysFont(None, 56)
+
+SHIP_W, SHIP_H = 40, 28
+ship_y = HEIGHT - SHIP_H - 12      # корабль внизу
+SHIP_SPEED = 6
+
+BULLET_W, BULLET_H = 4, 14
+BULLET_SPEED = 9
+
+ENEMY_SIZE = 32
+ENEMY_SPEED = 2
+SPAWN_EVERY = 45                   # через сколько кадров появляется новый враг
+
+# Звёзды на фоне (просто для красоты)
+stars = [(random.randint(0, WIDTH), random.randint(0, HEIGHT)) for _ in range(40)]
+
+
+def draw_ship(x):
+    """Корабль — синий треугольник носом вверх."""
+    points = [(x, ship_y), (x - SHIP_W // 2, ship_y + SHIP_H), (x + SHIP_W // 2, ship_y + SHIP_H)]
+    pygame.draw.polygon(screen, SHIP_COLOR, points)
+    pygame.draw.circle(screen, WHITE, (x, ship_y + SHIP_H - 8), 4)
+
+
+def draw_enemy(e):
+    """Пришелец — красный кружок с глазками."""
+    ex, ey = e.center
+    pygame.draw.circle(screen, ENEMY_COLOR, (ex, ey), ENEMY_SIZE // 2)
+    pygame.draw.circle(screen, WHITE, (ex - 6, ey - 3), 4)
+    pygame.draw.circle(screen, WHITE, (ex + 6, ey - 3), 4)
+    pygame.draw.circle(screen, BG, (ex - 6, ey - 3), 2)
+    pygame.draw.circle(screen, BG, (ex + 6, ey - 3), 2)
+
+
+def new_game():
+    ship_x = WIDTH // 2
+    bullets = []          # список пуль
+    enemies = []          # список врагов
+    return ship_x, bullets, enemies, 0, 3, 0
+
+
+ship_x, bullets, enemies, score, lives, spawn_timer = new_game()
+state = "play"            # "play" | "over"
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_f:                 # F — полный экран вкл/выкл
+                fullscreen = not fullscreen
+                flags = (pygame.SCALED | pygame.FULLSCREEN) if fullscreen else 0
+                screen = pygame.display.set_mode((WIDTH, HEIGHT), flags)
+            elif event.key == pygame.K_ESCAPE:
+                pygame.quit()
+                sys.exit()
+            elif event.key == pygame.K_SPACE:
+                if state == "play":
+                    # выстрел — добавляем новую пулю в список
+                    bullets.append(pygame.Rect(ship_x - BULLET_W // 2, ship_y, BULLET_W, BULLET_H))
+                else:
+                    ship_x, bullets, enemies, score, lives, spawn_timer = new_game()
+                    state = "play"
+
+    if state == "play":
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            ship_x -= SHIP_SPEED
+        if keys[pygame.K_RIGHT]:
+            ship_x += SHIP_SPEED
+        ship_x = max(SHIP_W // 2, min(ship_x, WIDTH - SHIP_W // 2))
+        ship_rect = pygame.Rect(ship_x - SHIP_W // 2, ship_y, SHIP_W, SHIP_H)
+
+        # Пули летят вверх; улетевшие за экран убираем из списка
+        for b in bullets[:]:
+            b.y -= BULLET_SPEED
+            if b.bottom < 0:
+                bullets.remove(b)
+
+        # Появляются новые враги
+        spawn_timer += 1
+        if spawn_timer >= SPAWN_EVERY:
+            spawn_timer = 0
+            x = random.randint(0, WIDTH - ENEMY_SIZE)
+            enemies.append(pygame.Rect(x, -ENEMY_SIZE, ENEMY_SIZE, ENEMY_SIZE))
+
+        # Враги летят вниз
+        for e in enemies[:]:
+            e.y += ENEMY_SPEED
+            if e.top > HEIGHT:                  # прорвался вниз — минус жизнь
+                enemies.remove(e)
+                lives -= 1
+            elif e.colliderect(ship_rect):      # врезался в корабль — минус жизнь
+                enemies.remove(e)
+                lives -= 1
+
+        # Попадания: пуля встретила врага — убираем обоих, +1 очко
+        for b in bullets[:]:
+            for e in enemies[:]:
+                if b.colliderect(e):
+                    bullets.remove(b)
+                    enemies.remove(e)
+                    score += 1
+                    break
+
+        if lives <= 0:
+            state = "over"
+
+    # Рисуем
+    screen.fill(BG)
+    for sx, sy in stars:
+        screen.set_at((sx, sy), (90, 92, 120))
+    for b in bullets:
+        pygame.draw.rect(screen, BULLET_COLOR, b)
+    for e in enemies:
+        draw_enemy(e)
+    draw_ship(ship_x)
+    hud = font.render(f"Очки: {score}    Жизни: {lives}", True, WHITE)
+    screen.blit(hud, (12, 8))
+
+    if state == "over":
+        t1 = big_font.render("Игра окончена", True, RED)
+        screen.blit(t1, t1.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 20)))
+        t2 = font.render("Пробел — играть заново", True, WHITE)
+        screen.blit(t2, t2.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 25)))
+
+    pygame.display.flip()
+    clock.tick(60)
