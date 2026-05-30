@@ -77,7 +77,7 @@ cp -r games/snake games/arkanoid
 
 ```python
 # 1) при создании окна — флаг SCALED и переменная-флаг:
-screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.SCALED)
+screen = pygame.display.set_mode((WIDTH, HEIGHT))   # окно обычного размера
 fullscreen = False
 
 # 2) в цикле событий — F (полный экран) и ESC (выход).
@@ -86,7 +86,7 @@ fullscreen = False
 if event.type == pygame.KEYDOWN:
     if event.key == pygame.K_f:
         fullscreen = not fullscreen
-        flags = pygame.SCALED | (pygame.FULLSCREEN if fullscreen else 0)
+        flags = (pygame.SCALED | pygame.FULLSCREEN) if fullscreen else 0
         screen = pygame.display.set_mode((WIDTH, HEIGHT), flags)
     elif event.key == pygame.K_ESCAPE:
         pygame.quit()
