@@ -9,6 +9,7 @@
   --muted: #9a9ab0;
   --accent: #ffd166;
   --code-bg: #15151f;       /* блоки кода всегда тёмные — в обеих темах */
+  --code-text: #eaeaea;     /* текст на код-фоне всегда светлый (обе темы) */
   --line: #3a3a52;
   --heading: #ffd166;        /* цвет подзаголовков h3 */
   --topbar-bg: rgba(30,30,46,.92);
@@ -115,6 +116,7 @@ h3 { color: var(--heading); margin-top: 24px; font-size: 1.1rem; }
 
 pre {
   background: var(--code-bg);
+  color: var(--code-text);
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 16px 18px;
@@ -124,7 +126,7 @@ pre {
   line-height: 1.55;
 }
 code { font-family: "SF Mono", Menlo, Consolas, monospace; }
-p code, li code, td code {
+p code, li code, td code, .box code, .goal code {
   background: var(--code-bg);
   padding: 1px 6px;
   border-radius: 5px;
@@ -152,7 +154,7 @@ p code, li code, td code {
 .grid-demo {
   font-family: "SF Mono", Menlo, monospace;
   font-size: .82rem;
-  color: var(--muted);
+  color: var(--code-text);
   line-height: 1.5;
   background: var(--code-bg);
   padding: 14px 16px;
@@ -160,7 +162,7 @@ p code, li code, td code {
   overflow-x: auto;
 }
 .pipe { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 14px 0; }
-.pill { background: var(--code-bg); border: 1px solid var(--line); padding: 8px 12px; border-radius: 10px; }
+.pill { background: var(--code-bg); color: var(--code-text); border: 1px solid var(--line); padding: 8px 12px; border-radius: 10px; }
 .arrow { color: var(--green); font-weight: 800; }
 
 table { width: 100%; border-collapse: collapse; margin: 16px 0; }
