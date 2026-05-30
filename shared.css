@@ -8,8 +8,25 @@
   --text: #eaeaea;
   --muted: #9a9ab0;
   --accent: #ffd166;
-  --code-bg: #15151f;
+  --code-bg: #15151f;       /* блоки кода всегда тёмные — в обеих темах */
   --line: #3a3a52;
+  --heading: #ffd166;        /* цвет подзаголовков h3 */
+  --topbar-bg: rgba(30,30,46,.92);
+}
+/* Светлая тема: переопределяем только фон/текст. Код оставляем тёмным,
+   чтобы подсветка синтаксиса оставалась читаемой. */
+:root[data-theme="light"] {
+  --bg: #f6f7fb;
+  --panel: #ffffff;
+  --panel2: #eef0f6;
+  --green: #0e9d63;
+  --dark-green: #0a6e47;
+  --red: #e23b3b;
+  --text: #1e1e2e;
+  --muted: #5c6070;
+  --line: #d7dae6;
+  --heading: #b8860b;
+  --topbar-bg: rgba(255,255,255,.9);
 }
 * { box-sizing: border-box; }
 body {
@@ -18,6 +35,7 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
+  transition: background .2s, color .2s;
 }
 
 /* ---- Верхняя навигация ---- */
@@ -25,7 +43,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(30,30,46,.92);
+  background: var(--topbar-bg);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
   padding: 10px 16px;
@@ -93,7 +111,7 @@ body {
 .goal .label { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .5px; font-weight: 700; }
 
 h2 { color: var(--green); margin-top: 34px; font-size: 1.4rem; }
-h3 { color: var(--accent); margin-top: 24px; font-size: 1.1rem; }
+h3 { color: var(--heading); margin-top: 24px; font-size: 1.1rem; }
 
 pre {
   background: var(--code-bg);
@@ -209,3 +227,48 @@ footer { text-align: center; color: var(--muted); padding: 30px; font-size: .9re
   font-size: .85rem;
   color: var(--accent);
 }
+
+/* ---- Кнопка скачивания кода ---- */
+.dl {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--green);
+  color: #06281a;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 9px 16px;
+  border-radius: 10px;
+  margin: 6px 0;
+  transition: transform .1s, filter .1s;
+}
+.dl:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.dl.ghost { background: transparent; color: var(--green); border: 1px solid var(--green); }
+.dl-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 14px 0; }
+.dl-list a {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--panel); color: var(--text); text-decoration: none; margin-bottom: 8px;
+  transition: border-color .12s;
+}
+.dl-list a:hover { border-color: var(--green); }
+.dl-list .fname { font-family: "SF Mono", Menlo, monospace; font-size: .88rem; }
+.dl-list .ficon { color: var(--green); font-weight: 800; }
+
+/* ---- Переключатель темы ---- */
+.theme-toggle {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  z-index: 30;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,.25);
+  transition: transform .12s, background .2s;
+}
+.theme-toggle:hover { transform: scale(1.1); }
