@@ -191,8 +191,11 @@ th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--li
 th { color: var(--muted); font-size: .85rem; text-transform: uppercase; }
 
 /* ---- Карточки уроков на главной ---- */
-.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 24px; }
+/* min(220px, 100%) — чтобы на узких экранах колонка сжималась, а не распирала */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); gap: 14px; margin-top: 24px; }
 .card {
+  min-width: 0;            /* разрешаем карточке сжиматься уже ширины картинки */
+  overflow: hidden;        /* аккуратно обрезаем превью по скруглённым углам */
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 14px;
