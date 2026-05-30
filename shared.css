@@ -126,21 +126,23 @@ pre {
   font-size: .9rem;
   line-height: 1.55;
 }
-/* кнопка «Копировать» на блоке кода */
+/* кнопка «Копировать» на блоке кода — всегда на тёмном фоне,
+   поэтому цвета фиксированные (не зависят от темы) */
 .copy-btn {
   position: absolute;
   top: 8px; right: 8px;
-  background: var(--panel2);
-  color: var(--code-text);
-  border: 1px solid var(--line);
+  background: #2b2b40;
+  color: #eaeaea;
+  border: 1px solid #44445e;
   border-radius: 7px;
   font: 600 .72rem -apple-system, "Segoe UI", system-ui, sans-serif;
   padding: 4px 10px;
   cursor: pointer;
-  opacity: .55;
+  opacity: .65;
   transition: opacity .12s, background .12s;
 }
 pre:hover .copy-btn { opacity: 1; }
+.copy-btn:hover { background: #3a3a52; }
 .copy-btn.copied { background: var(--green); color: #06281a; border-color: var(--green); opacity: 1; }
 code { font-family: "SF Mono", Menlo, Consolas, monospace; }
 p code, li code, td code, .box code, .goal code {
@@ -177,6 +179,8 @@ p code, li code, td code, .box code, .goal code {
   padding: 14px 16px;
   border-radius: 10px;
   overflow-x: auto;
+  white-space: pre;          /* сохраняем переносы строк в ASCII-схемах */
+  tab-size: 2;
 }
 .pipe { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 14px 0; }
 .pill { background: var(--code-bg); color: var(--code-text); border: 1px solid var(--line); padding: 8px 12px; border-radius: 10px; }
