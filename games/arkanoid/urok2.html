@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 2 — Мяч и стены</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🧱 Арканоид</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Ракетка">1</a>
+    <a class="dot active" href="urok2.html" title="Мяч и стены">2</a>
+    <a class="dot" href="urok3.html" title="Отскок от ракетки">3</a>
+    <a class="dot" href="urok4.html" title="Кирпичи">4</a>
+    <a class="dot" href="urok5.html" title="Жизни и победа">5</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 2 · самый важный</span>
+    <h1>Мяч летает и отскакивает</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Жёлтый мяч носится по экрану и отскакивает от всех четырёх стен. Файл:
+    <span class="run">step2_ball.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/step2_ball.py" download>⬇️ Скачать код урока</a>
+  </div>
+
+  <h2>⭐ Главная идея всей игры</h2>
+  <p>У мяча есть <b>позиция</b> <code>(bx, by)</code> и <b>скорость</b>
+     <code>(dx, dy)</code> — на сколько он сдвигается за кадр по горизонтали и
+     вертикали. Каждый кадр прибавляем скорость к позиции:</p>
+  <pre>bx += dx
+by += dy</pre>
+  <p>А <b>отскок — это смена знака</b> у нужной скорости. Ударился о левую или
+     правую стену — разворачиваем <code>dx</code>. О потолок или пол —
+     разворачиваем <code>dy</code>:</p>
+  <div class="pipe">
+    <span class="pill">летел вправо dx = 4</span><span class="arrow">→ стена →</span>
+    <span class="pill">dx = -4 (летит влево)</span>
+  </div>
+
+  <h2>📝 Код урока (только мяч)</h2>
+  <pre><span class="com"># Мяч: позиция (bx, by) и скорость (dx, dy)</span>
+BALL_R = <span class="num">8</span>
+bx, by = WIDTH / <span class="num">2</span>, HEIGHT / <span class="num">2</span>
+dx, dy = <span class="num">4.0</span>, <span class="num">4.0</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="com"># ... события и ракетка ...</span>
+
+    <span class="com"># Мяч летит</span>
+    bx += dx
+    by += dy
+
+    <span class="com"># Отскок: у краёв меняем знак скорости</span>
+    <span class="kw">if</span> bx &lt; BALL_R <span class="kw">or</span> bx &gt; WIDTH - BALL_R:
+        dx = -dx
+    <span class="kw">if</span> by &lt; BALL_R <span class="kw">or</span> by &gt; HEIGHT - BALL_R:
+        dy = -dy
+
+    <span class="com"># Рисуем мяч кружком</span>
+    pygame.draw.<span class="fn">circle</span>(screen, BALL_COLOR, (<span class="fn">int</span>(bx), <span class="fn">int</span>(by)), BALL_R)</pre>
+
+  <h2>🔍 Мелочи, которые важно понять</h2>
+  <h3>Почему <code>BALL_R</code> в проверке?</h3>
+  <p><code>bx</code> — это <b>центр</b> мяча, а <code>BALL_R</code> — его радиус.
+     Мяч касается стены не центром, а краем — поэтому отскакиваем, когда центр
+     подошёл к стене на радиус: <code>bx &lt; BALL_R</code> (левый край) и
+     <code>bx &gt; WIDTH - BALL_R</code> (правый).</p>
+
+  <h3>Почему скорость дробная (<code>4.0</code>)?</h3>
+  <p>Скоро мяч будет лететь под углом с дробной скоростью (например 3.7). Поэтому
+     сразу пишем <code>4.0</code>, а координаты держим дробными, а при рисовании
+     превращаем в целые: <code>int(bx)</code>.</p>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Сделай мяч быстрее: <code>dx, dy = 7.0, 7.0</code>.<br>
+    2. Запусти его под другим углом: <code>dx, dy = 3.0, 6.0</code>.<br>
+    3. Сделай мяч больше: <code>BALL_R = 14</code>.
+  </div>
+
+  <div class="pager">
+    <a href="urok1.html"><span class="dir">← Назад</span><span class="ttl">Урок 1 — Ракетка</span></a>
+    <a class="next" href="urok3.html"><span class="dir">Дальше →</span><span class="ttl">Урок 3 — Отскок от ракетки</span></a>
+  </div>
+</div>
+
+<footer>Урок 2 из 5 · Арканоид 🧱</footer>
+</body>
+</html>

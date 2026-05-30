@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 5 — Жизни и победа</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🧱 Арканоид</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Ракетка">1</a>
+    <a class="dot" href="urok2.html" title="Мяч и стены">2</a>
+    <a class="dot" href="urok3.html" title="Отскок от ракетки">3</a>
+    <a class="dot" href="urok4.html" title="Кирпичи">4</a>
+    <a class="dot active" href="urok5.html" title="Жизни и победа">5</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 5 · финал</span>
+    <h1>Жизни, победа и рестарт</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Готовую игру! Промахнулся — минус жизнь. Жизни кончились — «Игра окончена».
+    Разбил все кирпичи — «Победа!». Пробел — заново. Файл:
+    <span class="run">arkanoid.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/arkanoid.py" download>⬇️ Скачать готовую игру</a>
+  </div>
+
+  <h2>📝 Три состояния игры</h2>
+  <p>Вместо одного флага <code>game_over</code> заведём переменную
+     <code>state</code> с тремя значениями: <code>"play"</code> (играем),
+     <code>"over"</code> (проигрыш), <code>"win"</code> (победа).</p>
+  <pre><span class="kw">def</span> <span class="fn">new_game</span>():
+    paddle_x = WIDTH // <span class="num">2</span> - PADDLE_W // <span class="num">2</span>
+    bx, by = WIDTH / <span class="num">2</span>, HEIGHT / <span class="num">2</span>
+    dx, dy = <span class="num">4.0</span>, <span class="num">4.0</span>
+    <span class="kw">return</span> paddle_x, bx, by, dx, dy, <span class="fn">make_bricks</span>(), <span class="num">0</span>, <span class="num">3</span>
+
+state = <span class="str">"play"</span>        <span class="com"># "play" | "over" | "win"</span>
+
+<span class="com"># Промахнулся мимо мяча — минус жизнь</span>
+    <span class="kw">if</span> by &gt; HEIGHT:
+        lives -= <span class="num">1</span>
+        bx, by = WIDTH / <span class="num">2</span>, HEIGHT / <span class="num">2</span>
+        dx, dy = <span class="num">4.0</span>, <span class="num">4.0</span>
+        <span class="kw">if</span> lives &lt;= <span class="num">0</span>:
+            state = <span class="str">"over"</span>
+
+    <span class="com"># Кирпичей не осталось — победа!</span>
+    <span class="kw">if</span> <span class="kw">not</span> bricks:
+        state = <span class="str">"win"</span></pre>
+
+  <h2>🔍 Что тут происходит</h2>
+
+  <h3>Почему <code>state</code>, а не <code>game_over</code>?</h3>
+  <p>В прошлых играх хватало «да/нет». Здесь концовки <b>две</b> — победа и
+     проигрыш. Удобно хранить одно слово-состояние и по нему решать, что рисовать и
+     что делать.</p>
+
+  <h3><code>if not bricks:</code> — список пуст?</h3>
+  <p>Пустой список в Python считается «ложью», поэтому <code>if not bricks</code>
+     значит «если кирпичей не осталось». Все разбил — победа.</p>
+
+  <h3>Рестарт</h3>
+  <p>Пробел работает, только когда <code>state != "play"</code>: зовём
+     <code>new_game()</code> и снова ставим <code>state = "play"</code>.</p>
+
+  <div class="box idea">
+    <span class="label">🏆 Поздравляю!</span>
+    Ты освоил отскок мяча — основу множества аркад: Пинг-понг, Сквош, да хоть
+    футбол. И собрал полноценный Арканоид с победой и проигрышем!
+  </div>
+
+  <h2>🚀 Что дальше — задания со звёздочкой</h2>
+  <table>
+    <tr><th>Идея</th><th>Чему научишься</th></tr>
+    <tr><td>Звук при отскоке/разбитии</td><td>pygame.mixer (как в «Ловком коте»)</td></tr>
+    <tr><td>Ускорение мяча со временем</td><td>работа со скоростью</td></tr>
+    <tr><td>Прочные кирпичи (2 удара)</td><td>счётчик прочности у кирпича</td></tr>
+    <tr><td>Бонус: ракетка шире на 10 сек</td><td>таймеры</td></tr>
+    <tr><td>Уровни: разные стены кирпичей</td><td>несколько раскладок</td></tr>
+  </table>
+
+  <div class="pager">
+    <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Кирпичи</span></a>
+    <a class="next" href="index.html"><span class="dir">Готово ✓</span><span class="ttl">Ко всем урокам</span></a>
+  </div>
+</div>
+
+<footer>Урок 5 из 5 · Арканоид 🧱 · Молодец!</footer>
+</body>
+</html>

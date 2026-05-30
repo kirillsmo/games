@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 3 — Отскок от ракетки</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🧱 Арканоид</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Ракетка">1</a>
+    <a class="dot" href="urok2.html" title="Мяч и стены">2</a>
+    <a class="dot active" href="urok3.html" title="Отскок от ракетки">3</a>
+    <a class="dot" href="urok4.html" title="Кирпичи">4</a>
+    <a class="dot" href="urok5.html" title="Жизни и победа">5</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 3</span>
+    <h1>Отскок от ракетки</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Нижней стены больше нет — теперь мяч надо отбивать ракеткой. Промахнулся — мяч
+    вернётся в центр. Файл: <span class="run">step3_paddle_ball.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/step3_paddle_ball.py" download>⬇️ Скачать код урока</a>
+  </div>
+
+  <h2>📝 Что меняем</h2>
+  <pre>    <span class="com"># Нижней стены НЕТ — только левая, правая и верхняя</span>
+    <span class="kw">if</span> bx &lt; BALL_R <span class="kw">or</span> bx &gt; WIDTH - BALL_R:
+        dx = -dx
+    <span class="kw">if</span> by &lt; BALL_R:
+        dy = -dy
+
+    ball_rect = pygame.<span class="fn">Rect</span>(bx - BALL_R, by - BALL_R, BALL_R * <span class="num">2</span>, BALL_R * <span class="num">2</span>)
+
+    <span class="com"># Отскок от ракетки (только если мяч летит вниз)</span>
+    <span class="kw">if</span> ball_rect.<span class="fn">colliderect</span>(paddle) <span class="kw">and</span> dy &gt; <span class="num">0</span>:
+        dy = -dy
+        <span class="com"># Куда по ракетке попал — туда и уйдёт вбок</span>
+        hit = (bx - (paddle_x + PADDLE_W / <span class="num">2</span>)) / (PADDLE_W / <span class="num">2</span>)
+        dx = <span class="num">5</span> * hit
+
+    <span class="com"># Промахнулся — мяч в центр</span>
+    <span class="kw">if</span> by &gt; HEIGHT:
+        bx, by = WIDTH / <span class="num">2</span>, HEIGHT / <span class="num">2</span>
+        dx, dy = <span class="num">4.0</span>, <span class="num">4.0</span></pre>
+
+  <h2>🔍 Что тут происходит</h2>
+
+  <h3>Убрали нижнюю стену</h3>
+  <p>В прошлом уроке мяч отскакивал от пола. Теперь пол убираем — внизу стоит
+     ракетка, и отбивать должен игрок. Поэтому в проверке <code>by</code> осталась
+     только верхняя стена (<code>by &lt; BALL_R</code>).</p>
+
+  <h3><code>colliderect</code> + «летит вниз»</h3>
+  <p>Делаем из мяча квадратик <code>ball_rect</code> и проверяем пересечение с
+     ракеткой. Условие <code>and dy &gt; 0</code> важно: отскакиваем только если мяч
+     <b>падает</b> (иначе он мог бы «прилипнуть» к ракетке и дёргаться).</p>
+
+  <h3>🎯 Угол зависит от места удара</h3>
+  <p>Это делает игру управляемой! <code>hit</code> — насколько далеко от центра
+     ракетки попал мяч: 0 в центре, −1 у левого края, +1 у правого. Умножаем на 5
+     и получаем <code>dx</code> — у края мяч отлетит вбок, в центре — почти прямо
+     вверх.</p>
+  <div class="grid-demo">
+попал слева   → dx отрицательный → летит влево-вверх
+попал в центр → dx ≈ 0           → летит прямо вверх
+попал справа  → dx положительный → летит вправо-вверх</div>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Поменяй <code>5</code> на <code>8</code> — углы станут острее.<br>
+    2. Верни мячу +1 к скорости при каждом отскоке от ракетки — станет быстрее.
+  </div>
+
+  <div class="pager">
+    <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Мяч и стены</span></a>
+    <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Кирпичи</span></a>
+  </div>
+</div>
+
+<footer>Урок 3 из 5 · Арканоид 🧱</footer>
+</body>
+</html>

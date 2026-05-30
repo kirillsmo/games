@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 1 — Ракетка</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🧱 Арканоид</a>
+  <div class="dots">
+    <a class="dot active" href="urok1.html" title="Ракетка">1</a>
+    <a class="dot" href="urok2.html" title="Мяч и стены">2</a>
+    <a class="dot" href="urok3.html" title="Отскок от ракетки">3</a>
+    <a class="dot" href="urok4.html" title="Кирпичи">4</a>
+    <a class="dot" href="urok5.html" title="Жизни и победа">5</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 1</span>
+    <h1>Ракетка ездит</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Зелёная ракетка внизу экрана едет влево-вправо по стрелкам. Файл:
+    <span class="run">step1_paddle.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/step1_paddle.py" download>⬇️ Скачать код урока</a>
+  </div>
+
+  <h2>📝 Весь код урока</h2>
+  <pre><span class="kw">import</span> pygame, sys
+
+WIDTH, HEIGHT = <span class="num">600</span>, <span class="num">400</span>
+BG = (<span class="num">30</span>, <span class="num">30</span>, <span class="num">46</span>)
+GREEN = (<span class="num">22</span>, <span class="num">196</span>, <span class="num">127</span>)
+
+pygame.<span class="fn">init</span>()
+screen = pygame.display.<span class="fn">set_mode</span>((WIDTH, HEIGHT))
+pygame.display.<span class="fn">set_caption</span>(<span class="str">"Арканоид"</span>)
+clock = pygame.time.<span class="fn">Clock</span>()
+
+PADDLE_W, PADDLE_H = <span class="num">90</span>, <span class="num">14</span>
+paddle_x = WIDTH // <span class="num">2</span> - PADDLE_W // <span class="num">2</span>
+paddle_y = HEIGHT - <span class="num">30</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="kw">for</span> event <span class="kw">in</span> pygame.event.<span class="fn">get</span>():
+        <span class="kw">if</span> event.type == pygame.QUIT:
+            pygame.<span class="fn">quit</span>()
+            sys.<span class="fn">exit</span>()
+
+    keys = pygame.key.<span class="fn">get_pressed</span>()
+    <span class="kw">if</span> keys[pygame.K_LEFT]:
+        paddle_x -= <span class="num">8</span>
+    <span class="kw">if</span> keys[pygame.K_RIGHT]:
+        paddle_x += <span class="num">8</span>
+    paddle_x = <span class="fn">max</span>(<span class="num">0</span>, <span class="fn">min</span>(paddle_x, WIDTH - PADDLE_W))
+
+    screen.<span class="fn">fill</span>(BG)
+    pygame.draw.<span class="fn">rect</span>(screen, GREEN, (paddle_x, paddle_y, PADDLE_W, PADDLE_H), border_radius=<span class="num">6</span>)
+    pygame.display.<span class="fn">flip</span>()
+    clock.<span class="fn">tick</span>(<span class="num">60</span>)</pre>
+
+  <h2>🔍 Это ты уже знаешь по «Ловкому коту»</h2>
+  <p>Ракетка — почти как кот: едет влево-вправо, пока держишь стрелку
+     (<code>pygame.key.get_pressed()</code>), и не выезжает за края
+     (<code>max(0, min(...))</code>). Новое только мелочь:
+     <code>border_radius=6</code> в <code>draw.rect</code> — скругляет уголки
+     ракетки, чтобы выглядела аккуратнее.</p>
+
+  <div class="box idea">
+    <span class="label">💡 Дальше — самое интересное</span>
+    В следующем уроке появится мяч, который летает и отскакивает. Это новая идея,
+    ради которой мы и делаем Арканоид.
+  </div>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Сделай ракетку шире (<code>PADDLE_W = 140</code>) или уже.<br>
+    2. Поменяй скорость <code>8</code>.<br>
+    3. Управляй на A/D вместо стрелок.
+  </div>
+
+  <div class="pager">
+    <a href="index.html"><span class="dir">← К курсу</span><span class="ttl">Все уроки Арканоида</span></a>
+    <a class="next" href="urok2.html"><span class="dir">Дальше →</span><span class="ttl">Урок 2 — Мяч и стены</span></a>
+  </div>
+</div>
+
+<footer>Урок 1 из 5 · Арканоид 🧱</footer>
+</body>
+</html>

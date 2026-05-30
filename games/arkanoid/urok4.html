@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 4 — Кирпичи</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🧱 Арканоид</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Ракетка">1</a>
+    <a class="dot" href="urok2.html" title="Мяч и стены">2</a>
+    <a class="dot" href="urok3.html" title="Отскок от ракетки">3</a>
+    <a class="dot active" href="urok4.html" title="Кирпичи">4</a>
+    <a class="dot" href="urok5.html" title="Жизни и победа">5</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 4</span>
+    <h1>Кирпичи</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Сверху появляется стена из разноцветных кирпичей. Мяч их ломает, идут очки.
+    Файл: <span class="run">step4_bricks.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/step4_bricks.py" download>⬇️ Скачать код урока</a>
+  </div>
+
+  <h2>📝 Делаем стену кирпичей — это список</h2>
+  <p>Как в Змейке мы хранили тело змейки списком — так здесь храним кирпичи. Только
+     это список <b>прямоугольников</b> <code>pygame.Rect</code>:</p>
+  <pre>COLS, ROWS = <span class="num">10</span>, <span class="num">5</span>
+BRICK_W = WIDTH // COLS
+BRICK_H = <span class="num">24</span>
+GAP = <span class="num">3</span>
+TOP = <span class="num">40</span>
+bricks = []
+<span class="kw">for</span> row <span class="kw">in</span> <span class="fn">range</span>(ROWS):
+    <span class="kw">for</span> col <span class="kw">in</span> <span class="fn">range</span>(COLS):
+        x = col * BRICK_W + GAP
+        y = TOP + row * BRICK_H + GAP
+        bricks.<span class="fn">append</span>(pygame.<span class="fn">Rect</span>(x, y, BRICK_W - GAP * <span class="num">2</span>, BRICK_H - GAP * <span class="num">2</span>))</pre>
+
+  <h2>📝 Ломаем кирпич</h2>
+  <pre>    <span class="com"># Проверяем каждый кирпич: попали — убираем и отскакиваем</span>
+    <span class="kw">for</span> brick <span class="kw">in</span> bricks:
+        <span class="kw">if</span> ball_rect.<span class="fn">colliderect</span>(brick):
+            bricks.<span class="fn">remove</span>(brick)
+            dy = -dy
+            score += <span class="num">1</span>
+            <span class="kw">break</span>        <span class="com"># один кирпич за кадр</span></pre>
+
+  <h2>🔍 Что тут происходит</h2>
+
+  <h3>Два цикла <code>for</code> — это сетка</h3>
+  <p>Внешний <code>for row</code> идёт по строкам, внутренний <code>for col</code> —
+     по столбцам. Для каждой пары (строка, столбец) считаем место кирпича и кладём
+     его в список. <code>GAP</code> — щель между кирпичами, чтобы была сетка.</p>
+
+  <h3>Проверяем весь список</h3>
+  <p>Каждый кадр пробегаем список кирпичей и проверяем <code>colliderect</code> с
+     мячом. Попали — <code>bricks.remove(brick)</code> убирает кирпич из списка
+     (он исчезает с экрана), мяч отскакивает (<code>dy = -dy</code>), +1 очко.</p>
+
+  <div class="box warn">
+    <span class="label">⚠️ Зачем <code>break</code></span>
+    Мы выходим из цикла сразу после первого попадания. Во-первых, нельзя удалять из
+    списка и продолжать его перебирать — будет ошибка. Во-вторых, за один кадр
+    логично разбить один кирпич.
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Цвет по строке</span>
+    При рисовании цвет берём по номеру строки: <code>BRICK_COLORS[row % 5]</code> —
+    получаются разноцветные ряды, как в настоящем Арканоиде.
+  </div>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Больше кирпичей: <code>ROWS = 7</code>.<br>
+    2. Дай за кирпич 10 очков.<br>
+    3. Сделай <code>GAP = 0</code> — кирпичи вплотную.
+  </div>
+
+  <div class="pager">
+    <a href="urok3.html"><span class="dir">← Назад</span><span class="ttl">Урок 3 — Отскок от ракетки</span></a>
+    <a class="next" href="urok5.html"><span class="dir">Дальше →</span><span class="ttl">Урок 5 — Жизни и победа</span></a>
+  </div>
+</div>
+
+<footer>Урок 4 из 5 · Арканоид 🧱</footer>
+</body>
+</html>

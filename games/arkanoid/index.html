@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Арканоид на Python — курс</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🧱 Арканоид</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Ракетка">1</a>
+    <a class="dot" href="urok2.html" title="Мяч и стены">2</a>
+    <a class="dot" href="urok3.html" title="Отскок от ракетки">3</a>
+    <a class="dot" href="urok4.html" title="Кирпичи">4</a>
+    <a class="dot" href="urok5.html" title="Жизни и победа">5</a>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>🧱 Арканоид</h1>
+  <p>Отбивай мяч ракеткой и ломай кирпичи. Соберёшь за 5 шагов!</p>
+  <img class="hero-shot" src="preview.png" alt="Так выглядит игра Арканоид">
+</div>
+
+<div class="wrap">
+
+  <div class="goal">
+    <span class="label">Что у тебя получится</span>
+    Ракетка внизу, мяч прыгает по экрану и ломает разноцветные кирпичи. Промахнулся
+    мимо мяча — теряешь жизнь. Разбил все кирпичи — победа! Пробел — заново.
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Главная новая идея — отскок мяча</span>
+    У мяча есть <b>скорость</b> по двум осям: <code>(dx, dy)</code>. Отскок — это
+    просто <b>смена знака</b>: ударился о стенку слева/справа → <code>dx = -dx</code>,
+    о потолок или кирпич → <code>dy = -dy</code>. Всё остальное ты уже умеешь:
+    движение в пикселях, <code>colliderect</code> и список (как в Змейке).
+  </div>
+
+  <h3>Как запустить урок</h3>
+  <pre><span class="fn">python</span> games/arkanoid/code/step1_paddle.py</pre>
+
+  <h2>Уроки</h2>
+  <div class="cards">
+    <a class="card" href="urok1.html"><div class="n">1</div><h3>Ракетка</h3><p>Ракетка ездит влево-вправо по стрелкам.</p></a>
+    <a class="card" href="urok2.html"><div class="n">2</div><h3>Мяч и стены</h3><p>Мяч летает и отскакивает от стен — главный приём.</p></a>
+    <a class="card" href="urok3.html"><div class="n">3</div><h3>Отскок от ракетки</h3><p>Ловим мяч ракеткой, угол зависит от места удара.</p></a>
+    <a class="card" href="urok4.html"><div class="n">4</div><h3>Кирпичи</h3><p>Список кирпичей, ломаем их мячом, считаем очки.</p></a>
+    <a class="card" href="urok5.html"><div class="n">5</div><h3>Жизни и победа</h3><p>Жизни, проигрыш, победа и рестарт по пробелу.</p></a>
+  </div>
+
+  <h2>📦 Скачать код</h2>
+  <p>Игра целиком на фигурах — картинки не нужны, каждый файл запускается сам по себе.</p>
+
+  <div class="dl-row">
+    <a class="dl" href="code/arkanoid.py" download>⬇️ Готовая игра (arkanoid.py)</a>
+    <a class="dl ghost" href="https://github.com/kirillsmo/games/archive/refs/heads/main.zip">⬇️ Весь проект архивом (.zip)</a>
+  </div>
+
+  <div class="dl-list">
+    <a href="code/step1_paddle.py" download><span class="fname">step1_paddle.py</span><span class="ficon">↓ урок 1</span></a>
+    <a href="code/step2_ball.py" download><span class="fname">step2_ball.py</span><span class="ficon">↓ урок 2</span></a>
+    <a href="code/step3_paddle_ball.py" download><span class="fname">step3_paddle_ball.py</span><span class="ficon">↓ урок 3</span></a>
+    <a href="code/step4_bricks.py" download><span class="fname">step4_bricks.py</span><span class="ficon">↓ урок 4</span></a>
+    <a href="code/step5_lives.py" download><span class="fname">step5_lives.py</span><span class="ficon">↓ урок 5</span></a>
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Чтобы запустить</span>
+    Один раз поставь pygame: <code>pip install pygame-ce</code>. Потом:
+    <code>python arkanoid.py</code>.
+  </div>
+
+  <div class="pager">
+    <span class="pager-spacer" style="flex:1"></span>
+    <a class="next" href="urok1.html"><span class="dir">Начать →</span><span class="ttl">Урок 1 — Ракетка</span></a>
+  </div>
+
+</div>
+
+<footer>Учебный проект «Арканоид» · Python + pygame 🧱</footer>
+</body>
+</html>
