@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 1 — Кот-корзинка</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🐱 Ловкий кот</a>
+  <div class="dots">
+    <a class="dot active" href="urok1.html" title="Кот-корзинка">1</a>
+    <a class="dot" href="urok2.html" title="Падающее яблоко">2</a>
+    <a class="dot" href="urok3.html" title="Ловим и считаем">3</a>
+    <a class="dot" href="urok4.html" title="Жизни и проигрыш">4</a>
+    <a class="dot" href="urok5.html" title="Картинки">5</a>
+    <a class="dot" href="urok6.html" title="Звуки">6</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 1</span>
+    <h1>Кот-корзинка ездит</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Оранжевый прямоугольник внизу экрана — пока это «кот». Он ездит влево-вправо,
+    пока держишь стрелку. Файл: <span class="run">step1_basket.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/step1_basket.py" download>⬇️ Скачать код урока</a>
+  </div>
+
+  <h2>📝 Весь код урока</h2>
+  <pre><span class="kw">import</span> pygame, sys
+
+WIDTH, HEIGHT = <span class="num">600</span>, <span class="num">400</span>
+BG = (<span class="num">30</span>, <span class="num">30</span>, <span class="num">46</span>)
+ORANGE = (<span class="num">244</span>, <span class="num">162</span>, <span class="num">97</span>)
+
+pygame.<span class="fn">init</span>()
+screen = pygame.display.<span class="fn">set_mode</span>((WIDTH, HEIGHT))
+pygame.display.<span class="fn">set_caption</span>(<span class="str">"Ловкий кот"</span>)
+clock = pygame.time.<span class="fn">Clock</span>()
+
+<span class="com"># Пока кот — это просто оранжевый прямоугольник</span>
+cat_w, cat_h = <span class="num">88</span>, <span class="num">74</span>
+cat_x = WIDTH // <span class="num">2</span> - cat_w // <span class="num">2</span>     <span class="com"># по центру</span>
+cat_y = HEIGHT - cat_h - <span class="num">10</span>         <span class="com"># внизу</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="kw">for</span> event <span class="kw">in</span> pygame.event.<span class="fn">get</span>():
+        <span class="kw">if</span> event.type == pygame.QUIT:
+            pygame.<span class="fn">quit</span>()
+            sys.<span class="fn">exit</span>()
+
+    <span class="com"># Зажатые клавиши: пока держишь — кот едет</span>
+    keys = pygame.key.<span class="fn">get_pressed</span>()
+    <span class="kw">if</span> keys[pygame.K_LEFT]:
+        cat_x -= <span class="num">7</span>
+    <span class="kw">if</span> keys[pygame.K_RIGHT]:
+        cat_x += <span class="num">7</span>
+
+    <span class="com"># Не выпускаем кота за края экрана</span>
+    cat_x = <span class="fn">max</span>(<span class="num">0</span>, <span class="fn">min</span>(cat_x, WIDTH - cat_w))
+
+    screen.<span class="fn">fill</span>(BG)
+    pygame.draw.<span class="fn">rect</span>(screen, ORANGE, (cat_x, cat_y, cat_w, cat_h))
+    pygame.display.<span class="fn">flip</span>()
+    clock.<span class="fn">tick</span>(<span class="num">60</span>)</pre>
+
+  <h2>🔍 Что тут нового по сравнению со Змейкой</h2>
+
+  <h3>Движение в пикселях, а не по клеткам</h3>
+  <p>В Змейке всё прыгало по клеткам. Здесь кот двигается <b>плавно</b>: за один
+     кадр <code>cat_x</code> меняется на 7 пикселей. И кадров теперь
+     <code>60</code> в секунду — поэтому движение гладкое.</p>
+
+  <h3><code>pygame.key.get_pressed()</code> — зажатые клавиши</h3>
+  <p>Раньше мы ловили <b>момент</b> нажатия (<code>KEYDOWN</code>). Здесь иначе:
+     каждый кадр спрашиваем «какие клавиши сейчас зажаты?». Пока держишь стрелку —
+     кот едет. Отпустил — остановился. Так удобнее для плавного движения.</p>
+  <pre>keys = pygame.key.<span class="fn">get_pressed</span>()
+<span class="kw">if</span> keys[pygame.K_LEFT]:   <span class="com"># левая стрелка зажата?</span>
+    cat_x -= <span class="num">7</span>            <span class="com"># едем влево</span></pre>
+
+  <h3>Кот не убегает за край</h3>
+  <p><code>cat_x = max(0, min(cat_x, WIDTH - cat_w))</code> — хитрая, но полезная
+     строчка. <code>min(...)</code> не даёт уехать вправо дальше края, а
+     <code>max(0, ...)</code> — влево за ноль.</p>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Сделай кота быстрее или медленнее — поменяй <code>7</code>.<br>
+    2. Поставь кота повыше — измени <code>cat_y</code>.<br>
+    3. Поменяй цвет <code>ORANGE</code> на свой.
+  </div>
+
+  <div class="pager">
+    <a href="index.html"><span class="dir">← К курсу</span><span class="ttl">Все уроки кота</span></a>
+    <a class="next" href="urok2.html"><span class="dir">Дальше →</span><span class="ttl">Урок 2 — Яблоко падает</span></a>
+  </div>
+</div>
+
+<footer>Урок 1 из 6 · Ловкий кот 🐱</footer>
+</body>
+</html>

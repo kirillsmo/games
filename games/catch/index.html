@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ловкий кот на Python — курс</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🐱 Ловкий кот</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Кот-корзинка">1</a>
+    <a class="dot" href="urok2.html" title="Падающее яблоко">2</a>
+    <a class="dot" href="urok3.html" title="Ловим и считаем">3</a>
+    <a class="dot" href="urok4.html" title="Жизни и проигрыш">4</a>
+    <a class="dot" href="urok5.html" title="Картинки">5</a>
+    <a class="dot" href="urok6.html" title="Звуки">6</a>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>🐱 Ловкий кот</h1>
+  <p>Кот ловит падающие яблоки. Соберёшь игру с картинками и звуками за 6 шагов!</p>
+</div>
+
+<div class="wrap">
+
+  <div class="goal">
+    <span class="label">Что у тебя получится</span>
+    Кот ездит внизу влево-вправо, сверху падают яблоки. Поймал — очко и весёлый
+    звук. Промахнулся — теряешь жизнь. Жизни кончились — «Игра окончена», пробел —
+    заново. С каждым яблоком чуть быстрее!
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Что нового по сравнению со Змейкой</span>
+    Здесь движение <b>в пикселях</b>, а не по клеткам: кот и яблоко двигаются плавно.
+    Появляется <b>скорость</b> падения, проверка столкновений через
+    <code>rect.colliderect()</code>, а в конце — <b>картинки</b> и <b>звуки</b>.
+  </div>
+
+  <h3>Как запустить урок</h3>
+  <pre><span class="fn">python</span> games/catch/code/step1_basket.py</pre>
+
+  <h2>Уроки</h2>
+  <div class="cards">
+    <a class="card" href="urok1.html"><div class="n">1</div><h3>Кот-корзинка</h3><p>Кот ездит влево-вправо по нажатым стрелкам.</p></a>
+    <a class="card" href="urok2.html"><div class="n">2</div><h3>Яблоко падает</h3><p>Сверху падает яблоко и возвращается наверх.</p></a>
+    <a class="card" href="urok3.html"><div class="n">3</div><h3>Ловим!</h3><p>Столкновение через colliderect и счёт очков.</p></a>
+    <a class="card" href="urok4.html"><div class="n">4</div><h3>Жизни</h3><p>Промахи, проигрыш и рестарт по пробелу.</p></a>
+    <a class="card" href="urok5.html"><div class="n">5</div><h3>Картинки</h3><p>Меняем прямоугольники на спрайты кота и яблока.</p></a>
+    <a class="card" href="urok6.html"><div class="n">6</div><h3>Звуки</h3><p>Весёлый «дзынь» при ловле и низкий — при промахе.</p></a>
+  </div>
+
+  <h2>📦 Скачать код</h2>
+  <div class="box warn">
+    <span class="label">⚠️ Важно про картинки и звуки</span>
+    Урокам 5–6 нужна папка <code>assets</code> (кот, яблоко, звуки). Поэтому для
+    готовой игры качай <b>весь проект архивом</b> — отдельный <code>.py</code> без
+    картинок не запустится.
+  </div>
+
+  <div class="dl-row">
+    <a class="dl" href="https://github.com/kirillsmo/games/archive/refs/heads/main.zip">⬇️ Весь проект архивом (.zip) — с картинками и звуками</a>
+  </div>
+
+  <div class="dl-list">
+    <a href="code/step1_basket.py" download><span class="fname">step1_basket.py</span><span class="ficon">↓ урок 1</span></a>
+    <a href="code/step2_apple.py" download><span class="fname">step2_apple.py</span><span class="ficon">↓ урок 2</span></a>
+    <a href="code/step3_catch.py" download><span class="fname">step3_catch.py</span><span class="ficon">↓ урок 3</span></a>
+    <a href="code/step4_lives.py" download><span class="fname">step4_lives.py</span><span class="ficon">↓ урок 4</span></a>
+    <a href="code/step5_images.py" download><span class="fname">step5_images.py</span><span class="ficon">↓ урок 5 (нужны assets)</span></a>
+    <a href="code/catch.py" download><span class="fname">catch.py</span><span class="ficon">↓ готовая игра (нужны assets)</span></a>
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Чтобы запустить</span>
+    Один раз поставь pygame: <code>pip install pygame-ce</code>. Потом запускай файл:
+    <code>python catch.py</code> (из папки игры, чтобы рядом была папка
+    <code>assets</code>).
+  </div>
+
+  <div class="pager">
+    <span class="pager-spacer" style="flex:1"></span>
+    <a class="next" href="urok1.html"><span class="dir">Начать →</span><span class="ttl">Урок 1 — Кот-корзинка</span></a>
+  </div>
+
+</div>
+
+<footer>Учебный проект «Ловкий кот» · Python + pygame 🐱</footer>
+</body>
+</html>

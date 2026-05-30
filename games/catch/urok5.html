@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 5 — Картинки</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🐱 Ловкий кот</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Кот-корзинка">1</a>
+    <a class="dot" href="urok2.html" title="Падающее яблоко">2</a>
+    <a class="dot" href="urok3.html" title="Ловим и считаем">3</a>
+    <a class="dot" href="urok4.html" title="Жизни и проигрыш">4</a>
+    <a class="dot active" href="urok5.html" title="Картинки">5</a>
+    <a class="dot" href="urok6.html" title="Звуки">6</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 5</span>
+    <h1>Настоящие картинки</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Прямоугольники превращаются в настоящего кота 🐱 и яблоко 🍎. Файл:
+    <span class="run">step5_images.py</span>
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ Нужны картинки</span>
+    Рядом с кодом должна лежать папка <code>assets</code> с файлами
+    <code>cat.png</code> и <code>apple.png</code>. Поэтому качай
+    <b>весь проект архивом</b> (кнопка ниже), а не один файл.
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="https://github.com/kirillsmo/games/archive/refs/heads/main.zip">⬇️ Весь проект архивом (с картинками)</a>
+    <a class="dl ghost" href="code/step5_images.py" download>только код урока</a>
+  </div>
+
+  <h2>📝 Что меняем</h2>
+  <pre><span class="kw">import</span> pygame, sys, random, os
+
+HERE = os.path.<span class="fn">dirname</span>(__file__)   <span class="com"># папка, где лежит этот файл</span>
+
+<span class="com"># Загружаем картинки. convert_alpha() — чтобы прозрачные углы были прозрачными.</span>
+cat_img = pygame.image.<span class="fn">load</span>(os.path.<span class="fn">join</span>(HERE, <span class="str">"assets"</span>, <span class="str">"cat.png"</span>)).<span class="fn">convert_alpha</span>()
+apple_img = pygame.image.<span class="fn">load</span>(os.path.<span class="fn">join</span>(HERE, <span class="str">"assets"</span>, <span class="str">"apple.png"</span>)).<span class="fn">convert_alpha</span>()
+cat_w, cat_h = cat_img.<span class="fn">get_size</span>()
+apple_w, apple_h = apple_img.<span class="fn">get_size</span>()
+
+<span class="com"># ... вместо pygame.draw.rect рисуем картинки ...</span>
+screen.<span class="fn">blit</span>(apple_img, (apple_x, apple_y))
+screen.<span class="fn">blit</span>(cat_img, (cat_x, cat_y))</pre>
+
+  <h2>🔍 Что тут происходит</h2>
+
+  <h3><code>pygame.image.load(...)</code> — загрузить картинку</h3>
+  <p>Читает файл <code>.png</code> и превращает его в «картинку» (Surface), которую
+     можно рисовать. <code>.convert_alpha()</code> в конце нужен, чтобы прозрачные
+     уголки PNG остались прозрачными (а не залились квадратом).</p>
+
+  <h3><code>screen.blit(картинка, (x, y))</code> — приклеить на экран</h3>
+  <p>Раньше мы рисовали прямоугольники через <code>pygame.draw.rect</code>. Теперь
+     <code>blit</code> «штампует» картинку в точку (x, y) — это её левый верхний
+     угол.</p>
+
+  <h3>Зачем <code>os.path.join(HERE, ...)</code>?</h3>
+  <p><code>HERE</code> — это папка, где лежит сам файл с кодом. Так игра найдёт
+     картинки, <b>откуда бы её ни запустили</b>. А <code>get_size()</code> сам
+     берёт ширину и высоту из картинки — больше не пишем числа руками.</p>
+
+  <div class="box idea">
+    <span class="label">💡 Свои картинки!</span>
+    Замени <code>cat.png</code> и <code>apple.png</code> в папке <code>assets</code>
+    своими рисунками (примерно того же размера) — и игра сразу станет твоей.
+    Можно нарисовать кота в Paint!
+  </div>
+
+  <div class="pager">
+    <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Жизни</span></a>
+    <a class="next" href="urok6.html"><span class="dir">Дальше →</span><span class="ttl">Урок 6 — Звуки</span></a>
+  </div>
+</div>
+
+<footer>Урок 5 из 6 · Ловкий кот 🐱</footer>
+</body>
+</html>

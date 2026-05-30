@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 6 — Звуки</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🐱 Ловкий кот</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Кот-корзинка">1</a>
+    <a class="dot" href="urok2.html" title="Падающее яблоко">2</a>
+    <a class="dot" href="urok3.html" title="Ловим и считаем">3</a>
+    <a class="dot" href="urok4.html" title="Жизни и проигрыш">4</a>
+    <a class="dot" href="urok5.html" title="Картинки">5</a>
+    <a class="dot active" href="urok6.html" title="Звуки">6</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 6 · финал</span>
+    <h1>Звуки — и игра готова!</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Поймал яблоко — весёлый «дзынь». Промахнулся — низкий звук. Это финальная
+    версия игры. Файл: <span class="run">catch.py</span>
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ Нужны картинки и звуки</span>
+    Рядом с кодом — папка <code>assets</code> (cat.png, apple.png, catch.wav,
+    miss.wav). Качай <b>весь проект архивом</b>.
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="https://github.com/kirillsmo/games/archive/refs/heads/main.zip">⬇️ Весь проект архивом</a>
+    <a class="dl ghost" href="code/catch.py" download>только код игры</a>
+  </div>
+
+  <h2>📝 Что добавляем</h2>
+  <pre>pygame.<span class="fn">init</span>()
+pygame.mixer.<span class="fn">init</span>()            <span class="com"># включаем звук</span>
+
+<span class="com"># Загружаем звуки (лежат в assets рядом с кодом)</span>
+catch_sound = pygame.mixer.<span class="fn">Sound</span>(os.path.<span class="fn">join</span>(HERE, <span class="str">"assets"</span>, <span class="str">"catch.wav"</span>))
+miss_sound = pygame.mixer.<span class="fn">Sound</span>(os.path.<span class="fn">join</span>(HERE, <span class="str">"assets"</span>, <span class="str">"miss.wav"</span>))
+
+<span class="com"># ... когда поймали ...</span>
+        score += <span class="num">1</span>
+        catch_sound.<span class="fn">play</span>()        <span class="com"># дзынь!</span>
+
+<span class="com"># ... когда промахнулись ...</span>
+        lives -= <span class="num">1</span>
+        miss_sound.<span class="fn">play</span>()         <span class="com"># бум…</span></pre>
+
+  <h2>🔍 Что тут происходит</h2>
+
+  <h3>Звук в три шага</h3>
+  <div class="pipe">
+    <span class="pill">1. mixer.init()</span><span class="arrow">→</span>
+    <span class="pill">2. Sound("файл.wav")</span><span class="arrow">→</span>
+    <span class="pill">3. .play()</span>
+  </div>
+  <p><code>pygame.mixer.init()</code> включает звуковую систему один раз в начале.
+     <code>pygame.mixer.Sound(...)</code> загружает звук из файла. А
+     <code>.play()</code> проигрывает его в нужный момент — когда поймали или
+     промахнулись.</p>
+
+  <h3>Откуда взялись звуки</h3>
+  <p><code>catch.wav</code> и <code>miss.wav</code> мы сделали заранее. Это короткие
+     сигналы. Ты можешь записать свои звуки (например голосом «мяу!») и положить в
+     <code>assets</code> под теми же именами.</p>
+
+  <div class="box idea">
+    <span class="label">🏆 Поздравляю!</span>
+    Ты собрал игру с плавным движением, столкновениями, очками, жизнями,
+    картинками и звуком. Это уже настоящая аркада!
+  </div>
+
+  <h2>🚀 Что дальше — задания со звёздочкой</h2>
+  <table>
+    <tr><th>Идея</th><th>Чему научишься</th></tr>
+    <tr><td>Бомба 💣 — поймал, минус жизнь</td><td>второй падающий объект, другой список</td></tr>
+    <tr><td>Золотое яблоко — +5 очков</td><td>разные типы предметов</td></tr>
+    <tr><td>Рекорд в файл</td><td>работа с файлами</td></tr>
+    <tr><td>Фон-картинка вместо заливки</td><td>ещё один blit</td></tr>
+    <tr><td>Музыка фоном (mixer.music)</td><td>длинные звуки</td></tr>
+  </table>
+
+  <div class="pager">
+    <a href="urok5.html"><span class="dir">← Назад</span><span class="ttl">Урок 5 — Картинки</span></a>
+    <a class="next" href="index.html"><span class="dir">Готово ✓</span><span class="ttl">Ко всем урокам</span></a>
+  </div>
+</div>
+
+<footer>Урок 6 из 6 · Ловкий кот 🐱 · Молодец!</footer>
+</body>
+</html>

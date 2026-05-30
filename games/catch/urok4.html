@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 4 — Жизни</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🐱 Ловкий кот</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Кот-корзинка">1</a>
+    <a class="dot" href="urok2.html" title="Падающее яблоко">2</a>
+    <a class="dot" href="urok3.html" title="Ловим и считаем">3</a>
+    <a class="dot active" href="urok4.html" title="Жизни и проигрыш">4</a>
+    <a class="dot" href="urok5.html" title="Картинки">5</a>
+    <a class="dot" href="urok6.html" title="Звуки">6</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 4</span>
+    <h1>Жизни, проигрыш и рестарт</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Пропустил яблоко — минус жизнь. Жизни кончились — «Игра окончена», пробел
+    начинает заново. И игра потихоньку ускоряется. Файл:
+    <span class="run">step4_lives.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/step4_lives.py" download>⬇️ Скачать код урока</a>
+  </div>
+
+  <h2>📝 Код урока (главное)</h2>
+  <pre><span class="kw">def</span> <span class="fn">new_game</span>():
+    cat_x = WIDTH // <span class="num">2</span> - cat_w // <span class="num">2</span>
+    apple_x = random.<span class="fn">randint</span>(<span class="num">0</span>, WIDTH - apple_w)
+    <span class="kw">return</span> cat_x, apple_x, -apple_h, <span class="num">0</span>, <span class="num">3</span>, <span class="num">4.0</span>
+
+
+cat_x, apple_x, apple_y, score, lives, speed = <span class="fn">new_game</span>()
+game_over = <span class="kw">False</span>
+
+<span class="com"># ... в цикле событий ...</span>
+<span class="kw">if</span> event.type == pygame.KEYDOWN <span class="kw">and</span> game_over <span class="kw">and</span> event.key == pygame.K_SPACE:
+    cat_x, apple_x, apple_y, score, lives, speed = <span class="fn">new_game</span>()
+    game_over = <span class="kw">False</span>
+
+<span class="com"># ... в обновлении мира ...</span>
+    <span class="kw">if</span> cat_rect.<span class="fn">colliderect</span>(apple_rect):
+        score += <span class="num">1</span>
+        speed += <span class="num">0.3</span>            <span class="com"># с каждым яблоком чуть быстрее</span>
+        apple_x = random.<span class="fn">randint</span>(<span class="num">0</span>, WIDTH - apple_w)
+        apple_y = -apple_h
+    <span class="kw">elif</span> apple_y &gt; HEIGHT:
+        lives -= <span class="num">1</span>             <span class="com"># промах — минус жизнь</span>
+        apple_x = random.<span class="fn">randint</span>(<span class="num">0</span>, WIDTH - apple_w)
+        apple_y = -apple_h
+        <span class="kw">if</span> lives &lt;= <span class="num">0</span>:
+            game_over = <span class="kw">True</span></pre>
+
+  <h2>🔍 Что тут происходит</h2>
+
+  <h3>Флаг <code>game_over</code></h3>
+  <p>Как в Змейке: переменная <code>True/False</code>. Пока <code>False</code> —
+     игра идёт. Стало <code>True</code> — кот и яблоко замирают, показываем надпись,
+     ждём пробел.</p>
+
+  <h3>Функция <code>new_game()</code> — «начать сначала»</h3>
+  <p>Она возвращает все стартовые значения сразу: позицию кота, яблоко, 0 очков,
+     3 жизни, скорость 4. И в начале игры, и при рестарте мы зовём одну и ту же
+     функцию — не нужно дублировать код.</p>
+
+  <h3>Ускорение</h3>
+  <p><code>speed += 0.3</code> при каждой пойманной яблоке — игра становится всё
+     азартнее. Поэтому скорость дробная (<code>4.0</code>), а не целая.</p>
+
+  <div class="box idea">
+    <span class="label">💡 Готово ядро игры!</span>
+    Сейчас это уже полноценная игра — просто из прямоугольников. Дальше делаем
+    красиво: картинки (урок 5) и звуки (урок 6).
+  </div>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Дай 5 жизней вместо 3.<br>
+    2. Сделай ускорение сильнее (<code>0.6</code>) — или убери совсем.
+  </div>
+
+  <div class="pager">
+    <a href="urok3.html"><span class="dir">← Назад</span><span class="ttl">Урок 3 — Ловим!</span></a>
+    <a class="next" href="urok5.html"><span class="dir">Дальше →</span><span class="ttl">Урок 5 — Картинки</span></a>
+  </div>
+</div>
+
+<footer>Урок 4 из 6 · Ловкий кот 🐱</footer>
+</body>
+</html>

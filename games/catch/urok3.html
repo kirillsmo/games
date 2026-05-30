@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 3 — Ловим!</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🐱 Ловкий кот</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Кот-корзинка">1</a>
+    <a class="dot" href="urok2.html" title="Падающее яблоко">2</a>
+    <a class="dot active" href="urok3.html" title="Ловим и считаем">3</a>
+    <a class="dot" href="urok4.html" title="Жизни и проигрыш">4</a>
+    <a class="dot" href="urok5.html" title="Картинки">5</a>
+    <a class="dot" href="urok6.html" title="Звуки">6</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 3</span>
+    <h1>Ловим яблоко и считаем очки</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Когда кот касается яблока — очко прибавляется, яблоко появляется заново сверху.
+    Счёт виден сверху слева. Файл: <span class="run">step3_catch.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/step3_catch.py" download>⬇️ Скачать код урока</a>
+  </div>
+
+  <h2>📝 Код урока (главное)</h2>
+  <pre>    apple_y += speed
+
+    <span class="com"># Прямоугольники кота и яблока</span>
+    cat_rect = pygame.<span class="fn">Rect</span>(cat_x, cat_y, cat_w, cat_h)
+    apple_rect = pygame.<span class="fn">Rect</span>(apple_x, apple_y, apple_w, apple_h)
+
+    <span class="kw">if</span> cat_rect.<span class="fn">colliderect</span>(apple_rect):     <span class="com"># поймали!</span>
+        score += <span class="num">1</span>
+        apple_x = random.<span class="fn">randint</span>(<span class="num">0</span>, WIDTH - apple_w)
+        apple_y = -apple_h
+    <span class="kw">elif</span> apple_y &gt; HEIGHT:                    <span class="com"># упало мимо</span>
+        apple_x = random.<span class="fn">randint</span>(<span class="num">0</span>, WIDTH - apple_w)
+        apple_y = -apple_h</pre>
+
+  <h2>🔍 Звезда урока — <code>colliderect()</code></h2>
+  <p>В Змейке мы проверяли столкновение через <code>in</code> (по клеткам). Здесь
+     всё в пикселях, поэтому у pygame есть готовая проверка: <b>пересекаются ли
+     два прямоугольника</b>.</p>
+  <pre>cat_rect = pygame.<span class="fn">Rect</span>(cat_x, cat_y, cat_w, cat_h)
+apple_rect = pygame.<span class="fn">Rect</span>(apple_x, apple_y, apple_w, apple_h)
+
+<span class="kw">if</span> cat_rect.<span class="fn">colliderect</span>(apple_rect):
+    <span class="com"># прямоугольники наложились — значит поймали</span></pre>
+  <p><code>Rect</code> — это рамка (x, y, ширина, высота), как в Змейке.
+     <code>colliderect</code> возвращает <code>True</code>, если две рамки
+     пересеклись хоть краешком. Одна строчка — и проверка готова!</p>
+
+  <h3><code>if … elif …</code> — поймал ИЛИ промахнулся</h3>
+  <p>Сначала проверяем «поймал?». Если нет — проверяем «улетело вниз?». В обоих
+     случаях заводим новое яблоко сверху. Пока без штрафа за промах — это в
+     следующем уроке.</p>
+
+  <h3>Счёт на экране</h3>
+  <p><code>font.render(f"Очки: {score}", True, WHITE)</code> превращает текст в
+     картинку, а <code>screen.blit(...)</code> рисует её в углу.</p>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Дай за яблоко 10 очков вместо 1.<br>
+    2. Сделай кота шире (<code>cat_w</code> побольше) — ловить станет легче.
+  </div>
+
+  <div class="pager">
+    <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Яблоко падает</span></a>
+    <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Жизни</span></a>
+  </div>
+</div>
+
+<footer>Урок 3 из 6 · Ловкий кот 🐱</footer>
+</body>
+</html>
