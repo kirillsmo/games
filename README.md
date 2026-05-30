@@ -54,12 +54,18 @@ cp -r games/snake games/arkanoid
 
 ```html
 <a class="card" href="games/arkanoid/index.html">
-  <span class="emoji">🧱</span>
-  <h3>Арканоид</h3>
+  <img class="preview" src="games/arkanoid/preview.png" alt="Скриншот">
+  <h3>🧱 Арканоид</h3>
   <p>Короткое описание игры.</p>
   <span class="meta">5 уроков · готово</span>
 </a>
 ```
+
+**Превью-картинка** (`games/<имя>/preview.png`, 600×400) делает карточку
+привлекательнее и показывается ещё в шапке курса (`<img class="hero-shot" …>`).
+Проще всего получить её скриншотом игры или отрисовать кадр кодом (как сделаны
+существующие — см. историю git). Если превью нет — карточку можно оставить с
+`<span class="emoji">🎮</span>` вместо `<img class="preview">`.
 
 (Карточка-заглушка «скоро» — это `<span class="card soon">…</span>`, она не
 кликается. Когда игра готова — меняешь `span` на `a href=...` и убираешь класс

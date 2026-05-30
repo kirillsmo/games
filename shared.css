@@ -212,6 +212,27 @@ th { color: var(--muted); font-size: .85rem; text-transform: uppercase; }
 .card h3 { margin: 0 0 4px; color: var(--text); }
 .card p { margin: 0; color: var(--muted); font-size: .9rem; }
 .card .emoji { font-size: 2rem; line-height: 1; margin-bottom: 10px; display: block; }
+/* скриншот игры в карточке — во всю ширину, скруглён сверху */
+.card .preview {
+  display: block;
+  width: calc(100% + 36px);
+  margin: -18px -18px 14px;
+  height: 150px;
+  object-fit: cover;
+  object-position: center 35%;
+  border-radius: 13px 13px 0 0;
+  background: var(--code-bg);
+}
+/* большой скриншот в шапке курса */
+.hero-shot {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  margin: 20px auto 0;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
 .card .meta { display: inline-block; margin-top: 10px; font-size: .78rem; color: var(--green);
               background: rgba(22,196,127,.14); padding: 2px 10px; border-radius: 20px; }
 
