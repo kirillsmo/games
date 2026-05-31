@@ -4,7 +4,7 @@
 Когда игра окончена — пробел запускает заново.
 F — полный экран, ESC — выход.
 """
-import pygame, sys, random
+import pygame, sys, random, os
 
 WIDTH, HEIGHT = 600, 400
 BG = (15, 16, 38)
@@ -22,6 +22,22 @@ pygame.display.set_caption("Космос")
 clock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 36)
 big_font = pygame.font.SysFont(None, 56)
+
+# Звуки. Если папки assets нет — игра работает без звука (молча).
+HERE = os.path.dirname(__file__)
+class _Silent:
+    def play(self):
+        pass
+try:
+    pygame.mixer.init()
+    def _snd(name):
+        return pygame.mixer.Sound(os.path.join(HERE, "assets", name))
+    shoot_sound = _snd("shoot.wav")
+    boom_sound = _snd("boom.wav")
+    hit_sound = _snd("hit.wav")
+    gameover_sound = _snd("gameover.wav")
+except Exception:
+    shoot_sound = boom_sound = hit_sound = gameover_sound = _Silent()
 
 SHIP_W, SHIP_H = 40, 28
 ship_y = HEIGHT - SHIP_H - 12      # корабль внизу
@@ -82,6 +98,7 @@ while True:
                 if state == "play":
                     # выстрел — добавляем новую пулю в список
                     bullets.append(pygame.Rect(ship_x - BULLET_W // 2, ship_y, BULLET_W, BULLET_H))
+                    shoot_sound.play()
                 else:
                     ship_x, bullets, enemies, score, lives, spawn_timer = new_game()
                     state = "play"
@@ -114,9 +131,11 @@ while True:
             if e.top > HEIGHT:                  # прорвался вниз — минус жизнь
                 enemies.remove(e)
                 lives -= 1
+                hit_sound.play()
             elif e.colliderect(ship_rect):      # врезался в корабль — минус жизнь
                 enemies.remove(e)
                 lives -= 1
+                hit_sound.play()
 
         # Попадания: пуля встретила врага — убираем обоих, +1 очко
         for b in bullets[:]:
@@ -125,10 +144,12 @@ while True:
                     bullets.remove(b)
                     enemies.remove(e)
                     score += 1
+                    boom_sound.play()
                     break
 
         if lives <= 0:
             state = "over"
+            gameover_sound.play()
 
     # Рисуем
     screen.fill(BG)
