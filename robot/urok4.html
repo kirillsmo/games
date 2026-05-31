@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 4 — Плечо и локоть</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🤖 Робот MeArm</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Покупки и тело">1</a>
+    <a class="dot" href="urok2.html" title="Сервопривод">2</a>
+    <a class="dot" href="urok3.html" title="Основание">3</a>
+    <a class="dot active" href="urok4.html" title="Плечо и локоть">4</a>
+    <a class="dot" href="urok5.html" title="Захват">5</a>
+    <a class="dot" href="urok6.html" title="Подключение">6</a>
+    <a class="dot" href="urok7.html" title="Первый скетч">7</a>
+    <a class="dot" href="urok8.html" title="pygame ↔ Arduino">8</a>
+    <a class="dot" href="urok9.html" title="Все суставы">9</a>
+    <a class="dot" href="urok10.html" title="Пульт и запись">10</a>
+    <a class="dot" href="urok11.html" title="Проект">11</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 4 · сборка</span>
+    <h1>Плечо и локоть</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Собрать два сустава руки: плечо (№1) и локоть (№2).
+  </div>
+
+  <h2>🛠️ Шаги сборки</h2>
+  <ol>
+    <li><b>Центрируй</b> серво плеча и серво локтя в 90° (урок 2).</li>
+    <li>Закрепи оба серво на поворотной площадке основания.</li>
+    <li>Собери рычаги руки. У MeArm рычаги соединены в <b>параллельный механизм</b> —
+        несколько тяг двигаются вместе, чтобы захват оставался ровным.</li>
+    <li>Надевай качалки на серво так, чтобы при 90° рука стояла примерно
+        в среднем, удобном положении (не у самого упора).</li>
+    <li>Сверяйся с фото-гайдом — какая тяга к какому отверстию.</li>
+  </ol>
+
+  <div class="box idea">
+    <span class="label">💡 Что за «параллельный механизм»</span>
+    Это набор рычагов-тяг, который держит захват горизонтально, как бы рука ни наклонялась.
+    Благодаря ему роботом проще управлять.
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ Снова про 90°</span>
+    Если забыть отцентрировать серво плеча/локтя — рука соберётся «перекошенной» и упрётся.
+    Поставил 90 → надел качалку → прикрутил.
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Проверка</span>
+    Плечо и локоть закреплены, рычаги двигаются плавно, захват держится ровно.
+  </div>
+
+  <div class="pager">
+    <a href="urok3.html"><span class="dir">← Назад</span><span class="ttl">Урок 3 — Основание</span></a>
+    <a class="next" href="urok5.html"><span class="dir">Дальше →</span><span class="ttl">Урок 5 — Захват</span></a>
+  </div>
+</div>
+
+<footer>Урок 4 из 11 · Робот MeArm 🤖</footer>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 11 — Проект</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🤖 Робот MeArm</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Покупки и тело">1</a>
+    <a class="dot" href="urok2.html" title="Сервопривод">2</a>
+    <a class="dot" href="urok3.html" title="Основание">3</a>
+    <a class="dot" href="urok4.html" title="Плечо и локоть">4</a>
+    <a class="dot" href="urok5.html" title="Захват">5</a>
+    <a class="dot" href="urok6.html" title="Подключение">6</a>
+    <a class="dot" href="urok7.html" title="Первый скетч">7</a>
+    <a class="dot" href="urok8.html" title="pygame ↔ Arduino">8</a>
+    <a class="dot" href="urok9.html" title="Все суставы">9</a>
+    <a class="dot" href="urok10.html" title="Пульт и запись">10</a>
+    <a class="dot active" href="urok11.html" title="Проект">11</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 11 · финал</span>
+    <h1>Проект</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока · ФИНАЛ</span>
+    Запрограммировать робота на задачу: взять предмет и переставить в другое место.
+  </div>
+
+  <h2>🤖 Программа = список поз</h2>
+  <p>Соберём последовательность поз: подъехать → открыть → опуститься → закрыть (схватить) →
+     поднять → перенести → опустить → открыть (отпустить) → домой. Между позами — пауза,
+     чтобы робот успел доехать.</p>
+  <pre><span class="com"># [база, плечо, локоть, захват]</span>
+PROGRAM = [
+    [<span class="num">40</span>, <span class="num">60</span>, <span class="num">60</span>, <span class="num">90</span>],   <span class="com"># опустились, захват открыт</span>
+    [<span class="num">40</span>, <span class="num">60</span>, <span class="num">60</span>, <span class="num">30</span>],   <span class="com"># сжали — взяли</span>
+    [<span class="num">40</span>, <span class="num">110</span>, <span class="num">110</span>, <span class="num">30</span>], <span class="com"># подняли</span>
+    [<span class="num">140</span>, <span class="num">110</span>, <span class="num">110</span>, <span class="num">30</span>],<span class="com"># перенесли</span>
+    [<span class="num">140</span>, <span class="num">60</span>, <span class="num">60</span>, <span class="num">90</span>],  <span class="com"># опустили и отпустили</span>
+]
+
+<span class="kw">for</span> pose <span class="kw">in</span> PROGRAM:
+    <span class="kw">for</span> joint <span class="kw">in</span> <span class="fn">range</span>(<span class="num">4</span>):
+        robot.<span class="fn">send</span>(joint, pose[joint])
+    time.<span class="fn">sleep</span>(<span class="num">1.0</span>)        <span class="com"># пауза, чтобы доехать</span></pre>
+  <div class="dl-row">
+    <a class="dl" href="code/demo_pick.py" download>⬇️ demo_pick.py</a>
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ Углы — примерные</span>
+    Подставь свои значения, которые подобрал в уроках 9–10: где лежит предмет, как
+    закрыт захват именно у твоей сборки.
+  </div>
+
+  <div class="box idea">
+    <span class="label">🏆 Поздравляю!</span>
+    Ты собрал настоящего робота и научил его выполнять программу. Теперь робот делает то,
+    что ты придумал в коде.
+  </div>
+
+  <h2>🚀 Что дальше — идеи проектов</h2>
+  <table>
+    <tr><th>Идея</th><th>Чему научишься</th></tr>
+    <tr><td>Робот рисует фигуру маркером</td><td>точные последовательности поз</td></tr>
+    <tr><td>Сортировка кубиков по местам</td><td>несколько программ</td></tr>
+    <tr><td>Запись поз в файл и загрузка</td><td>работа с файлами</td></tr>
+    <tr><td>Кнопка «СТОП» и плавное движение</td><td>безопасность, интерполяция углов</td></tr>
+    <tr><td>Управление мышкой/джойстиком</td><td>другие события pygame</td></tr>
+  </table>
+
+  <div class="pager">
+    <a href="urok10.html"><span class="dir">← Назад</span><span class="ttl">Урок 10 — Пульт и запись</span></a>
+    <a class="next" href="index.html"><span class="dir">Готово ✓</span><span class="ttl">Ко всем урокам</span></a>
+  </div>
+</div>
+
+<footer>Урок 11 из 11 · Робот MeArm 🤖</footer>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 6 — Подключение</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🤖 Робот MeArm</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Покупки и тело">1</a>
+    <a class="dot" href="urok2.html" title="Сервопривод">2</a>
+    <a class="dot" href="urok3.html" title="Основание">3</a>
+    <a class="dot" href="urok4.html" title="Плечо и локоть">4</a>
+    <a class="dot" href="urok5.html" title="Захват">5</a>
+    <a class="dot active" href="urok6.html" title="Подключение">6</a>
+    <a class="dot" href="urok7.html" title="Первый скетч">7</a>
+    <a class="dot" href="urok8.html" title="pygame ↔ Arduino">8</a>
+    <a class="dot" href="urok9.html" title="Все суставы">9</a>
+    <a class="dot" href="urok10.html" title="Пульт и запись">10</a>
+    <a class="dot" href="urok11.html" title="Проект">11</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 6 · электроника</span>
+    <h1>Подключение</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Подключить 4 сервопривода к Arduino и внешнему питанию — правильно и безопасно.
+  </div>
+
+  <img class="diagram" src="img/wiring.svg" alt="Схема подключения">
+
+  <h2>🔌 Куда что втыкать</h2>
+  <ul>
+    <li><b>Сигнальные</b> провода серво → пины Arduino: база→<b>3</b>, плечо→<b>5</b>,
+        локоть→<b>6</b>, захват→<b>9</b>.</li>
+    <li><b>Питание (+)</b> всех серво → плюс внешнего блока <b>5–6 В</b>.</li>
+    <li><b>Земля (−)</b> всех серво и <b>GND Arduino</b> → минус блока питания. Это
+        <b>общая земля</b> — без неё ничего не заработает.</li>
+  </ul>
+
+  <div class="box warn">
+    <span class="label">⚠️ Два главных правила</span>
+    1. Сервоприводы <b>не</b> питаем от Arduino/USB — только внешний блок 5–6 В, 2–3 А.<br>
+    2. Минусы блока питания и Arduino <b>обязательно</b> соединяем вместе (общая земля).
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Плата из набора</span>
+    В наборе MeArm есть небольшая плата-PCB с разъёмами — она помогает аккуратно развести
+    провода серво и питание. Можно использовать её вместо макетки. Главное правило про
+    «отдельное питание + общая земля» остаётся.
+  </div>
+
+  <div class="box idea">
+    <span class="label">🚀 Продвинуто: драйвер PCA9685</span>
+    Если взяли драйвер PCA9685 — серво подключаются к нему, а он к Arduino по двум проводам
+    (I2C: SDA/SCL). Это чище по питанию и сигналу. Для старта хватает и прямого подключения
+    к пинам.
+  </div>
+
+  <h2>✅ Первая проверка</h2>
+  <p>Залей на Arduino скетч «центрировать все» — все 4 серво встанут в 90°. Если так и
+     случилось (и Arduino не перезагружается) — питание и земля в порядке.</p>
+  <div class="dl-row">
+    <a class="dl" href="code/arduino/center_all.ino" download>⬇️ center_all.ino</a>
+  </div>
+
+  <div class="pager">
+    <a href="urok5.html"><span class="dir">← Назад</span><span class="ttl">Урок 5 — Захват</span></a>
+    <a class="next" href="urok7.html"><span class="dir">Дальше →</span><span class="ttl">Урок 7 — Первый скетч</span></a>
+  </div>
+</div>
+
+<footer>Урок 6 из 11 · Робот MeArm 🤖</footer>
+</body>
+</html>

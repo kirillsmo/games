@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 340" font-family="-apple-system, Segoe UI, sans-serif">
+  <rect x="0" y="0" width="460" height="340" rx="14" fill="#1a1b28"/>
+  <text x="22" y="30" fill="#16c47f" font-size="17" font-weight="700">Четыре сустава MeArm</text>
+
+  <!-- стол -->
+  <line x1="40" y1="300" x2="300" y2="300" stroke="#3a3a52" stroke-width="3"/>
+  <!-- основание + поворот -->
+  <ellipse cx="120" cy="298" rx="60" ry="12" fill="#2f3550" stroke="#16c47f" stroke-width="2"/>
+  <rect x="104" y="250" width="32" height="50" rx="5" fill="#2f3550" stroke="#16c47f" stroke-width="2"/>
+  <!-- плечо (звено вверх) -->
+  <line x1="120" y1="255" x2="180" y2="160" stroke="#9bb4ff" stroke-width="10" stroke-linecap="round"/>
+  <!-- локоть (звено вперёд) -->
+  <line x1="180" y1="160" x2="280" y2="150" stroke="#9bb4ff" stroke-width="10" stroke-linecap="round"/>
+  <!-- захват -->
+  <line x1="280" y1="150" x2="306" y2="138" stroke="#cfcfe0" stroke-width="6" stroke-linecap="round"/>
+  <line x1="306" y1="138" x2="322" y2="128" stroke="#cfcfe0" stroke-width="6" stroke-linecap="round"/>
+  <line x1="306" y1="138" x2="320" y2="150" stroke="#cfcfe0" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- точки суставов -->
+  <circle cx="120" cy="298" r="7" fill="#ffd166"/>
+  <circle cx="120" cy="255" r="7" fill="#ffd166"/>
+  <circle cx="180" cy="160" r="7" fill="#ffd166"/>
+  <circle cx="288" cy="146" r="7" fill="#ffd166"/>
+
+  <!-- легенда -->
+  <g font-size="14">
+    <circle cx="332" cy="200" r="6" fill="#ffd166"/>
+    <text x="346" y="205" fill="#eaeaea">0 — база (поворот)</text>
+    <circle cx="332" cy="228" r="6" fill="#ffd166"/>
+    <text x="346" y="233" fill="#eaeaea">1 — плечо</text>
+    <circle cx="332" cy="256" r="6" fill="#ffd166"/>
+    <text x="346" y="261" fill="#eaeaea">2 — локоть</text>
+    <circle cx="332" cy="284" r="6" fill="#ffd166"/>
+    <text x="346" y="289" fill="#eaeaea">3 — захват</text>
+  </g>
+
+  <text x="22" y="326" fill="#9a9ab0" font-size="13">Каждым суставом крутит свой сервопривод. В коде это номера 0–3.</text>
+</svg>

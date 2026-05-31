@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 3 — Основание</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🤖 Робот MeArm</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Покупки и тело">1</a>
+    <a class="dot" href="urok2.html" title="Сервопривод">2</a>
+    <a class="dot active" href="urok3.html" title="Основание">3</a>
+    <a class="dot" href="urok4.html" title="Плечо и локоть">4</a>
+    <a class="dot" href="urok5.html" title="Захват">5</a>
+    <a class="dot" href="urok6.html" title="Подключение">6</a>
+    <a class="dot" href="urok7.html" title="Первый скетч">7</a>
+    <a class="dot" href="urok8.html" title="pygame ↔ Arduino">8</a>
+    <a class="dot" href="urok9.html" title="Все суставы">9</a>
+    <a class="dot" href="urok10.html" title="Пульт и запись">10</a>
+    <a class="dot" href="urok11.html" title="Проект">11</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 3 · сборка</span>
+    <h1>Основание</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Собрать основание робота и поворотный сустав (сустав №0 — «база»).
+  </div>
+
+  <img class="diagram" src="img/arm-joints.svg" alt="Суставы робота">
+
+  <h2>🛠️ Шаги сборки</h2>
+  <ol>
+    <li><b>Центрируй серво базы</b> в 90° (урок 2) — это серво №0.</li>
+    <li>Собери нижнюю платформу основания по официальной инструкции
+        (<a href="https://shop.mearm.com/pages/building-the-mearm-robotic-arm-version-3" target="_blank" rel="noopener" style="color:var(--green)">фото-гайд MeArm</a>).</li>
+    <li>Закрепи серво базы в основании винтами из набора.</li>
+    <li>Надень на серво качалку и верхнюю площадку так, чтобы она смотрела
+        <b>прямо вперёд</b> (серво в 90° = середина поворота).</li>
+    <li>Прикрути качалку маленьким винтом.</li>
+  </ol>
+
+  <div class="box warn">
+    <span class="label">⚠️ Не крути рукой</span>
+    Собранный сустав не проворачивай силой — это испортит шестерёнки. Двигать будем кодом.
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Зачем именно «вперёд»</span>
+    База в 90° смотрит прямо. Тогда в коде угол 0 — поворот в одну сторону, 180 — в другую,
+    90 — прямо. Логично и предсказуемо.
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Проверка</span>
+    Основание устойчиво стоит, серво базы закреплено, верхняя площадка смотрит вперёд.
+  </div>
+
+  <div class="pager">
+    <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Сервопривод</span></a>
+    <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Плечо и локоть</span></a>
+  </div>
+</div>
+
+<footer>Урок 3 из 11 · Робот MeArm 🤖</footer>
+</body>
+</html>

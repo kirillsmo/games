@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 10 — Пульт и запись</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🤖 Робот MeArm</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Покупки и тело">1</a>
+    <a class="dot" href="urok2.html" title="Сервопривод">2</a>
+    <a class="dot" href="urok3.html" title="Основание">3</a>
+    <a class="dot" href="urok4.html" title="Плечо и локоть">4</a>
+    <a class="dot" href="urok5.html" title="Захват">5</a>
+    <a class="dot" href="urok6.html" title="Подключение">6</a>
+    <a class="dot" href="urok7.html" title="Первый скетч">7</a>
+    <a class="dot" href="urok8.html" title="pygame ↔ Arduino">8</a>
+    <a class="dot" href="urok9.html" title="Все суставы">9</a>
+    <a class="dot active" href="urok10.html" title="Пульт и запись">10</a>
+    <a class="dot" href="urok11.html" title="Проект">11</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 10 · код</span>
+    <h1>Пульт и запись</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Сделать пульт: записывать позы робота и проигрывать их по очереди.
+  </div>
+
+  <h2>🎛️ Что умеет пульт</h2>
+  <p>Суставы крутятся клавишами (как в уроке 9), а мышкой жмём кнопки:</p>
+  <div class="pipe">
+    <span class="pill">Записать позу</span><span class="arrow">→</span>
+    <span class="pill">Играть</span><span class="arrow">→</span>
+    <span class="pill">Очистить</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/robot_panel.py" download>⬇️ robot_panel.py</a>
+  </div>
+
+  <h2>🔍 Поза — это список из 4 углов</h2>
+  <pre>poses = []                       <span class="com"># программа робота = список поз</span>
+
+<span class="com"># кнопка «Записать позу» — запомнить текущие углы</span>
+poses.<span class="fn">append</span>(<span class="fn">list</span>(angles))      <span class="com"># [база, плечо, локоть, захват]</span>
+
+<span class="com"># «Играть» — пройти позы по очереди</span>
+<span class="kw">def</span> <span class="fn">apply_pose</span>(pose):
+    <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(<span class="num">4</span>):
+        robot.<span class="fn">send</span>(j, pose[j])</pre>
+
+  <div class="box idea">
+    <span class="label">💡 Это та же «работа со списком»</span>
+    Список поз — как список пуль или кирпичей в играх. Добавили позу — список вырос;
+    проигрываем — идём по списку по очереди. Робот «повторяет программу».
+  </div>
+
+  <h2>🖱️ Кнопки — как в игре «Космос»</h2>
+  <p>Кнопка — это <code>pygame.Rect</code>, а клик проверяем через
+     <code>RECT.collidepoint(event.pos)</code> — точно так же, как кнопка «Играть заново»
+     на экране Game Over в игре «Космос».</p>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй</span>
+    Запиши 3–4 позы и нажми «Играть» — робот повторит их по кругу.
+  </div>
+
+  <div class="pager">
+    <a href="urok9.html"><span class="dir">← Назад</span><span class="ttl">Урок 9 — Все суставы</span></a>
+    <a class="next" href="urok11.html"><span class="dir">Дальше →</span><span class="ttl">Урок 11 — Проект</span></a>
+  </div>
+</div>
+
+<footer>Урок 10 из 11 · Робот MeArm 🤖</footer>
+</body>
+</html>

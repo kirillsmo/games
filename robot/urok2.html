@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 2 — Сервопривод</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🤖 Робот MeArm</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Покупки и тело">1</a>
+    <a class="dot active" href="urok2.html" title="Сервопривод">2</a>
+    <a class="dot" href="urok3.html" title="Основание">3</a>
+    <a class="dot" href="urok4.html" title="Плечо и локоть">4</a>
+    <a class="dot" href="urok5.html" title="Захват">5</a>
+    <a class="dot" href="urok6.html" title="Подключение">6</a>
+    <a class="dot" href="urok7.html" title="Первый скетч">7</a>
+    <a class="dot" href="urok8.html" title="pygame ↔ Arduino">8</a>
+    <a class="dot" href="urok9.html" title="Все суставы">9</a>
+    <a class="dot" href="urok10.html" title="Пульт и запись">10</a>
+    <a class="dot" href="urok11.html" title="Проект">11</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 2 · сборка</span>
+    <h1>Сервопривод</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Понять, как устроен сервопривод, и научиться ставить его в 90° кодом — это нужно
+    делать ПЕРЕД сборкой каждого сустава.
+  </div>
+
+  <h2>⚙️ Что такое сервопривод</h2>
+  <p>Сервопривод (серво) — это моторчик, который поворачивается не «крутится без конца»,
+     а встаёт на <b>заданный угол</b> от 0 до 180°. У него три провода:</p>
+  <img class="diagram" src="img/servo-pins.svg" alt="Три провода сервопривода">
+  <p>Сигнальный провод задаёт угол специальными импульсами (это называется <b>PWM</b>) —
+     но нам не нужно об этом думать: библиотека сама всё сделает, мы просто скажем «угол 90».</p>
+
+  <div class="box idea">
+    <span class="label">💡 Самое важное правило сборки</span>
+    Перед тем как надеть на серво качалку (рычаг), <b>поставь серво в 90°</b>. Тогда сустав
+    сможет повернуться и влево, и вправо одинаково. Если собрать на «случайном» угле —
+    рука упрётся и не будет двигаться в одну сторону.
+  </div>
+
+  <h2>🔌 Ставим серво в 90°</h2>
+  <p>Подключи ОДИН сервопривод: сигнал → пин <b>9</b>, питание <b>+</b> и <b>−</b> — к внешнему
+     блоку 5 В (общая земля с Arduino). Залей на Arduino вот такой скетч
+     (как заливать — подробно в уроке 7):</p>
+  <pre><span class="com">#include &lt;Servo.h&gt;</span>
+Servo servo;
+<span class="kw">void</span> <span class="fn">setup</span>() {
+  servo.<span class="fn">attach</span>(<span class="num">9</span>);     <span class="com">// серво на пине 9</span>
+  servo.<span class="fn">write</span>(<span class="num">90</span>);     <span class="com">// поставить в центр</span>
+}
+<span class="kw">void</span> <span class="fn">loop</span>() { }</pre>
+  <div class="dl-row">
+    <a class="dl" href="code/arduino/one_servo_test.ino" download>⬇️ one_servo_test.ino</a>
+  </div>
+  <p>Серво дёрнется и встанет в среднее положение. Теперь его можно ставить в сустав.
+     Повтори это с каждым сервоприводом перед его установкой.</p>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй</span>
+    Поменяй <code>90</code> на <code>0</code>, потом на <code>180</code> — посмотри крайние
+    положения. Перед сборкой обязательно верни <code>90</code>.
+  </div>
+
+  <div class="pager">
+    <a href="urok1.html"><span class="dir">← Назад</span><span class="ttl">Урок 1 — Покупки и тело</span></a>
+    <a class="next" href="urok3.html"><span class="dir">Дальше →</span><span class="ttl">Урок 3 — Основание</span></a>
+  </div>
+</div>
+
+<footer>Урок 2 из 11 · Робот MeArm 🤖</footer>
+</body>
+</html>

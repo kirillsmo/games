@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 7 — Первый скетч</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🤖 Робот MeArm</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Покупки и тело">1</a>
+    <a class="dot" href="urok2.html" title="Сервопривод">2</a>
+    <a class="dot" href="urok3.html" title="Основание">3</a>
+    <a class="dot" href="urok4.html" title="Плечо и локоть">4</a>
+    <a class="dot" href="urok5.html" title="Захват">5</a>
+    <a class="dot" href="urok6.html" title="Подключение">6</a>
+    <a class="dot active" href="urok7.html" title="Первый скетч">7</a>
+    <a class="dot" href="urok8.html" title="pygame ↔ Arduino">8</a>
+    <a class="dot" href="urok9.html" title="Все суставы">9</a>
+    <a class="dot" href="urok10.html" title="Пульт и запись">10</a>
+    <a class="dot" href="urok11.html" title="Проект">11</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 7 · код</span>
+    <h1>Первый скетч</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Залить первый скетч на Arduino и повернуть один сустав. Понять Servo-библиотеку.
+  </div>
+
+  <h2>🧰 Arduino IDE — три шага</h2>
+  <div class="pipe">
+    <span class="pill">1. выбрать плату (Uno)</span><span class="arrow">→</span>
+    <span class="pill">2. выбрать порт</span><span class="arrow">→</span>
+    <span class="pill">3. нажать «Загрузить» ⬆</span>
+  </div>
+  <p>На Ubuntu порт обычно называется <code>/dev/ttyACM0</code>. Если порт «серый»
+     (не выбирается) — см. урок 8, там про права доступа.</p>
+
+  <h2>📝 Скетч: один сустав на угол</h2>
+  <pre><span class="com">#include &lt;Servo.h&gt;</span>
+Servo servo;
+
+<span class="kw">void</span> <span class="fn">setup</span>() {
+  servo.<span class="fn">attach</span>(<span class="num">9</span>);      <span class="com">// серво подключено к пину 9</span>
+  servo.<span class="fn">write</span>(<span class="num">120</span>);     <span class="com">// повернуть на 120°</span>
+}
+
+<span class="kw">void</span> <span class="fn">loop</span>() { }</pre>
+  <div class="dl-row">
+    <a class="dl" href="code/arduino/one_servo_test.ino" download>⬇️ one_servo_test.ino</a>
+  </div>
+
+  <h2>🔍 Что значат две строки</h2>
+  <ul>
+    <li><code>servo.attach(9)</code> — «серво воткнуто в пин 9», подготовить его.</li>
+    <li><code>servo.write(120)</code> — «повернись на 120°». Можно от 0 до 180.</li>
+  </ul>
+
+  <div class="box idea">
+    <span class="label">💡 setup и loop</span>
+    В Arduino <code>setup()</code> выполняется один раз при включении, а <code>loop()</code>
+    повторяется без конца — прямо как игровой цикл в pygame!
+  </div>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй</span>
+    Поставь <code>0</code>, потом <code>180</code> — увидишь крайние углы. Это пригодится,
+    чтобы подобрать пределы суставов.
+  </div>
+
+  <div class="pager">
+    <a href="urok6.html"><span class="dir">← Назад</span><span class="ttl">Урок 6 — Подключение</span></a>
+    <a class="next" href="urok8.html"><span class="dir">Дальше →</span><span class="ttl">Урок 8 — pygame ↔ Arduino</span></a>
+  </div>
+</div>
+
+<footer>Урок 7 из 11 · Робот MeArm 🤖</footer>
+</body>
+</html>

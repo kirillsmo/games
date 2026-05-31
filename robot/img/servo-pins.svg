@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 240" font-family="-apple-system, Segoe UI, sans-serif">
+  <rect x="0" y="0" width="460" height="240" rx="14" fill="#1a1b28"/>
+  <!-- корпус серво -->
+  <rect x="36" y="78" width="120" height="86" rx="8" fill="#2f3550" stroke="#6c8cff" stroke-width="2"/>
+  <rect x="86" y="50" width="20" height="34" rx="3" fill="#6c8cff"/>
+  <circle cx="96" cy="46" r="12" fill="#9bb4ff"/>
+  <text x="96" y="128" fill="#eaeaea" font-size="15" text-anchor="middle">серво</text>
+  <!-- три провода -->
+  <line x1="156" y1="104" x2="300" y2="104" stroke="#ffb74d" stroke-width="5"/>
+  <line x1="156" y1="122" x2="300" y2="122" stroke="#ff6b6b" stroke-width="5"/>
+  <line x1="156" y1="140" x2="300" y2="140" stroke="#a98274" stroke-width="5"/>
+  <!-- подписи -->
+  <circle cx="306" cy="104" r="5" fill="#ffb74d"/>
+  <text x="318" y="100" fill="#eaeaea" font-size="15">Сигнал (оранж./жёлт.)</text>
+  <text x="318" y="118" fill="#9a9ab0" font-size="12">→ к пину Arduino (PWM)</text>
+  <circle cx="306" cy="138" r="5" fill="#ff6b6b"/>
+  <text x="318" y="143" fill="#eaeaea" font-size="15">+ (красный)</text>
+  <text x="318" y="161" fill="#9a9ab0" font-size="12">→ внешние 5–6 В</text>
+  <circle cx="306" cy="178" r="5" fill="#a98274"/>
+  <text x="318" y="183" fill="#eaeaea" font-size="15">− земля (коричн./чёрн.)</text>
+  <text x="318" y="201" fill="#9a9ab0" font-size="12">→ общая земля</text>
+  <!-- заголовок -->
+  <text x="24" y="30" fill="#16c47f" font-size="17" font-weight="700">У сервопривода 3 провода</text>
+  <text x="24" y="224" fill="#9a9ab0" font-size="13">Сигнал задаёт угол 0–180° (импульсами PWM).</text>
+</svg>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 8 — pygame ↔ Arduino</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🤖 Робот MeArm</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Покупки и тело">1</a>
+    <a class="dot" href="urok2.html" title="Сервопривод">2</a>
+    <a class="dot" href="urok3.html" title="Основание">3</a>
+    <a class="dot" href="urok4.html" title="Плечо и локоть">4</a>
+    <a class="dot" href="urok5.html" title="Захват">5</a>
+    <a class="dot" href="urok6.html" title="Подключение">6</a>
+    <a class="dot" href="urok7.html" title="Первый скетч">7</a>
+    <a class="dot active" href="urok8.html" title="pygame ↔ Arduino">8</a>
+    <a class="dot" href="urok9.html" title="Все суставы">9</a>
+    <a class="dot" href="urok10.html" title="Пульт и запись">10</a>
+    <a class="dot" href="urok11.html" title="Проект">11</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 8 · код</span>
+    <h1>pygame ↔ Arduino</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Связать компьютер и Arduino: pygame шлёт угол по USB, робот двигает сустав.
+  </div>
+
+  <h2>🧠 Идея</h2>
+  <p>Arduino будет слушать USB-порт и крутить серво по командам вида <code>"номер,угол"</code>.
+     pygame на компьютере будет эти команды отправлять, когда мы жмём клавиши. Связь по USB
+     называется <b>serial</b>.</p>
+
+  <h2>1️⃣ Прошивка Arduino</h2>
+  <p>Залей основную прошивку — она принимает команды и крутит все 4 серво:</p>
+  <div class="dl-row">
+    <a class="dl" href="code/arduino/serial_servos.ino" download>⬇️ serial_servos.ino</a>
+  </div>
+  <p>Внутри она читает строку <code>"0,90"</code> и делает <code>servo[0].write(90)</code>.
+     Углы ограничены пределами — лишнее само обрежется.</p>
+
+  <h2>2️⃣ Код на Python (pygame)</h2>
+  <p>Поставь библиотеку для связи (один раз): <code>pip install pyserial</code>. Затем
+     запусти <span class="run">control_one.py</span> — стрелки крутят базу:</p>
+  <pre><span class="kw">from</span> robot_link <span class="kw">import</span> connect
+robot = <span class="fn">connect</span>()          <span class="com"># сам найдёт Arduino</span>
+
+<span class="com"># ... в игровом цикле, по нажатию стрелок ...</span>
+angle = <span class="fn">max</span>(<span class="num">0</span>, <span class="fn">min</span>(<span class="num">180</span>, angle))
+robot.<span class="fn">send</span>(<span class="num">0</span>, angle)      <span class="com"># сустав 0 (база) на угол</span></pre>
+  <div class="dl-row">
+    <a class="dl" href="code/control_one.py" download>⬇️ control_one.py</a>
+    <a class="dl ghost" href="code/robot_link.py" download>robot_link.py (связь)</a>
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ Порт на Ubuntu</span>
+    Если Python пишет «нет доступа к порту» — добавь себя в группу: 
+    <code>sudo usermod -aG dialout $USER</code>, потом перезайди в систему. Скорость порта
+    (9600) должна совпадать в Arduino и в Python.
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Робота ещё нет под рукой?</span>
+    <code>robot_link</code> работает и в «режиме показа»: без Arduino программа просто не шлёт
+    команды и не падает. Можно писать код заранее.
+  </div>
+
+  <div class="pager">
+    <a href="urok7.html"><span class="dir">← Назад</span><span class="ttl">Урок 7 — Первый скетч</span></a>
+    <a class="next" href="urok9.html"><span class="dir">Дальше →</span><span class="ttl">Урок 9 — Все суставы</span></a>
+  </div>
+</div>
+
+<footer>Урок 8 из 11 · Робот MeArm 🤖</footer>
+</body>
+</html>

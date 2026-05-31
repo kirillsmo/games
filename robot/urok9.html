@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 9 — Все суставы</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🤖 Робот MeArm</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Покупки и тело">1</a>
+    <a class="dot" href="urok2.html" title="Сервопривод">2</a>
+    <a class="dot" href="urok3.html" title="Основание">3</a>
+    <a class="dot" href="urok4.html" title="Плечо и локоть">4</a>
+    <a class="dot" href="urok5.html" title="Захват">5</a>
+    <a class="dot" href="urok6.html" title="Подключение">6</a>
+    <a class="dot" href="urok7.html" title="Первый скетч">7</a>
+    <a class="dot" href="urok8.html" title="pygame ↔ Arduino">8</a>
+    <a class="dot active" href="urok9.html" title="Все суставы">9</a>
+    <a class="dot" href="urok10.html" title="Пульт и запись">10</a>
+    <a class="dot" href="urok11.html" title="Проект">11</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 9 · код</span>
+    <h1>Все суставы</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Управлять всеми 4 суставами с клавиатуры, с безопасными пределами углов.
+  </div>
+
+  <h2>⌨️ Управление</h2>
+  <div class="grid-demo">База:    ←  →
+Плечо:   ↑  ↓
+Локоть:  W  S
+Захват:  O (открыть)  C (закрыть)
+ESC — выход</div>
+
+  <h2>📝 Главная идея — пределы и отправка</h2>
+  <pre>JOINTS = [
+    {<span class="str">"name"</span>: <span class="str">"База"</span>,   <span class="str">"lo"</span>: <span class="num">0</span>,  <span class="str">"hi"</span>: <span class="num">180</span>},
+    {<span class="str">"name"</span>: <span class="str">"Плечо"</span>,  <span class="str">"lo"</span>: <span class="num">30</span>, <span class="str">"hi"</span>: <span class="num">150</span>},
+    {<span class="str">"name"</span>: <span class="str">"Локоть"</span>, <span class="str">"lo"</span>: <span class="num">30</span>, <span class="str">"hi"</span>: <span class="num">150</span>},
+    {<span class="str">"name"</span>: <span class="str">"Захват"</span>, <span class="str">"lo"</span>: <span class="num">20</span>, <span class="str">"hi"</span>: <span class="num">120</span>},
+]
+
+<span class="kw">def</span> <span class="fn">move</span>(joint, delta):
+    lo, hi = JOINTS[joint][<span class="str">"lo"</span>], JOINTS[joint][<span class="str">"hi"</span>]
+    angles[joint] = <span class="fn">max</span>(lo, <span class="fn">min</span>(hi, angles[joint] + delta))
+    robot.<span class="fn">send</span>(joint, angles[joint])</pre>
+  <div class="dl-row">
+    <a class="dl" href="code/control_arm.py" download>⬇️ control_arm.py</a>
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Зачем пределы (clamp)</span>
+    У каждого сустава своя «безопасная зона». <code>max(lo, min(hi, ...))</code> не даёт углу
+    выйти за неё — так робот не упрётся и не сломает шестерёнки. Те же пределы стоят и в
+    прошивке Arduino — двойная защита.
+  </div>
+
+  <div class="box try">
+    <span class="label">🎮 Подбери свои углы</span>
+    Покрути суставы и запиши, при каких углах рука в удобных положениях — пригодится в
+    проекте (урок 11).
+  </div>
+
+  <div class="pager">
+    <a href="urok8.html"><span class="dir">← Назад</span><span class="ttl">Урок 8 — pygame ↔ Arduino</span></a>
+    <a class="next" href="urok10.html"><span class="dir">Дальше →</span><span class="ttl">Урок 10 — Пульт и запись</span></a>
+  </div>
+</div>
+
+<footer>Урок 9 из 11 · Робот MeArm 🤖</footer>
+</body>
+</html>

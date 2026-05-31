@@ -155,6 +155,10 @@ p code, li code, td code, .box code, .goal code {
 .kw  { color: #c792ea; }
 .str { color: #c3e88d; }
 .num { color: #f78c6c; }
+
+/* схемы (SVG) — тёмная «карточка», читаются в обеих темах */
+.diagram { display: block; width: 100%; max-width: 540px; height: auto;
+           margin: 18px auto; border-radius: 12px; border: 1px solid var(--line); }
 .com { color: #5c6370; font-style: italic; }
 .fn  { color: #82aaff; }
 
