@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Космос на Python — курс</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🚀 Космос</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Корабль">1</a>
+    <a class="dot" href="urok2.html" title="Выстрел">2</a>
+    <a class="dot" href="urok3.html" title="Враги">3</a>
+    <a class="dot" href="urok4.html" title="Попадания">4</a>
+    <a class="dot" href="urok5.html" title="Жизни и конец">5</a>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>🚀 Космос</h1>
+  <p>Управляй кораблём и сбивай пришельцев. Соберёшь за 5 шагов!</p>
+  <img class="hero-shot" src="preview.png" alt="Так выглядит игра Космос">
+</div>
+
+<div class="wrap">
+
+  <div class="goal">
+    <span class="label">Что у тебя получится</span>
+    Корабль внизу ездит влево-вправо, по пробелу стреляет лазером вверх. Сверху
+    падают пришельцы — попал по врагу, он лопается и даёт очко. Пропустил врага
+    вниз или столкнулся с ним — теряешь жизнь. Кончились жизни — конец, пробел
+    запускает заново.
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Главная новая идея — список объектов</span>
+    Раньше у нас был <b>один</b> мяч или <b>один</b> кот. Здесь пуль и врагов —
+    <b>сразу много</b>. Поэтому держим их в <b>списках</b>: выстрелил —
+    <code>bullets.append(...)</code>; враг появился — <code>enemies.append(...)</code>;
+    улетел или сбит — <code>.remove(...)</code>. Каждый кадр пробегаем список циклом
+    <code>for</code> и двигаем всех. Список ты уже видел в Змейке — теперь он
+    «живой»: растёт и уменьшается прямо в игре.
+  </div>
+
+  <p>Не знаешь, что такое терминал, venv и как всё запустить? → <a href="../../start.html" style="color:var(--green);font-weight:700">🚀 Подготовка</a></p>
+  <h3>Как запустить урок</h3>
+  <pre><span class="fn">python</span> games/space/code/step1_ship.py</pre>
+
+  <h2>Уроки</h2>
+  <div class="cards">
+    <a class="card" href="urok1.html"><div class="n">1</div><h3>Корабль</h3><p>Корабль-треугольник ездит влево-вправо по стрелкам.</p></a>
+    <a class="card" href="urok2.html"><div class="n">2</div><h3>Выстрел</h3><p>Список пуль: пробел стреляет, пули летят вверх — главный приём.</p></a>
+    <a class="card" href="urok3.html"><div class="n">3</div><h3>Враги</h3><p>Список врагов: пришельцы появляются сверху и падают вниз.</p></a>
+    <a class="card" href="urok4.html"><div class="n">4</div><h3>Попадания</h3><p>Пуля встретила врага — оба исчезают, считаем очки.</p></a>
+    <a class="card" href="urok5.html"><div class="n">5</div><h3>Жизни и конец</h3><p>Жизни, конец игры и рестарт по пробелу.</p></a>
+  </div>
+
+  <h2>📦 Скачать код</h2>
+  <p>Игра целиком на фигурах — картинки не нужны, каждый файл запускается сам по себе.</p>
+
+  <div class="dl-row">
+    <a class="dl" href="code/space.py" download>⬇️ Готовая игра (space.py)</a>
+    <a class="dl ghost" href="https://github.com/kirillsmo/games/archive/refs/heads/main.zip">⬇️ Весь проект архивом (.zip)</a>
+  </div>
+
+  <div class="dl-list">
+    <a href="code/step1_ship.py" download><span class="fname">step1_ship.py</span><span class="ficon">↓ урок 1</span></a>
+    <a href="code/step2_shoot.py" download><span class="fname">step2_shoot.py</span><span class="ficon">↓ урок 2</span></a>
+    <a href="code/step3_enemies.py" download><span class="fname">step3_enemies.py</span><span class="ficon">↓ урок 3</span></a>
+    <a href="code/step4_hits.py" download><span class="fname">step4_hits.py</span><span class="ficon">↓ урок 4</span></a>
+    <a href="code/step5_lives.py" download><span class="fname">step5_lives.py</span><span class="ficon">↓ урок 5</span></a>
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Чтобы запустить</span>
+    Один раз поставь pygame: <code>pip install pygame-ce</code>. Потом:
+    <code>python space.py</code>.
+  </div>
+
+  <div class="box idea">
+    <span class="label">🖥️ Полный экран</span>
+    В готовой игре нажми <b>F</b> — она развернётся на весь экран как настоящая (<b>ESC</b> — выход).
+  </div>
+
+  <div class="pager">
+    <span class="pager-spacer" style="flex:1"></span>
+    <a class="next" href="urok1.html"><span class="dir">Начать →</span><span class="ttl">Урок 1 — Корабль</span></a>
+  </div>
+
+</div>
+
+<footer>Учебный проект «Космос» · Python + pygame 🚀</footer>
+</body>
+</html>

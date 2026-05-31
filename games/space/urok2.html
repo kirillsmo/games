@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 2 — Выстрел</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🚀 Космос</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Корабль">1</a>
+    <a class="dot active" href="urok2.html" title="Выстрел">2</a>
+    <a class="dot" href="urok3.html" title="Враги">3</a>
+    <a class="dot" href="urok4.html" title="Попадания">4</a>
+    <a class="dot" href="urok5.html" title="Жизни и конец">5</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 2 · самый важный</span>
+    <h1>Корабль стреляет</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    По пробелу корабль выпускает жёлтые лазеры, они летят вверх и исчезают за
+    краем экрана. Можно настрелять сразу много. Файл:
+    <span class="run">step2_shoot.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/step2_shoot.py" download>⬇️ Скачать код урока</a>
+  </div>
+
+  <h2>⭐ Главная идея всей игры — список объектов</h2>
+  <p>Пуль на экране может быть <b>сразу много</b>. Заводить переменную под каждую —
+     невозможно. Поэтому держим их в <b>списке</b> <code>bullets</code>. С ним всего
+     три действия:</p>
+  <div class="pipe">
+    <span class="pill">выстрел → append (добавить)</span>
+    <span class="arrow">→</span>
+    <span class="pill">кадр → двигаем все в цикле</span>
+    <span class="arrow">→</span>
+    <span class="pill">улетела → remove (убрать)</span>
+  </div>
+
+  <h2>📝 Что добавилось (только про пули)</h2>
+  <pre>BULLET_W, BULLET_H = <span class="num">4</span>, <span class="num">14</span>
+BULLET_SPEED = <span class="num">9</span>
+bullets = []                       <span class="com"># СПИСОК пуль — пока пустой</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="kw">for</span> event <span class="kw">in</span> pygame.event.<span class="fn">get</span>():
+        <span class="com"># ... выход ...</span>
+        <span class="kw">if</span> event.type == pygame.KEYDOWN <span class="kw">and</span> event.key == pygame.K_SPACE:
+            <span class="com"># выстрел — ДОБАВЛЯЕМ новую пулю в список</span>
+            bullets.<span class="fn">append</span>(pygame.<span class="fn">Rect</span>(ship_x - BULLET_W // <span class="num">2</span>, ship_y, BULLET_W, BULLET_H))
+
+    <span class="com"># ... движение корабля ...</span>
+
+    <span class="com"># каждая пуля летит вверх; улетевшую за экран УБИРАЕМ из списка</span>
+    <span class="kw">for</span> b <span class="kw">in</span> bullets[:]:           <span class="com"># bullets[:] — копия, чтобы безопасно удалять</span>
+        b.y -= BULLET_SPEED
+        <span class="kw">if</span> b.bottom &lt; <span class="num">0</span>:
+            bullets.<span class="fn">remove</span>(b)
+
+    screen.<span class="fn">fill</span>(BG)
+    <span class="kw">for</span> b <span class="kw">in</span> bullets:              <span class="com"># рисуем каждую пулю из списка</span>
+        pygame.draw.<span class="fn">rect</span>(screen, BULLET_COLOR, b)</pre>
+
+  <h2>🔍 Три важные мелочи</h2>
+
+  <h3>Почему стреляем на <code>KEYDOWN</code>, а не <code>get_pressed()</code>?</h3>
+  <p>Движение мы проверяем через <code>get_pressed()</code> — оно «истинно» <b>каждый
+     кадр</b>, пока держишь клавишу. Для выстрела так нельзя: иначе одно нажатие
+     пробела даст десятки пуль за секунду. <code>KEYDOWN</code> срабатывает
+     <b>один раз</b> на каждое нажатие — один пробел, одна пуля.</p>
+
+  <h3>Что значит <code>bullets[:]</code>?</h3>
+  <p>Это <b>копия</b> списка. Нельзя удалять из списка и одновременно бежать по
+     нему — Python запутается и пропустит элементы. Поэтому идём по копии
+     <code>bullets[:]</code>, а удаляем из настоящего <code>bullets</code>. В Змейке
+     мы список не трогали во время цикла — здесь трогаем, поэтому и копия.</p>
+
+  <h3>Пуля — это <code>Rect</code></h3>
+  <p>Как и кирпичи в Арканоиде, пуля — это <code>pygame.Rect(x, y, ширина, высота)</code>.
+     У прямоугольника удобно двигать <code>b.y</code> и проверять край через
+     <code>b.bottom</code>. А ещё потом он сам умеет проверять столкновения.</p>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Сделай лазер быстрее: <code>BULLET_SPEED = 14</code>.<br>
+    2. Сделай пули толще: <code>BULLET_W = 8</code>.<br>
+    3. Стреляй из двух «пушек» сразу — добавь в список две пули со сдвигом
+       <code>ship_x - 12</code> и <code>ship_x + 12</code>.
+  </div>
+
+  <div class="pager">
+    <a href="urok1.html"><span class="dir">← Назад</span><span class="ttl">Урок 1 — Корабль</span></a>
+    <a class="next" href="urok3.html"><span class="dir">Дальше →</span><span class="ttl">Урок 3 — Враги</span></a>
+  </div>
+</div>
+
+<footer>Урок 2 из 5 · Космос 🚀</footer>
+</body>
+</html>

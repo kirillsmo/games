@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 1 — Корабль</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🎮 Все игры</a>
+  <a class="home" href="index.html">🚀 Космос</a>
+  <div class="dots">
+    <a class="dot active" href="urok1.html" title="Корабль">1</a>
+    <a class="dot" href="urok2.html" title="Выстрел">2</a>
+    <a class="dot" href="urok3.html" title="Враги">3</a>
+    <a class="dot" href="urok4.html" title="Попадания">4</a>
+    <a class="dot" href="urok5.html" title="Жизни и конец">5</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 1</span>
+    <h1>Корабль ездит</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Синий корабль-треугольник внизу экрана едет влево-вправо по стрелкам. Файл:
+    <span class="run">step1_ship.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/step1_ship.py" download>⬇️ Скачать код урока</a>
+  </div>
+
+  <h2>📝 Весь код урока</h2>
+  <pre><span class="kw">import</span> pygame, sys
+
+WIDTH, HEIGHT = <span class="num">600</span>, <span class="num">400</span>
+BG = (<span class="num">15</span>, <span class="num">16</span>, <span class="num">38</span>)
+WHITE = (<span class="num">234</span>, <span class="num">234</span>, <span class="num">234</span>)
+SHIP_COLOR = (<span class="num">108</span>, <span class="num">178</span>, <span class="num">255</span>)
+
+pygame.<span class="fn">init</span>()
+screen = pygame.display.<span class="fn">set_mode</span>((WIDTH, HEIGHT))
+pygame.display.<span class="fn">set_caption</span>(<span class="str">"Космос"</span>)
+clock = pygame.time.<span class="fn">Clock</span>()
+
+SHIP_W, SHIP_H = <span class="num">40</span>, <span class="num">28</span>
+ship_x = WIDTH // <span class="num">2</span>                 <span class="com"># ship_x — это ЦЕНТР корабля</span>
+ship_y = HEIGHT - SHIP_H - <span class="num">12</span>
+SHIP_SPEED = <span class="num">6</span>
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="kw">for</span> event <span class="kw">in</span> pygame.event.<span class="fn">get</span>():
+        <span class="kw">if</span> event.type == pygame.QUIT:
+            pygame.<span class="fn">quit</span>()
+            sys.<span class="fn">exit</span>()
+
+    keys = pygame.key.<span class="fn">get_pressed</span>()
+    <span class="kw">if</span> keys[pygame.K_LEFT]:
+        ship_x -= SHIP_SPEED
+    <span class="kw">if</span> keys[pygame.K_RIGHT]:
+        ship_x += SHIP_SPEED
+    ship_x = <span class="fn">max</span>(SHIP_W // <span class="num">2</span>, <span class="fn">min</span>(ship_x, WIDTH - SHIP_W // <span class="num">2</span>))
+
+    screen.<span class="fn">fill</span>(BG)
+    <span class="com"># корабль — синий треугольник носом вверх</span>
+    points = [(ship_x, ship_y), (ship_x - SHIP_W // <span class="num">2</span>, ship_y + SHIP_H), (ship_x + SHIP_W // <span class="num">2</span>, ship_y + SHIP_H)]
+    pygame.draw.<span class="fn">polygon</span>(screen, SHIP_COLOR, points)
+    pygame.draw.<span class="fn">circle</span>(screen, WHITE, (ship_x, ship_y + SHIP_H - <span class="num">8</span>), <span class="num">4</span>)
+    pygame.display.<span class="fn">flip</span>()
+    clock.<span class="fn">tick</span>(<span class="num">60</span>)</pre>
+
+  <h2>🔍 Это ты уже знаешь по «Арканоиду»</h2>
+  <p>Корабль ездит как ракетка: пока держишь стрелку
+     (<code>pygame.key.get_pressed()</code>), он сдвигается и не выезжает за края
+     (<code>max(..., min(...))</code>). Новое — мелочи:</p>
+
+  <h3>Треугольник вместо прямоугольника</h3>
+  <p><code>pygame.draw.polygon</code> рисует фигуру по <b>списку точек</b>. Мы задаём
+     три угла: нос сверху и две нижние «лапы». Поэтому <code>ship_x</code> у нас —
+     это <b>центр</b> корабля (а не левый край, как была <code>paddle_x</code>).</p>
+  <div class="pipe">
+    <span class="pill">нос (ship_x, ship_y)</span>
+    <span class="pill">низ-лево</span>
+    <span class="pill">низ-право</span>
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Дальше — самое интересное</span>
+    В следующем уроке корабль начнёт стрелять, и пуль будет много сразу. Ради
+    этого приёма — <b>списка объектов</b> — мы и делаем «Космос».
+  </div>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам</span>
+    1. Сделай корабль больше: <code>SHIP_W, SHIP_H = 60, 40</code>.<br>
+    2. Поменяй скорость <code>SHIP_SPEED</code>.<br>
+    3. Поменяй цвет корабля <code>SHIP_COLOR</code> на свой.
+  </div>
+
+  <div class="pager">
+    <a href="index.html"><span class="dir">← К курсу</span><span class="ttl">Все уроки Космоса</span></a>
+    <a class="next" href="urok2.html"><span class="dir">Дальше →</span><span class="ttl">Урок 2 — Выстрел</span></a>
+  </div>
+</div>
+
+<footer>Урок 1 из 5 · Космос 🚀</footer>
+</body>
+</html>
