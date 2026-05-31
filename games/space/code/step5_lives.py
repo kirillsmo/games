@@ -39,6 +39,14 @@ try:
 except Exception:
     shoot_sound = boom_sound = hit_sound = gameover_sound = _Silent()
 
+# Фоновая музыка (тоже необязательная — без файла просто не играет)
+try:
+    pygame.mixer.music.load(os.path.join(HERE, "assets", "music.wav"))
+    pygame.mixer.music.set_volume(0.35)
+    pygame.mixer.music.play(-1)          # -1 = повторять бесконечно
+except Exception:
+    pass
+
 SHIP_W, SHIP_H = 40, 28
 ship_y = HEIGHT - SHIP_H - 12      # корабль внизу
 SHIP_SPEED = 6
