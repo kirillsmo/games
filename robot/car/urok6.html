@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 6 — Глаза машины</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🚗 Робомашинка</a>
+  <div class="dots">
+    <a class="dot" href="../index.html" title="Все роботы">🤖</a>
+    <a class="dot" href="urok1.html" title="Знакомство">1</a>
+    <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
+    <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
+    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok5.html" title="Bluetooth">5</a>
+    <a class="dot active" href="urok6.html" title="Глаза машины">6</a>
+    <a class="dot" href="urok7.html" title="Первый заезд">7</a>
+    <a class="dot" href="urok8.html" title="Кокпит">8</a>
+    <a class="dot" href="urok9.html" title="Радар">9</a>
+    <a class="dot" href="urok10.html" title="Автопилот">10</a>
+    <a class="dot" href="urok11.html" title="Миссия">11</a>
+    <a class="dot" href="urok12.html" title="Камера (бонус)">12</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 6 · прошивка</span>
+    <h1>Глаза машины — ультразвук и датчики линии</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Залить главную прошивку <code>car_firmware.ino</code>: машина не только едет, но и
+    <b>сама шлёт нам телеметрию</b> — что видит ультразвук и датчики линии. Это сделает возможным
+    радар на ноутбуке.
+  </div>
+
+  <h2>👀 Как работает ультразвук</h2>
+  <p>Датчик HC-SR04 «крикнет» неслышимым писком и засекает, через сколько вернётся эхо. Чем
+     дольше эхо, тем дальше стена. По времени считаем расстояние в сантиметрах:</p>
+  <pre><span class="fn">digitalWrite</span>(TRIG, HIGH); <span class="fn">delayMicroseconds</span>(<span class="num">10</span>); <span class="fn">digitalWrite</span>(TRIG, LOW);
+<span class="kw">long</span> us = <span class="fn">pulseIn</span>(ECHO, HIGH);   <span class="com">// сколько шло эхо</span>
+<span class="kw">long</span> cm = us / <span class="num">58</span>;             <span class="com">// микросекунды → сантиметры</span></pre>
+
+  <h2>🔄 Серво крутит «глаз»</h2>
+  <p>Датчик стоит на серво. Прошивка плавно крутит серво от 0° до 180° и обратно, и для каждого
+     угла меряет расстояние. Каждое измерение машина шлёт нам строкой:</p>
+  <pre><span class="com">// телеметрия машине → ноутбуку</span>
+<span class="str">"D,90,40"</span>    <span class="com"># под углом 90° стена в 40 см</span>
+<span class="str">"T,0,1,0"</span>    <span class="com"># датчики линии: видит середина</span></pre>
+
+  <h2>📥 Заливаем главную прошивку</h2>
+  <p>Залей <span class="run">car_firmware.ino</span> — она объединяет всё: моторы (как в уроке 4),
+     серво + ультразвук и датчики линии. Команда <code>SCAN,1</code> включает «качание» датчика
+     и поток расстояний, <code>SCAN,0</code> — выключает.</p>
+  <div class="dl-row">
+    <a class="dl" href="code/arduino/car_firmware.ino" download>⬇️ car_firmware.ino</a>
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ Сверь пины датчиков</span>
+    В коде по умолчанию: серво <code>D3</code>, ультразвук <code>TRIG=12, ECHO=13</code>, датчики
+    линии <code>A0, A1, A2</code>. На твоей плате-расширении может быть иначе — поправь номера
+    вверху скетча.
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Теперь связь в обе стороны</span>
+    Раньше мы только командовали машиной. Теперь машина <b>отвечает</b>: шлёт расстояние и
+    датчики линии. Эти строки будет ловить наш Python — и рисовать из них радар.
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Проверка</span>
+    Открой Serial Monitor, отправь <code>SCAN,1</code> — побегут строки <code>D,угол,см</code>.
+    Поднеси руку к датчику — числа уменьшаются. Работает? Переходим к Python.
+  </div>
+
+  <div class="pager">
+    <a href="urok5.html"><span class="dir">← Назад</span><span class="ttl">Урок 5 — Bluetooth</span></a>
+    <a class="next" href="urok7.html"><span class="dir">Дальше →</span><span class="ttl">Урок 7 — Первый заезд</span></a>
+  </div>
+</div>
+
+<footer>Урок 6 из 12 · Робомашинка 🚗</footer>
+</body>
+</html>

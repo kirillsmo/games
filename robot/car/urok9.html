@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 9 — Радар</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🚗 Робомашинка</a>
+  <div class="dots">
+    <a class="dot" href="../index.html" title="Все роботы">🤖</a>
+    <a class="dot" href="urok1.html" title="Знакомство">1</a>
+    <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
+    <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
+    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok5.html" title="Bluetooth">5</a>
+    <a class="dot" href="urok6.html" title="Глаза машины">6</a>
+    <a class="dot" href="urok7.html" title="Первый заезд">7</a>
+    <a class="dot" href="urok8.html" title="Кокпит">8</a>
+    <a class="dot active" href="urok9.html" title="Радар">9</a>
+    <a class="dot" href="urok10.html" title="Автопилот">10</a>
+    <a class="dot" href="urok11.html" title="Миссия">11</a>
+    <a class="dot" href="urok12.html" title="Камера (бонус)">12</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 9 · код</span>
+    <h1>Радар — видим препятствия</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Прочитать телеметрию <code>"D,угол,см"</code> и нарисовать из неё радар: точки-препятствия
+    вокруг машины, как на экране подводной лодки.
+  </div>
+
+  <h2>📡 Читаем телеметрию</h2>
+  <p>Сначала просим машину качать датчиком: <code>car.send("SCAN,1")</code>. Дальше каждый кадр
+     читаем строку и разбираем её на угол и расстояние:</p>
+  <pre>line = car.<span class="fn">read</span>()                <span class="com"># напр. "D,90,40" или None</span>
+<span class="kw">if</span> line <span class="kw">and</span> line.<span class="fn">startswith</span>(<span class="str">"D,"</span>):
+    parts = line.<span class="fn">split</span>(<span class="str">","</span>)        <span class="com"># ["D", "90", "40"]</span>
+    angle = <span class="fn">int</span>(parts[<span class="num">1</span>])
+    cm = <span class="fn">int</span>(parts[<span class="num">2</span>])
+    blips.<span class="fn">append</span>([angle, cm])      <span class="com"># запомнили точку</span></pre>
+
+  <h2>🧭 Из угла и см — точка на экране</h2>
+  <p>Угол говорит, <b>куда</b> смотрел датчик, расстояние — <b>как далеко</b> препятствие. Точку
+     на экране находим тригонометрией (та самая из математики, синус и косинус):</p>
+  <img src="img/radar.svg" alt="Как угол и расстояние превращаются в точку" style="width:100%;border-radius:12px;margin:10px 0">
+  <pre><span class="kw">import</span> math
+x = CX + d * math.<span class="fn">cos</span>(math.<span class="fn">radians</span>(angle))
+y = CY - d * math.<span class="fn">sin</span>(math.<span class="fn">radians</span>(angle))</pre>
+  <p>Близкие препятствия красим красным, далёкие — зелёным. Запусти <span class="run">radar.py</span> —
+     можно одновременно рулить стрелками и смотреть радар.</p>
+  <div class="dl-row">
+    <a class="dl" href="code/radar.py" download>⬇️ radar.py</a>
+    <a class="dl ghost" href="code/car_link.py" download>car_link.py</a>
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Радар работает даже без машины</span>
+    В «режиме показа» <code>car_link</code> выдаёт телеметрию понарошку — впереди «стена». Поэтому
+    радар крутится и оживает, даже если машина не подключена. Удобно отлаживать рисование.
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Проверка</span>
+    На экране бежит луч, появляются точки. Поднеси руку к датчику — точка станет красной и ближе.
+    Это самый эффектный экран курса. Дальше научим компьютер помогать водителю.
+  </div>
+
+  <div class="pager">
+    <a href="urok8.html"><span class="dir">← Назад</span><span class="ttl">Урок 8 — Кокпит</span></a>
+    <a class="next" href="urok10.html"><span class="dir">Дальше →</span><span class="ttl">Урок 10 — Автопилот</span></a>
+  </div>
+</div>
+
+<footer>Урок 9 из 12 · Робомашинка 🚗</footer>
+</body>
+</html>

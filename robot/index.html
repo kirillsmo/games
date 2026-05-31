@@ -3,137 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Робот MeArm — курс робототехники</title>
+<title>Робототехника на Python — школьный курс</title>
 <link rel="stylesheet" href="../shared.css">
 <script src="../theme.js"></script>
 </head>
 <body>
 
 <div class="topbar">
-  <a class="home" href="index.html">🤖 Робот MeArm</a>
+  <a class="home" href="index.html">🤖 Робототехника</a>
   <div class="dots">
-    <a class="dot" href="urok1.html" title="Покупки и тело">1</a>
-    <a class="dot" href="urok2.html" title="Сервопривод">2</a>
-    <a class="dot" href="urok3.html" title="Основание">3</a>
-    <a class="dot" href="urok4.html" title="Плечо и локоть">4</a>
-    <a class="dot" href="urok5.html" title="Захват">5</a>
-    <a class="dot" href="urok6.html" title="Подключение">6</a>
-    <a class="dot" href="urok7.html" title="Первый скетч">7</a>
-    <a class="dot" href="urok8.html" title="pygame ↔ Arduino">8</a>
-    <a class="dot" href="urok9.html" title="Все суставы">9</a>
-    <a class="dot" href="urok10.html" title="Пульт и запись">10</a>
-    <a class="dot" href="urok11.html" title="Проект">11</a>
+    <a class="dot" href="../index.html" title="К играм">🎮</a>
   </div>
 </div>
 
 <div class="hero">
-  <h1>🤖 Робот MeArm</h1>
-  <p>Соберём настоящую руку-манипулятор и научим её слушаться кода на Python (pygame).</p>
-  <img class="hero-shot" src="img/arm-joints.svg" alt="Суставы робота MeArm">
+  <h1>🤖 Робототехника</h1>
+  <p>Собираем настоящих роботов и управляем ими из Python. То, что ты научился делать в играх,
+     теперь оживает в железе — моторы, датчики и связь по проводу и по воздуху.</p>
 </div>
 
 <div class="wrap">
 
   <div class="goal">
-    <span class="label">Что у тебя получится</span>
-    Рука-робот с 4 суставами (поворот, плечо, локоть, захват). Сначала соберём её,
-    потом напишем программу на Python: рука будет двигаться с клавиатуры, а в финале —
-    сама переставит предмет по записанной программе.
+    <span class="label">Как это работает</span>
+    Каждый робот — отдельный курс из нескольких уроков: сначала собираем устройство, потом
+    пишем для него программу на Python (pygame). Робот не понимает Python напрямую — между ними
+    стоит плата Arduino, которая слушает наши команды.
   </div>
 
   <div class="box idea">
-    <span class="label">💡 Как робот слушается Python</span>
-    Робот не понимает Python напрямую. Поэтому: <b>компьютер (pygame)</b> по USB шлёт
-    команды на плату <b>Arduino Nano</b>, та передаёт их драйверу <b>PCA9685</b>, а он уже
-    крутит <b>сервоприводы</b> — моторчики суставов. Цепочка:
-    <div class="pipe" style="margin-top:10px">
-      <span class="pill">💻 pygame</span><span class="arrow">→ USB →</span>
-      <span class="pill">🔌 Nano</span><span class="arrow">→ I2C →</span>
-      <span class="pill">🎛️ PCA9685</span><span class="arrow">→</span>
-      <span class="pill">⚙️ серво</span>
+    <span class="label">🎮 Сначала пройди игры</span>
+    Эти курсы рассчитаны на тех, кто уже знает основы pygame: игровой цикл, события,
+    <code>get_pressed</code>, списки и экранные кнопки. Если ещё нет —
+    <a href="../index.html" style="color:var(--green);font-weight:700">начни с игр</a>.
+  </div>
+
+  <h2>Курсы</h2>
+  <div class="cards">
+
+    <a class="card" href="mearm/index.html">
+      <img class="preview" src="mearm/img/arm-joints.svg" alt="Робот-рука MeArm">
+      <h3>🤖 Робот MeArm</h3>
+      <p>Собираем руку-манипулятор с 4 суставами и управляем ей с клавиатуры. Связь по USB,
+         в финале рука сама переставляет предмет.</p>
+      <span class="meta">11 уроков · готово</span>
+    </a>
+
+    <a class="card" href="car/index.html">
+      <img class="preview" src="car/img/architecture.svg" alt="Робомашинка">
+      <h3>🚗 Робомашинка</h3>
+      <p>Собираем машину на колёсах и рулим ей с ноутбука по Bluetooth — без проводов. На экране
+         живой радар и автотормоз перед стеной.</p>
+      <span class="meta">11 уроков + бонус · готово</span>
+    </a>
+
+  </div>
+
+  <div class="box idea">
+    <span class="label">🔌 В чём разница</span>
+    У <b>руки MeArm</b> питание по USB-проводу — она стоит на месте и точно двигает суставами.
+    У <b>машинки</b> своя батарея — поэтому она ездит свободно, а команды летят по Bluetooth.
+    Это два разных способа подружить Python с железом.
+  </div>
+
+  <h2>Узнать больше</h2>
+  <div class="goal" style="text-align:center">
+    Подробная информация о школе — на сайте или по почте:
+    <div class="dl-row" style="justify-content:center; margin-top:14px">
+      <a class="dl" href="https://meine-schule-wiesbaden.de" target="_blank" rel="noopener">🌐 meine-schule-wiesbaden.de</a>
+      <a class="dl ghost" href="mailto:info@meine-schule-wiesbaden.de">✉️ info@meine-schule-wiesbaden.de</a>
     </div>
-    Питание сервоприводов берём <b>от того же USB</b> (через 5 В Nano) — отдельный блок не нужен.
-  </div>
-
-  <p>Не знаешь, что такое терминал и как запускать Python? →
-     <a href="../start.html" style="color:var(--green);font-weight:700">🚀 Подготовка</a></p>
-
-  <h2>🛒 Что нужно купить</h2>
-  <div class="box">
-    <span class="label">✅ Уже в наборе MeArm (покупать НЕ нужно)</span>
-    4 металлических сервопривода, плата-PCB с кабелем, винты, гайки, ножки, «глазки»,
-    шестигранный ключ.
-  </div>
-  <p><b>Тело робота в набор «Cut Your Own» не входит</b> — его вырезают лазером или
-     печатают на 3D-принтере по бесплатным файлам (об этом — урок 1).</p>
-
-  <h3>На каждый комплект (одного робота) докупить:</h3>
-  <table>
-    <tr><th>Что</th><th>Зачем</th></tr>
-    <tr><td>Arduino <b>Nano</b> + USB-кабель</td><td>плата-посредник между ПК и драйвером серво</td></tr>
-    <tr><td>Драйвер сервоприводов <b>PCA9685</b></td><td>крутит серво и раздаёт им питание — сердце схемы</td></tr>
-    <tr><td>Макетная плата (breadboard)</td><td>удобно соединить Nano и PCA9685</td></tr>
-    <tr><td>Провода-перемычки «мама-папа» (+ немного «папа-папа»)</td><td>4 провода Nano↔PCA9685 и питание</td></tr>
-    <tr><td>Маленькая крестовая отвёртка</td><td>винты качалок серво и клеммы V+ на PCA9685</td></tr>
-    <tr><td>Лист 3 мм акрил/фанера <i>или</i> PLA-пластик</td><td>материал тела (режем/печатаем сами)</td></tr>
-    <tr><td><i>(желательно)</i> USB-зарядка/хаб на 2 А</td><td>USB-порт ПК слабоват — для надёжного питания серво</td></tr>
-  </table>
-  <p>Отдельный блок питания <b>не нужен</b> — сервоприводы питаются от USB через 5 В Nano.</p>
-
-  <h3>Общее на класс:</h3>
-  <p>Компьютер с Ubuntu на группу (Python + <code>pygame-ce</code> + <code>pyserial</code> +
-     Arduino IDE с библиотекой <b>Adafruit PWM Servo Driver</b>), по желанию мультиметр и
-     липучка/струбцина, чтобы закрепить базу робота на столе.</p>
-
-  <div class="box warn">
-    <span class="label">⚠️ Техника безопасности (читаем со всеми!)</span>
-    • Питание серво идёт <b>от USB через 5 В Nano</b> на вход <b>V+</b> PCA9685. Минусы (GND)
-      Nano и PCA9685 — <b>вместе</b> (общая земля).<br>
-    • USB-порт ПК даёт мало тока (~0,5 А): <b>двигай по одному суставу плавно</b>. Если Nano
-      перезагружается или серво дёргаются — это нехватка тока: возьми USB-зарядку/хаб на 2 А.<br>
-    • <b>Не крутим суставы руками</b>, пока подано питание — можно сорвать шестерёнки.<br>
-    • Базу робота закрепляем — рука перевешивает и опрокидывается.
-  </div>
-
-  <h2>Уроки</h2>
-  <p><b>Часть 1 — сборка.</b></p>
-  <div class="cards">
-    <a class="card" href="urok1.html"><div class="n">1</div><h3>Покупки и тело</h3><p>Что купить и как вырезать/напечатать детали.</p></a>
-    <a class="card" href="urok2.html"><div class="n">2</div><h3>Сервопривод</h3><p>Как он устроен и зачем центрировать в 90°.</p></a>
-    <a class="card" href="urok3.html"><div class="n">3</div><h3>Основание</h3><p>Собираем базу и поворотный сустав.</p></a>
-    <a class="card" href="urok4.html"><div class="n">4</div><h3>Плечо и локоть</h3><p>Два сустава и рычажный механизм.</p></a>
-    <a class="card" href="urok5.html"><div class="n">5</div><h3>Захват</h3><p>Собираем «клешню» и проверяем ход.</p></a>
-  </div>
-  <p style="margin-top:18px"><b>Часть 2 — код на pygame.</b></p>
-  <div class="cards">
-    <a class="card" href="urok6.html"><div class="n">6</div><h3>Подключение</h3><p>Схема проводов и питание. Общая земля.</p></a>
-    <a class="card" href="urok7.html"><div class="n">7</div><h3>Первый скетч</h3><p>Arduino крутит один сустав.</p></a>
-    <a class="card" href="urok8.html"><div class="n">8</div><h3>pygame ↔ Arduino</h3><p>Управляем суставом с клавиатуры по USB.</p></a>
-    <a class="card" href="urok9.html"><div class="n">9</div><h3>Все суставы</h3><p>4 сустава, пределы углов, экран с углами.</p></a>
-    <a class="card" href="urok10.html"><div class="n">10</div><h3>Пульт и запись</h3><p>Записываем позы и робот их повторяет.</p></a>
-    <a class="card" href="urok11.html"><div class="n">11</div><h3>Проект</h3><p>Робот сам переставляет предмет.</p></a>
-  </div>
-
-  <h2>📦 Скачать код</h2>
-  <div class="dl-row">
-    <a class="dl" href="https://github.com/kirillsmo/games/archive/refs/heads/main.zip">⬇️ Весь проект архивом (.zip)</a>
-  </div>
-  <div class="dl-list">
-    <a href="code/arduino/center_all.ino" download><span class="fname">arduino/center_all.ino</span><span class="ficon">↓ центр 90°</span></a>
-    <a href="code/arduino/serial_servos.ino" download><span class="fname">arduino/serial_servos.ino</span><span class="ficon">↓ прошивка</span></a>
-    <a href="code/robot_link.py" download><span class="fname">robot_link.py</span><span class="ficon">↓ связь</span></a>
-    <a href="code/control_arm.py" download><span class="fname">control_arm.py</span><span class="ficon">↓ управление</span></a>
-    <a href="code/robot_panel.py" download><span class="fname">robot_panel.py</span><span class="ficon">↓ пульт</span></a>
-    <a href="code/demo_pick.py" download><span class="fname">demo_pick.py</span><span class="ficon">↓ проект</span></a>
-  </div>
-
-  <div class="pager">
-    <span class="pager-spacer" style="flex:1"></span>
-    <a class="next" href="urok1.html"><span class="dir">Начать →</span><span class="ttl">Урок 1 — Покупки и тело</span></a>
   </div>
 
 </div>
 
-<footer>Курс робототехники · MeArm + Python (pygame) 🤖</footer>
+<footer>
+  Meine Schule Wiesbaden · Робототехника на Python 🤖<br>
+  <a href="https://meine-schule-wiesbaden.de" target="_blank" rel="noopener">meine-schule-wiesbaden.de</a>
+  · <a href="mailto:info@meine-schule-wiesbaden.de">info@meine-schule-wiesbaden.de</a>
+</footer>
 </body>
 </html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 7 — Первый заезд из pygame</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🚗 Робомашинка</a>
+  <div class="dots">
+    <a class="dot" href="../index.html" title="Все роботы">🤖</a>
+    <a class="dot" href="urok1.html" title="Знакомство">1</a>
+    <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
+    <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
+    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok5.html" title="Bluetooth">5</a>
+    <a class="dot" href="urok6.html" title="Глаза машины">6</a>
+    <a class="dot active" href="urok7.html" title="Первый заезд">7</a>
+    <a class="dot" href="urok8.html" title="Кокпит">8</a>
+    <a class="dot" href="urok9.html" title="Радар">9</a>
+    <a class="dot" href="urok10.html" title="Автопилот">10</a>
+    <a class="dot" href="urok11.html" title="Миссия">11</a>
+    <a class="dot" href="urok12.html" title="Камера (бонус)">12</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 7 · код</span>
+    <h1>Первый заезд из pygame</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Написать первый «пульт» на Python: окно pygame ловит стрелки и шлёт машине команды по
+    Bluetooth. Машина едет с клавиатуры ноутбука.
+  </div>
+
+  <h2>🔗 Библиотека связи <code>car_link.py</code></h2>
+  <p>Связь с машиной спрятана в готовый файл <code>car_link.py</code> — как <code>robot_link.py</code>
+     у руки-робота, только умеет ещё и <b>читать</b> ответы машины. Пользоваться просто:</p>
+  <pre><span class="kw">from</span> car_link <span class="kw">import</span> connect
+car = <span class="fn">connect</span>()            <span class="com"># сам найдёт машину (Bluetooth/USB)</span>
+car.<span class="fn">send</span>(<span class="str">"F,200"</span>)        <span class="com"># вперёд на скорости 200</span>
+car.<span class="fn">send</span>(<span class="str">"S"</span>)            <span class="com"># стоп</span>
+line = car.<span class="fn">read</span>()         <span class="com"># строка телеметрии или None</span></pre>
+  <div class="dl-row">
+    <a class="dl ghost" href="code/car_link.py" download>car_link.py (связь)</a>
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Машины ещё нет? Работаем в «режиме показа»</span>
+    Если машина не подключена, <code>car_link</code> сам включает режим показа: команды просто
+    игнорируются, а телеметрия выдаётся понарошку. Программа не падает — можно писать и пробовать
+    код заранее, даже без машины.
+  </div>
+
+  <h2>🎮 Пульт: стрелки → команды</h2>
+  <p>Знакомый игровой цикл: каждый кадр смотрим, какие стрелки зажаты, и шлём команду. Хитрость —
+     шлём её <b>только когда она поменялась</b>, чтобы не заваливать машину одинаковыми строками:</p>
+  <pre>keys = pygame.key.<span class="fn">get_pressed</span>()
+<span class="kw">if</span>   keys[pygame.K_UP]:    <span class="fn">drive</span>(<span class="str">"F"</span>)
+<span class="kw">elif</span> keys[pygame.K_DOWN]:  <span class="fn">drive</span>(<span class="str">"B"</span>)
+<span class="kw">elif</span> keys[pygame.K_LEFT]:  <span class="fn">drive</span>(<span class="str">"L"</span>)
+<span class="kw">elif</span> keys[pygame.K_RIGHT]: <span class="fn">drive</span>(<span class="str">"R"</span>)
+<span class="kw">else</span>:                     <span class="fn">drive</span>(<span class="str">"S"</span>)   <span class="com"># отпустил — стоп</span></pre>
+  <p>Запусти <span class="run">drive_keys.py</span>: <code>↑↓</code> едем, <code>←→</code> поворот,
+     отпустил — стоп, <code>ESC</code> — выход.</p>
+  <div class="dl-row">
+    <a class="dl" href="code/drive_keys.py" download>⬇️ drive_keys.py</a>
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ Сначала на коробке, потом на пол</span>
+    Проверь управление, когда машина на подставке. Убедился, что стрелки рулят правильно — ставь
+    на пол и катай. <code>pip install pyserial</code>, если ещё не стоит.
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Проверка</span>
+    Машина едет с клавиатуры по Bluetooth, без проводов. Поздравляю — это уже настоящий
+    радиоуправляемый робот! Дальше сделаем пульт удобнее.
+  </div>
+
+  <div class="pager">
+    <a href="urok6.html"><span class="dir">← Назад</span><span class="ttl">Урок 6 — Глаза машины</span></a>
+    <a class="next" href="urok8.html"><span class="dir">Дальше →</span><span class="ttl">Урок 8 — Кокпит</span></a>
+  </div>
+</div>
+
+<footer>Урок 7 из 12 · Робомашинка 🚗</footer>
+</body>
+</html>

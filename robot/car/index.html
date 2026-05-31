@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Робомашинка — курс робототехники</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🚗 Робомашинка</a>
+  <div class="dots">
+    <a class="dot" href="../index.html" title="Все роботы">🤖</a>
+    <a class="dot" href="urok1.html" title="Знакомство">1</a>
+    <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
+    <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
+    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok5.html" title="Bluetooth">5</a>
+    <a class="dot" href="urok6.html" title="Глаза машины">6</a>
+    <a class="dot" href="urok7.html" title="Первый заезд">7</a>
+    <a class="dot" href="urok8.html" title="Кокпит">8</a>
+    <a class="dot" href="urok9.html" title="Радар">9</a>
+    <a class="dot" href="urok10.html" title="Автопилот">10</a>
+    <a class="dot" href="urok11.html" title="Миссия">11</a>
+    <a class="dot" href="urok12.html" title="Камера (бонус)">12</a>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>🚗 Робомашинка</h1>
+  <p>Соберём машину на колёсах и будем рулить ей с клавиатуры ноутбука — по Bluetooth,
+     с радаром на экране. Управление пишем на Python (pygame).</p>
+  <img class="hero-shot" src="img/architecture.svg" alt="Как машина связана с ноутбуком">
+</div>
+
+<div class="wrap">
+
+  <div class="goal">
+    <span class="label">Что у тебя получится</span>
+    Машина на 4 колёсах, которая ездит по командам с ноутбука <b>без проводов</b>. Сначала
+    соберём её и научим слушаться, потом напишем «кокпит» на Python: руль с клавиатуры,
+    живой <b>радар</b> из ультразвука, автотормоз перед стеной и запись маршрута. В бонусе —
+    камера и «вид от первого лица».
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Как машина слушается Python</span>
+    Машина не понимает Python напрямую. Поэтому: <b>ноутбук (pygame)</b> по <b>Bluetooth</b>
+    шлёт короткие команды на плату <b>Arduino UNO</b>, та через драйвер <b>L298N</b> крутит
+    моторы. А машина шлёт назад телеметрию — что «видят» её датчики. Цепочка:
+    <div class="pipe" style="margin-top:10px">
+      <span class="pill">💻 pygame</span><span class="arrow">→ Bluetooth →</span>
+      <span class="pill">🔌 UNO</span><span class="arrow">→ L298N →</span>
+      <span class="pill">⚙️ моторы</span><span class="arrow">+</span>
+      <span class="pill">🔭 датчики</span>
+    </div>
+    Главное отличие от руки-робота: <b>у машины своя батарея</b>, поэтому она ездит свободно,
+    а провод не нужен.
+  </div>
+
+  <p>Не знаешь, что такое терминал и как запускать Python? →
+     <a href="../../start.html" style="color:var(--green);font-weight:700">🚀 Подготовка</a></p>
+
+  <h2>🛒 Что нужно</h2>
+  <div class="box">
+    <span class="label">✅ Уже в наборе Elegoo Smart Robot Car (покупать НЕ нужно)</span>
+    Arduino UNO + плата-расширение, драйвер моторов <b>L298N</b>, 4 мотора с колёсами,
+    ультразвук <b>HC-SR04</b> на серво, датчики линии, <b>Bluetooth-модуль</b>, корпус и крепёж.
+  </div>
+  <h3>Докупить (немного):</h3>
+  <table>
+    <tr><th>Что</th><th>Зачем</th></tr>
+    <tr><td>2 аккумулятора <b>18650</b> + зарядка</td><td>питание машины (часто не в наборе)</td></tr>
+    <tr><td><i>(если у ноутбука нет Bluetooth)</i> USB Bluetooth-донгл</td><td>чтобы ноутбук видел машину</td></tr>
+    <tr><td><i>(бонус, урок 12)</i> модуль <b>ESP32-CAM</b></td><td>камера и «вид от первого лица»</td></tr>
+  </table>
+
+  <h3>Общее на класс:</h3>
+  <p>Компьютер с Ubuntu на группу (Python + <code>pygame-ce</code> + <code>pyserial</code> +
+     Arduino IDE), крестовая отвёртка, коробок/подставка (поднять машину при первых тестах).</p>
+
+  <div class="box warn">
+    <span class="label">⚠️ Техника безопасности (читаем со всеми!)</span>
+    • <b>При первом тесте подними машину на коробок</b>, чтобы колёса крутились в воздухе —
+      иначе уедет со стола.<br>
+    • Аккумуляторы 18650 ставим <b>по полярности</b> (+/−), не путаем. Заряжаем со взрослым.<br>
+    • Выключай питание машины, когда подключаешь провода.<br>
+    • Не гоняй машину людям и животным под ноги.
+  </div>
+
+  <h2>Уроки</h2>
+  <p><b>Часть 1 — сборка и первая жизнь.</b></p>
+  <div class="cards">
+    <a class="card" href="urok1.html"><div class="n">1</div><h3>Знакомство</h3><p>Что в наборе и как всё устроено.</p></a>
+    <a class="card" href="urok2.html"><div class="n">2</div><h3>Сборка шасси</h3><p>Моторы, колёса, батареи, корпус.</p></a>
+    <a class="card" href="urok3.html"><div class="n">3</div><h3>Мозг и провода</h3><p>UNO и L298N. Первый заезд по таймеру.</p></a>
+  </div>
+  <p style="margin-top:18px"><b>Часть 2 — прошивка Arduino.</b></p>
+  <div class="cards">
+    <a class="card" href="urok4.html"><div class="n">4</div><h3>Команды моторам</h3><p>Едем по буквам F/B/L/R/S из Serial.</p></a>
+    <a class="card" href="urok5.html"><div class="n">5</div><h3>Bluetooth</h3><p>Режем провод: те же команды по воздуху.</p></a>
+    <a class="card" href="urok6.html"><div class="n">6</div><h3>Глаза машины</h3><p>Ультразвук, серво и датчики линии.</p></a>
+  </div>
+  <p style="margin-top:18px"><b>Часть 3 — кокпит на pygame.</b></p>
+  <div class="cards">
+    <a class="card" href="urok7.html"><div class="n">7</div><h3>Первый заезд</h3><p>Рулим машиной стрелками с ноутбука.</p></a>
+    <a class="card" href="urok8.html"><div class="n">8</div><h3>Кокпит</h3><p>Скорость, приборы, состояние связи.</p></a>
+    <a class="card" href="urok9.html"><div class="n">9</div><h3>Радар</h3><p>Рисуем препятствия, как у подлодки.</p></a>
+    <a class="card" href="urok10.html"><div class="n">10</div><h3>Автопилот</h3><p>Автотормоз и датчики линии.</p></a>
+    <a class="card" href="urok11.html"><div class="n">11</div><h3>Миссия</h3><p>Записываем маршрут — машина повторяет.</p></a>
+  </div>
+  <p style="margin-top:18px"><b>Бонус.</b></p>
+  <div class="cards">
+    <a class="card" href="urok12.html"><div class="n">12</div><h3>Камера (бонус)</h3><p>ESP32-CAM и «вид от первого лица».</p></a>
+  </div>
+
+  <h2>📦 Скачать код</h2>
+  <div class="dl-list">
+    <a href="code/arduino/drive_test.ino" download><span class="fname">arduino/drive_test.ino</span><span class="ficon">↓ проверка</span></a>
+    <a href="code/arduino/serial_drive.ino" download><span class="fname">arduino/serial_drive.ino</span><span class="ficon">↓ команды</span></a>
+    <a href="code/arduino/car_firmware.ino" download><span class="fname">arduino/car_firmware.ino</span><span class="ficon">↓ прошивка</span></a>
+    <a href="code/car_link.py" download><span class="fname">car_link.py</span><span class="ficon">↓ связь</span></a>
+    <a href="code/cockpit.py" download><span class="fname">cockpit.py</span><span class="ficon">↓ кокпит</span></a>
+    <a href="code/radar.py" download><span class="fname">radar.py</span><span class="ficon">↓ радар</span></a>
+    <a href="code/autopilot.py" download><span class="fname">autopilot.py</span><span class="ficon">↓ автопилот</span></a>
+    <a href="code/mission.py" download><span class="fname">mission.py</span><span class="ficon">↓ миссия</span></a>
+  </div>
+
+  <div class="pager">
+    <span class="pager-spacer" style="flex:1"></span>
+    <a class="next" href="urok1.html"><span class="dir">Начать →</span><span class="ttl">Урок 1 — Знакомство</span></a>
+  </div>
+
+</div>
+
+<footer>Курс робототехники · Elegoo Smart Robot Car + Python (pygame) 🚗</footer>
+</body>
+</html>

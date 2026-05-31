@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 11 — Проект «Миссия»</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🚗 Робомашинка</a>
+  <div class="dots">
+    <a class="dot" href="../index.html" title="Все роботы">🤖</a>
+    <a class="dot" href="urok1.html" title="Знакомство">1</a>
+    <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
+    <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
+    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok5.html" title="Bluetooth">5</a>
+    <a class="dot" href="urok6.html" title="Глаза машины">6</a>
+    <a class="dot" href="urok7.html" title="Первый заезд">7</a>
+    <a class="dot" href="urok8.html" title="Кокпит">8</a>
+    <a class="dot" href="urok9.html" title="Радар">9</a>
+    <a class="dot" href="urok10.html" title="Автопилот">10</a>
+    <a class="dot active" href="urok11.html" title="Миссия">11</a>
+    <a class="dot" href="urok12.html" title="Камера (бонус)">12</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 11 · проект</span>
+    <h1>Проект «Миссия» — запись маршрута</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Собрать финальный проект: машина <b>запоминает маршрут</b> и потом сама его повторяет. Это
+    та же идея «списка», что мы знаем из игр и из руки-робота.
+  </div>
+
+  <h2>🗺️ Маршрут — это список шагов</h2>
+  <p>Маршрут — обычный список команд: <code>["F", "F", "L", "F"]</code>. Едем стрелками, а кнопкой
+     «Записать шаг» добавляем текущую команду в список. Кнопка «Играть» проходит список по очереди:</p>
+  <pre>route = []                       <span class="com"># маршрут — список команд</span>
+
+<span class="com"># при клике «Записать шаг»:</span>
+route.<span class="fn">append</span>(command)          <span class="com"># запомнили текущую команду</span>
+
+<span class="com"># при «Играть» — по очереди, каждую держим STEP_FRAMES кадров:</span>
+<span class="fn">send_cmd</span>(route[play_index])</pre>
+
+  <div class="box idea">
+    <span class="label">💡 Где мы это уже видели</span>
+    У руки-робота программа была <b>списком поз</b>. В «Космосе» — <b>список пуль и врагов</b>.
+    Здесь маршрут — <b>список команд</b>. Одна и та же мощная идея: «много объектов — храним
+    списком и проходим в цикле».
+  </div>
+
+  <h2>🎮 Собираем пульт с кнопками</h2>
+  <p>Кнопки рисуем прямоугольниками и ловим клик мышкой <code>collidepoint</code> — точно как
+     кнопку «Играть заново» в «Космосе». Запусти <span class="run">mission.py</span>:</p>
+  <ul>
+    <li><code>↑↓ ←→</code> — рулим машиной;</li>
+    <li><b>Записать шаг</b> — добавить команду в маршрут;</li>
+    <li><b>Играть</b> — машина повторяет весь маршрут;</li>
+    <li><b>Очистить</b> — стереть маршрут.</li>
+  </ul>
+  <div class="dl-row">
+    <a class="dl" href="code/mission.py" download>⬇️ mission.py</a>
+    <a class="dl ghost" href="code/car_link.py" download>car_link.py</a>
+  </div>
+
+  <div class="box try">
+    <span class="label">🏁 Идеи, как развить проект</span>
+    • Запоминать не только команду, но и её длительность.<br>
+    • Кнопка «Назад по маршруту» — проехать путь в обратную сторону.<br>
+    • Совместить с уроком 10: во время повтора маршрута тормозить перед неожиданной стеной.<br>
+    • «Радар-кладоискатель»: спрятать предмет и искать его по радару.
+  </div>
+
+  <div class="box idea">
+    <span class="label">🎉 Ты прошёл основной курс!</span>
+    Машина ездит по Bluetooth, показывает радар, тормозит у стен и повторяет маршруты — и всё это
+    управляется твоим кодом на Python. Хочешь ещё круче? Дальше — бонус про камеру.
+  </div>
+
+  <div class="pager">
+    <a href="urok10.html"><span class="dir">← Назад</span><span class="ttl">Урок 10 — Автопилот</span></a>
+    <a class="next" href="urok12.html"><span class="dir">Бонус →</span><span class="ttl">Урок 12 — Камера</span></a>
+  </div>
+</div>
+
+<footer>Урок 11 из 12 · Робомашинка 🚗</footer>
+</body>
+</html>

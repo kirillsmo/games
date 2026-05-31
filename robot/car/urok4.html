@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 4 — Команды моторам</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🚗 Робомашинка</a>
+  <div class="dots">
+    <a class="dot" href="../index.html" title="Все роботы">🤖</a>
+    <a class="dot" href="urok1.html" title="Знакомство">1</a>
+    <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
+    <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
+    <a class="dot active" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok5.html" title="Bluetooth">5</a>
+    <a class="dot" href="urok6.html" title="Глаза машины">6</a>
+    <a class="dot" href="urok7.html" title="Первый заезд">7</a>
+    <a class="dot" href="urok8.html" title="Кокпит">8</a>
+    <a class="dot" href="urok9.html" title="Радар">9</a>
+    <a class="dot" href="urok10.html" title="Автопилот">10</a>
+    <a class="dot" href="urok11.html" title="Миссия">11</a>
+    <a class="dot" href="urok12.html" title="Камера (бонус)">12</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 4 · прошивка</span>
+    <h1>Команды моторам</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Научить машину слушать команды по Serial-порту: написать буквы — и машина едет
+    вперёд/назад/поворачивает. Пока по USB-проводу, через Serial Monitor.
+  </div>
+
+  <h2>🧠 Идея: команды одной буквой</h2>
+  <p>Договоримся об «языке» команд. Каждая команда — одна строка:</p>
+  <table>
+    <tr><th>Команда</th><th>Что делает</th></tr>
+    <tr><td><code>F,200</code></td><td>вперёд на скорости 200 (0…255)</td></tr>
+    <tr><td><code>B,200</code></td><td>назад</td></tr>
+    <tr><td><code>L,200</code></td><td>поворот налево (танком)</td></tr>
+    <tr><td><code>R,200</code></td><td>поворот направо</td></tr>
+    <tr><td><code>S</code></td><td>стоп</td></tr>
+  </table>
+
+  <h2>🔄 Поворот «танком»</h2>
+  <p>Чтобы повернуть налево, левые колёса крутятся <b>назад</b>, а правые — <b>вперёд</b>.
+     Машина разворачивается на месте. В коде это две функции: одна на левые моторы, другая
+     на правые, каждой говорим направление и скорость:</p>
+  <pre><span class="kw">void</span> <span class="fn">doCommand</span>(<span class="kw">char</span> dir, <span class="kw">int</span> speed) {
+  <span class="kw">if</span> (dir == <span class="str">'F'</span>) { <span class="fn">leftMotors</span>(<span class="num">1</span>, speed);  <span class="fn">rightMotors</span>(<span class="num">1</span>, speed); }
+  <span class="kw">else if</span> (dir == <span class="str">'L'</span>) { <span class="fn">leftMotors</span>(<span class="num">-1</span>, speed); <span class="fn">rightMotors</span>(<span class="num">1</span>, speed); }
+  <span class="com">// ... B и R — наоборот, S — стоп</span>
+}</pre>
+
+  <h2>📥 Заливаем прошивку</h2>
+  <p>Залей <span class="run">serial_drive.ino</span>. Открой <b>Serial Monitor</b> в Arduino IDE,
+     поставь скорость <b>9600</b> и впиши команду, например <code>F,200</code>, нажми Enter —
+     машина поедет. <code>S</code> — стоп.</p>
+  <div class="dl-row">
+    <a class="dl" href="code/arduino/serial_drive.ino" download>⬇️ serial_drive.ino</a>
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Это тот же serial, что у руки-робота</span>
+    Рука MeArm слушала команды <code>"номер,угол"</code>. Машина слушает <code>"буква,скорость"</code>.
+    Приём один и тот же: Arduino читает строку из порта и выполняет. В следующем уроке этот порт
+    станет беспроводным.
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Проверка (машина на коробке!)</span>
+    Команды <code>F</code>, <code>B</code>, <code>L</code>, <code>R</code>, <code>S</code> из
+    Serial Monitor работают, скорость меняет резвость колёс. Дальше — режем провод.
+  </div>
+
+  <div class="pager">
+    <a href="urok3.html"><span class="dir">← Назад</span><span class="ttl">Урок 3 — Мозг и провода</span></a>
+    <a class="next" href="urok5.html"><span class="dir">Дальше →</span><span class="ttl">Урок 5 — Bluetooth</span></a>
+  </div>
+</div>
+
+<footer>Урок 4 из 12 · Робомашинка 🚗</footer>
+</body>
+</html>

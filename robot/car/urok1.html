@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 1 — Знакомство с машиной</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🚗 Робомашинка</a>
+  <div class="dots">
+    <a class="dot" href="../index.html" title="Все роботы">🤖</a>
+    <a class="dot active" href="urok1.html" title="Знакомство">1</a>
+    <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
+    <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
+    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok5.html" title="Bluetooth">5</a>
+    <a class="dot" href="urok6.html" title="Глаза машины">6</a>
+    <a class="dot" href="urok7.html" title="Первый заезд">7</a>
+    <a class="dot" href="urok8.html" title="Кокпит">8</a>
+    <a class="dot" href="urok9.html" title="Радар">9</a>
+    <a class="dot" href="urok10.html" title="Автопилот">10</a>
+    <a class="dot" href="urok11.html" title="Миссия">11</a>
+    <a class="dot" href="urok12.html" title="Камера (бонус)">12</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 1 · сборка</span>
+    <h1>Знакомство с машиной</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Понять, из чего состоит машина и как она будет слушаться нашего кода. Разложить детали
+    набора и разобраться, кто за что отвечает.
+  </div>
+
+  <h2>🧩 Что в наборе</h2>
+  <p>Набор Elegoo Smart Robot Car — это конструктор машины-робота. В нём уже есть всё главное:</p>
+  <ul>
+    <li><b>Arduino UNO</b> — «мозг» машины (плата, которая выполняет нашу программу);</li>
+    <li>драйвер моторов <b>L298N</b> — «мускулы»: даёт моторам ток и команду крутиться;</li>
+    <li><b>4 мотора с колёсами</b> — машина едет и поворачивает;</li>
+    <li><b>ультразвук HC-SR04</b> на серво — «глаза»: меряет расстояние до препятствий;</li>
+    <li><b>датчики линии</b> — видят чёрную линию на полу;</li>
+    <li><b>Bluetooth-модуль</b> — связь с ноутбуком без проводов;</li>
+    <li>корпус, крепёж, провода и держатель батарей.</li>
+  </ul>
+
+  <h2>🔗 Как машина связана с ноутбуком</h2>
+  <p>Машина не понимает Python. Поэтому связь идёт по цепочке: мы пишем код на ноутбуке,
+     он по Bluetooth шлёт машине короткие команды, а UNO выполняет их моторами.</p>
+  <img src="img/architecture.svg" alt="Ноутбук, Bluetooth и машина" style="width:100%;border-radius:12px;margin:10px 0">
+
+  <div class="box idea">
+    <span class="label">💡 Чем машина отличается от руки-робота</span>
+    У руки MeArm питание шло по USB-проводу, и она стояла на месте. У машины — <b>своя
+    батарея</b>, поэтому провод не нужен и она ездит свободно. Связь — по Bluetooth. Это и есть
+    главная фишка курса: рулим настоящей машиной с клавиатуры, а она катается по комнате.
+  </div>
+
+  <h2>🔍 Разложим детали</h2>
+  <p>Открой набор и разложи по группам: <b>моторы и колёса</b>, <b>платы</b> (UNO, L298N),
+     <b>датчики</b> (ультразвук, линия), <b>Bluetooth</b>, <b>батарейный отсек</b> и крепёж.
+     Сверься с инструкцией Elegoo, какие детали к какой части.</p>
+
+  <div class="box warn">
+    <span class="label">⚠️ Про аккумуляторы 18650</span>
+    Машина питается от двух аккумуляторов 18650. Их часто нужно докупить и зарядить
+    (обязательно со взрослым). Ставят их строго по полярности <b>+/−</b> — перепутаешь, плата
+    может сгореть.
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Чек перед следующим уроком</span>
+    Все детали на месте, есть отвёртка, заряжены батареи. Понятно, кто «мозг», кто «мускулы»,
+    кто «глаза»? Тогда собираем машину.
+  </div>
+
+  <div class="pager">
+    <a href="index.html"><span class="dir">← К курсу</span><span class="ttl">Обзор машины</span></a>
+    <a class="next" href="urok2.html"><span class="dir">Дальше →</span><span class="ttl">Урок 2 — Сборка шасси</span></a>
+  </div>
+</div>
+
+<footer>Урок 1 из 12 · Робомашинка 🚗</footer>
+</body>
+</html>

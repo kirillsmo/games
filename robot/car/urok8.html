@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 8 — Кокпит</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🚗 Робомашинка</a>
+  <div class="dots">
+    <a class="dot" href="../index.html" title="Все роботы">🤖</a>
+    <a class="dot" href="urok1.html" title="Знакомство">1</a>
+    <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
+    <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
+    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok5.html" title="Bluetooth">5</a>
+    <a class="dot" href="urok6.html" title="Глаза машины">6</a>
+    <a class="dot" href="urok7.html" title="Первый заезд">7</a>
+    <a class="dot active" href="urok8.html" title="Кокпит">8</a>
+    <a class="dot" href="urok9.html" title="Радар">9</a>
+    <a class="dot" href="urok10.html" title="Автопилот">10</a>
+    <a class="dot" href="urok11.html" title="Миссия">11</a>
+    <a class="dot" href="urok12.html" title="Камера (бонус)">12</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 8 · код</span>
+    <h1>Кокпит — приборная панель</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Превратить простой пульт в «кокпит»: добавить регулировку скорости, приборы на экране
+    (скорость полоской, текущая команда) и индикатор связи.
+  </div>
+
+  <h2>⚙️ Скорость на лету</h2>
+  <p>Заведём переменную <code>speed</code> и будем менять её клавишами <code>+</code> и
+     <code>-</code>. Меняем по событию нажатия (а не каждый кадр), с ограничением 80…255:</p>
+  <pre><span class="kw">if</span> event.type == pygame.KEYDOWN:
+    <span class="kw">if</span> event.key <span class="kw">in</span> (pygame.K_EQUALS, pygame.K_KP_PLUS):
+        speed = <span class="fn">min</span>(<span class="num">255</span>, speed + <span class="num">20</span>)   <span class="com"># быстрее</span>
+    <span class="kw">if</span> event.key <span class="kw">in</span> (pygame.K_MINUS, pygame.K_KP_MINUS):
+        speed = <span class="fn">max</span>(<span class="num">80</span>, speed - <span class="num">20</span>)    <span class="com"># медленнее</span></pre>
+
+  <h2>📊 Приборы на экране</h2>
+  <p>Рисуем «полоску» скорости — это просто прямоугольник, ширина которого равна скорости.
+     И показываем, есть ли связь (у <code>car</code> есть подсказка <code>car.online</code>):</p>
+  <pre><span class="com"># полоска скорости</span>
+pygame.draw.<span class="fn">rect</span>(screen, (<span class="num">60</span>,<span class="num">60</span>,<span class="num">80</span>), (<span class="num">24</span>,<span class="num">140</span>,<span class="num">255</span>,<span class="num">20</span>))
+pygame.draw.<span class="fn">rect</span>(screen, (<span class="num">108</span>,<span class="num">178</span>,<span class="num">255</span>), (<span class="num">24</span>,<span class="num">140</span>, speed, <span class="num">20</span>))
+
+link = <span class="str">"есть связь"</span> <span class="kw">if</span> car.online <span class="kw">else</span> <span class="str">"режим показа"</span></pre>
+  <p>Запусти <span class="run">cockpit.py</span>: <code>↑↓ ←→</code> руль, <code>+/-</code> скорость.</p>
+  <div class="dl-row">
+    <a class="dl" href="code/cockpit.py" download>⬇️ cockpit.py</a>
+    <a class="dl ghost" href="code/car_link.py" download>car_link.py</a>
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Это та же приборная панель, что в играх</span>
+    Полоска скорости — как полоска жизней в «Космосе»: прямоугольник, длина которого зависит от
+    числа. Ничего нового — просто рисуем по числам.
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Проверка</span>
+    На экране видно команду, скорость-полоску и состояние связи. <code>+/-</code> реально меняют
+    резвость машины. Готов к самому зрелищному уроку — радару.
+  </div>
+
+  <div class="pager">
+    <a href="urok7.html"><span class="dir">← Назад</span><span class="ttl">Урок 7 — Первый заезд</span></a>
+    <a class="next" href="urok9.html"><span class="dir">Дальше →</span><span class="ttl">Урок 9 — Радар</span></a>
+  </div>
+</div>
+
+<footer>Урок 8 из 12 · Робомашинка 🚗</footer>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 10 — Автопилот</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🚗 Робомашинка</a>
+  <div class="dots">
+    <a class="dot" href="../index.html" title="Все роботы">🤖</a>
+    <a class="dot" href="urok1.html" title="Знакомство">1</a>
+    <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
+    <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
+    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok5.html" title="Bluetooth">5</a>
+    <a class="dot" href="urok6.html" title="Глаза машины">6</a>
+    <a class="dot" href="urok7.html" title="Первый заезд">7</a>
+    <a class="dot" href="urok8.html" title="Кокпит">8</a>
+    <a class="dot" href="urok9.html" title="Радар">9</a>
+    <a class="dot active" href="urok10.html" title="Автопилот">10</a>
+    <a class="dot" href="urok11.html" title="Миссия">11</a>
+    <a class="dot" href="urok12.html" title="Камера (бонус)">12</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 10 · код</span>
+    <h1>Автопилот-помощник</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Заставить компьютер <b>помогать водителю</b>: автотормоз перед стеной и показ датчиков линии.
+    Это первый шаг к «умной» машине.
+  </div>
+
+  <h2>🛑 Автотормоз</h2>
+  <p>Из телеметрии берём расстояние прямо по курсу (углы около 90°). Если впереди ближе 20 см —
+     запрещаем ехать вперёд и мигаем «СТОП». Логика — обычный <code>if</code>:</p>
+  <pre>blocked = front_cm &lt; <span class="num">20</span>          <span class="com"># стена близко?</span>
+
+<span class="kw">if</span> keys[pygame.K_UP] <span class="kw">and</span> <span class="kw">not</span> blocked:
+    <span class="fn">drive</span>(<span class="str">"F"</span>)                  <span class="com"># вперёд можно</span>
+<span class="kw">elif</span> ...                          <span class="com"># назад/повороты — как обычно</span></pre>
+  <p>Так машина не врежется, даже если водитель давит «вперёд». Компьютер страхует.</p>
+
+  <h2>▣ Датчики линии на экране</h2>
+  <p>Машина шлёт строку <code>"T,л,с,п"</code> — видят ли линию левый, средний и правый датчики.
+     Рисуем три кружка: горит зелёным, когда датчик видит линию:</p>
+  <pre>msg = car.<span class="fn">read</span>()
+<span class="kw">if</span> msg <span class="kw">and</span> msg.<span class="fn">startswith</span>(<span class="str">"T,"</span>):
+    parts = msg.<span class="fn">split</span>(<span class="str">","</span>)
+    line = [<span class="fn">int</span>(parts[<span class="num">1</span>]), <span class="fn">int</span>(parts[<span class="num">2</span>]), <span class="fn">int</span>(parts[<span class="num">3</span>])]</pre>
+  <p>Запусти <span class="run">autopilot.py</span>: едешь стрелками, но у стены машина сама тормозит.</p>
+  <div class="dl-row">
+    <a class="dl" href="code/autopilot.py" download>⬇️ autopilot.py</a>
+    <a class="dl ghost" href="code/car_link.py" download>car_link.py</a>
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Кто принимает решение?</span>
+    Заметь: «тормозить или нет» решает <b>наш Python</b>, а не Arduino. Машина лишь шлёт числа,
+    а ум — на ноутбуке. Так удобно: правила поведения легко менять в понятном Python-коде.
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Проверка (а потом — идея!)</span>
+    Машина тормозит перед стеной, кружки датчиков линии загораются. <b>Идея для смелых:</b> когда
+    впереди стена — пусть машина сама чуть повернёт (<code>drive("R")</code>), чтобы объехать.
+  </div>
+
+  <div class="pager">
+    <a href="urok9.html"><span class="dir">← Назад</span><span class="ttl">Урок 9 — Радар</span></a>
+    <a class="next" href="urok11.html"><span class="dir">Дальше →</span><span class="ttl">Урок 11 — Миссия</span></a>
+  </div>
+</div>
+
+<footer>Урок 10 из 12 · Робомашинка 🚗</footer>
+</body>
+</html>

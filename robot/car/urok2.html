@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 2 — Сборка шасси</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🚗 Робомашинка</a>
+  <div class="dots">
+    <a class="dot" href="../index.html" title="Все роботы">🤖</a>
+    <a class="dot" href="urok1.html" title="Знакомство">1</a>
+    <a class="dot active" href="urok2.html" title="Сборка шасси">2</a>
+    <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
+    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok5.html" title="Bluetooth">5</a>
+    <a class="dot" href="urok6.html" title="Глаза машины">6</a>
+    <a class="dot" href="urok7.html" title="Первый заезд">7</a>
+    <a class="dot" href="urok8.html" title="Кокпит">8</a>
+    <a class="dot" href="urok9.html" title="Радар">9</a>
+    <a class="dot" href="urok10.html" title="Автопилот">10</a>
+    <a class="dot" href="urok11.html" title="Миссия">11</a>
+    <a class="dot" href="urok12.html" title="Камера (бонус)">12</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 2 · сборка</span>
+    <h1>Собираем шасси</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Собрать «тело» машины: прикрутить моторы и колёса, поставить батарейный отсек и платы.
+    В конце урока — готовая машина (пока без «ума»).
+  </div>
+
+  <h2>🛠️ Порядок сборки</h2>
+  <p>У набора есть подробная официальная инструкция Elegoo с фотографиями каждого шага. Наш урок —
+     про <b>понимание</b>, что мы делаем и зачем, а не про каждый винтик. Общий порядок такой:</p>
+  <ol>
+    <li><b>Моторы на нижнюю плату.</b> 4 мотора крепятся по углам, провода выводим наверх.</li>
+    <li><b>Колёса на моторы.</b> Надеваем колёса на оси моторов.</li>
+    <li><b>Батарейный отсек.</b> Ставим держатель на 2× 18650 — это «бак» машины.</li>
+    <li><b>Верхняя плата.</b> На неё крепим Arduino UNO и драйвер L298N.</li>
+    <li><b>Серво с ультразвуком — спереди.</b> «Глаза» смотрят вперёд, серво даст им крутиться.</li>
+    <li><b>Датчики линии — снизу спереди</b>, близко к полу.</li>
+  </ol>
+
+  <div class="box idea">
+    <span class="label">💡 Зачем 4 мотора, а руль не нужен?</span>
+    Машина поворачивает <b>как танк</b>: левые и правые колёса крутятся в разные стороны, и
+    машина разворачивается на месте. Поэтому руля нет — поворотом управляет разница скоростей
+    колёс. Это нам пригодится в прошивке (команды <b>L</b> и <b>R</b>).
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ Аккуратно с проводами моторов</span>
+    Провода моторов длинные — выведи их наверх и не зажми между платами. Какой провод куда —
+    разберёмся в следующем уроке. Пока просто аккуратно собери и заметь, где левые, где правые
+    моторы.
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Проверка</span>
+    Машина стоит на 4 колёсах, ничего не болтается, провода моторов и датчиков выведены наверх,
+    батарейный отсек на месте. Готово? Дадим машине «мозг».
+  </div>
+
+  <div class="pager">
+    <a href="urok1.html"><span class="dir">← Назад</span><span class="ttl">Урок 1 — Знакомство</span></a>
+    <a class="next" href="urok3.html"><span class="dir">Дальше →</span><span class="ttl">Урок 3 — Мозг и провода</span></a>
+  </div>
+</div>
+
+<footer>Урок 2 из 12 · Робомашинка 🚗</footer>
+</body>
+</html>

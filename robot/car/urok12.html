@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 12 — Камера (бонус)</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🚗 Робомашинка</a>
+  <div class="dots">
+    <a class="dot" href="../index.html" title="Все роботы">🤖</a>
+    <a class="dot" href="urok1.html" title="Знакомство">1</a>
+    <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
+    <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
+    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok5.html" title="Bluetooth">5</a>
+    <a class="dot" href="urok6.html" title="Глаза машины">6</a>
+    <a class="dot" href="urok7.html" title="Первый заезд">7</a>
+    <a class="dot" href="urok8.html" title="Кокпит">8</a>
+    <a class="dot" href="urok9.html" title="Радар">9</a>
+    <a class="dot" href="urok10.html" title="Автопилот">10</a>
+    <a class="dot" href="urok11.html" title="Миссия">11</a>
+    <a class="dot active" href="urok12.html" title="Камера (бонус)">12</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 12 · бонус · продвинутый</span>
+    <h1>Камера — вид от первого лица</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Подключить камеру <b>ESP32-CAM</b> и показать видео с машины в окне pygame. Получится FPV —
+    «вид от первого лица», как у настоящих дронов.
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ Это продвинутый и необязательный урок</span>
+    Камера ESP32-CAM не входит в набор и подключается отдельно. Весь курс прекрасно работает
+    и без неё. Берись за этот урок, если хочется большего и рядом есть взрослый-помощник.
+  </div>
+
+  <h2>📷 Как камера отдаёт видео</h2>
+  <p>ESP32-CAM — это маленькая плата с камерой и Wi-Fi. Она раздаёт видео как <b>поток картинок
+     JPEG</b> (формат MJPEG) по адресу вроде <code>http://192.168.4.1:81/stream</code>. Видео — это
+     просто много картинок подряд, наша задача — ловить их и показывать.</p>
+
+  <h2>🧩 Что нужно сделать</h2>
+  <ol>
+    <li>Залить в ESP32-CAM пример <b>CameraWebServer</b> из Arduino IDE (со взрослым: для прошивки
+        нужен USB-переходник).</li>
+    <li>Узнать IP-адрес камеры — он печатается в Serial Monitor при старте.</li>
+    <li>Подключить ноутбук к Wi-Fi камеры и вписать адрес в <code>CAM_URL</code>.</li>
+  </ol>
+  <pre>CAM_URL = <span class="str">"http://192.168.4.1:81/stream"</span>   <span class="com"># ← адрес своей камеры</span></pre>
+
+  <h2>🖼️ Показываем кадры в pygame</h2>
+  <p>Поток читаем в фоновом потоке, вырезаем каждый кадр JPEG (он начинается с байтов
+     <code>FF D8</code> и кончается <code>FF D9</code>) и рисуем картинку:</p>
+  <pre>frame = pygame.image.<span class="fn">load</span>(io.<span class="fn">BytesIO</span>(latest_jpeg))
+screen.<span class="fn">blit</span>(frame, (<span class="num">0</span>, <span class="num">0</span>))</pre>
+  <p>Запусти <span class="run">fpv.py</span>. Если камеры нет — программа не упадёт, просто покажет
+     «нет сигнала».</p>
+  <div class="dl-row">
+    <a class="dl" href="code/fpv.py" download>⬇️ fpv.py</a>
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Куда расти дальше</span>
+    Соедини камеру и кокпит: видео на весь экран, а сверху — HUD радара и кнопки управления.
+    Получится настоящая станция управления: видишь «глазами» машины и рулишь, даже когда она
+    в другой комнате.
+  </div>
+
+  <div class="box try">
+    <span class="label">🏆 Финал курса</span>
+    Ты собрал машину-робота, научил её ездить по Bluetooth, рисовать радар, тормозить у стен,
+    повторять маршруты — и даже показывать видео. Это уже серьёзная робототехника. Поздравляю!
+  </div>
+
+  <div class="pager">
+    <a href="urok11.html"><span class="dir">← Назад</span><span class="ttl">Урок 11 — Миссия</span></a>
+    <a class="next" href="index.html"><span class="dir">К курсу →</span><span class="ttl">Обзор машины</span></a>
+  </div>
+</div>
+
+<footer>Урок 12 из 12 · Робомашинка 🚗</footer>
+</body>
+</html>

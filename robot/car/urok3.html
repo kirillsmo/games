@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 3 — Мозг и провода</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="home" href="index.html">🚗 Робомашинка</a>
+  <div class="dots">
+    <a class="dot" href="../index.html" title="Все роботы">🤖</a>
+    <a class="dot" href="urok1.html" title="Знакомство">1</a>
+    <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
+    <a class="dot active" href="urok3.html" title="Мозг и провода">3</a>
+    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok5.html" title="Bluetooth">5</a>
+    <a class="dot" href="urok6.html" title="Глаза машины">6</a>
+    <a class="dot" href="urok7.html" title="Первый заезд">7</a>
+    <a class="dot" href="urok8.html" title="Кокпит">8</a>
+    <a class="dot" href="urok9.html" title="Радар">9</a>
+    <a class="dot" href="urok10.html" title="Автопилот">10</a>
+    <a class="dot" href="urok11.html" title="Миссия">11</a>
+    <a class="dot" href="urok12.html" title="Камера (бонус)">12</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 3 · сборка</span>
+    <h1>Мозг и провода — первая жизнь</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Подключить моторы к драйверу L298N, залить простой скетч — и машина впервые поедет
+    (вперёд 2 секунды и стоп). Это «первая жизнь».
+  </div>
+
+  <h2>🔌 Подключаем моторы к L298N</h2>
+  <p>Драйвер <b>L298N</b> — это «мускулы». У него два канала: один на левые моторы, другой
+     на правые. Каждый канал управляется тремя пинами Arduino:</p>
+  <ul>
+    <li><b>ENA</b> и <b>ENB</b> — скорость (0…255, через <code>analogWrite</code>);</li>
+    <li><b>IN1, IN2</b> — направление левых моторов;</li>
+    <li><b>IN3, IN4</b> — направление правых моторов.</li>
+  </ul>
+  <img src="img/wiring-l298n.svg" alt="Схема подключения UNO и L298N" style="width:100%;border-radius:12px;margin:10px 0">
+
+  <div class="box warn">
+    <span class="label">⚠️ Пины зависят от твоей платы</span>
+    В наборе провода часто уже разведены под определённые пины. Сверь номера пинов на схеме с
+    реальной платой и инструкцией Elegoo. В нашем коде по умолчанию: левые
+    <code>ENA=5, IN1=7, IN2=8</code>, правые <code>ENB=6, IN3=9, IN4=11</code>.
+  </div>
+
+  <h2>🚀 Заливаем проверочный скетч</h2>
+  <p>Открой <span class="run">drive_test.ino</span> в Arduino IDE (плата «Arduino UNO»),
+     выбери порт и нажми «Загрузить». Внутри всё просто:</p>
+  <pre><span class="com">// едем вперёд: оба мотора крутятся «вперёд»</span>
+<span class="fn">digitalWrite</span>(IN1, HIGH); <span class="fn">digitalWrite</span>(IN2, LOW);
+<span class="fn">digitalWrite</span>(IN3, HIGH); <span class="fn">digitalWrite</span>(IN4, LOW);
+<span class="fn">analogWrite</span>(ENA, <span class="num">200</span>);   <span class="com">// скорость левых</span>
+<span class="fn">analogWrite</span>(ENB, <span class="num">200</span>);   <span class="com">// скорость правых</span>
+<span class="fn">delay</span>(<span class="num">2000</span>);          <span class="com">// 2 секунды</span></pre>
+  <div class="dl-row">
+    <a class="dl" href="code/arduino/drive_test.ino" download>⬇️ drive_test.ino</a>
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ ПОДНИМИ машину на коробок!</span>
+    Перед заливкой поставь машину на коробок/книжку, чтобы колёса крутились в воздухе. Иначе
+    она уедет со стола. Включи питание машины (батареи) — без него моторы не поедут.
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Машина едет криво или назад?</span>
+    Если колёса крутятся не туда — поменяй местами два провода этого мотора на L298N (или поменяй
+    <code>HIGH</code>/<code>LOW</code> в коде). Это нормальная настройка, у всех бывает.
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Проверка</span>
+    Машина проехала вперёд ~2 секунды и остановилась. Все 4 колеса крутятся в нужную сторону.
+    Получилось? Теперь научим её слушаться команд.
+  </div>
+
+  <div class="pager">
+    <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Сборка шасси</span></a>
+    <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Команды моторам</span></a>
+  </div>
+</div>
+
+<footer>Урок 3 из 12 · Робомашинка 🚗</footer>
+</body>
+</html>
