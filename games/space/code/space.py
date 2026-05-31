@@ -1,7 +1,7 @@
 """
 Космос — стреляй по падающим пришельцам!
 Стрелки влево/вправо — двигать корабль. Пробел — стрелять.
-Когда игра окончена — пробел запускает заново.
+Когда игра окончена — кнопка на экране или Enter запускают заново.
 F — полный экран, ESC — выход.
 """
 import pygame, sys, random, os
@@ -61,6 +61,12 @@ SPAWN_EVERY = 45                   # через сколько кадров по
 # Звёзды на фоне (просто для красоты)
 stars = [(random.randint(0, WIDTH), random.randint(0, HEIGHT)) for _ in range(40)]
 
+small_font = pygame.font.SysFont(None, 26)
+
+# Кнопки на экране «Игра окончена» (прямоугольники, по ним кликаем мышкой)
+RESTART_BTN = pygame.Rect(WIDTH // 2 - 120, HEIGHT // 2 + 24, 240, 46)
+QUIT_BTN = pygame.Rect(WIDTH // 2 - 80, HEIGHT // 2 + 82, 160, 36)
+
 
 def draw_ship(x):
     """Корабль — синий треугольник носом вверх."""
@@ -102,14 +108,21 @@ while True:
             elif event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 sys.exit()
-            elif event.key == pygame.K_SPACE:
-                if state == "play":
-                    # выстрел — добавляем новую пулю в список
-                    bullets.append(pygame.Rect(ship_x - BULLET_W // 2, ship_y, BULLET_W, BULLET_H))
-                    shoot_sound.play()
-                else:
-                    ship_x, bullets, enemies, score, lives, spawn_timer = new_game()
-                    state = "play"
+            elif event.key == pygame.K_SPACE and state == "play":
+                # выстрел — добавляем новую пулю в список (пробел больше НЕ перезапускает!)
+                bullets.append(pygame.Rect(ship_x - BULLET_W // 2, ship_y, BULLET_W, BULLET_H))
+                shoot_sound.play()
+            elif event.key == pygame.K_RETURN and state == "over":
+                ship_x, bullets, enemies, score, lives, spawn_timer = new_game()
+                state = "play"
+        # На экране «Игра окончена» — клик мышкой по кнопкам
+        if event.type == pygame.MOUSEBUTTONDOWN and state == "over":
+            if RESTART_BTN.collidepoint(event.pos):
+                ship_x, bullets, enemies, score, lives, spawn_timer = new_game()
+                state = "play"
+            elif QUIT_BTN.collidepoint(event.pos):
+                pygame.quit()
+                sys.exit()
 
     if state == "play":
         keys = pygame.key.get_pressed()
@@ -172,10 +185,31 @@ while True:
     screen.blit(hud, (12, 8))
 
     if state == "over":
+        # Затемняем поле, чтобы экран был хорошо виден
+        overlay = pygame.Surface((WIDTH, HEIGHT))
+        overlay.set_alpha(190)
+        overlay.fill((10, 10, 25))
+        screen.blit(overlay, (0, 0))
+
         t1 = big_font.render("Игра окончена", True, RED)
-        screen.blit(t1, t1.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 20)))
-        t2 = font.render("Пробел — играть заново", True, WHITE)
-        screen.blit(t2, t2.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 25)))
+        screen.blit(t1, t1.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 70)))
+        sc = font.render(f"Твой счёт: {score}", True, WHITE)
+        screen.blit(sc, sc.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 25)))
+
+        mouse = pygame.mouse.get_pos()
+        # Кнопка «Играть заново» (подсвечивается при наведении)
+        hot = RESTART_BTN.collidepoint(mouse)
+        pygame.draw.rect(screen, GREEN if hot else (18, 150, 100), RESTART_BTN, border_radius=10)
+        bt = font.render("Играть заново", True, (6, 40, 26))
+        screen.blit(bt, bt.get_rect(center=RESTART_BTN.center))
+        # Кнопка «Выход»
+        hotq = QUIT_BTN.collidepoint(mouse)
+        pygame.draw.rect(screen, (70, 72, 95) if hotq else (45, 46, 64), QUIT_BTN, border_radius=8)
+        qt = font.render("Выход", True, WHITE)
+        screen.blit(qt, qt.get_rect(center=QUIT_BTN.center))
+
+        hint = small_font.render("Enter — заново · Esc — выход", True, (150, 152, 175))
+        screen.blit(hint, hint.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 132)))
 
     pygame.display.flip()
     clock.tick(60)

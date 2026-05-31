@@ -30,7 +30,8 @@
   <div class="goal">
     <span class="label">Что ты увидишь</span>
     Пропустил врага вниз или столкнулся с ним — минус жизнь. Жизни кончились —
-    «Игра окончена», пробел запускает заново. Это готовая игра. Файл:
+    «Игра окончена»: видишь свой счёт и кнопку «Играть заново» (или жми Enter).
+    Это готовая игра. Файл:
     <span class="run">space.py</span> (он же <span class="run">step5_lives.py</span>)
   </div>
   <div class="dl-row">
@@ -65,20 +66,33 @@ state = <span class="str">"play"</span>            <span class="com"># "play" | 
     <span class="kw">if</span> lives &lt;= <span class="num">0</span>:
         state = <span class="str">"over"</span>
 
-<span class="com"># --- пробел: стреляет в игре, перезапускает после конца ---</span>
-        <span class="kw">elif</span> event.key == pygame.K_SPACE:
-            <span class="kw">if</span> state == <span class="str">"play"</span>:
-                bullets.<span class="fn">append</span>(pygame.<span class="fn">Rect</span>(ship_x - BULLET_W // <span class="num">2</span>, ship_y, BULLET_W, BULLET_H))
-            <span class="kw">else</span>:
-                ship_x, bullets, enemies, score, lives, spawn_timer = <span class="fn">new_game</span>()
-                state = <span class="str">"play"</span></pre>
+<span class="com"># --- пробел ТОЛЬКО стреляет; перезапуск — Enter или кнопка ---</span>
+        <span class="kw">elif</span> event.key == pygame.K_SPACE <span class="kw">and</span> state == <span class="str">"play"</span>:
+            bullets.<span class="fn">append</span>(pygame.<span class="fn">Rect</span>(ship_x - BULLET_W // <span class="num">2</span>, ship_y, BULLET_W, BULLET_H))
+        <span class="kw">elif</span> event.key == pygame.K_RETURN <span class="kw">and</span> state == <span class="str">"over"</span>:
+            ship_x, bullets, enemies, score, lives, spawn_timer = <span class="fn">new_game</span>()
+            state = <span class="str">"play"</span>
+
+    <span class="com"># клик мышкой по кнопке «Играть заново»</span>
+    <span class="kw">if</span> event.type == pygame.MOUSEBUTTONDOWN <span class="kw">and</span> state == <span class="str">"over"</span>:
+        <span class="kw">if</span> RESTART_BTN.<span class="fn">collidepoint</span>(event.pos):
+            ship_x, bullets, enemies, score, lives, spawn_timer = <span class="fn">new_game</span>()
+            state = <span class="str">"play"</span></pre>
 
   <h2>🔍 Мелочи, которые важно понять</h2>
 
-  <h3>Пробел делает <b>два</b> разных дела</h3>
-  <p>Пока играем — пробел стреляет. После «Игра окончена» — тот же пробел
-     запускает заново. Поэтому проверяем <code>state</code>: <code>if state ==
-     "play"</code> → выстрел, <code>else</code> → новая игра.</p>
+  <h3>⚠️ Почему пробел НЕ перезапускает</h3>
+  <p>Заманчиво повесить и стрельбу, и рестарт на пробел. Но в конце игры ты ещё
+     жмёшь пробел (стрелял же!) — и игра мгновенно начнётся заново, а ты даже не
+     успеешь увидеть свой счёт. Поэтому <b>пробел только стреляет</b>, а перезапуск
+     отдельно: клавишей <b>Enter</b> или <b>кликом по кнопке</b> на экране.</p>
+
+  <h3>Кнопка — это прямоугольник + проверка клика</h3>
+  <p>Кнопка «Играть заново» — обычный <code>pygame.Rect</code>. Когда кликнули мышкой
+     (<code>MOUSEBUTTONDOWN</code>), проверяем
+     <code>RESTART_BTN.collidepoint(event.pos)</code> — попал ли курсор внутрь.
+     Попал — начинаем новую игру. А финальный счёт показываем так:
+     <code>font.render(f"Твой счёт: {score}")</code>.</p>
 
   <h3><code>new_game()</code> — чистый старт</h3>
   <p>Функция возвращает всё «как в начале»: корабль по центру, пустые списки, очки
