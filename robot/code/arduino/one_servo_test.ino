@@ -1,23 +1,33 @@
 /*
-  one_servo_test.ino — проверяем ОДИН сервопривод и центрируем его в 90°.
-  Удобно при сборке: воткнул серво в пин 9, залил — он встал в центр.
-  Хочешь увидеть движение? Раскомментируй блок "качание" в loop().
+  one_servo_test.ino — проверяем ОДИН сервопривод и центрируем его в 90°
+  через драйвер PCA9685. Удобно при сборке: воткнул серво в КАНАЛ 0, залил —
+  он встал в центр. Хочешь увидеть движение? Раскомментируй блок в loop().
 
-  Сигнальный провод серво -> пин 9.
-  Питание серво — внешние 5–6 В, общая земля с Arduino.
+  Подключение (минимум, см. урок 6):
+    Nano A4 -> SDA, A5 -> SCL, 5V -> VCC и V+, GND -> GND
+    проверяемый серво -> КАНАЛ 0 платы PCA9685
+  Нужна библиотека "Adafruit PWM Servo Driver Library".
 */
-#include <Servo.h>
+#include <Wire.h>
+#include <Adafruit_PWMServoDriver.h>
 
-Servo servo;
-const int PIN = 9;
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();   // 0x40
+const int CHANNEL = 0;
+const int SERVOMIN = 150;
+const int SERVOMAX = 600;
+
+int angleToPulse(int angle) {
+  return map(angle, 0, 180, SERVOMIN, SERVOMAX);
+}
 
 void setup() {
-  servo.attach(PIN);
-  servo.write(90);          // центр — то, что нужно перед сборкой
+  pwm.begin();
+  pwm.setPWMFreq(50);
+  pwm.setPWM(CHANNEL, 0, angleToPulse(90));   // центр — нужно перед сборкой
 }
 
 void loop() {
-  // --- качание (для проверки, что серво живой) ---
-  // servo.write(60);  delay(500);
-  // servo.write(120); delay(500);
+  // --- качание (проверка, что серво живой) ---
+  // pwm.setPWM(CHANNEL, 0, angleToPulse(60));  delay(500);
+  // pwm.setPWM(CHANNEL, 0, angleToPulse(120)); delay(500);
 }

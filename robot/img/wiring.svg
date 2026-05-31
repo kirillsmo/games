@@ -1,55 +1,75 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 400" font-family="-apple-system, Segoe UI, sans-serif">
-  <rect x="0" y="0" width="580" height="400" rx="14" fill="#1a1b28"/>
-  <text x="22" y="30" fill="#16c47f" font-size="17" font-weight="700">Схема подключения</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 440" font-family="-apple-system, Segoe UI, sans-serif">
+  <rect x="0" y="0" width="620" height="440" rx="14" fill="#1a1b28"/>
+  <text x="22" y="30" fill="#16c47f" font-size="17" font-weight="700">Схема: Nano + PCA9685 + 4 серво (питание по USB)</text>
 
-  <!-- Arduino -->
-  <rect x="28" y="60" width="150" height="180" rx="10" fill="#13351f" stroke="#16c47f" stroke-width="2"/>
-  <text x="103" y="88" fill="#eaeaea" font-size="16" text-anchor="middle" font-weight="700">Arduino</text>
-  <text x="103" y="108" fill="#9a9ab0" font-size="12" text-anchor="middle">(USB к компьютеру)</text>
-  <!-- пины -->
-  <text x="44" y="138" fill="#ffb74d" font-size="13">пин 3</text>
-  <text x="44" y="162" fill="#ffb74d" font-size="13">пин 5</text>
-  <text x="44" y="186" fill="#ffb74d" font-size="13">пин 6</text>
-  <text x="44" y="210" fill="#ffb74d" font-size="13">пин 9</text>
-  <text x="120" y="232" fill="#cfcfe0" font-size="13">GND</text>
-  <circle cx="172" cy="134" r="4" fill="#ffb74d"/>
-  <circle cx="172" cy="158" r="4" fill="#ffb74d"/>
-  <circle cx="172" cy="182" r="4" fill="#ffb74d"/>
-  <circle cx="172" cy="206" r="4" fill="#ffb74d"/>
-  <circle cx="172" cy="228" r="4" fill="#cfcfe0"/>
+  <!-- USB источник -->
+  <rect x="20" y="58" width="150" height="40" rx="8" fill="#262738" stroke="#9a9ab0" stroke-width="1.5"/>
+  <text x="95" y="76" fill="#eaeaea" font-size="12" text-anchor="middle">💻 USB 5 В</text>
+  <text x="95" y="91" fill="#9a9ab0" font-size="11" text-anchor="middle">(ПК или зарядка 2 А)</text>
 
-  <!-- 4 серво -->
-  <g>
-    <rect x="392" y="64" width="160" height="34" rx="6" fill="#2f3550" stroke="#6c8cff" stroke-width="1.5"/>
-    <text x="472" y="86" fill="#eaeaea" font-size="14" text-anchor="middle">серво 0 — база</text>
-    <rect x="392" y="106" width="160" height="34" rx="6" fill="#2f3550" stroke="#6c8cff" stroke-width="1.5"/>
-    <text x="472" y="128" fill="#eaeaea" font-size="14" text-anchor="middle">серво 1 — плечо</text>
-    <rect x="392" y="148" width="160" height="34" rx="6" fill="#2f3550" stroke="#6c8cff" stroke-width="1.5"/>
-    <text x="472" y="170" fill="#eaeaea" font-size="14" text-anchor="middle">серво 2 — локоть</text>
-    <rect x="392" y="190" width="160" height="34" rx="6" fill="#2f3550" stroke="#6c8cff" stroke-width="1.5"/>
-    <text x="472" y="212" fill="#eaeaea" font-size="14" text-anchor="middle">серво 3 — захват</text>
+  <!-- Nano -->
+  <rect x="40" y="130" width="130" height="160" rx="10" fill="#13351f" stroke="#16c47f" stroke-width="2"/>
+  <text x="105" y="156" fill="#eaeaea" font-size="15" text-anchor="middle" font-weight="700">Arduino Nano</text>
+  <rect x="28" y="150" width="16" height="22" rx="2" fill="#9a9ab0"/>
+  <line x1="36" y1="98" x2="36" y2="150" stroke="#9a9ab0" stroke-width="3"/>
+  <!-- пины Nano (справа) -->
+  <text x="120" y="186" fill="#ff6b6b" font-size="12" text-anchor="end">5V</text>
+  <text x="120" y="214" fill="#cfcfe0" font-size="12" text-anchor="end">GND</text>
+  <text x="120" y="242" fill="#6c8cff" font-size="12" text-anchor="end">A4 (SDA)</text>
+  <text x="120" y="270" fill="#16c47f" font-size="12" text-anchor="end">A5 (SCL)</text>
+  <circle cx="170" cy="182" r="4" fill="#ff6b6b"/>
+  <circle cx="170" cy="210" r="4" fill="#cfcfe0"/>
+  <circle cx="170" cy="238" r="4" fill="#6c8cff"/>
+  <circle cx="170" cy="266" r="4" fill="#16c47f"/>
+
+  <!-- PCA9685 -->
+  <rect x="270" y="96" width="170" height="250" rx="10" fill="#2f3550" stroke="#6c8cff" stroke-width="2"/>
+  <text x="355" y="120" fill="#eaeaea" font-size="14" text-anchor="middle" font-weight="700">PCA9685</text>
+  <!-- входы слева -->
+  <circle cx="270" cy="150" r="4" fill="#ff6b6b"/><text x="282" y="154" fill="#eaeaea" font-size="11">VCC</text>
+  <circle cx="270" cy="178" r="4" fill="#cfcfe0"/><text x="282" y="182" fill="#eaeaea" font-size="11">GND</text>
+  <circle cx="270" cy="206" r="4" fill="#6c8cff"/><text x="282" y="210" fill="#eaeaea" font-size="11">SDA</text>
+  <circle cx="270" cy="234" r="4" fill="#16c47f"/><text x="282" y="238" fill="#eaeaea" font-size="11">SCL</text>
+  <circle cx="270" cy="300" r="5" fill="#ff6b6b"/><text x="282" y="304" fill="#ff6b6b" font-size="12" font-weight="700">V+ (питание серво)</text>
+  <!-- каналы справа -->
+  <text x="430" y="150" fill="#ffd166" font-size="11" text-anchor="end">кан.0</text>
+  <text x="430" y="186" fill="#ffd166" font-size="11" text-anchor="end">кан.1</text>
+  <text x="430" y="222" fill="#ffd166" font-size="11" text-anchor="end">кан.2</text>
+  <text x="430" y="258" fill="#ffd166" font-size="11" text-anchor="end">кан.3</text>
+  <circle cx="440" cy="146" r="4" fill="#ffd166"/>
+  <circle cx="440" cy="182" r="4" fill="#ffd166"/>
+  <circle cx="440" cy="218" r="4" fill="#ffd166"/>
+  <circle cx="440" cy="254" r="4" fill="#ffd166"/>
+
+  <!-- серво -->
+  <g font-size="12">
+    <rect x="486" y="130" width="116" height="30" rx="5" fill="#222433" stroke="#6c8cff" stroke-width="1.2"/>
+    <text x="544" y="150" fill="#eaeaea" text-anchor="middle">база</text>
+    <rect x="486" y="166" width="116" height="30" rx="5" fill="#222433" stroke="#6c8cff" stroke-width="1.2"/>
+    <text x="544" y="186" fill="#eaeaea" text-anchor="middle">плечо</text>
+    <rect x="486" y="202" width="116" height="30" rx="5" fill="#222433" stroke="#6c8cff" stroke-width="1.2"/>
+    <text x="544" y="222" fill="#eaeaea" text-anchor="middle">локоть</text>
+    <rect x="486" y="238" width="116" height="30" rx="5" fill="#222433" stroke="#6c8cff" stroke-width="1.2"/>
+    <text x="544" y="258" fill="#eaeaea" text-anchor="middle">захват</text>
   </g>
 
-  <!-- сигнальные провода пины -> серво (оранжевые) -->
-  <path d="M172 134 C 280 134, 300 81, 392 81"  fill="none" stroke="#ffb74d" stroke-width="2.5"/>
-  <path d="M172 158 C 280 158, 300 123, 392 123" fill="none" stroke="#ffb74d" stroke-width="2.5"/>
-  <path d="M172 182 C 280 182, 300 165, 392 165" fill="none" stroke="#ffb74d" stroke-width="2.5"/>
-  <path d="M172 206 C 280 206, 300 207, 392 207" fill="none" stroke="#ffb74d" stroke-width="2.5"/>
+  <!-- провода Nano -> PCA9685 -->
+  <path d="M170 182 C 220 182, 230 150, 270 150" fill="none" stroke="#ff6b6b" stroke-width="2.5"/>
+  <path d="M170 210 C 220 210, 230 178, 270 178" fill="none" stroke="#cfcfe0" stroke-width="2.5"/>
+  <path d="M170 238 C 220 238, 230 206, 270 206" fill="none" stroke="#6c8cff" stroke-width="2.5"/>
+  <path d="M170 266 C 220 266, 230 234, 270 234" fill="none" stroke="#16c47f" stroke-width="2.5"/>
+  <!-- 5V также на V+ (ветка питания серво по USB) -->
+  <path d="M176 182 C 210 320, 230 300, 270 300" fill="none" stroke="#ff6b6b" stroke-width="2.5" stroke-dasharray="6 4"/>
+  <text x="150" y="340" fill="#ff6b6b" font-size="11">5V → V+ (серво от USB)</text>
 
-  <!-- внешнее питание -->
-  <rect x="210" y="300" width="170" height="70" rx="10" fill="#3a1e1e" stroke="#ff6b6b" stroke-width="2"/>
-  <text x="295" y="326" fill="#eaeaea" font-size="14" text-anchor="middle" font-weight="700">Питание 5–6 В, 2–3 А</text>
-  <text x="248" y="352" fill="#ff6b6b" font-size="15" font-weight="700">+</text>
-  <text x="338" y="352" fill="#cfcfe0" font-size="15" font-weight="700">−</text>
+  <!-- каналы -> серво -->
+  <line x1="440" y1="146" x2="486" y2="145" stroke="#ffd166" stroke-width="2"/>
+  <line x1="440" y1="182" x2="486" y2="181" stroke="#ffd166" stroke-width="2"/>
+  <line x1="440" y1="218" x2="486" y2="217" stroke="#ffd166" stroke-width="2"/>
+  <line x1="440" y1="254" x2="486" y2="253" stroke="#ffd166" stroke-width="2"/>
 
-  <!-- + питания -> все серво (красный) -->
-  <path d="M252 350 C 252 280, 560 280, 560 98 L 552 98" fill="none" stroke="#ff6b6b" stroke-width="2.5"/>
-  <text x="566" y="150" fill="#ff6b6b" font-size="11" transform="rotate(90 566 150)">+5В на все серво</text>
-
-  <!-- общая земля: серво GND и Arduino GND -> минус (белый/серый) -->
-  <path d="M342 350 C 342 260, 388 260, 388 240 L 388 232" fill="none" stroke="#cfcfe0" stroke-width="2.5"/>
-  <path d="M342 352 C 200 352, 120 300, 120 240" fill="none" stroke="#cfcfe0" stroke-width="2.5"/>
-  <text x="150" y="300" fill="#ffd166" font-size="13" font-weight="700">⚠ ОБЩАЯ ЗЕМЛЯ</text>
-
-  <text x="22" y="392" fill="#9a9ab0" font-size="12">Сигнал — с пинов Arduino. Питание серво — ОТДЕЛЬНОЕ, не от Arduino. Минусы соединены вместе.</text>
+  <!-- пояснения -->
+  <text x="22" y="388" fill="#ffd166" font-size="12" font-weight="700">⚡ Питание серво идёт от USB через 5V Nano → V+ PCA9685.</text>
+  <text x="22" y="408" fill="#9a9ab0" font-size="12">4 провода Nano↔PCA9685: 5V→VCC, GND→GND, A4→SDA, A5→SCL. Серво — в каналы 0–3.</text>
+  <text x="22" y="428" fill="#ff6b6b" font-size="12">⚠ USB ПК даёт ~0,5 А — двигай по одному суставу. Надёжнее: USB-зарядка/хаб 2 А.</text>
 </svg>

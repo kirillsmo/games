@@ -65,8 +65,9 @@ robot.<span class="fn">send</span>(<span class="num">0</span>, angle)      <span
   </div>
 
   <div class="box warn">
-    <span class="label">⚠️ Порт на Ubuntu</span>
-    Если Python пишет «нет доступа к порту» — добавь себя в группу: 
+    <span class="label">⚠️ Порт на Ubuntu (Nano)</span>
+    У Nano порт обычно <code>/dev/ttyUSB0</code> (чип CH340; на старых системах нужен его
+    драйвер). Если Python пишет «нет доступа к порту» — добавь себя в группу:
     <code>sudo usermod -aG dialout $USER</code>, потом перезайди в систему. Скорость порта
     (9600) должна совпадать в Arduino и в Python.
   </div>

@@ -12,7 +12,7 @@
   <!-- подписи -->
   <circle cx="306" cy="104" r="5" fill="#ffb74d"/>
   <text x="318" y="100" fill="#eaeaea" font-size="15">Сигнал (оранж./жёлт.)</text>
-  <text x="318" y="118" fill="#9a9ab0" font-size="12">→ к пину Arduino (PWM)</text>
+  <text x="318" y="118" fill="#9a9ab0" font-size="12">→ в канал PCA9685 (S)</text>
   <circle cx="306" cy="138" r="5" fill="#ff6b6b"/>
   <text x="318" y="143" fill="#eaeaea" font-size="15">+ (красный)</text>
   <text x="318" y="161" fill="#9a9ab0" font-size="12">→ внешние 5–6 В</text>

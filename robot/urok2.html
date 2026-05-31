@@ -53,26 +53,36 @@
   </div>
 
   <h2>🔌 Ставим серво в 90°</h2>
-  <p>Подключи ОДИН сервопривод: сигнал → пин <b>9</b>, питание <b>+</b> и <b>−</b> — к внешнему
-     блоку 5 В (общая земля с Arduino). Залей на Arduino вот такой скетч
-     (как заливать — подробно в уроке 7):</p>
-  <pre><span class="com">#include &lt;Servo.h&gt;</span>
-Servo servo;
+  <p>Нам понадобится драйвер <b>PCA9685</b>, подключённый к Nano (4 провода + питание —
+     подробная схема в <a href="urok6.html" style="color:var(--green)">уроке 6</a>). Воткни
+     проверяемый серво в <b>канал 0</b> и залей скетч (как заливать — урок 7):</p>
+  <pre><span class="com">#include &lt;Wire.h&gt;</span>
+<span class="com">#include &lt;Adafruit_PWMServoDriver.h&gt;</span>
+Adafruit_PWMServoDriver pwm;        <span class="com">// драйвер серво</span>
+
 <span class="kw">void</span> <span class="fn">setup</span>() {
-  servo.<span class="fn">attach</span>(<span class="num">9</span>);     <span class="com">// серво на пине 9</span>
-  servo.<span class="fn">write</span>(<span class="num">90</span>);     <span class="com">// поставить в центр</span>
+  pwm.<span class="fn">begin</span>();
+  pwm.<span class="fn">setPWMFreq</span>(<span class="num">50</span>);          <span class="com">// серво работают на 50 Гц</span>
+  pwm.<span class="fn">setPWM</span>(<span class="num">0</span>, <span class="num">0</span>, <span class="num">375</span>);      <span class="com">// канал 0 в центр (~90°)</span>
 }
 <span class="kw">void</span> <span class="fn">loop</span>() { }</pre>
   <div class="dl-row">
     <a class="dl" href="code/arduino/one_servo_test.ino" download>⬇️ one_servo_test.ino</a>
   </div>
   <p>Серво дёрнется и встанет в среднее положение. Теперь его можно ставить в сустав.
-     Повтори это с каждым сервоприводом перед его установкой.</p>
+     Повтори это с каждым сервоприводом перед установкой.</p>
+
+  <div class="box idea">
+    <span class="label">💡 Откуда число 375</span>
+    PCA9685 задаёт угол длиной импульса (числом из 4096). Примерно: ~150 = 0°, ~600 = 180°,
+    середина ~375 = 90°. В основной прошивке это посчитает функция <code>angleToPulse</code>,
+    и мы будем писать просто «угол 90».
+  </div>
 
   <div class="box try">
     <span class="label">🎮 Попробуй</span>
-    Поменяй <code>90</code> на <code>0</code>, потом на <code>180</code> — посмотри крайние
-    положения. Перед сборкой обязательно верни <code>90</code>.
+    Поставь <code>150</code> (0°), потом <code>600</code> (180°) — крайние положения.
+    Перед сборкой верни центр (<code>375</code>).
   </div>
 
   <div class="pager">

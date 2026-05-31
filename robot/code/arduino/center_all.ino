@@ -1,27 +1,32 @@
 /*
-  center_all.ino — ставит ВСЕ 4 сервопривода в 90° (центр).
-  Заливай этот скетч ПЕРЕД сборкой и перед креплением качалок,
-  чтобы у суставов был полный диапазон в обе стороны.
+  center_all.ino — ставит ВСЕ 4 сервопривода в 90° (центр) через PCA9685.
+  Заливай ПЕРЕД сборкой и перед креплением качалок, чтобы у суставов был
+  полный диапазон в обе стороны.
 
-  Подключение сигнальных проводов сервоприводов:
-    база (поворот)  -> пин 3
-    плечо           -> пин 5
-    локоть          -> пин 6
-    захват          -> пин 9
-  Питание сервоприводов — ВНЕШНИЕ 5–6 В (не от Arduino!), общая земля.
+  Подключение (см. урок 6):
+    Nano A4 -> SDA, A5 -> SCL, 5V -> VCC и V+, GND -> GND
+    серво -> каналы 0 (база), 1 (плечо), 2 (локоть), 3 (захват)
+  Нужна библиотека "Adafruit PWM Servo Driver Library".
 */
-#include <Servo.h>
+#include <Wire.h>
+#include <Adafruit_PWMServoDriver.h>
 
-const int PINS[4] = {3, 5, 6, 9};
-Servo servos[4];
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();   // 0x40
+const int SERVOMIN = 150;
+const int SERVOMAX = 600;
+
+int angleToPulse(int angle) {
+  return map(angle, 0, 180, SERVOMIN, SERVOMAX);
+}
 
 void setup() {
+  pwm.begin();
+  pwm.setPWMFreq(50);
   for (int i = 0; i < 4; i++) {
-    servos[i].attach(PINS[i]);
-    servos[i].write(90);     // центр
+    pwm.setPWM(i, 0, angleToPulse(90));   // центр
   }
 }
 
 void loop() {
-  // ничего — сервоприводы просто держат 90°
+  // ничего — сервоприводы держат 90°
 }
