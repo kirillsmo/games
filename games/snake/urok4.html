@@ -103,6 +103,33 @@
     3. Сделай быстрее или медленнее: поменяй <code>10</code> в <code>tick</code>.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="snake4-move" data-hash="69990f8bca63f93f888952d8f220655a336a23d0ac84fecdf11b24ac018bf728">
+      <p class="quiz-prompt">Как змейка двигается каждый кадр?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Двигаем весь список целиком</button>
+        <button type="button" class="quiz-opt">Меняем цвет</button>
+        <button type="button" class="quiz-opt">Рисуем заново</button>
+        <button type="button" class="quiz-opt">Добавляем новую голову спереди и убираем хвост сзади</button>
+      </div>
+      <div class="quiz-explain">✅ Самый красивый трюк игры: insert(0, new_head) и pop(). Со стороны это выглядит как движение.</div>
+    </div>
+
+    <div class="quiz-q" data-id="snake4-dir" data-hash="5156ce066f418123b0262d2fc8d02c1bb8f66f79b89b2de26692a86fd22f5e7c">
+      <p class="quiz-prompt">Что хранит direction, например (1, 0)?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Цвет змейки</button>
+        <button type="button" class="quiz-opt">Куда сдвинуться по x и y за шаг</button>
+        <button type="button" class="quiz-opt">Скорость в пикселях</button>
+        <button type="button" class="quiz-opt">Длину змейки</button>
+      </div>
+      <div class="quiz-explain">✅ (1, 0) — вправо, (0, -1) — вверх. Ось y смотрит вниз, поэтому вверх это y минус один.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok3.html"><span class="dir">← Назад</span><span class="ttl">Урок 3 — Змейка-список</span></a>
     <a class="next" href="urok5.html"><span class="dir">Дальше →</span><span class="ttl">Урок 5 — Стрелки</span></a>
@@ -110,5 +137,6 @@
 </div>
 
 <footer>Урок 4 из 7 · Змейка на Python 🐍</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

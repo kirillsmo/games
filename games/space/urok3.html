@@ -108,6 +108,33 @@ spawn_timer = <span class="num">0</span>
     3. Поменяй размер <code>ENEMY_SIZE</code> — глазки сдвинутся сами.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="space3-timer" data-hash="6db21c4bb9ce0ddcb96fbfe202040787bc3d4a8824c4aa5142b8ceafd073afeb">
+      <p class="quiz-prompt">Как игра сама добавляет врагов?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Случайно из ниоткуда</button>
+        <button type="button" class="quiz-opt">По таймеру — счётчику кадров spawn_timer</button>
+        <button type="button" class="quiz-opt">Их добавляет игрок</button>
+        <button type="button" class="quiz-opt">По нажатию пробела</button>
+      </div>
+      <div class="quiz-explain">✅ spawn_timer растёт каждый кадр; дорос до SPAWN_EVERY — добавляем врага и обнуляем счётчик.</div>
+    </div>
+
+    <div class="quiz-q" data-id="space3-triple" data-hash="238f18f2b3251b479a338f9a219c23e979fee59537ee045030a886d070d9bebb">
+      <p class="quiz-prompt">Какая «тройка» действий со списком тут повторяется?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">init → mode → flip</button>
+        <button type="button" class="quiz-opt">append → for → remove</button>
+        <button type="button" class="quiz-opt">load → blit → play</button>
+        <button type="button" class="quiz-opt">insert → pop → in</button>
+      </div>
+      <div class="quiz-explain">✅ Добавить в список, в цикле подвигать всех, убрать улетевших — как и с пулями.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Выстрел</span></a>
     <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Попадания</span></a>
@@ -115,5 +142,6 @@ spawn_timer = <span class="num">0</span>
 </div>
 
 <footer>Урок 3 из 5 · Космос 🚀</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

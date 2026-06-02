@@ -110,6 +110,33 @@ fullscreen = <span class="kw">False</span>
      координаты в игре остаются те же, ничего пересчитывать не надо. <b>F</b> —
      включить/выключить полный экран, <b>ESC</b> — выйти.</p>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="ark5-state" data-hash="23880b1b0fd2e4dea511a8640bfa1d7aeb6ed4c9bc05ed4a87bd00a614b1db09">
+      <p class="quiz-prompt">Что хранит переменная state?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Состояние игры: play / over / win</button>
+        <button type="button" class="quiz-opt">Размер ракетки</button>
+        <button type="button" class="quiz-opt">Скорость мяча</button>
+        <button type="button" class="quiz-opt">Счёт игрока</button>
+      </div>
+      <div class="quiz-explain">✅ Концовки две — победа и проигрыш. Удобно держать одно слово-состояние и по нему решать, что делать.</div>
+    </div>
+
+    <div class="quiz-q" data-id="ark5-empty" data-hash="cb759aca0d5bc2a1dabc62ab454b9c44ee2ddc6eeae5ff6d6d85d2733dec972a">
+      <p class="quiz-prompt">Что значит if not bricks?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Кирпичи ещё есть</button>
+        <button type="button" class="quiz-opt">Игра на паузе</button>
+        <button type="button" class="quiz-opt">Кирпичей не осталось — список пуст</button>
+        <button type="button" class="quiz-opt">Мяч улетел</button>
+      </div>
+      <div class="quiz-explain">✅ Пустой список в Python считается «ложью», поэтому not bricks — это «кирпичей нет». Все разбил — победа.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Кирпичи</span></a>
     <a class="next" href="index.html"><span class="dir">Готово ✓</span><span class="ttl">Ко всем урокам</span></a>
@@ -117,5 +144,6 @@ fullscreen = <span class="kw">False</span>
 </div>
 
 <footer>Урок 5 из 5 · Арканоид 🧱 · Молодец!</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

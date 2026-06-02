@@ -91,6 +91,33 @@
     так далее для <code>K_s</code>, <code>K_a</code>, <code>K_d</code>.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="snake5-keydown" data-hash="5be45bd4a31726f0ae3560e7c9eb36346d72f634496c5014d7d991324c028328">
+      <p class="quiz-prompt">Когда срабатывает pygame.KEYDOWN?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Каждый кадр, пока держишь</button>
+        <button type="button" class="quiz-opt">В момент нажатия клавиши</button>
+        <button type="button" class="quiz-opt">При закрытии окна</button>
+        <button type="button" class="quiz-opt">Никогда</button>
+      </div>
+      <div class="quiz-explain">✅ KEYDOWN — это «клавишу нажали». А event.key говорит, какую именно (K_UP, K_LEFT…).</div>
+    </div>
+
+    <div class="quiz-q" data-id="snake5-180" data-hash="a7475b6680634d290ffac520e93d564e3e4afa45f3b4061ed43d1998b246ed8a">
+      <p class="quiz-prompt">Зачем условие direction != (0, 1) при повороте вверх?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Чтобы ехать быстрее</button>
+        <button type="button" class="quiz-opt">Для случайности</button>
+        <button type="button" class="quiz-opt">Чтобы нельзя было развернуться на 180° и врезаться в себя</button>
+        <button type="button" class="quiz-opt">Чтобы росли очки</button>
+      </div>
+      <div class="quiz-explain">✅ Если едешь вниз и жмёшь вверх — голова попадёт в своё же тело. Поэтому разворот запрещаем.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Движение</span></a>
     <a class="next" href="urok6.html"><span class="dir">Дальше →</span><span class="ttl">Урок 6 — Еда и рост</span></a>
@@ -98,5 +125,6 @@
 </div>
 
 <footer>Урок 5 из 7 · Змейка на Python 🐍</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

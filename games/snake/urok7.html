@@ -130,6 +130,33 @@ fullscreen = <span class="kw">False</span>
      координаты в игре остаются те же, ничего пересчитывать не надо. <b>F</b> —
      включить/выключить полный экран, <b>ESC</b> — выйти.</p>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="snake7-flag" data-hash="8623a6f88efb3097ab72cbddb4c8268dc96046ebeee28055f6f51a9bf721c343">
+      <p class="quiz-prompt">Что хранит флаг game_over?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Счёт</button>
+        <button type="button" class="quiz-opt">Позицию еды</button>
+        <button type="button" class="quiz-opt">Направление</button>
+        <button type="button" class="quiz-opt">True или False — закончилась игра или нет</button>
+      </div>
+      <div class="quiz-explain">✅ Пока False — змейка двигается. Стало True — движение замирает и появляется надпись.</div>
+    </div>
+
+    <div class="quiz-q" data-id="snake7-self" data-hash="20176930ae548fb8fc555804a755d3b9e240cce99ff60dd5b676915126d5e169">
+      <p class="quiz-prompt">Чем проверяют, что змейка врезалась в саму себя?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">colliderect</button>
+        <button type="button" class="quiz-opt">random</button>
+        <button type="button" class="quiz-opt">insert</button>
+        <button type="button" class="quiz-opt">new_head in snake — оператор in</button>
+      </div>
+      <div class="quiz-explain">✅ in спрашивает: есть ли такая клетка где-то в теле змейки? Одна короткая строка делает всю работу.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok6.html"><span class="dir">← Назад</span><span class="ttl">Урок 6 — Еда и рост</span></a>
     <a class="next" href="index.html"><span class="dir">Готово ✓</span><span class="ttl">Ко всем урокам</span></a>
@@ -137,5 +164,6 @@ fullscreen = <span class="kw">False</span>
 </div>
 
 <footer>Урок 7 из 7 · Змейка на Python 🐍 · Молодец!</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

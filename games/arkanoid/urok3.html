@@ -85,6 +85,33 @@
     2. Верни мячу +1 к скорости при каждом отскоке от ракетки — станет быстрее.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="ark3-cond" data-hash="ca871a6ad9be384d3069ac7034443a6ca97a7c74132c393d219779e73d5a2730">
+      <p class="quiz-prompt">Почему отскок от ракетки делаем только при dy &gt; 0?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Чтобы летел быстрее</button>
+        <button type="button" class="quiz-opt">Чтобы шли очки</button>
+        <button type="button" class="quiz-opt">Чтобы мяч не «прилипал» — отскакиваем, только когда он падает</button>
+        <button type="button" class="quiz-opt">Это случайность</button>
+      </div>
+      <div class="quiz-explain">✅ Если отскакивать всегда, мяч может застрять у ракетки и дёргаться. dy > 0 значит «летит вниз».</div>
+    </div>
+
+    <div class="quiz-q" data-id="ark3-hit" data-hash="dd651c1716190207b8f5153f5f1a7fc83d6f33a4125886894e7476fd8aed8090">
+      <p class="quiz-prompt">От чего зависит, куда мяч улетит вбок после ракетки?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">От места удара по ракетке</button>
+        <button type="button" class="quiz-opt">От числа очков</button>
+        <button type="button" class="quiz-opt">От размера экрана</button>
+        <button type="button" class="quiz-opt">От цвета мяча</button>
+      </div>
+      <div class="quiz-explain">✅ hit — насколько далеко от центра попал мяч. У края улетит вбок, в центре — почти прямо вверх.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Мяч и стены</span></a>
     <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Кирпичи</span></a>
@@ -92,5 +119,6 @@
 </div>
 
 <footer>Урок 3 из 5 · Арканоид 🧱</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

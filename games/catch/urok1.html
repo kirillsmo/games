@@ -102,6 +102,33 @@ cat_y = HEIGHT - cat_h - <span class="num">10</span>         <span class="com">#
     3. Поменяй цвет <code>ORANGE</code> на свой.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="cat1-pixels" data-hash="3736dc620f2a0067ac3d094b19bc61225c10f93eb3831fdf53eb8e52d8ed114c">
+      <p class="quiz-prompt">Чем движение кота отличается от Змейки?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Прыгает в случайные места</button>
+        <button type="button" class="quiz-opt">Совсем не двигается</button>
+        <button type="button" class="quiz-opt">Двигается плавно в пикселях, а не по клеткам</button>
+        <button type="button" class="quiz-opt">Двигается по клеткам</button>
+      </div>
+      <div class="quiz-explain">✅ В Змейке всё прыгало по клеткам. Кот же сдвигается на несколько пикселей за кадр при 60 кадрах в секунду.</div>
+    </div>
+
+    <div class="quiz-q" data-id="cat1-keys" data-hash="4b41df679a33c3053cdb75bc4dd8dd4a24b6cf48166c4c9f40a07eaaa430d35e">
+      <p class="quiz-prompt">Чем ловят зажатые стрелки для плавного движения?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">random.randint</button>
+        <button type="button" class="quiz-opt">pygame.key.get_pressed()</button>
+        <button type="button" class="quiz-opt">colliderect</button>
+        <button type="button" class="quiz-opt">pygame.KEYDOWN</button>
+      </div>
+      <div class="quiz-explain">✅ get_pressed каждый кадр отвечает, какие клавиши зажаты. Пока держишь — кот едет.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="index.html"><span class="dir">← К курсу</span><span class="ttl">Все уроки кота</span></a>
     <a class="next" href="urok2.html"><span class="dir">Дальше →</span><span class="ttl">Урок 2 — Яблоко падает</span></a>
@@ -109,5 +136,6 @@ cat_y = HEIGHT - cat_h - <span class="num">10</span>         <span class="com">#
 </div>
 
 <footer>Урок 1 из 6 · Ловкий кот 🐱</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

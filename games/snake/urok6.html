@@ -107,6 +107,33 @@ score = <span class="num">0</span>
        тоже. Не забудь проверять оба!
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="snake6-func" data-hash="2c1325ed703e91f948ace87b2f4c8d59c53611b595b6591f996e37eea26d8d67">
+      <p class="quiz-prompt">Что такое def spawn_food(snake)?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Своя команда-функция, которую можно вызывать</button>
+        <button type="button" class="quiz-opt">Цвет</button>
+        <button type="button" class="quiz-opt">Цикл</button>
+        <button type="button" class="quiz-opt">Список</button>
+      </div>
+      <div class="quiz-explain">✅ Функция — кусок кода с именем. spawn_food возвращает случайную клетку, где нет змейки.</div>
+    </div>
+
+    <div class="quiz-q" data-id="snake6-grow" data-hash="2beee77f6bf5a98989a41b64e94a11304131e4193e085a48bfea25deef628967">
+      <p class="quiz-prompt">Как змейка растёт, когда съела яблоко?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Меняем скорость</button>
+        <button type="button" class="quiz-opt">В этот кадр НЕ убираем хвост</button>
+        <button type="button" class="quiz-opt">Увеличиваем CELL</button>
+        <button type="button" class="quiz-opt">Добавляем сразу две головы</button>
+      </div>
+      <div class="quiz-explain">✅ Обычный шаг = вставить голову + убрать хвост. Съели — просто не делаем pop(), и змейка длиннее.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok5.html"><span class="dir">← Назад</span><span class="ttl">Урок 5 — Стрелки</span></a>
     <a class="next" href="urok7.html"><span class="dir">Дальше →</span><span class="ttl">Урок 7 — Игра окончена</span></a>
@@ -114,5 +141,6 @@ score = <span class="num">0</span>
 </div>
 
 <footer>Урок 6 из 7 · Змейка на Python 🐍</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

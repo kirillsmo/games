@@ -101,6 +101,33 @@ head_y = snake[<span class="num">0</span>][<span class="num">1</span>]   <span c
     2. Сделай змейку вертикальной: <code>[(5, 10), (5, 9), (5, 8)]</code>.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="snake3-list" data-hash="043e474aacd9c171e1c7695eb8e7ecd310b6565e108dd18a50d90db6cbc018b8">
+      <p class="quiz-prompt">Что такое змейка в коде?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Список клеток — пар чисел</button>
+        <button type="button" class="quiz-opt">Одно число</button>
+        <button type="button" class="quiz-opt">Одна переменная</button>
+        <button type="button" class="quiz-opt">Картинка</button>
+      </div>
+      <div class="quiz-explain">✅ snake = [(5,10), (4,10), (3,10)]. Каждая клетка — пара (кортеж).</div>
+    </div>
+
+    <div class="quiz-q" data-id="snake3-head" data-hash="be0e0dd7fd9153058b88a09767426e112e485144cfdda3bb6c6bda50786109b6">
+      <p class="quiz-prompt">Где у змейки голова?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">В середине списка</button>
+        <button type="button" class="quiz-opt">snake[-1] — последний</button>
+        <button type="button" class="quiz-opt">snake[0] — первый элемент</button>
+        <button type="button" class="quiz-opt">Голова не хранится</button>
+      </div>
+      <div class="quiz-explain">✅ В Python счёт с нуля: первый элемент списка (номер 0) — голова, остальное — хвост.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Квадрат</span></a>
     <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Движение</span></a>
@@ -108,5 +135,6 @@ head_y = snake[<span class="num">0</span>][<span class="num">1</span>]   <span c
 </div>
 
 <footer>Урок 3 из 7 · Змейка на Python 🐍</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

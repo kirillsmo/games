@@ -119,6 +119,33 @@ clock = pygame.time.<span class="fn">Clock</span>()
     2. Сделай окно больше: <code>WIDTH = 800</code>, <code>HEIGHT = 600</code>.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="snake1-color" data-hash="4f135cc97847a0f266d8fad9dc6d15acc1580390c18b22769fb40c8107c605d8">
+      <p class="quiz-prompt">Как задаётся цвет в pygame?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Тремя числами от 0 до 255 (R, G, B)</button>
+        <button type="button" class="quiz-opt">Одним словом</button>
+        <button type="button" class="quiz-opt">Одной буквой</button>
+        <button type="button" class="quiz-opt">Числом от 0 до 9</button>
+      </div>
+      <div class="quiz-explain">✅ (255, 0, 0) — ярко-красный, (0, 0, 0) — чёрный. Сколько красного, зелёного и синего.</div>
+    </div>
+
+    <div class="quiz-q" data-id="snake1-quit" data-hash="ee633a1e3cf82e0a7a71e4c14a04c923b3dbae3fee1dd4b9b6010f85a42af6fc">
+      <p class="quiz-prompt">Что закрывает игру при нажатии на крестик окна?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">event.type == pygame.QUIT</button>
+        <button type="button" class="quiz-opt">clock.tick</button>
+        <button type="button" class="quiz-opt">screen.fill</button>
+        <button type="button" class="quiz-opt">pygame.KEYDOWN</button>
+      </div>
+      <div class="quiz-explain">✅ В цикле событий ловим QUIT и выходим из программы.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="index.html"><span class="dir">← К курсу</span><span class="ttl">Все уроки змейки</span></a>
     <a class="next" href="urok2.html"><span class="dir">Дальше →</span><span class="ttl">Урок 2 — Квадрат</span></a>
@@ -126,5 +153,6 @@ clock = pygame.time.<span class="fn">Clock</span>()
 </div>
 
 <footer>Урок 1 из 7 · Змейка на Python 🐍</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

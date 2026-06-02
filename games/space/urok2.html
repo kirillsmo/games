@@ -100,6 +100,33 @@ bullets = []                       <span class="com"># СПИСОК пуль —
        <code>ship_x - 12</code> и <code>ship_x + 12</code>.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="space2-keydown" data-hash="6a953f33e6e0dd66c53824f5f19e8fe75332333a768482ab1d7336adb3fc5db3">
+      <p class="quiz-prompt">Почему стреляют на KEYDOWN, а не get_pressed()?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Иначе одно нажатие пробела даст десятки пуль</button>
+        <button type="button" class="quiz-opt">KEYDOWN рисует пулю</button>
+        <button type="button" class="quiz-opt">get_pressed не работает с пробелом</button>
+        <button type="button" class="quiz-opt">Чтобы пуля летела вверх</button>
+      </div>
+      <div class="quiz-explain">✅ KEYDOWN срабатывает один раз на нажатие — один пробел, одна пуля. get_pressed «истинно» каждый кадр.</div>
+    </div>
+
+    <div class="quiz-q" data-id="space2-copy" data-hash="7a34362fbbc95054af99f644f8eca276e1a482b1b1309def41b4bebf5add6652">
+      <p class="quiz-prompt">Зачем пробегают по копии bullets[:]?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Просто так</button>
+        <button type="button" class="quiz-opt">Копия работает быстрее</button>
+        <button type="button" class="quiz-opt">Чтобы пуль было больше</button>
+        <button type="button" class="quiz-opt">Нельзя удалять из списка и одновременно бежать по нему</button>
+      </div>
+      <div class="quiz-explain">✅ Идём по копии bullets[:], а удаляем из настоящего списка — иначе Python пропустит элементы.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok1.html"><span class="dir">← Назад</span><span class="ttl">Урок 1 — Корабль</span></a>
     <a class="next" href="urok3.html"><span class="dir">Дальше →</span><span class="ttl">Урок 3 — Враги</span></a>
@@ -107,5 +134,6 @@ bullets = []                       <span class="com"># СПИСОК пуль —
 </div>
 
 <footer>Урок 2 из 5 · Космос 🚀</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

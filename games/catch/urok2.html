@@ -88,6 +88,33 @@ speed = <span class="num">4</span>                   <span class="com"># на с
        тоже рисуй и двигай его.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="cat2-fall" data-hash="c11a674c3b51b064d4d27f7b775db1182ff41c37e7b7e6b996468991260d7a20">
+      <p class="quiz-prompt">Как заставить яблоко падать вниз?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Менять apple_x</button>
+        <button type="button" class="quiz-opt">Каждый кадр прибавлять к apple_y</button>
+        <button type="button" class="quiz-opt">Каждый кадр вычитать из apple_y</button>
+        <button type="button" class="quiz-opt">Уменьшать speed</button>
+      </div>
+      <div class="quiz-explain">✅ Ось y смотрит вниз. Прибавляем к apple_y число speed — яблоко падает.</div>
+    </div>
+
+    <div class="quiz-q" data-id="cat2-rand" data-hash="3b96ac5d9d405b36185debe8fa3c02a45f7ca4349269bd6dfb8ca5c48674f300">
+      <p class="quiz-prompt">Что делает random.randint(0, WIDTH - apple_w)?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Даёт случайное место по горизонтали</button>
+        <button type="button" class="quiz-opt">Случайные очки</button>
+        <button type="button" class="quiz-opt">Случайную скорость</button>
+        <button type="button" class="quiz-opt">Случайный цвет</button>
+      </div>
+      <div class="quiz-explain">✅ Случайное число от 0 до правого края (минус ширина) — каждое новое яблоко падает в новом месте.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok1.html"><span class="dir">← Назад</span><span class="ttl">Урок 1 — Кот-корзинка</span></a>
     <a class="next" href="urok3.html"><span class="dir">Дальше →</span><span class="ttl">Урок 3 — Ловим!</span></a>
@@ -95,5 +122,6 @@ speed = <span class="num">4</span>                   <span class="com"># на с
 </div>
 
 <footer>Урок 2 из 6 · Ловкий кот 🐱</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

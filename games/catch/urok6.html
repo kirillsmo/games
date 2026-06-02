@@ -112,6 +112,33 @@ fullscreen = <span class="kw">False</span>
      координаты в игре остаются те же, ничего пересчитывать не надо. <b>F</b> —
      включить/выключить полный экран, <b>ESC</b> — выйти.</p>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="cat6-init" data-hash="c1e5bb0c1f46266226d9ebc1bf1d40067caaedd11280f81f542b6112b11659d3">
+      <p class="quiz-prompt">Что включает звуковую систему один раз в начале?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">pygame.mixer.init()</button>
+        <button type="button" class="quiz-opt">pygame.image.load()</button>
+        <button type="button" class="quiz-opt">clock.tick()</button>
+        <button type="button" class="quiz-opt">Sound.play()</button>
+      </div>
+      <div class="quiz-explain">✅ mixer.init() запускает звук. Потом Sound(файл) загружает, а play() проигрывает в нужный момент.</div>
+    </div>
+
+    <div class="quiz-q" data-id="cat6-play" data-hash="94784080143c11989399a73bd8b5cf079b84a955907e617dc7b6893355471175">
+      <p class="quiz-prompt">Чем проигрывают загруженный звук в нужный момент?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">.tick()</button>
+        <button type="button" class="quiz-opt">.play()</button>
+        <button type="button" class="quiz-opt">.load()</button>
+        <button type="button" class="quiz-opt">.blit()</button>
+      </div>
+      <div class="quiz-explain">✅ catch_sound.play() — дзынь при поимке. Три шага звука: init → Sound → play.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok5.html"><span class="dir">← Назад</span><span class="ttl">Урок 5 — Картинки</span></a>
     <a class="next" href="index.html"><span class="dir">Готово ✓</span><span class="ttl">Ко всем урокам</span></a>
@@ -119,5 +146,6 @@ fullscreen = <span class="kw">False</span>
 </div>
 
 <footer>Урок 6 из 6 · Ловкий кот 🐱 · Молодец!</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

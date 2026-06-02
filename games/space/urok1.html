@@ -103,6 +103,33 @@ SHIP_SPEED = <span class="num">6</span>
     3. Поменяй цвет корабля <code>SHIP_COLOR</code> на свой.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="space1-poly" data-hash="d6f8120c5008d8a17cadb27fd20806b65ecfb3f6320478c9b7066460d8bbf8fd">
+      <p class="quiz-prompt">Чем рисуют корабль-треугольник?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">pygame.draw.rect</button>
+        <button type="button" class="quiz-opt">pygame.draw.polygon — по списку точек</button>
+        <button type="button" class="quiz-opt">screen.blit</button>
+        <button type="button" class="quiz-opt">pygame.draw.circle</button>
+      </div>
+      <div class="quiz-explain">✅ polygon рисует фигуру по углам. Мы задаём три точки: нос сверху и две нижние лапы.</div>
+    </div>
+
+    <div class="quiz-q" data-id="space1-center" data-hash="d117ac448cb09451192fdd1ee5c70ad622e4b8e4cec3f6d895daeabbd9618d3e">
+      <p class="quiz-prompt">Что означает ship_x в этой игре?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Левый край</button>
+        <button type="button" class="quiz-opt">Центр корабля</button>
+        <button type="button" class="quiz-opt">Скорость</button>
+        <button type="button" class="quiz-opt">Очки</button>
+      </div>
+      <div class="quiz-explain">✅ Раз рисуем треугольник от центра, ship_x — это центр (а не левый край, как была paddle_x).</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="index.html"><span class="dir">← К курсу</span><span class="ttl">Все уроки Космоса</span></a>
     <a class="next" href="urok2.html"><span class="dir">Дальше →</span><span class="ttl">Урок 2 — Выстрел</span></a>
@@ -110,5 +137,6 @@ SHIP_SPEED = <span class="num">6</span>
 </div>
 
 <footer>Урок 1 из 5 · Космос 🚀</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

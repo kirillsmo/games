@@ -90,6 +90,33 @@ paddle_y = HEIGHT - <span class="num">30</span>
     3. Управляй на A/D вместо стрелок.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="ark1-keys" data-hash="795b538f48b84cea8c219dfdffae27941a4911b7461c8f263114ba42ec8161d0">
+      <p class="quiz-prompt">Чем проверяют, что стрелка СЕЙЧАС зажата (для плавного движения)?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">pygame.QUIT</button>
+        <button type="button" class="quiz-opt">event.type == KEYDOWN</button>
+        <button type="button" class="quiz-opt">pygame.key.get_pressed()</button>
+        <button type="button" class="quiz-opt">clock.tick(60)</button>
+      </div>
+      <div class="quiz-explain">✅ Каждый кадр спрашиваем, какие клавиши зажаты — поэтому ракетка едет, пока держишь стрелку.</div>
+    </div>
+
+    <div class="quiz-q" data-id="ark1-clamp" data-hash="f6dded7b28639297a4bb6fc7d2bd0c05d38f29a69c2759d5242b48188cb6201b">
+      <p class="quiz-prompt">Что делает max(0, min(paddle_x, WIDTH - PADDLE_W))?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Рисует ракетку</button>
+        <button type="button" class="quiz-opt">Считает очки</button>
+        <button type="button" class="quiz-opt">Не даёт ракетке выехать за края</button>
+        <button type="button" class="quiz-opt">Ускоряет ракетку</button>
+      </div>
+      <div class="quiz-explain">✅ min не пускает вправо за край, max — влево. Ракетка остаётся на экране.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="index.html"><span class="dir">← К курсу</span><span class="ttl">Все уроки Арканоида</span></a>
     <a class="next" href="urok2.html"><span class="dir">Дальше →</span><span class="ttl">Урок 2 — Мяч и стены</span></a>
@@ -97,5 +124,6 @@ paddle_y = HEIGHT - <span class="num">30</span>
 </div>
 
 <footer>Урок 1 из 5 · Арканоид 🧱</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

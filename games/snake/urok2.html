@@ -99,6 +99,33 @@ pygame.<span class="fn">Rect</span>( x*CELL,   y*CELL,   CELL,    CELL  )</pre>
     3. Сделай клетку крупнее: <code>CELL = 40</code>. Что изменилось?
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="snake2-cell" data-hash="da253e540f2ec2c80293b968fc5d7dcd620bdb2d8a232dfbafff36c18692e5be">
+      <p class="quiz-prompt">Как перевести клетку в пиксели?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Прибавить CELL</button>
+        <button type="button" class="quiz-opt">Умножить на размер клетки CELL</button>
+        <button type="button" class="quiz-opt">Разделить на CELL</button>
+        <button type="button" class="quiz-opt">Ничего не делать</button>
+      </div>
+      <div class="quiz-explain">✅ Клетка (5, 10) — это пиксели (5*CELL, 10*CELL). Мостик между клетками и пикселями — умножение.</div>
+    </div>
+
+    <div class="quiz-q" data-id="snake2-logic" data-hash="1b5ead8181a042b72cdd93c63cc9a14be4e54c35479f854e63191b8d5e8fe232">
+      <p class="quiz-prompt">Для чего клетки, а для чего пиксели?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Это одно и то же</button>
+        <button type="button" class="quiz-opt">Клетки — для логики, пиксели — для рисования</button>
+        <button type="button" class="quiz-opt">Пиксели не нужны</button>
+        <button type="button" class="quiz-opt">Клетки для рисования, пиксели для логики</button>
+      </div>
+      <div class="quiz-explain">✅ Змейка «думает» в клетках, а рисуем в пикселях. Запомни это навсегда.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok1.html"><span class="dir">← Назад</span><span class="ttl">Урок 1 — Окно</span></a>
     <a class="next" href="urok3.html"><span class="dir">Дальше →</span><span class="ttl">Урок 3 — Змейка-список</span></a>
@@ -106,5 +133,6 @@ pygame.<span class="fn">Rect</span>( x*CELL,   y*CELL,   CELL,    CELL  )</pre>
 </div>
 
 <footer>Урок 2 из 7 · Змейка на Python 🐍</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

@@ -94,6 +94,33 @@ game_over = <span class="kw">False</span>
     2. Сделай ускорение сильнее (<code>0.6</code>) — или убери совсем.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="cat4-newgame" data-hash="b4b474ffbd12184ba088f45150e7fffbd4295c5ea3f25d9bf9189ee55ddc8c4b">
+      <p class="quiz-prompt">Зачем нужна функция new_game()?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Проиграть звук</button>
+        <button type="button" class="quiz-opt">Рисовать кота</button>
+        <button type="button" class="quiz-opt">Закрыть окно</button>
+        <button type="button" class="quiz-opt">Вернуть стартовые значения и для старта, и для рестарта</button>
+      </div>
+      <div class="quiz-explain">✅ Она отдаёт сразу все начальные значения. Одну функцию зовём и в начале игры, и при рестарте.</div>
+    </div>
+
+    <div class="quiz-q" data-id="cat4-flag" data-hash="ce915a13cdfc76319eb1ab10732943a93142e0bba3bc0dedda9d957dcc900e31">
+      <p class="quiz-prompt">Что хранит переменная game_over?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Число очков</button>
+        <button type="button" class="quiz-opt">True или False — закончилась игра или нет</button>
+        <button type="button" class="quiz-opt">Позицию яблока</button>
+        <button type="button" class="quiz-opt">Скорость</button>
+      </div>
+      <div class="quiz-explain">✅ Это флаг. Пока False — игра идёт; стало True — всё замирает и ждём пробел.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok3.html"><span class="dir">← Назад</span><span class="ttl">Урок 3 — Ловим!</span></a>
     <a class="next" href="urok5.html"><span class="dir">Дальше →</span><span class="ttl">Урок 5 — Картинки</span></a>
@@ -101,5 +128,6 @@ game_over = <span class="kw">False</span>
 </div>
 
 <footer>Урок 4 из 6 · Ловкий кот 🐱</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

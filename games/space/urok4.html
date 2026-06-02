@@ -95,6 +95,33 @@ score = <span class="num">0</span>
     3. Покажи рядом число врагов на экране: <code>len(enemies)</code>.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="space4-double" data-hash="41ec94e5ae7d3b5ff6888ee6d969de4d94c25dedd377984c8403cd916428f6ea">
+      <p class="quiz-prompt">Как проверяют, кто в кого попал (две группы объектов)?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Цикл в цикле: каждую пулю с каждым врагом</button>
+        <button type="button" class="quiz-opt">Один цикл for</button>
+        <button type="button" class="quiz-opt">Оператор in</button>
+        <button type="button" class="quiz-opt">random</button>
+      </div>
+      <div class="quiz-explain">✅ Двойной for: берём пулю, пробегаем всех врагов, пересеклись — убираем обоих.</div>
+    </div>
+
+    <div class="quiz-q" data-id="space4-break" data-hash="1717dc916c28e08140f1fa3eea804988b52264dca6039d1417f71a444bb73715">
+      <p class="quiz-prompt">Зачем break после попадания пули во врага?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Чтобы дать 2 очка</button>
+        <button type="button" class="quiz-opt">Пуля удалена — сравнивать её больше не с кем</button>
+        <button type="button" class="quiz-opt">Чтобы игра шла быстрее</button>
+        <button type="button" class="quiz-opt">Чтобы враг вырос</button>
+      </div>
+      <div class="quiz-explain">✅ break выходит из внутреннего цикла к следующей пуле. Без него можно убить одной пулей двух и поймать ошибку.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok3.html"><span class="dir">← Назад</span><span class="ttl">Урок 3 — Враги</span></a>
     <a class="next" href="urok5.html"><span class="dir">Дальше →</span><span class="ttl">Урок 5 — Жизни и конец</span></a>
@@ -102,5 +129,6 @@ score = <span class="num">0</span>
 </div>
 
 <footer>Урок 4 из 5 · Космос 🚀</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

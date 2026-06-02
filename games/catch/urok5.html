@@ -84,6 +84,33 @@ screen.<span class="fn">blit</span>(cat_img, (cat_x, cat_y))</pre>
     Можно нарисовать кота в Paint!
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="cat5-load" data-hash="84341afeabf66d82c1419d34f989237e886e0cb0618c5c6e90601fa2d7f5d1d5">
+      <p class="quiz-prompt">Чем загружают картинку из файла?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">pygame.mixer.Sound(...)</button>
+        <button type="button" class="quiz-opt">screen.blit(...)</button>
+        <button type="button" class="quiz-opt">pygame.Rect(...)</button>
+        <button type="button" class="quiz-opt">pygame.image.load(...)</button>
+      </div>
+      <div class="quiz-explain">✅ image.load читает .png и превращает в Surface. convert_alpha сохраняет прозрачные уголки.</div>
+    </div>
+
+    <div class="quiz-q" data-id="cat5-blit" data-hash="e5d49c950ed71cda511e0fa1d2b7c1363bc98116090754e669a84dc90ed6479d">
+      <p class="quiz-prompt">Что делает screen.blit(картинка, (x, y))?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Загружает картинку</button>
+        <button type="button" class="quiz-opt">Рисует (приклеивает) картинку на экран</button>
+        <button type="button" class="quiz-opt">Считает очки</button>
+        <button type="button" class="quiz-opt">Проверяет столкновение</button>
+      </div>
+      <div class="quiz-explain">✅ blit «штампует» картинку в точку (x, y) — это её левый верхний угол.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Жизни</span></a>
     <a class="next" href="urok6.html"><span class="dir">Дальше →</span><span class="ttl">Урок 6 — Звуки</span></a>
@@ -91,5 +118,6 @@ screen.<span class="fn">blit</span>(cat_img, (cat_x, cat_y))</pre>
 </div>
 
 <footer>Урок 5 из 6 · Ловкий кот 🐱</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

@@ -92,6 +92,33 @@ bricks = []
     3. Сделай <code>GAP = 0</code> — кирпичи вплотную.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="ark4-store" data-hash="77615823e04ecfa768829689217482b25f12c11cb2b37fc4e2104d163eea4199">
+      <p class="quiz-prompt">Как хранятся кирпичи?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Списком прямоугольников (Rect)</button>
+        <button type="button" class="quiz-opt">Текстом</button>
+        <button type="button" class="quiz-opt">Одной переменной</button>
+        <button type="button" class="quiz-opt">Картинкой</button>
+      </div>
+      <div class="quiz-explain">✅ Как тело змейки — списком. Каждый кирпич это pygame.Rect, лежащий в списке bricks.</div>
+    </div>
+
+    <div class="quiz-q" data-id="ark4-break" data-hash="0be4c1b5f7e98261dfab5f774bffb33e843483a992ac76f272b0ef3073c05758">
+      <p class="quiz-prompt">Зачем break после попадания мяча в кирпич?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Чтобы дать больше очков</button>
+        <button type="button" class="quiz-opt">Нельзя удалять из списка и продолжать его перебирать</button>
+        <button type="button" class="quiz-opt">Чтобы игра шла быстрее</button>
+        <button type="button" class="quiz-opt">Чтобы мяч исчез</button>
+      </div>
+      <div class="quiz-explain">✅ За кадр ломаем один кирпич и сразу выходим из цикла — иначе перебор списка во время удаления сломается.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok3.html"><span class="dir">← Назад</span><span class="ttl">Урок 3 — Отскок от ракетки</span></a>
     <a class="next" href="urok5.html"><span class="dir">Дальше →</span><span class="ttl">Урок 5 — Жизни и победа</span></a>
@@ -99,5 +126,6 @@ bricks = []
 </div>
 
 <footer>Урок 4 из 5 · Арканоид 🧱</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

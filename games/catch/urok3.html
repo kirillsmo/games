@@ -80,6 +80,33 @@ apple_rect = pygame.<span class="fn">Rect</span>(apple_x, apple_y, apple_w, appl
     2. Сделай кота шире (<code>cat_w</code> побольше) — ловить станет легче.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="cat3-collide" data-hash="6a4ac13500df89249367eae1f55f07385ef580d3a8cf904bbb02832330d7382c">
+      <p class="quiz-prompt">Чем проверяют, что кот поймал яблоко?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">оператор in</button>
+        <button type="button" class="quiz-opt">colliderect — пересечение прямоугольников</button>
+        <button type="button" class="quiz-opt">random</button>
+        <button type="button" class="quiz-opt">знак ==</button>
+      </div>
+      <div class="quiz-explain">✅ Делаем из кота и яблока два Rect и спрашиваем colliderect — пересеклись ли рамки.</div>
+    </div>
+
+    <div class="quiz-q" data-id="cat3-rect" data-hash="c5f5ae054826290f0e3b9136e4871d657dfe364fa112f73a55e0fcbbdfe2b6be">
+      <p class="quiz-prompt">Что такое Rect?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Цвет</button>
+        <button type="button" class="quiz-opt">Рамка: x, y, ширина, высота</button>
+        <button type="button" class="quiz-opt">Список очков</button>
+        <button type="button" class="quiz-opt">Звук</button>
+      </div>
+      <div class="quiz-explain">✅ Rect — прямоугольник из четырёх чисел. По нему удобно и рисовать, и проверять столкновения.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Яблоко падает</span></a>
     <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Жизни</span></a>
@@ -87,5 +114,6 @@ apple_rect = pygame.<span class="fn">Rect</span>(apple_x, apple_y, apple_w, appl
 </div>
 
 <footer>Урок 3 из 6 · Ловкий кот 🐱</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

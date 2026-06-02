@@ -126,6 +126,33 @@ state = <span class="str">"play"</span>            <span class="com"># "play" | 
     умеешь управлять <b>множеством</b> предметов сразу.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="space5-state" data-hash="d43782e825a38a34f73887298f521b9e71a28a188045f929cafe172daa4e0015">
+      <p class="quiz-prompt">Сколько состояний у игры здесь и какие?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Два: play и over</button>
+        <button type="button" class="quiz-opt">Одно: play</button>
+        <button type="button" class="quiz-opt">Ни одного</button>
+        <button type="button" class="quiz-opt">Три: play, over, win</button>
+      </div>
+      <div class="quiz-explain">✅ Как в Арканоиде заводим state, но тут концовка одна: play (играем) и over (конец).</div>
+    </div>
+
+    <div class="quiz-q" data-id="space5-space" data-hash="5c66cbbae7d5191bfc974913d51655abe6a1e87b3399ae39f1d6a217f5a9c1e1">
+      <p class="quiz-prompt">Почему пробел НЕ перезапускает игру?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Иначе игра сразу начнётся заново, и не увидишь счёт</button>
+        <button type="button" class="quiz-opt">Пробел сломан</button>
+        <button type="button" class="quiz-opt">Чтобы стрелять быстрее</button>
+        <button type="button" class="quiz-opt">Так нельзя в pygame</button>
+      </div>
+      <div class="quiz-explain">✅ В конце игры ты ещё жмёшь пробел (стрелял же). Поэтому рестарт — на Enter или кнопку мышкой.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Попадания</span></a>
     <a class="next" href="index.html"><span class="dir">Готово ✓</span><span class="ttl">Ко всем урокам</span></a>
@@ -133,5 +160,6 @@ state = <span class="str">"play"</span>            <span class="com"># "play" | 
 </div>
 
 <footer>Урок 5 из 5 · Космос 🚀</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

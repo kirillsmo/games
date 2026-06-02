@@ -91,6 +91,33 @@ dx, dy = <span class="num">4.0</span>, <span class="num">4.0</span>
     3. Сделай мяч больше: <code>BALL_R = 14</code>.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="ark2-move" data-hash="ba9f9365773b1040ae5dbe3fbe9de814de67606a4648f05fcb9c066039ffb9e1">
+      <p class="quiz-prompt">Как мяч летит каждый кадр?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Прибавляем скорость к позиции (bx += dx)</button>
+        <button type="button" class="quiz-opt">Рисуем его заново в центре</button>
+        <button type="button" class="quiz-opt">Удаляем из списка</button>
+        <button type="button" class="quiz-opt">Меняем его размер</button>
+      </div>
+      <div class="quiz-explain">✅ У мяча есть позиция и скорость. Каждый кадр позиция += скорость — мяч движется.</div>
+    </div>
+
+    <div class="quiz-q" data-id="ark2-bounce" data-hash="803cdabcd8dfba5356c241d6c6bd1efe3ecb4bee3a95c048ddfff8bfa11fa76f">
+      <p class="quiz-prompt">Что такое «отскок» от стены в коде?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Увеличение скорости вдвое</button>
+        <button type="button" class="quiz-opt">Новый мяч сверху</button>
+        <button type="button" class="quiz-opt">Остановка мяча</button>
+        <button type="button" class="quiz-opt">Смена знака скорости (dx = -dx)</button>
+      </div>
+      <div class="quiz-explain">✅ Ударился слева/справа — разворачиваем dx, о потолок/пол — dy. Знак меняется на противоположный.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok1.html"><span class="dir">← Назад</span><span class="ttl">Урок 1 — Ракетка</span></a>
     <a class="next" href="urok3.html"><span class="dir">Дальше →</span><span class="ttl">Урок 3 — Отскок от ракетки</span></a>
@@ -98,5 +125,6 @@ dx, dy = <span class="num">4.0</span>, <span class="num">4.0</span>
 </div>
 
 <footer>Урок 2 из 5 · Арканоид 🧱</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>
