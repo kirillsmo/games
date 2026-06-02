@@ -16,6 +16,17 @@ from quizhash import quizhash, normalize  # noqa: E402
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ITER = 2000
 
+# Курсы для страницы прогресса: (id, заголовок, раздел, папка)
+COURSES = [
+    ("snake",    "🐍 Змейка",            "Игры",          "games/snake"),
+    ("catch",    "🐱 Ловкий кот",         "Игры",          "games/catch"),
+    ("arkanoid", "🧱 Арканоид",           "Игры",          "games/arkanoid"),
+    ("space",    "🚀 Космос",             "Игры",          "games/space"),
+    ("basics",   "⚡ Основы электроники",  "Робототехника", "robot/basics"),
+    ("mearm",    "🤖 Робот MeArm",        "Робототехника", "robot/mearm"),
+    ("car",      "🚗 Робомашинка",        "Робототехника", "robot/car"),
+]
+
 # Для каждого урока: список вопросов.
 # Вопрос = (id, prompt, [правильный, неправильный, неправильный, ...], explain)
 Q = {
@@ -443,6 +454,36 @@ def build_block(questions):
     return "\n".join(out)
 
 
+def build_manifest():
+    """Сканирует уроки и пишет quiz-manifest.js (для страницы прогресса)."""
+    import glob
+    import json
+    import re
+
+    courses = []
+    for cid, title, section, folder in COURSES:
+        files = glob.glob(os.path.join(ROOT, folder, "urok*.html"))
+        files.sort(key=lambda p: int(re.search(r"urok(\d+)", p).group(1)))
+        lessons = []
+        for path in files:
+            with open(path, encoding="utf-8") as fh:
+                html = fh.read()
+            m = re.search(r"<title>(.*?)</title>", html, re.S)
+            ttl = (m.group(1).strip() if m else os.path.basename(path))
+            ids = re.findall(r'data-id="([^"]+)"', html)
+            url = os.path.relpath(path, ROOT).replace(os.sep, "/")
+            lessons.append({"url": url, "title": ttl, "ids": ids})
+        courses.append({"id": cid, "title": title, "section": section, "lessons": lessons})
+
+    data = {"courses": courses}
+    out = "window.QUIZ_MANIFEST = " + json.dumps(data, ensure_ascii=False, indent=2) + ";\n"
+    with open(os.path.join(ROOT, "quiz-manifest.js"), "w", encoding="utf-8") as fh:
+        fh.write(out)
+    n = sum(len(l["ids"]) for c in courses for l in c["lessons"])
+    print("manifest: %d курсов, %d вопросов -> quiz-manifest.js" %
+          (len(courses), n))
+
+
 def main():
     changed = 0
     for rel, questions in Q.items():
@@ -464,6 +505,7 @@ def main():
         changed += 1
         print("ok:", rel, "(%d вопроса)" % len(questions))
     print("\nИзменено файлов:", changed)
+    build_manifest()
 
 
 if __name__ == "__main__":
