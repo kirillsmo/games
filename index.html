@@ -26,6 +26,7 @@
     font-family:"Manrope",system-ui,sans-serif;line-height:1.65;
     border-top:4px solid var(--ink);
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
   a{color:inherit;}
   img{max-width:100%;}
@@ -67,7 +68,7 @@
   section{scroll-margin-top:90px;}
 
   /* ---------- hero ---------- */
-  .lp-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;padding:74px 0 30px;}
+  .lp-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;padding-top:74px;padding-bottom:30px;}
   .lp-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-soft);color:var(--accent-deep);
     font-weight:700;font-size:.9rem;padding:8px 15px;border-radius:999px;margin-bottom:26px;}
   .lp-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);}
@@ -98,7 +99,7 @@
   .lp-chip.done .ic{background:var(--purple);}
 
   /* ---------- games ---------- */
-  .lp-section{padding:78px 0;}
+  .lp-section{padding-top:78px;padding-bottom:78px;}
   .lp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:24px;margin-top:34px;}
   .lp-gamecard{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);
     border-radius:20px;overflow:hidden;text-decoration:none;color:inherit;transition:transform .18s,box-shadow .18s,border-color .18s;}
@@ -139,7 +140,7 @@
 
   /* ---------- footer ---------- */
   .lp-footer{border-top:1px solid var(--line);margin-top:30px;}
-  .lp-footer-in{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:30px;padding:54px 0;}
+  .lp-footer-in{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:30px;padding-top:54px;padding-bottom:54px;}
   .lp-footer .lp-mark{margin-bottom:14px;}
   .lp-footer .desc{color:var(--muted);font-size:.95rem;max-width:24em;margin:0;}
   .lp-fbrand{font-family:"Onest",sans-serif;font-weight:800;font-size:1.05rem;color:var(--ink-2);margin-bottom:6px;}
@@ -158,7 +159,6 @@
     .lp-wrap{padding:0 20px;}
     .lp-navlinks{display:none;}
     .lp-footer-in{grid-template-columns:1fr;gap:26px;}
-    .lp-ctablock,.lp-section{padding-left:0;padding-right:0;}
     .lp-ctablock{padding:44px 24px;}
   }
 </style>
