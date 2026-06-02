@@ -118,6 +118,35 @@
     Почему мотор питают отдельной батарейкой, а не от платы?
   </div>
 
+  <div class="quiz" data-iter="2000">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Ответы спрятаны хэшем — их не угадать и не подсмотреть. Найди в уроке.</p>
+
+    <div class="quiz-q" data-id="basics5-forward"
+         data-hash="13ee23a61c5e5e34529e796d0e163346c6fede36b660a9cdb2b93f0db3861072 4117ca7a46b6c6f2889fba7ab7b1ba3c477d071b267280d1a6fa70b1f1d2e910 0ba77034eaf0aed057abd97d6aeeb5e8e3c12d7c7a955be90a139081e3568596 6f304a1e72b3825187ee49949f4469940b96b7406c13b61f842ae43bc96c1379"
+         data-look="Смотри список под схемой H-моста.">
+      <p class="quiz-prompt">Какие два выключателя H-моста надо включить, чтобы мотор ехал вперёд?</p>
+      <p class="quiz-hint">Запиши пару, например: <code>s1 и s4</code>.</p>
+      <div class="quiz-explain">✅ Верно — <b>S1 и S4</b> (одна диагональ). Другая диагональ S2+S3 — это «назад».</div>
+    </div>
+
+    <div class="quiz-q" data-id="basics5-short"
+         data-hash="353d4f7969da053a23965f3088672a504f578f3828390f4cd3d7ad0966940fda 5fe583c3780a334285a4710f802750d816025f7c872c855aeda8810527ea54a6 70f267019bd6b594258566c7438b42278fe8b679e1d8e343b5504e7775dc3780"
+         data-look="Смотри блок «Запретная комбинация».">
+      <p class="quiz-prompt">Что случится, если включить S1 и S3 одновременно? (как это называется)</p>
+      <p class="quiz-hint">Два слова или сокращение из урока 1.</p>
+      <div class="quiz-explain">✅ Верно — <b>короткое замыкание</b> (КЗ): «+» и «−» батарейки соединятся напрямую.</div>
+    </div>
+
+    <div class="quiz-q" data-id="basics5-chip"
+         data-hash="b7835d84d2948bd0ab4e2b41c1ae6c499dd33dd83ce3b8d4d7961b34f0aa3326 dfe040a6d9dd82be29af844aa318024869070588f15bea088039bd7065f0d004 920dd6b7e9a2a688b4f675a28ec92e2847032c9a969b12a7e4eda3bea7619ae0 5c0343334d6952272c7a989cc3826eb84cc38210c67b6297f421b126dde36d5d"
+         data-look="Смотри раздел про микросхему H-моста.">
+      <p class="quiz-prompt">Как называется микросхема-H-мост (одна из тех, что в уроке)?</p>
+      <p class="quiz-hint">Подойдёт та, что в машинке, или её «младший брат».</p>
+      <div class="quiz-explain">✅ Верно — <b>L293D</b> (или <b>L298N</b> на машинке): два H-моста в одной микросхеме.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Транзистор</span></a>
     <a class="next" href="urok6.html"><span class="dir">Дальше →</span><span class="ttl">Урок 6 — Мостик к Arduino</span></a>
@@ -125,5 +154,6 @@
 </div>
 
 <footer>Урок 5 из 6 · Основы электроники ⚡</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

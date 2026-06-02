@@ -93,6 +93,35 @@
     воткнуть LED наоборот?
   </div>
 
+  <div class="quiz" data-iter="2000">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Ответь сам, подсмотри в уроке, если надо. Ответы спрятаны — не угадать, надо понять.</p>
+
+    <div class="quiz-q" data-id="basics2-part"
+         data-hash="4c63a6f63b99792a98591c9aedc7c61930c566ac2ab7d3d518ebb1fc3b41aec2"
+         data-look="Смотри блок «Правило на всю жизнь».">
+      <p class="quiz-prompt">Какую деталь обязательно ставят последовательно со светодиодом, чтобы он не сгорел?</p>
+      <p class="quiz-hint">Одно слово. Подсказка: раздел «Резистор — придерживает ток».</p>
+      <div class="quiz-explain">✅ Верно — <b>резистор</b>. Он ограничивает ток до безопасного, иначе светодиод сгорит.</div>
+    </div>
+
+    <div class="quiz-q" data-id="basics2-plus"
+         data-hash="6fefcf1a9cd8c8ba1d78cff9b7f92adb62f6d5d403f0964003219f44323932bc 9c244f712dbcb8987b4e856c8fc1e2fd54db686bee5dc67c2e7f19164540e2ca 4e96abdc1c60e8c16ba8e8dbb94c5b9fa56254a510720706682a0d0c26a6f373"
+         data-look="Смотри пункт про полярность светодиода.">
+      <p class="quiz-prompt">Какая ножка светодиода — это «плюс»: длинная или короткая?</p>
+      <p class="quiz-hint">Можно ответить и научным словом.</p>
+      <div class="quiz-explain">✅ Верно — <b>длинная</b> ножка, она же <b>анод</b> («+»). Короткая — катод («−»).</div>
+    </div>
+
+    <div class="quiz-q" data-id="basics2-resistor"
+         data-hash="3f1ab178826d39689189488011326072f099b58543c227777fa305fe8ff82306 4df455e6383b4dea43237709beec97f4648df81f40f8ab91927326ae6a71bf8a"
+         data-look="Смотри расчёт в разделе «Сколько ом?».">
+      <p class="quiz-prompt">По расчёту из урока (на резисторе падает 3 В, ток 0,01 А) — сколько Ом должен быть резистор?</p>
+      <p class="quiz-hint">Только число. Вспомни закон Ома: R = U / I.</p>
+      <div class="quiz-explain">✅ Верно — <b>300 Ом</b> (3 ÷ 0,01). Поэтому на практике берут 220–330 Ом.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok1.html"><span class="dir">← Назад</span><span class="ttl">Урок 1 — Электричество</span></a>
     <a class="next" href="urok3.html"><span class="dir">Дальше →</span><span class="ttl">Урок 3 — Кнопка</span></a>
@@ -100,5 +129,6 @@
 </div>
 
 <footer>Урок 2 из 6 · Основы электроники ⚡</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>
