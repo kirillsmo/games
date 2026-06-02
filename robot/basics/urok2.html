@@ -93,32 +93,44 @@
     воткнуть LED наоборот?
   </div>
 
-  <div class="quiz" data-iter="2000">
+  <div class="quiz" data-iter="2000" data-cooldown="30">
     <h2>🧠 Проверь себя</h2>
-    <p style="color:var(--muted);margin-top:-2px">Ответь сам, подсмотри в уроке, если надо. Ответы спрятаны — не угадать, надо понять.</p>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
 
     <div class="quiz-q" data-id="basics2-part"
-         data-hash="4c63a6f63b99792a98591c9aedc7c61930c566ac2ab7d3d518ebb1fc3b41aec2"
-         data-look="Смотри блок «Правило на всю жизнь».">
+         data-hash="4c63a6f63b99792a98591c9aedc7c61930c566ac2ab7d3d518ebb1fc3b41aec2">
       <p class="quiz-prompt">Какую деталь обязательно ставят последовательно со светодиодом, чтобы он не сгорел?</p>
-      <p class="quiz-hint">Одно слово. Подсказка: раздел «Резистор — придерживает ток».</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Резистор</button>
+        <button type="button" class="quiz-opt">Конденсатор</button>
+        <button type="button" class="quiz-opt">Транзистор</button>
+        <button type="button" class="quiz-opt">Диод</button>
+      </div>
       <div class="quiz-explain">✅ Верно — <b>резистор</b>. Он ограничивает ток до безопасного, иначе светодиод сгорит.</div>
     </div>
 
     <div class="quiz-q" data-id="basics2-plus"
-         data-hash="6fefcf1a9cd8c8ba1d78cff9b7f92adb62f6d5d403f0964003219f44323932bc 9c244f712dbcb8987b4e856c8fc1e2fd54db686bee5dc67c2e7f19164540e2ca 4e96abdc1c60e8c16ba8e8dbb94c5b9fa56254a510720706682a0d0c26a6f373"
-         data-look="Смотри пункт про полярность светодиода.">
-      <p class="quiz-prompt">Какая ножка светодиода — это «плюс»: длинная или короткая?</p>
-      <p class="quiz-hint">Можно ответить и научным словом.</p>
-      <div class="quiz-explain">✅ Верно — <b>длинная</b> ножка, она же <b>анод</b> («+»). Короткая — катод («−»).</div>
+         data-hash="6fefcf1a9cd8c8ba1d78cff9b7f92adb62f6d5d403f0964003219f44323932bc 9c244f712dbcb8987b4e856c8fc1e2fd54db686bee5dc67c2e7f19164540e2ca 4e96abdc1c60e8c16ba8e8dbb94c5b9fa56254a510720706682a0d0c26a6f373">
+      <p class="quiz-prompt">Какая ножка светодиода — это «плюс»?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Длинная</button>
+        <button type="button" class="quiz-opt">Короткая</button>
+        <button type="button" class="quiz-opt">Любая</button>
+        <button type="button" class="quiz-opt">Та, где спил на колбе</button>
+      </div>
+      <div class="quiz-explain">✅ Верно — <b>длинная</b> ножка (анод, «+»). Короткая — катод («−»), у неё спил на колбе.</div>
     </div>
 
     <div class="quiz-q" data-id="basics2-resistor"
-         data-hash="3f1ab178826d39689189488011326072f099b58543c227777fa305fe8ff82306 4df455e6383b4dea43237709beec97f4648df81f40f8ab91927326ae6a71bf8a"
-         data-look="Смотри расчёт в разделе «Сколько ом?».">
-      <p class="quiz-prompt">По расчёту из урока (на резисторе падает 3 В, ток 0,01 А) — сколько Ом должен быть резистор?</p>
-      <p class="quiz-hint">Только число. Вспомни закон Ома: R = U / I.</p>
-      <div class="quiz-explain">✅ Верно — <b>300 Ом</b> (3 ÷ 0,01). Поэтому на практике берут 220–330 Ом.</div>
+         data-hash="3f1ab178826d39689189488011326072f099b58543c227777fa305fe8ff82306 4df455e6383b4dea43237709beec97f4648df81f40f8ab91927326ae6a71bf8a">
+      <p class="quiz-prompt">По расчёту из урока (на резисторе падает 3 В, ток 0,01 А) — какой нужен резистор?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">300 Ом</button>
+        <button type="button" class="quiz-opt">30 Ом</button>
+        <button type="button" class="quiz-opt">3000 Ом</button>
+        <button type="button" class="quiz-opt">3 Ом</button>
+      </div>
+      <div class="quiz-explain">✅ Верно — <b>300 Ом</b> (3 ÷ 0,01). На практике берут 220–330 Ом.</div>
     </div>
   </div>
 

@@ -73,23 +73,31 @@ arm.base.angle += <span class="num">2</span>          <span class="com"># пов
     серво и не падает. Можно писать и проверять код заранее.
   </div>
 
-  <div class="quiz" data-iter="2000">
+  <div class="quiz" data-iter="2000" data-cooldown="30">
     <h2>🧠 Проверь себя</h2>
-    <p style="color:var(--muted);margin-top:-2px">Ответ нужно найти в уроке или в коде — угадать не выйдет.</p>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы заглянуть в урок или код.</p>
 
     <div class="quiz-q" data-id="mearm8-lib"
-         data-hash="0eef274596a8dbff44377a6121a94f8b5ece6d1868926116621fe64b2bd873c7 340c3a3f2d790f5da0097ddf48d5d2a97cd8be92aadfb2773327a0f35cf4516d"
-         data-look="Смотри раздел «Идея» и команду pip install.">
+         data-hash="0eef274596a8dbff44377a6121a94f8b5ece6d1868926116621fe64b2bd873c7 340c3a3f2d790f5da0097ddf48d5d2a97cd8be92aadfb2773327a0f35cf4516d">
       <p class="quiz-prompt">Какой Python-библиотекой мы управляем ножками Arduino?</p>
-      <p class="quiz-hint">Её ставят через <code>pip install …</code></p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">pymata4</button>
+        <button type="button" class="quiz-opt">pygame</button>
+        <button type="button" class="quiz-opt">Adafruit</button>
+        <button type="button" class="quiz-opt">Servo</button>
+      </div>
       <div class="quiz-explain">✅ Верно — <b>pymata4</b> (часто пишут просто «pymata»). Она командует Firmata по USB.</div>
     </div>
 
     <div class="quiz-q" data-id="mearm8-prop"
-         data-hash="f2dd3314d5b0633a8eaa5d4c21bf72286a641998159d9c6e2c5ace67a72d7075 3c8092f68c1258272a0a51dd8443d9b518ede11d51d844ed61dac14b60311c52"
-         data-look="Смотри пример кода: arm.base.____ += 2">
-      <p class="quiz-prompt">Через какое свойство объекта-сустава задаётся угол? (например <code>arm.base.____</code>)</p>
-      <p class="quiz-hint">Одно слово по-английски.</p>
+         data-hash="f2dd3314d5b0633a8eaa5d4c21bf72286a641998159d9c6e2c5ace67a72d7075 3c8092f68c1258272a0a51dd8443d9b518ede11d51d844ed61dac14b60311c52">
+      <p class="quiz-prompt">Через какое свойство объекта-сустава задаётся угол? (<code>arm.base.____</code>)</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">angle</button>
+        <button type="button" class="quiz-opt">value</button>
+        <button type="button" class="quiz-opt">pos</button>
+        <button type="button" class="quiz-opt">degree</button>
+      </div>
       <div class="quiz-explain">✅ Верно — <b>angle</b>. Например <code>arm.base.angle = 120</code>. Пределы объект хранит сам.</div>
     </div>
   </div>

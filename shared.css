@@ -361,33 +361,24 @@ footer a:hover { text-decoration: underline; }
   margin: 14px 0;
 }
 .quiz-q.solved { border-left-color: var(--green); }
-.quiz-prompt { font-weight: 700; margin: 0 0 4px; }
+.quiz-prompt { font-weight: 700; margin: 0 0 8px; }
 .quiz-hint { color: var(--muted); font-size: .9rem; margin: 0 0 10px; }
-.quiz-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.quiz-input {
-  flex: 1 1 220px;
-  min-width: 160px;
-  padding: 10px 12px;
-  border-radius: 9px;
+.quiz-options { display: flex; flex-direction: column; gap: 8px; margin: 6px 0; }
+.quiz-opt {
+  text-align: left;
+  padding: 11px 14px;
   border: 1px solid var(--line);
   background: var(--panel2);
   color: var(--text);
-  font-size: 1rem;
-}
-.quiz-input:focus { outline: none; border-color: var(--accent); }
-.quiz-input:disabled { opacity: .8; }
-.quiz-check {
-  padding: 10px 18px;
-  border: none;
   border-radius: 9px;
-  background: var(--green);
-  color: #07150d;
-  font-weight: 800;
   font-size: 1rem;
   cursor: pointer;
+  transition: border-color .12s, background .12s;
 }
-.quiz-check:hover { filter: brightness(1.08); }
-.quiz-check:disabled { background: var(--line); color: var(--muted); cursor: default; filter: none; }
+.quiz-opt:hover:not(:disabled) { border-color: var(--accent); }
+.quiz-opt:disabled { cursor: default; opacity: .9; }
+.quiz-opt.correct { background: rgba(22,196,127,.18); border-color: var(--green); font-weight: 700; }
+.quiz-opt.wrong { background: rgba(255,107,107,.18); border-color: var(--red); }
 .quiz-feedback { margin: 8px 0 0; min-height: 1.1em; font-weight: 600; }
 .quiz-feedback.ok { color: var(--green); }
 .quiz-feedback.no { color: var(--red); }
@@ -400,6 +391,18 @@ footer a:hover { text-decoration: underline; }
   border-left: 3px solid var(--green);
 }
 .quiz-q.solved .quiz-explain { display: block; }
+.quiz-reset {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 7px 14px;
+  font-size: .85rem;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.quiz-reset:hover { color: var(--text); border-color: var(--muted); }
 .quiz-q.shake { animation: quizShake .32s; }
 @keyframes quizShake {
   0%, 100% { transform: translateX(0); }

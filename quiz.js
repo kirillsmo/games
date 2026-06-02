@@ -1,28 +1,31 @@
 // quiz.js — самопроверка после уроков для GitHub Pages (без сервера).
 //
-// КАК ЭТО УСТРОЕНО (и почему ответ нельзя угадать или подсмотреть):
-//  • Ребёнок вводит ответ СВОБОДНЫМ ТЕКСТОМ — нет кнопок-вариантов, перебрать нечего.
-//  • В странице лежит НЕ ответ, а его «посоленный» SHA-256-хэш, прогнанный много раз.
-//    Из хэша ответ не восстановить, а перебор словами/числами скриптом — дорог.
-//  • Правильный ответ нужно НАЙТИ В УРОКЕ — на это и расчёт: подумать → посмотреть → ответить.
-//  • Объяснение («почему так») показывается ТОЛЬКО после верного ответа.
+// ФОРМАТ: выбор ответа КНОПКАМИ (печатать ничего не нужно — удобно без русской раскладки).
+// Защита от «тыка наугад»: после неверного ответа вопрос блокируется на 30 секунд
+// «на почитать» — за это время надо вернуться в урок и найти ответ.
+//  • Варианты каждый раз перемешиваются (нельзя запомнить «правильную — вторая»).
+//  • В HTML лежит не «какой вариант верный», а ХЭШ правильного ответа — в исходнике не виден.
+//  • Объяснение показывается только после верного ответа; прогресс хранится в браузере.
+//  • Внизу блока — кнопка «Сбросить ответы» (очищает прогресс по всем урокам).
 //
 // Разметка урока:
-//   <div class="quiz" data-iter="2000">
+//   <div class="quiz" data-iter="2000" data-cooldown="30">
 //     <h2>🧠 Проверь себя</h2>
-//     <div class="quiz-q" data-id="basics2-led" data-hash="ХЭШ1 ХЭШ2">
+//     <div class="quiz-q" data-id="basics2-part" data-hash="ХЭШ1 ХЭШ2">
 //       <p class="quiz-prompt">Вопрос…</p>
-//       <p class="quiz-hint">Подсказка: где смотреть в уроке.</p>
+//       <div class="quiz-options">
+//         <button type="button" class="quiz-opt">Вариант A</button>
+//         <button type="button" class="quiz-opt">Вариант B</button>
+//       </div>
 //       <div class="quiz-explain">Появится после верного ответа.</div>
 //     </div>
 //   </div>
-// data-hash — один или несколько (через пробел) допустимых хэшей ответа.
-// Хэши считаются скриптом tools/quizhash.py — он использует ТУ ЖЕ нормализацию и число повторов.
+// data-hash — хэш(и) правильного варианта (см. tools/quizhash.py).
 
 (function () {
   "use strict";
 
-  // ---- SHA-256 (компактная реализация, работает офлайн и на file://) ----
+  // ---- SHA-256 (компактная, работает офлайн и на file://) ----
   var K = [
     0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
     0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
@@ -42,7 +45,7 @@
     var m = new Uint8Array(total);
     m.set(bytes, 0);
     m[l] = 0x80;
-    var bitLen = l * 8;                       // входы короткие — помещаются в 32 бита
+    var bitLen = l * 8;
     m[total - 4] = (bitLen >>> 24) & 0xff;
     m[total - 3] = (bitLen >>> 16) & 0xff;
     m[total - 2] = (bitLen >>> 8) & 0xff;
@@ -78,23 +81,23 @@
     return hex;
   }
 
-  var enc = (typeof TextEncoder !== "undefined") ? new TextEncoder() : null;
+  var encoder = (typeof TextEncoder !== "undefined") ? new TextEncoder() : null;
   function utf8(str) {
-    if (enc) return enc.encode(str);
-    str = unescape(encodeURIComponent(str));        // запасной путь
+    if (encoder) return encoder.encode(str);
+    str = unescape(encodeURIComponent(str));
     var arr = new Uint8Array(str.length);
     for (var i = 0; i < str.length; i++) arr[i] = str.charCodeAt(i);
     return arr;
   }
   function sha256hex(str) { return sha256bytes(utf8(str)); }
 
-  // ---- Нормализация ответа (ДОЛЖНА совпадать с tools/quizhash.py) ----
+  // ---- Нормализация (ДОЛЖНА совпадать с tools/quizhash.py) ----
   function normalize(s) {
     s = (s || "").toLowerCase().replace(/ё/g, "е");
-    s = s.replace(/,/g, ".");                        // десятичная запятая → точка
-    s = s.replace(/[^0-9a-zа-я .\-]/g, " ");         // лишние символы → пробел
+    s = s.replace(/,/g, ".");
+    s = s.replace(/[^0-9a-zа-я .\-]/g, " ");
     s = s.replace(/\s+/g, " ").trim();
-    s = s.replace(/^[.\-]+|[.\-]+$/g, "").trim();    // убрать крайние точки/дефисы
+    s = s.replace(/^[.\-]+|[.\-]+$/g, "").trim();
     return s;
   }
 
@@ -104,83 +107,103 @@
     return h;
   }
 
-  // ---- Логика виджета ----
-  function setup(q, iter) {
+  // ---- Утилиты ----
+  function toArr(nodeList) { return Array.prototype.slice.call(nodeList); }
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  // ---- Один вопрос ----
+  function setupQ(q, iter, cooldown) {
     var id = q.getAttribute("data-id");
     var hashes = (q.getAttribute("data-hash") || "").trim().split(/\s+/);
-    var look = q.getAttribute("data-look") || "Загляни в урок выше — там есть ответ.";
-
-    var row = document.createElement("div");
-    row.className = "quiz-row";
-    var input = document.createElement("input");
-    input.className = "quiz-input";
-    input.type = "text";
-    input.autocomplete = "off";
-    input.spellcheck = false;
-    input.placeholder = "твой ответ…";
-    var btn = document.createElement("button");
-    btn.className = "quiz-check";
-    btn.type = "button";
-    btn.textContent = "Проверить";
-    row.appendChild(input);
-    row.appendChild(btn);
+    var box = q.querySelector(".quiz-options");
+    var opts = toArr(q.querySelectorAll(".quiz-opt"));
+    shuffle(opts).forEach(function (o) { box.appendChild(o); });   // перемешать порядок
 
     var fb = document.createElement("p");
     fb.className = "quiz-feedback";
-
     var explain = q.querySelector(".quiz-explain");
-    var hint = q.querySelector(".quiz-hint");
-    if (explain) q.insertBefore(row, explain); else q.appendChild(row);
-    q.insertBefore(fb, row.nextSibling);
+    if (explain) q.insertBefore(fb, explain); else q.appendChild(fb);
 
-    var attempts = 0;
     var key = "quiz:" + id;
+    var locked = false, timer = null;
 
-    function solved() {
+    function isCorrect(el) {
+      return hashes.indexOf(quizhash(id, el.textContent, iter)) !== -1;
+    }
+
+    function solve(clicked) {
+      if (timer) { clearInterval(timer); timer = null; }
+      locked = false;
       q.classList.add("solved");
-      input.value = "";
-      input.placeholder = "✓ решено";
-      input.disabled = true;
-      btn.disabled = true;
-      fb.textContent = "✅ Верно!";
+      opts.forEach(function (o) {
+        o.disabled = true;
+        o.classList.remove("wrong");
+        if (o === clicked || (!clicked && isCorrect(o))) o.classList.add("correct");
+      });
       fb.className = "quiz-feedback ok";
+      fb.textContent = "✅ Верно!";
       try { localStorage.setItem(key, "1"); } catch (e) {}
     }
 
-    if (localStorage.getItem(key) === "1") { solved(); }
-
-    function check() {
-      if (q.classList.contains("solved")) return;
-      var val = input.value;
-      if (!normalize(val)) { input.focus(); return; }
-      var h = quizhash(id, val, iter);
-      if (hashes.indexOf(h) !== -1) {
-        solved();
-      } else {
-        attempts++;
-        q.classList.remove("shake");
-        void q.offsetWidth;                          // перезапустить анимацию
-        q.classList.add("shake");
-        fb.className = "quiz-feedback no";
-        fb.textContent = attempts >= 3
-          ? "✗ Пока не то. " + look
-          : "✗ Не совсем — подумай ещё и проверь в уроке.";
+    function cooldownStart(wrongEl) {
+      locked = true;
+      opts.forEach(function (o) { o.disabled = true; });
+      var left = cooldown;
+      fb.className = "quiz-feedback no";
+      function tick() {
+        if (left <= 0) {
+          clearInterval(timer); timer = null; locked = false;
+          opts.forEach(function (o) { o.disabled = false; o.classList.remove("wrong"); });
+          fb.className = "quiz-feedback";
+          fb.textContent = "Можно отвечать снова.";
+          return;
+        }
+        fb.textContent = "✗ Не то. Загляни в урок — ответить снова можно через " + left + " c";
+        left--;
       }
+      tick();
+      timer = setInterval(tick, 1000);
     }
 
-    btn.addEventListener("click", check);
-    input.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") { e.preventDefault(); check(); }
+    opts.forEach(function (o) {
+      o.addEventListener("click", function () {
+        if (locked || q.classList.contains("solved")) return;
+        if (isCorrect(o)) solve(o);
+        else { o.classList.add("wrong"); cooldownStart(o); }
+      });
     });
+
+    if (localStorage.getItem(key) === "1") solve(null);   // восстановить решённое
   }
 
+  // ---- Инициализация всех блоков ----
   function init() {
-    var quizzes = document.querySelectorAll(".quiz");
-    for (var i = 0; i < quizzes.length; i++) {
-      var iter = parseInt(quizzes[i].getAttribute("data-iter"), 10) || 2000;
-      var qs = quizzes[i].querySelectorAll(".quiz-q");
-      for (var j = 0; j < qs.length; j++) setup(qs[j], iter);
-    }
+    var blocks = toArr(document.querySelectorAll(".quiz"));
+    blocks.forEach(function (b) {
+      var iter = parseInt(b.getAttribute("data-iter"), 10) || 2000;
+      var cd = parseInt(b.getAttribute("data-cooldown"), 10) || 30;
+      toArr(b.querySelectorAll(".quiz-q")).forEach(function (q) { setupQ(q, iter, cd); });
+
+      var reset = document.createElement("button");
+      reset.type = "button";
+      reset.className = "quiz-reset";
+      reset.textContent = "↺ Сбросить ответы";
+      reset.addEventListener("click", function () {
+        try {
+          Object.keys(localStorage).forEach(function (k) {
+            if (k.indexOf("quiz:") === 0) localStorage.removeItem(k);
+          });
+        } catch (e) {}
+        location.reload();
+      });
+      b.appendChild(reset);
+    });
   }
 
   if (document.readyState === "loading") {
