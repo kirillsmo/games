@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Урок 4 — Команды моторам</title>
+<title>Урок 4 — Моторы из Python</title>
 <link rel="stylesheet" href="../../shared.css">
 <script src="../../theme.js"></script>
 </head>
@@ -16,7 +16,7 @@
     <a class="dot" href="urok1.html" title="Знакомство">1</a>
     <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
     <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
-    <a class="dot active" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot active" href="urok4.html" title="Моторы из Python">4</a>
     <a class="dot" href="urok5.html" title="Bluetooth">5</a>
     <a class="dot" href="urok6.html" title="Глаза машины">6</a>
     <a class="dot" href="urok7.html" title="Первый заезд">7</a>
@@ -30,56 +30,82 @@
 
 <div class="wrap">
   <div class="lesson-head">
-    <span class="eyebrow">Урок 4 · прошивка</span>
-    <h1>Команды моторам</h1>
+    <span class="eyebrow">Урок 4 · Firmata + код</span>
+    <h1>Моторы из Python</h1>
   </div>
 
   <div class="goal">
     <span class="label">Цель урока</span>
-    Научить машину слушать команды по Serial-порту: написать буквы — и машина едет
-    вперёд/назад/поворачивает. Пока по USB-проводу, через Serial Monitor.
+    Залить в плату готовую прошивку <b>Firmata</b> (один раз) и поехать командами прямо из Python:
+    <code>car.forward()</code>, <code>car.left_turn()</code>, <code>car.stop()</code>. Без своего
+    «протокола» и без программирования Arduino.
   </div>
 
-  <h2>🧠 Идея: команды одной буквой</h2>
-  <p>Договоримся об «языке» команд. Каждая команда — одна строка:</p>
-  <table>
-    <tr><th>Команда</th><th>Что делает</th></tr>
-    <tr><td><code>F,200</code></td><td>вперёд на скорости 200 (0…255)</td></tr>
-    <tr><td><code>B,200</code></td><td>назад</td></tr>
-    <tr><td><code>L,200</code></td><td>поворот налево (танком)</td></tr>
-    <tr><td><code>R,200</code></td><td>поворот направо</td></tr>
-    <tr><td><code>S</code></td><td>стоп</td></tr>
-  </table>
+  <h2>📥 Шаг 1 — заливаем Firmata (один раз)</h2>
+  <p>В уроке 3 мы залили крошечный «сырой» скетч, чтобы убедиться, что моторы крутятся. Больше
+     писать программы для Arduino мы не будем. Ставим библиотеку <b>FirmataExpress</b>
+     (Инструменты → Управление библиотеками), затем <b>Файл → Примеры → FirmataExpress →
+     FirmataExpress</b> → выбрать плату «Arduino Uno» и порт → «Загрузить». Всё.</p>
+  <div class="dl-row">
+    <a class="dl" href="code/arduino/README.txt" download>⬇️ как залить Firmata (README)</a>
+  </div>
+  <div class="box idea">
+    <span class="label">💡 То же, что у руки MeArm</span>
+    На руке-роботе мы уже так делали: одна готовая прошивка Firmata — и весь «ум» живёт в Python.
+    Машина устроена так же, только вместо серво у неё моторы через драйвер L298N.
+  </div>
+
+  <h2>🧠 Шаг 2 — командуем объектами</h2>
+  <p>Связь и моторы спрятаны в файл <code>robot.py</code>. Там есть объект <code>car</code>, у
+     которого понятные команды — никаких «букв» и строк протокола:</p>
+  <pre><span class="kw">from</span> robot <span class="kw">import</span> connect
+car = <span class="fn">connect</span>()           <span class="com"># найдёт плату с Firmata (USB)</span>
+
+car.<span class="fn">forward</span>(<span class="num">180</span>)        <span class="com"># вперёд, скорость 0..255</span>
+car.<span class="fn">left_turn</span>()          <span class="com"># поворот налево «танком»</span>
+car.<span class="fn">stop</span>()               <span class="com"># стоп</span></pre>
+  <div class="dl-row">
+    <a class="dl ghost" href="code/robot.py" download>robot.py (связь + объекты)</a>
+  </div>
 
   <h2>🔄 Поворот «танком»</h2>
-  <p>Чтобы повернуть налево, левые колёса крутятся <b>назад</b>, а правые — <b>вперёд</b>.
-     Машина разворачивается на месте. В коде это две функции: одна на левые моторы, другая
-     на правые, каждой говорим направление и скорость:</p>
-  <pre><span class="kw">void</span> <span class="fn">doCommand</span>(<span class="kw">char</span> dir, <span class="kw">int</span> speed) {
-  <span class="kw">if</span> (dir == <span class="str">'F'</span>) { <span class="fn">leftMotors</span>(<span class="num">1</span>, speed);  <span class="fn">rightMotors</span>(<span class="num">1</span>, speed); }
-  <span class="kw">else if</span> (dir == <span class="str">'L'</span>) { <span class="fn">leftMotors</span>(<span class="num">-1</span>, speed); <span class="fn">rightMotors</span>(<span class="num">1</span>, speed); }
-  <span class="com">// ... B и R — наоборот, S — стоп</span>
-}</pre>
+  <p>Машина поворачивает на месте: один борт колёс крутится вперёд, другой — назад. Это уже
+     зашито в объект — <code>car.left_turn()</code> сам крутит левый борт назад, а правый вперёд.
+     Внутри <code>robot.py</code> у машины два объекта-мотора: <code>car.left</code> и
+     <code>car.right</code>, и у каждого метод <code>drive(speed)</code> (от −255 до 255).</p>
 
-  <h2>📥 Заливаем прошивку</h2>
-  <p>Залей <span class="run">serial_drive.ino</span>. Открой <b>Serial Monitor</b> в Arduino IDE,
-     поставь скорость <b>9600</b> и впиши команду, например <code>F,200</code>, нажми Enter —
-     машина поедет. <code>S</code> — стоп.</p>
-  <div class="dl-row">
-    <a class="dl" href="code/arduino/serial_drive.ino" download>⬇️ serial_drive.ino</a>
-  </div>
-
-  <div class="box idea">
-    <span class="label">💡 Это тот же serial, что у руки-робота</span>
-    Рука MeArm слушала команды <code>"номер,угол"</code>. Машина слушает <code>"буква,скорость"</code>.
-    Приём один и тот же: Arduino читает строку из порта и выполняет. В следующем уроке этот порт
-    станет беспроводным.
+  <div class="box warn">
+    <span class="label">⚠️ Проверяй на коробке</span>
+    Перед запуском подними машину на подставку (колёса в воздухе). Поставь
+    <code>pip install pymata4</code>, если ещё не стоит. Питание моторов (18650) — включено.
   </div>
 
   <div class="box try">
-    <span class="label">✅ Проверка (машина на коробке!)</span>
-    Команды <code>F</code>, <code>B</code>, <code>L</code>, <code>R</code>, <code>S</code> из
-    Serial Monitor работают, скорость меняет резвость колёс. Дальше — режем провод.
+    <span class="label">✅ Проверка</span>
+    Маленькая программа с <code>car.forward(180)</code> и через секунду <code>car.stop()</code>
+    реально крутит колёса. Едет не туда? Это нормально — настроим на следующих уроках. Дальше —
+    режем провод.
+  </div>
+
+  <div class="quiz" data-iter="2000">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Ответы спрятаны — их не подобрать. Найди в уроке или в <code>robot.py</code>.</p>
+
+    <div class="quiz-q" data-id="car4-firmware"
+         data-hash="be5d6bcf1c1a2fb20e75dd15ae478ccafa94f9b816c35f21a6118e4fe3b8447a 54798400830923754532443152a97481009c20c7aa309d37c54a2495a64defaa"
+         data-look="Смотри «Шаг 1 — заливаем Firmata».">
+      <p class="quiz-prompt">Какую готовую прошивку заливают в Arduino один раз, чтобы рулить им из Python?</p>
+      <p class="quiz-hint">Название прошивки (можно коротко).</p>
+      <div class="quiz-explain">✅ Верно — <b>Firmata</b> (мы ставим вариант <b>FirmataExpress</b>). После заливки Arduino не программируем.</div>
+    </div>
+
+    <div class="quiz-q" data-id="car4-method"
+         data-hash="a31a92c39ccc8cb57e5b425157730cfc101aeb0f26c4870f0b5f83e390872d3b c61a00174947c246f7b7a8aee65fbf691c9a2141de21852f3565c4ad14980dd3"
+         data-look="Смотри пример кода с объектом car.">
+      <p class="quiz-prompt">Каким методом объекта <code>car</code> машина едет вперёд? (например <code>car.____</code>)</p>
+      <p class="quiz-hint">Одно английское слово.</p>
+      <div class="quiz-explain">✅ Верно — <b>forward</b>: <code>car.forward(180)</code>. Ещё есть back, left_turn, right_turn, stop.</div>
+    </div>
   </div>
 
   <div class="pager">
@@ -89,5 +115,6 @@
 </div>
 
 <footer>Урок 4 из 12 · Робомашинка 🚗</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Основы электроники — курс перед роботами</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">🤖 Робототехника</a>
+  <a class="home" href="index.html">⚡ Основы электроники</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Электричество">1</a>
+    <a class="dot" href="urok2.html" title="Светодиод и резистор">2</a>
+    <a class="dot" href="urok3.html" title="Кнопка">3</a>
+    <a class="dot" href="urok4.html" title="Транзистор">4</a>
+    <a class="dot" href="urok5.html" title="Мотор и H-мост">5</a>
+    <a class="dot" href="urok6.html" title="Мостик к Arduino">6</a>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>⚡ Основы электроники</h1>
+  <p>Прежде чем собирать роботов, разберёмся с самим электричеством: ток, напряжение,
+     сопротивление, светодиод, кнопка, транзистор и мотор. На макетке, руками — без пайки.</p>
+</div>
+
+<div class="wrap">
+
+  <div class="goal">
+    <span class="label">Зачем этот курс</span>
+    Робот — это электроника, которой управляет программа. Если не понимать, что такое
+    ток и напряжение, почему светодиод сгорает без резистора и почему мотор нельзя втыкать
+    прямо в ножку платы — собрать робота получится «на удачу». Здесь мы строим фундамент:
+    шесть коротких занятий с настоящими деталями на макетной плате.
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Куда дальше</span>
+    Этот курс — <b>самый первый</b> в робототехнике. После него идут роботы:
+    <a href="../mearm/index.html" style="color:var(--green);font-weight:700">рука MeArm</a> и
+    <a href="../car/index.html" style="color:var(--green);font-weight:700">машинка</a>. Программировать
+    будем на Python — основы Python и pygame берём из
+    <a href="../../index.html" style="color:var(--green);font-weight:700">курса игр</a>.
+  </div>
+
+  <h2>🛒 Что нужно (недорогой набор на парту)</h2>
+  <div class="box">
+    <span class="label">✅ Стартовый набор электроники</span>
+    Подойдёт любой «Arduino Starter Kit» или отдельные детали:
+    <b>макетная плата</b> (breadboard), провода-перемычки, <b>батарейный отсек на 3–4 AA</b>
+    (или 9 В «крона» с клеммой), пара <b>светодиодов</b>, <b>резисторы</b> 220–330 Ом и 1–10 кОм,
+    <b>тактовая кнопка</b>, <b>NPN-транзистор</b> (например 2N2222 или BC547), <b>диод</b> 1N4001,
+    маленький <b>DC-моторчик</b>, микросхема H-моста <b>L293D</b> (или модуль L298N).
+  </div>
+  <h3>Очень желательно:</h3>
+  <p><b>Мультиметр</b> (самый дешёвый) — измерять напряжение и проверять цепь. И <b>взрослый рядом</b>
+     при первой сборке.</p>
+
+  <div class="box warn">
+    <span class="label">⚠️ Техника безопасности (читаем со всеми!)</span>
+    • Работаем только на <b>батарейках до 9 В</b> — это безопасно. <b>Никогда</b> не подключаемся к розетке.<br>
+    • <b>Не соединяй «+» и «−» батарейки напрямую</b> (без детали между ними) — это короткое замыкание:
+      провода и батарейка сильно греются, могут обжечь.<br>
+    • Светодиод <b>всегда</b> через резистор. Мотор — <b>никогда</b> прямо в ножку платы.<br>
+    • Что-то нагрелось или пахнет — сразу <b>отсоедини батарейку</b> и позови взрослого.
+  </div>
+
+  <h2>Уроки</h2>
+  <div class="cards">
+    <a class="card" href="urok1.html"><div class="n">1</div><h3>Что такое электричество</h3><p>Ток, напряжение, сопротивление — на пальцах.</p></a>
+    <a class="card" href="urok2.html"><div class="n">2</div><h3>Светодиод и резистор</h3><p>Первая цепь. Полярность и как не сжечь LED.</p></a>
+    <a class="card" href="urok3.html"><div class="n">3</div><h3>Кнопка</h3><p>Замыкаем и размыкаем цепь по нажатию.</p></a>
+    <a class="card" href="urok4.html"><div class="n">4</div><h3>Транзистор</h3><p>Электронный выключатель: слабый ток рулит сильным.</p></a>
+    <a class="card" href="urok5.html"><div class="n">5</div><h3>Мотор и H-мост</h3><p>Как заставить мотор крутиться в обе стороны.</p></a>
+    <a class="card" href="urok6.html"><div class="n">6</div><h3>Мостик к Arduino</h3><p>Плата как набор управляемых ножек. ШИМ. Дальше — Python.</p></a>
+  </div>
+
+  <div class="pager">
+    <span class="pager-spacer" style="flex:1"></span>
+    <a class="next" href="urok1.html"><span class="dir">Начать →</span><span class="ttl">Урок 1 — Электричество</span></a>
+  </div>
+
+</div>
+
+<footer>Основы электроники · фундамент перед роботами ⚡</footer>
+</body>
+</html>

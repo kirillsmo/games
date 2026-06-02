@@ -1,0 +1,19 @@
+<svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+  <rect width="480" height="270" fill="#11141f"/>
+  <!-- battery -->
+  <rect x="40" y="120" width="70" height="40" rx="6" fill="#2a2f45" stroke="#16c47f" stroke-width="3"/>
+  <text x="58" y="146" fill="#16c47f" font-family="sans-serif" font-size="22" font-weight="700">+ −</text>
+  <!-- wires -->
+  <path d="M110 130 H200" stroke="#6cb2ff" stroke-width="4" fill="none"/>
+  <path d="M110 150 H160 V220 H360 V160" stroke="#6cb2ff" stroke-width="4" fill="none"/>
+  <!-- resistor -->
+  <rect x="200" y="118" width="60" height="24" rx="4" fill="#e0a92b"/>
+  <path d="M260 130 H300" stroke="#6cb2ff" stroke-width="4" fill="none"/>
+  <!-- LED -->
+  <circle cx="330" cy="130" r="20" fill="#ff5d5d"/>
+  <circle cx="330" cy="130" r="9" fill="#ffd0d0"/>
+  <path d="M350 130 H360" stroke="#6cb2ff" stroke-width="4" fill="none"/>
+  <!-- spark -->
+  <text x="300" y="80" fill="#ffd23f" font-family="sans-serif" font-size="40">⚡</text>
+  <text x="36" y="50" fill="#eaeaea" font-family="sans-serif" font-size="30" font-weight="800">Основы электроники</text>
+</svg>

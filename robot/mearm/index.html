@@ -19,8 +19,8 @@
     <a class="dot" href="urok4.html" title="Плечо и локоть">4</a>
     <a class="dot" href="urok5.html" title="Захват">5</a>
     <a class="dot" href="urok6.html" title="Подключение">6</a>
-    <a class="dot" href="urok7.html" title="Первый скетч">7</a>
-    <a class="dot" href="urok8.html" title="pygame ↔ Arduino">8</a>
+    <a class="dot" href="urok7.html" title="Заливаем Firmata">7</a>
+    <a class="dot" href="urok8.html" title="pygame ↔ робот">8</a>
     <a class="dot" href="urok9.html" title="Все суставы">9</a>
     <a class="dot" href="urok10.html" title="Пульт и запись">10</a>
     <a class="dot" href="urok11.html" title="Проект">11</a>
@@ -44,16 +44,24 @@
 
   <div class="box idea">
     <span class="label">💡 Как робот слушается Python</span>
-    Робот не понимает Python напрямую. Поэтому: <b>компьютер (pygame)</b> по USB шлёт
-    команды на плату <b>Arduino Nano</b>, та передаёт их драйверу <b>PCA9685</b>, а он уже
-    крутит <b>сервоприводы</b> — моторчики суставов. Цепочка:
+    Робот не понимает Python напрямую. В плату <b>Arduino Nano</b> мы один раз заливаем
+    стандартную прошивку <b>Firmata</b> — и дальше она просто слушается компьютера. Из Python
+    библиотека <b>pymata</b> управляет ножками платы, а мы прячем это за объектами-суставами
+    (<code>arm.base</code>, <code>arm.grip</code>…). Цепочка:
     <div class="pipe" style="margin-top:10px">
-      <span class="pill">💻 pygame</span><span class="arrow">→ USB →</span>
-      <span class="pill">🔌 Nano</span><span class="arrow">→ I2C →</span>
-      <span class="pill">🎛️ PCA9685</span><span class="arrow">→</span>
+      <span class="pill">💻 pygame</span><span class="arrow">→ pymata · USB →</span>
+      <span class="pill">🔌 Nano (Firmata)</span><span class="arrow">→</span>
       <span class="pill">⚙️ серво</span>
     </div>
-    Питание сервоприводов берём <b>от того же USB</b> (через 5 В Nano) — отдельный блок не нужен.
+    Никакого своего «протокола команд» учить не нужно. Сервоприводы подключены прямо к ножкам
+    Nano, питание берём от USB — отдельный блок не нужен.
+  </div>
+
+  <div class="box idea">
+    <span class="label">🧰 Перед этим курсом</span>
+    Полезно пройти <a href="../basics/index.html" style="color:var(--green);font-weight:700">⚡ Основы
+    электроники</a> (что такое серво, питание, ножки платы) и знать основы pygame из
+    <a href="../../index.html" style="color:var(--green);font-weight:700">курса игр</a>.
   </div>
 
   <p>Не знаешь, что такое терминал и как запускать Python? →
@@ -71,27 +79,28 @@
   <h3>На каждый комплект (одного робота) докупить:</h3>
   <table>
     <tr><th>Что</th><th>Зачем</th></tr>
-    <tr><td>Arduino <b>Nano</b> + USB-кабель</td><td>плата-посредник между ПК и драйвером серво</td></tr>
-    <tr><td>Драйвер сервоприводов <b>PCA9685</b></td><td>крутит серво и раздаёт им питание — сердце схемы</td></tr>
-    <tr><td>Макетная плата (breadboard)</td><td>удобно соединить Nano и PCA9685</td></tr>
-    <tr><td>Провода-перемычки «мама-папа» (+ немного «папа-папа»)</td><td>4 провода Nano↔PCA9685 и питание</td></tr>
-    <tr><td>Маленькая крестовая отвёртка</td><td>винты качалок серво и клеммы V+ на PCA9685</td></tr>
+    <tr><td>Arduino <b>Nano</b> + USB-кабель</td><td>плата-посредник между ПК и сервоприводами</td></tr>
+    <tr><td>Макетная плата (breadboard)</td><td>удобно развести питание 5 В/GND на 4 серво</td></tr>
+    <tr><td>Провода-перемычки «мама-папа»</td><td>сигнал и питание к сервоприводам</td></tr>
+    <tr><td>Маленькая крестовая отвёртка</td><td>винты качалок сервоприводов</td></tr>
     <tr><td>Лист 3 мм акрил/фанера <i>или</i> PLA-пластик</td><td>материал тела (режем/печатаем сами)</td></tr>
     <tr><td><i>(желательно)</i> USB-зарядка/хаб на 2 А</td><td>USB-порт ПК слабоват — для надёжного питания серво</td></tr>
   </table>
-  <p>Отдельный блок питания <b>не нужен</b> — сервоприводы питаются от USB через 5 В Nano.</p>
+  <p>Отдельный драйвер серво и блок питания <b>не нужны</b> — серво подключаются прямо к ножкам
+     Nano, питание идёт от USB.</p>
 
   <h3>Общее на класс:</h3>
-  <p>Компьютер с Ubuntu на группу (Python + <code>pygame-ce</code> + <code>pyserial</code> +
-     Arduino IDE с библиотекой <b>Adafruit PWM Servo Driver</b>), по желанию мультиметр и
+  <p>Компьютер с Ubuntu на группу (Python + <code>pygame-ce</code> + <code>pymata4</code> +
+     Arduino IDE с библиотекой <b>FirmataExpress</b>), по желанию мультиметр и
      липучка/струбцина, чтобы закрепить базу робота на столе.</p>
 
   <div class="box warn">
     <span class="label">⚠️ Техника безопасности (читаем со всеми!)</span>
-    • Питание серво идёт <b>от USB через 5 В Nano</b> на вход <b>V+</b> PCA9685. Минусы (GND)
-      Nano и PCA9685 — <b>вместе</b> (общая земля).<br>
+    • Сигнальные провода серво — на ножки Nano (база=9, плечо=10, локоть=11, захват=6),
+      питание серво — на 5 В и GND (общая земля с платой).<br>
     • USB-порт ПК даёт мало тока (~0,5 А): <b>двигай по одному суставу плавно</b>. Если Nano
-      перезагружается или серво дёргаются — это нехватка тока: возьми USB-зарядку/хаб на 2 А.<br>
+      перезагружается или серво дёргаются — нехватка тока: запитай серво от USB-зарядки/хаба 2 А
+      или внешних 5 В, обязательно соединив GND с платой.<br>
     • <b>Не крутим суставы руками</b>, пока подано питание — можно сорвать шестерёнки.<br>
     • Базу робота закрепляем — рука перевешивает и опрокидывается.
   </div>
@@ -107,9 +116,9 @@
   </div>
   <p style="margin-top:18px"><b>Часть 2 — код на pygame.</b></p>
   <div class="cards">
-    <a class="card" href="urok6.html"><div class="n">6</div><h3>Подключение</h3><p>Схема проводов и питание. Общая земля.</p></a>
-    <a class="card" href="urok7.html"><div class="n">7</div><h3>Первый скетч</h3><p>Arduino крутит один сустав.</p></a>
-    <a class="card" href="urok8.html"><div class="n">8</div><h3>pygame ↔ Arduino</h3><p>Управляем суставом с клавиатуры по USB.</p></a>
+    <a class="card" href="urok6.html"><div class="n">6</div><h3>Подключение</h3><p>Серво на ножки Nano. Питание и общая земля.</p></a>
+    <a class="card" href="urok7.html"><div class="n">7</div><h3>Заливаем Firmata</h3><p>Стандартная прошивка — Arduino не программируем.</p></a>
+    <a class="card" href="urok8.html"><div class="n">8</div><h3>pygame ↔ робот</h3><p>Управляем суставом-объектом из Python.</p></a>
     <a class="card" href="urok9.html"><div class="n">9</div><h3>Все суставы</h3><p>4 сустава, пределы углов, экран с углами.</p></a>
     <a class="card" href="urok10.html"><div class="n">10</div><h3>Пульт и запись</h3><p>Записываем позы и робот их повторяет.</p></a>
     <a class="card" href="urok11.html"><div class="n">11</div><h3>Проект</h3><p>Робот сам переставляет предмет.</p></a>
@@ -120,9 +129,10 @@
     <a class="dl" href="https://github.com/kirillsmo/games/archive/refs/heads/main.zip">⬇️ Весь проект архивом (.zip)</a>
   </div>
   <div class="dl-list">
-    <a href="code/arduino/center_all.ino" download><span class="fname">arduino/center_all.ino</span><span class="ficon">↓ центр 90°</span></a>
-    <a href="code/arduino/serial_servos.ino" download><span class="fname">arduino/serial_servos.ino</span><span class="ficon">↓ прошивка</span></a>
-    <a href="code/robot_link.py" download><span class="fname">robot_link.py</span><span class="ficon">↓ связь</span></a>
+    <a href="code/arduino/README.txt" download><span class="fname">arduino/README.txt</span><span class="ficon">↓ Firmata</span></a>
+    <a href="code/arm.py" download><span class="fname">arm.py</span><span class="ficon">↓ связь+объекты</span></a>
+    <a href="code/center.py" download><span class="fname">center.py</span><span class="ficon">↓ центр 90°</span></a>
+    <a href="code/control_one.py" download><span class="fname">control_one.py</span><span class="ficon">↓ один сустав</span></a>
     <a href="code/control_arm.py" download><span class="fname">control_arm.py</span><span class="ficon">↓ управление</span></a>
     <a href="code/robot_panel.py" download><span class="fname">robot_panel.py</span><span class="ficon">↓ пульт</span></a>
     <a href="code/demo_pick.py" download><span class="fname">demo_pick.py</span><span class="ficon">↓ проект</span></a>

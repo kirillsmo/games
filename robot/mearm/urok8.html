@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Урок 8 — pygame ↔ Arduino</title>
+<title>Урок 8 — pygame ↔ робот</title>
 <link rel="stylesheet" href="../../shared.css">
 <script src="../../theme.js"></script>
 </head>
@@ -19,8 +19,8 @@
     <a class="dot" href="urok4.html" title="Плечо и локоть">4</a>
     <a class="dot" href="urok5.html" title="Захват">5</a>
     <a class="dot" href="urok6.html" title="Подключение">6</a>
-    <a class="dot" href="urok7.html" title="Первый скетч">7</a>
-    <a class="dot active" href="urok8.html" title="pygame ↔ Arduino">8</a>
+    <a class="dot" href="urok7.html" title="Заливаем Firmata">7</a>
+    <a class="dot active" href="urok8.html" title="pygame ↔ робот">8</a>
     <a class="dot" href="urok9.html" title="Все суставы">9</a>
     <a class="dot" href="urok10.html" title="Пульт и запись">10</a>
     <a class="dot" href="urok11.html" title="Проект">11</a>
@@ -30,61 +30,77 @@
 <div class="wrap">
   <div class="lesson-head">
     <span class="eyebrow">Урок 8 · код</span>
-    <h1>pygame ↔ Arduino</h1>
+    <h1>pygame ↔ робот</h1>
   </div>
 
   <div class="goal">
     <span class="label">Цель урока</span>
-    Связать компьютер и Arduino: pygame шлёт угол по USB, робот двигает сустав.
+    Связать компьютер и робота: жмём стрелки в pygame — настоящий сустав поворачивается.
   </div>
 
-  <h2>🧠 Идея</h2>
-  <p>Arduino будет слушать USB-порт и крутить серво по командам вида <code>"номер,угол"</code>.
-     pygame на компьютере будет эти команды отправлять, когда мы жмём клавиши. Связь по USB
-     называется <b>serial</b>.</p>
+  <h2>🧠 Идея — командуем объектами, а не проводами</h2>
+  <p>Firmata уже залита (урок 7), поэтому код Arduino мы не трогаем. В Python библиотека
+     <b>pymata</b> управляет ножками, но мы спрятали её за понятным объектом <code>arm</code>:
+     у него есть суставы <code>arm.base</code>, <code>arm.shoulder</code>, <code>arm.elbow</code>,
+     <code>arm.grip</code> — и у каждого свойство <code>.angle</code>.</p>
 
-  <h2>1️⃣ Прошивка Arduino</h2>
-  <p>Залей основную прошивку — она принимает команды и крутит все 4 серво:</p>
-  <div class="dl-row">
-    <a class="dl" href="code/arduino/serial_servos.ino" download>⬇️ serial_servos.ino</a>
-  </div>
-  <p>Внутри она читает строку <code>"0,90"</code> и делает <code>servo[0].write(90)</code>.
-     Углы ограничены пределами — лишнее само обрежется.</p>
-
-  <h2>2️⃣ Код на Python (pygame)</h2>
-  <p>Поставь библиотеку для связи (один раз): <code>pip install pyserial</code>. Затем
-     запусти <span class="run">control_one.py</span> — стрелки крутят базу:</p>
-  <pre><span class="kw">from</span> robot_link <span class="kw">import</span> connect
-robot = <span class="fn">connect</span>()          <span class="com"># сам найдёт Arduino</span>
+  <h2>📝 Код на Python</h2>
+  <p>Поставь библиотеку (один раз): <code>pip install pymata4</code>. Затем запусти
+     <span class="run">control_one.py</span> — стрелки крутят базу:</p>
+  <pre><span class="kw">from</span> arm <span class="kw">import</span> connect
+arm = <span class="fn">connect</span>()              <span class="com"># найдёт Arduino с Firmata</span>
 
 <span class="com"># ... в игровом цикле, по нажатию стрелок ...</span>
-angle = <span class="fn">max</span>(<span class="num">0</span>, <span class="fn">min</span>(<span class="num">180</span>, angle))
-robot.<span class="fn">send</span>(<span class="num">0</span>, angle)      <span class="com"># сустав 0 (база) на угол</span></pre>
+arm.base.angle += <span class="num">2</span>          <span class="com"># повернуть базу на 2° правее</span></pre>
+  <p>Пределы углов сустав хранит сам (в <code>arm.py</code>), поэтому за безопасный диапазон
+     не выйти — <code>max/min</code> писать не нужно. Один объект — одна понятная команда.</p>
   <div class="dl-row">
     <a class="dl" href="code/control_one.py" download>⬇️ control_one.py</a>
-    <a class="dl ghost" href="code/robot_link.py" download>robot_link.py (связь)</a>
+    <a class="dl ghost" href="code/arm.py" download>arm.py (связь + объекты)</a>
   </div>
 
   <div class="box warn">
     <span class="label">⚠️ Порт на Ubuntu (Nano)</span>
     У Nano порт обычно <code>/dev/ttyUSB0</code> (чип CH340; на старых системах нужен его
     драйвер). Если Python пишет «нет доступа к порту» — добавь себя в группу:
-    <code>sudo usermod -aG dialout $USER</code>, потом перезайди в систему. Скорость порта
-    (9600) должна совпадать в Arduino и в Python.
+    <code>sudo usermod -aG dialout $USER</code>, потом перезайди в систему. <code>pymata4</code>
+    сам найдёт плату — порт прописывать обычно не нужно.
   </div>
 
   <div class="box idea">
     <span class="label">💡 Робота ещё нет под рукой?</span>
-    <code>robot_link</code> работает и в «режиме показа»: без Arduino программа просто не шлёт
-    команды и не падает. Можно писать код заранее.
+    <code>arm.py</code> работает и в «режиме показа»: без Arduino программа просто не двигает
+    серво и не падает. Можно писать и проверять код заранее.
+  </div>
+
+  <div class="quiz" data-iter="2000">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Ответ нужно найти в уроке или в коде — угадать не выйдет.</p>
+
+    <div class="quiz-q" data-id="mearm8-lib"
+         data-hash="0eef274596a8dbff44377a6121a94f8b5ece6d1868926116621fe64b2bd873c7 340c3a3f2d790f5da0097ddf48d5d2a97cd8be92aadfb2773327a0f35cf4516d"
+         data-look="Смотри раздел «Идея» и команду pip install.">
+      <p class="quiz-prompt">Какой Python-библиотекой мы управляем ножками Arduino?</p>
+      <p class="quiz-hint">Её ставят через <code>pip install …</code></p>
+      <div class="quiz-explain">✅ Верно — <b>pymata4</b> (часто пишут просто «pymata»). Она командует Firmata по USB.</div>
+    </div>
+
+    <div class="quiz-q" data-id="mearm8-prop"
+         data-hash="f2dd3314d5b0633a8eaa5d4c21bf72286a641998159d9c6e2c5ace67a72d7075 3c8092f68c1258272a0a51dd8443d9b518ede11d51d844ed61dac14b60311c52"
+         data-look="Смотри пример кода: arm.base.____ += 2">
+      <p class="quiz-prompt">Через какое свойство объекта-сустава задаётся угол? (например <code>arm.base.____</code>)</p>
+      <p class="quiz-hint">Одно слово по-английски.</p>
+      <div class="quiz-explain">✅ Верно — <b>angle</b>. Например <code>arm.base.angle = 120</code>. Пределы объект хранит сам.</div>
+    </div>
   </div>
 
   <div class="pager">
-    <a href="urok7.html"><span class="dir">← Назад</span><span class="ttl">Урок 7 — Первый скетч</span></a>
+    <a href="urok7.html"><span class="dir">← Назад</span><span class="ttl">Урок 7 — Заливаем Firmata</span></a>
     <a class="next" href="urok9.html"><span class="dir">Дальше →</span><span class="ttl">Урок 9 — Все суставы</span></a>
   </div>
 </div>
 
 <footer>Урок 8 из 11 · Робот MeArm 🤖</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

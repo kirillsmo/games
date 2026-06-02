@@ -16,7 +16,7 @@
     <a class="dot" href="urok1.html" title="Знакомство">1</a>
     <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
     <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
-    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok4.html" title="Моторы из Python">4</a>
     <a class="dot" href="urok5.html" title="Bluetooth">5</a>
     <a class="dot" href="urok6.html" title="Глаза машины">6</a>
     <a class="dot" href="urok7.html" title="Первый заезд">7</a>
@@ -41,38 +41,37 @@
   </div>
 
   <h2>🛑 Автотормоз</h2>
-  <p>Из телеметрии берём расстояние прямо по курсу (углы около 90°). Если впереди ближе 20 см —
-     запрещаем ехать вперёд и мигаем «СТОП». Логика — обычный <code>if</code>:</p>
-  <pre>blocked = front_cm &lt; <span class="num">20</span>          <span class="com"># стена близко?</span>
+  <p>Держим «глаз» прямо по курсу (<code>car.radar.look(90)</code>) и каждый кадр меряем
+     расстояние. Если впереди ближе 20 см — запрещаем ехать вперёд и мигаем «СТОП». Логика —
+     обычный <code>if</code>:</p>
+  <pre>front_cm = car.radar.<span class="fn">measure</span>()      <span class="com"># сколько см до стены</span>
+blocked = front_cm &lt; <span class="num">20</span>             <span class="com"># стена близко?</span>
 
 <span class="kw">if</span> keys[pygame.K_UP] <span class="kw">and</span> <span class="kw">not</span> blocked:
-    <span class="fn">drive</span>(<span class="str">"F"</span>)                  <span class="com"># вперёд можно</span>
+    car.<span class="fn">forward</span>(SPEED)            <span class="com"># вперёд можно</span>
 <span class="kw">elif</span> ...                          <span class="com"># назад/повороты — как обычно</span></pre>
   <p>Так машина не врежется, даже если водитель давит «вперёд». Компьютер страхует.</p>
 
   <h2>▣ Датчики линии на экране</h2>
-  <p>Машина шлёт строку <code>"T,л,с,п"</code> — видят ли линию левый, средний и правый датчики.
-     Рисуем три кружка: горит зелёным, когда датчик видит линию:</p>
-  <pre>msg = car.<span class="fn">read</span>()
-<span class="kw">if</span> msg <span class="kw">and</span> msg.<span class="fn">startswith</span>(<span class="str">"T,"</span>):
-    parts = msg.<span class="fn">split</span>(<span class="str">","</span>)
-    line = [<span class="fn">int</span>(parts[<span class="num">1</span>]), <span class="fn">int</span>(parts[<span class="num">2</span>]), <span class="fn">int</span>(parts[<span class="num">3</span>])]</pre>
+  <p>Одной командой читаем три датчика линии и рисуем три кружка: горит зелёным, когда датчик
+     видит линию:</p>
+  <pre>line = car.line.<span class="fn">read</span>()            <span class="com"># [слева, центр, справа], напр. [0,1,0]</span></pre>
   <p>Запусти <span class="run">autopilot.py</span>: едешь стрелками, но у стены машина сама тормозит.</p>
   <div class="dl-row">
     <a class="dl" href="code/autopilot.py" download>⬇️ autopilot.py</a>
-    <a class="dl ghost" href="code/car_link.py" download>car_link.py</a>
+    <a class="dl ghost" href="code/robot.py" download>robot.py</a>
   </div>
 
   <div class="box idea">
     <span class="label">💡 Кто принимает решение?</span>
-    Заметь: «тормозить или нет» решает <b>наш Python</b>, а не Arduino. Машина лишь шлёт числа,
-    а ум — на ноутбуке. Так удобно: правила поведения легко менять в понятном Python-коде.
+    Заметь: «тормозить или нет» решает <b>наш Python</b>, а не Arduino. Плата лишь даёт числа с
+    датчиков, а ум — на ноутбуке. Так удобно: правила поведения легко менять в понятном Python-коде.
   </div>
 
   <div class="box try">
     <span class="label">✅ Проверка (а потом — идея!)</span>
     Машина тормозит перед стеной, кружки датчиков линии загораются. <b>Идея для смелых:</b> когда
-    впереди стена — пусть машина сама чуть повернёт (<code>drive("R")</code>), чтобы объехать.
+    впереди стена — пусть машина сама чуть повернёт (<code>car.right_turn()</code>), чтобы объехать.
   </div>
 
   <div class="pager">

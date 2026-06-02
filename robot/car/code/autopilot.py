@@ -1,23 +1,20 @@
 """
 Урок 10: автопилот-помощник. Машина едет, но компьютер следит за датчиками
-и подстраховывает.
+и подстраховывает. РЕШЕНИЕ ПРИНИМАЕТ PYTHON, не Arduino.
 
 • Если впереди ближе 20 см — автотормоз: вперёд ехать нельзя, мигает «СТОП».
-• Внизу — три датчика линии (слева/середина/справа): горят, когда видят линию.
+• Внизу — три датчика линии (слева/центр/справа): горят, когда видят линию.
 
 ↑↓ ←→ — едем · ESC — выход.
 """
 import pygame, sys
-from car_link import connect
+from robot import connect
 
 car = connect()
-car.send("SCAN,1")             # пусть качает датчиком и шлёт расстояние
+car.radar.look(90)             # смотрим прямо по курсу
 
 SPEED = 180
 STOP_CM = 20                   # ближе этого вперёд не едем
-front_cm = 100                 # что видим прямо по курсу
-line = [0, 0, 0]               # датчики линии: слева, середина, справа
-command = "S"
 blink = 0
 
 pygame.init()
@@ -27,50 +24,32 @@ clock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 48)
 small = pygame.font.SysFont(None, 24)
 
-
-def drive(cmd):
-    global command
-    if cmd != command:
-        command = cmd
-        car.send("S" if cmd == "S" else cmd + "," + str(SPEED))
-
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (
             event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE
         ):
-            car.send("S")
-            car.send("SCAN,0")
             car.close()
             pygame.quit()
             sys.exit()
 
-    # --- телеметрия ---
-    msg = car.read()
-    if msg and msg.startswith("D,"):
-        parts = msg.split(",")
-        if len(parts) == 3 and 70 <= int(parts[1]) <= 110:   # смотрим прямо по курсу
-            front_cm = int(parts[2])
-    if msg and msg.startswith("T,"):
-        parts = msg.split(",")
-        if len(parts) == 4:
-            line = [int(parts[1]), int(parts[2]), int(parts[3])]
-
+    # --- читаем датчики ---
+    front_cm = car.radar.measure()         # сколько см до стены прямо по курсу
+    line = car.line.read()                 # [слева, центр, справа], 0/1
     blocked = front_cm < STOP_CM
 
     # --- управление с автотормозом ---
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP] and not blocked:
-        drive("F")
+        car.forward(SPEED)
     elif keys[pygame.K_DOWN]:
-        drive("B")
+        car.back(SPEED)
     elif keys[pygame.K_LEFT]:
-        drive("L")
+        car.left_turn(SPEED)
     elif keys[pygame.K_RIGHT]:
-        drive("R")
+        car.right_turn(SPEED)
     else:
-        drive("S")
+        car.stop()
 
     # --- экран ---
     screen.fill((30, 30, 46))

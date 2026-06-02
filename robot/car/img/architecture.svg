@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="-apple-system, Segoe UI, sans-serif">
   <rect x="0" y="0" width="640" height="320" rx="14" fill="#1a1b28"/>
-  <text x="22" y="32" fill="#16c47f" font-size="17" font-weight="700">Как машина слушается Python (по Bluetooth)</text>
+  <text x="22" y="32" fill="#16c47f" font-size="17" font-weight="700">Как машина слушается Python (через Firmata)</text>
 
   <!-- ПК -->
   <rect x="30" y="90" width="170" height="150" rx="12" fill="#13351f" stroke="#16c47f" stroke-width="2"/>
@@ -10,25 +10,25 @@
   <text x="115" y="198" fill="#9a9ab0" font-size="12" text-anchor="middle">радар ← телеметрия</text>
 
   <!-- Bluetooth по центру -->
-  <text x="320" y="120" fill="#6cb2ff" font-size="13" text-anchor="middle" font-weight="700">📶 Bluetooth</text>
-  <text x="320" y="138" fill="#9a9ab0" font-size="11" text-anchor="middle">(тот же serial, по воздуху)</text>
+  <text x="320" y="120" fill="#6cb2ff" font-size="13" text-anchor="middle" font-weight="700">🔌 USB / Bluetooth</text>
+  <text x="320" y="138" fill="#9a9ab0" font-size="11" text-anchor="middle">Firmata + pymata</text>
   <!-- команды -> -->
   <path d="M205 165 H 435" fill="none" stroke="#16c47f" stroke-width="3" marker-end="url(#ag)"/>
-  <text x="320" y="160" fill="#16c47f" font-size="12" text-anchor="middle">"F,200"  "L"  "S"  "SCAN,1"</text>
-  <!-- телеметрия <- -->
+  <text x="320" y="160" fill="#16c47f" font-size="12" text-anchor="middle">car.forward()  car.stop()</text>
+  <!-- датчики <- -->
   <path d="M435 200 H 205" fill="none" stroke="#ffd166" stroke-width="3" marker-end="url(#ay)"/>
-  <text x="320" y="222" fill="#ffd166" font-size="12" text-anchor="middle">"D,90,40"   "T,0,1,0"</text>
+  <text x="320" y="222" fill="#ffd166" font-size="11" text-anchor="middle">car.radar.measure()  car.line.read()</text>
 
   <!-- Машина -->
   <rect x="440" y="90" width="170" height="150" rx="12" fill="#2f3550" stroke="#6cb2ff" stroke-width="2"/>
   <text x="525" y="120" fill="#eaeaea" font-size="15" text-anchor="middle" font-weight="700">🚗 Машина</text>
-  <text x="525" y="146" fill="#9a9ab0" font-size="12" text-anchor="middle">Arduino UNO + L298N</text>
+  <text x="525" y="146" fill="#9a9ab0" font-size="12" text-anchor="middle">Arduino UNO (Firmata) + L298N</text>
   <text x="525" y="168" fill="#9a9ab0" font-size="12" text-anchor="middle">4 мотора · серво</text>
   <text x="525" y="190" fill="#9a9ab0" font-size="12" text-anchor="middle">ультразвук · линия</text>
   <text x="525" y="216" fill="#9a9ab0" font-size="12" text-anchor="middle">🔋 своя батарея</text>
 
   <text x="22" y="280" fill="#ffd166" font-size="12" font-weight="700">⚡ У машины своя батарея (18650) — поэтому она ездит без проводов.</text>
-  <text x="22" y="300" fill="#9a9ab0" font-size="12">Ноутбук шлёт команды и принимает телеметрию — связь в обе стороны.</text>
+  <text x="22" y="300" fill="#9a9ab0" font-size="12">Ноутбук командует объектами и читает датчики — весь «ум» в Python.</text>
 
   <defs>
     <marker id="ag" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">

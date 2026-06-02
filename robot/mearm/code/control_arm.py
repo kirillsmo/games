@@ -7,22 +7,20 @@
   Захват:          O (открыть)  C (закрыть)
   ESC — выход.
 
-На экране видно текущие углы. У каждого сустава свои безопасные пределы,
-чтобы не сломать механику (как и в прошивке Arduino).
+На экране видно текущие углы. Безопасные пределы каждого сустава хранит сам объект
+Servo (см. LIMITS в arm.py) — за них не выйти, механику не сломать.
 """
 import pygame, sys
-from robot_link import connect
+from arm import connect
 
-robot = connect()
+arm = connect()
+STEP = 2                          # на сколько градусов за кадр
 
-# Имя сустава и его пределы (мин, макс). Подбери под свою сборку!
-JOINTS = [
-    {"name": "База",   "lo": 0,  "hi": 180},
-    {"name": "Плечо",  "lo": 30, "hi": 150},
-    {"name": "Локоть", "lo": 30, "hi": 150},
-    {"name": "Захват", "lo": 20, "hi": 120},
-]
-angles = [90, 90, 90, 60]         # стартовые углы
+
+def move(joint, delta):
+    """Подвинуть сустав. Объект сам обрежет угол по пределам."""
+    arm.joints[joint].angle += delta
+
 
 pygame.init()
 screen = pygame.display.set_mode((460, 320))
@@ -31,24 +29,12 @@ clock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 34)
 small = pygame.font.SysFont(None, 24)
 
-STEP = 2                          # на сколько градусов за кадр
-
-
-def move(joint, delta):
-    lo, hi = JOINTS[joint]["lo"], JOINTS[joint]["hi"]
-    angles[joint] = max(lo, min(hi, angles[joint] + delta))
-    robot.send(joint, angles[joint])
-
-
-for j in range(4):                # выставить старт на роботе
-    robot.send(j, angles[j])
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (
             event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE
         ):
-            robot.close()
+            arm.close()
             pygame.quit()
             sys.exit()
 
@@ -66,8 +52,8 @@ while True:
     screen.fill((30, 30, 46))
     title = font.render("Углы суставов", True, (234, 234, 234))
     screen.blit(title, (20, 16))
-    for i, j in enumerate(JOINTS):
-        line = font.render(f"{j['name']}: {angles[i]}°", True, (22, 196, 127))
+    for i, s in enumerate(arm.joints):
+        line = font.render(f"{s.name}: {s.angle}°", True, (22, 196, 127))
         screen.blit(line, (30, 60 + i * 42))
     hint = small.render("← → база · ↑ ↓ плечо · W S локоть · O C захват · ESC", True, (150, 152, 175))
     screen.blit(hint, (16, 286))

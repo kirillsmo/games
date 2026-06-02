@@ -12,17 +12,9 @@ ESC — выход.
 Это та же идея «списка объектов», что и в играх (пули, враги, кирпичи).
 """
 import pygame, sys
-from robot_link import connect
+from arm import connect
 
-robot = connect()
-
-JOINTS = [
-    {"name": "База",   "lo": 0,  "hi": 180},
-    {"name": "Плечо",  "lo": 30, "hi": 150},
-    {"name": "Локоть", "lo": 30, "hi": 150},
-    {"name": "Захват", "lo": 20, "hi": 120},
-]
-angles = [90, 90, 90, 60]
+arm = connect()
 poses = []                       # список записанных поз (каждая — [a0,a1,a2,a3])
 
 playing = False
@@ -44,31 +36,25 @@ CLR_BTN = pygame.Rect(350, 300, 150, 40)
 
 
 def move(joint, delta):
-    lo, hi = JOINTS[joint]["lo"], JOINTS[joint]["hi"]
-    angles[joint] = max(lo, min(hi, angles[joint] + delta))
-    robot.send(joint, angles[joint])
+    arm.joints[joint].angle += delta
 
 
 def apply_pose(pose):
     for j in range(4):
-        angles[j] = pose[j]
-        robot.send(j, pose[j])
+        arm.set(j, pose[j])
 
-
-for j in range(4):
-    robot.send(j, angles[j])
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (
             event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE
         ):
-            robot.close()
+            arm.close()
             pygame.quit()
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if REC_BTN.collidepoint(event.pos):
-                poses.append(list(angles))          # запомнить текущую позу
+                poses.append(arm.angles())          # запомнить текущую позу
             elif PLAY_BTN.collidepoint(event.pos) and poses:
                 playing = True
                 play_index = 0
@@ -101,8 +87,8 @@ while True:
 
     # Рисуем
     screen.fill((30, 30, 46))
-    for i, j in enumerate(JOINTS):
-        line = font.render(f"{j['name']}: {angles[i]}°", True, (22, 196, 127))
+    for i, s in enumerate(arm.joints):
+        line = font.render(f"{s.name}: {s.angle}°", True, (22, 196, 127))
         screen.blit(line, (24, 20 + i * 34))
     info = small.render(f"Записано поз: {len(poses)}" + ("   ▶ играю..." if playing else ""),
                         True, (234, 234, 234))
