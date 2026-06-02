@@ -63,6 +63,33 @@
     Захват открывается и закрывается без заеданий. Все 4 сервопривода стоят на местах.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="m5-grip" data-hash="f8dd39f4e2b5a99f14f17df0a6b11811b473fa9bedda5972b4b214525243d837">
+      <p class="quiz-prompt">В каком положении должен быть захват при 90°?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Наполовину открыт — есть ход и на открытие, и на закрытие</button>
+        <button type="button" class="quiz-opt">Полностью закрыт</button>
+        <button type="button" class="quiz-opt">Снят с руки</button>
+        <button type="button" class="quiz-opt">Полностью открыт</button>
+      </div>
+      <div class="quiz-explain">✅ Точные углы «открыто/закрыто» у каждой сборки свои — подберёшь их в уроках с кодом.</div>
+    </div>
+
+    <div class="quiz-q" data-id="m5-num" data-hash="c93203dac792bb60f21ffac1d4a48879bef695e9a9064f394d1ef612974a0837">
+      <p class="quiz-prompt">Какой номер у сустава-захвата?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">№0</button>
+        <button type="button" class="quiz-opt">№3</button>
+        <button type="button" class="quiz-opt">№2</button>
+        <button type="button" class="quiz-opt">№1</button>
+      </div>
+      <div class="quiz-explain">✅ Захват — четвёртый и последний сустав (счёт с нуля: база 0, плечо 1, локоть 2, захват 3).</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Плечо и локоть</span></a>
     <a class="next" href="urok6.html"><span class="dir">Дальше →</span><span class="ttl">Урок 6 — Подключение</span></a>
@@ -70,5 +97,6 @@
 </div>
 
 <footer>Урок 5 из 11 · Робот MeArm 🤖</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

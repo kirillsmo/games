@@ -75,6 +75,33 @@ y = CY - d * math.<span class="fn">sin</span>(math.<span class="fn">radians</spa
     Это самый эффектный экран курса. Дальше научим компьютер помогать водителю.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="car9-trig" data-hash="6332b686e36372fdeef98d458f7fcd27fb73fbb5ef3520b4acde97e6ccd1570e">
+      <p class="quiz-prompt">Как из угла и расстояния получают точку на экране радара?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Случайно</button>
+        <button type="button" class="quiz-opt">Делением на 2</button>
+        <button type="button" class="quiz-opt">Через colliderect</button>
+        <button type="button" class="quiz-opt">Тригонометрией: синус и косинус (math.cos / math.sin)</button>
+      </div>
+      <div class="quiz-explain">✅ x = CX + d·cos(angle), y = CY − d·sin(angle). Близкие точки красим красным, далёкие — зелёным.</div>
+    </div>
+
+    <div class="quiz-q" data-id="car9-sweep" data-hash="b01d39b86b8a737f344acff3253c283fe515f48e29374dc4f0783e8ec3f44b1c">
+      <p class="quiz-prompt">Как датчик «качается»?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Стоит неподвижно</button>
+        <button type="button" class="quiz-opt">Двигается случайно</button>
+        <button type="button" class="quiz-opt">Крутится на 360° без конца</button>
+        <button type="button" class="quiz-opt">Угол шагает туда-сюда от 0° до 180°</button>
+      </div>
+      <div class="quiz-explain">✅ Каждый кадр поворачиваем «глаз» на новый угол и сразу меряем — получается качание луча.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok8.html"><span class="dir">← Назад</span><span class="ttl">Урок 8 — Кокпит</span></a>
     <a class="next" href="urok10.html"><span class="dir">Дальше →</span><span class="ttl">Урок 10 — Автопилот</span></a>
@@ -82,5 +109,6 @@ y = CY - d * math.<span class="fn">sin</span>(math.<span class="fn">radians</spa
 </div>
 
 <footer>Урок 9 из 12 · Робомашинка 🚗</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

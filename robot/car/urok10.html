@@ -74,6 +74,33 @@ blocked = front_cm &lt; <span class="num">20</span>             <span class="com
     впереди стена — пусть машина сама чуть повернёт (<code>car.right_turn()</code>), чтобы объехать.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="car10-brake" data-hash="05767d56aa4a3c642d4abe838dab54ffe31a89ea6ff79651aa42bb18fac35da5">
+      <p class="quiz-prompt">Как работает автотормоз?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Глушим мотор навсегда</button>
+        <button type="button" class="quiz-opt">Едем назад</button>
+        <button type="button" class="quiz-opt">Ничего не делаем</button>
+        <button type="button" class="quiz-opt">Меряем расстояние; ближе 20 см — запрещаем ехать вперёд</button>
+      </div>
+      <div class="quiz-explain">✅ Машина не врежется, даже если водитель давит «вперёд». Компьютер страхует.</div>
+    </div>
+
+    <div class="quiz-q" data-id="car10-who" data-hash="1e00b17001cfc56dc20b2e5bc5c29b98edf4e4d413664eefae84f4ad92dc0504">
+      <p class="quiz-prompt">Кто принимает решение тормозить?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Bluetooth-модуль</button>
+        <button type="button" class="quiz-opt">Arduino сама</button>
+        <button type="button" class="quiz-opt">Python на ноутбуке (Arduino лишь даёт числа с датчиков)</button>
+        <button type="button" class="quiz-opt">Драйвер L298N</button>
+      </div>
+      <div class="quiz-explain">✅ Ум — на ноутбуке. Поэтому правила поведения легко менять в понятном Python-коде.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok9.html"><span class="dir">← Назад</span><span class="ttl">Урок 9 — Радар</span></a>
     <a class="next" href="urok11.html"><span class="dir">Дальше →</span><span class="ttl">Урок 11 — Миссия</span></a>
@@ -81,5 +108,6 @@ blocked = front_cm &lt; <span class="num">20</span>             <span class="com
 </div>
 
 <footer>Урок 10 из 12 · Робомашинка 🚗</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

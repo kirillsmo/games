@@ -81,6 +81,33 @@ PROGRAM = [
     <tr><td>Управление мышкой/джойстиком</td><td>другие события pygame</td></tr>
   </table>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="m11-program" data-hash="9453f209e3adc420ba735e4a6b595769376932854dfe6e982ab72ea742dbaeb0">
+      <p class="quiz-prompt">Что такое программа робота в финале?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Картинка маршрута</button>
+        <button type="button" class="quiz-opt">Случайные движения</button>
+        <button type="button" class="quiz-opt">Одна поза</button>
+        <button type="button" class="quiz-opt">Список поз, которые робот проходит по очереди</button>
+      </div>
+      <div class="quiz-explain">✅ PROGRAM — список из поз: опуститься → схватить → поднять → перенести → отпустить.</div>
+    </div>
+
+    <div class="quiz-q" data-id="m11-pause" data-hash="c27441e30d77aa99c15670d060f87ee04ea3d2a7f53f5325105c41b4af2c0ee0">
+      <p class="quiz-prompt">Зачем time.sleep(1.0) между позами?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Чтобы экономить ток</button>
+        <button type="button" class="quiz-opt">Чтобы серво остыло</button>
+        <button type="button" class="quiz-opt">Это ошибка в коде</button>
+        <button type="button" class="quiz-opt">Чтобы робот успел доехать до позы</button>
+      </div>
+      <div class="quiz-explain">✅ Между позами нужна пауза — иначе следующая команда придёт раньше, чем рука доедет.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok10.html"><span class="dir">← Назад</span><span class="ttl">Урок 10 — Пульт и запись</span></a>
     <a class="next" href="index.html"><span class="dir">Готово ✓</span><span class="ttl">Ко всем урокам</span></a>
@@ -88,5 +115,6 @@ PROGRAM = [
 </div>
 
 <footer>Урок 11 из 11 · Робот MeArm 🤖</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

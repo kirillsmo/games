@@ -67,6 +67,33 @@
     Основание устойчиво стоит, серво базы закреплено, верхняя площадка смотрит вперёд.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="m3-base" data-hash="5fa9f78d484f55a4f651daf2de00942fe1e1fea42165adbc0e3e6277f2d7acb1">
+      <p class="quiz-prompt">Какой сустав собирают в этом уроке?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Захват</button>
+        <button type="button" class="quiz-opt">Локоть</button>
+        <button type="button" class="quiz-opt">База (сустав №0) — поворотный</button>
+        <button type="button" class="quiz-opt">Плечо</button>
+      </div>
+      <div class="quiz-explain">✅ База в 90° смотрит прямо: тогда в коде 0 — поворот в одну сторону, 180 — в другую, 90 — прямо.</div>
+    </div>
+
+    <div class="quiz-q" data-id="m3-noforce" data-hash="2565b7f677e040eacc4ba483cb4fc915d120caa80f66c6fba5719af7ea05a183">
+      <p class="quiz-prompt">Почему собранный сустав нельзя крутить рукой?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Разрядишь батарею</button>
+        <button type="button" class="quiz-opt">Ничего страшного, можно</button>
+        <button type="button" class="quiz-opt">Сотрёшь краску</button>
+        <button type="button" class="quiz-opt">Испортишь шестерёнки — двигать будем кодом</button>
+      </div>
+      <div class="quiz-explain">✅ Сервопривод двигается только по команде программы. Силой проворачивать его нельзя.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Сервопривод</span></a>
     <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Плечо и локоть</span></a>
@@ -74,5 +101,6 @@
 </div>
 
 <footer>Урок 3 из 11 · Робот MeArm 🤖</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

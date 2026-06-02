@@ -83,6 +83,33 @@
     мы подключим транзистор к Arduino?
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="b4-base" data-hash="1c715dda2796025cfb92ab3ac742f319875d394851e57f4175a4c69f470f4199">
+      <p class="quiz-prompt">На какую ножку транзистора подаём слабый управляющий ток?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Эмиттер (E)</button>
+        <button type="button" class="quiz-opt">Коллектор (C)</button>
+        <button type="button" class="quiz-opt">На любую</button>
+        <button type="button" class="quiz-opt">База (B)</button>
+      </div>
+      <div class="quiz-explain">✅ Есть ток на базе → большой ток идёт с коллектора на эмиттер. Базу подключают через резистор.</div>
+    </div>
+
+    <div class="quiz-q" data-id="b4-why" data-hash="4892bf12d9baba5715add7dd94e0ffd31f1a7e56ba568083ddb258f38471fe6d">
+      <p class="quiz-prompt">Зачем транзистор нужен в роботе?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Слабым сигналом включать сильную цепь (например мотор)</button>
+        <button type="button" class="quiz-opt">Измерять расстояние</button>
+        <button type="button" class="quiz-opt">Светить ярче</button>
+        <button type="button" class="quiz-opt">Хранить программу</button>
+      </div>
+      <div class="quiz-explain">✅ Ножка платы даёт крошечный ток. Транзистор — выключатель, которым управляет провод, а не палец.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok3.html"><span class="dir">← Назад</span><span class="ttl">Урок 3 — Кнопка</span></a>
     <a class="next" href="urok5.html"><span class="dir">Дальше →</span><span class="ttl">Урок 5 — Мотор и H-мост</span></a>
@@ -90,5 +117,6 @@
 </div>
 
 <footer>Урок 4 из 6 · Основы электроники ⚡</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

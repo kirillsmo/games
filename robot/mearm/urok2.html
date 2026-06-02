@@ -78,6 +78,33 @@
     <code>140</code> — крайние положения. Перед сборкой верни центр (<code>90</code>).
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="m2-angle" data-hash="7db49f5dcf42255371d3fcd3f058763a44fb3599054e9369bb5d73865700eeef">
+      <p class="quiz-prompt">Чем сервопривод отличается от обычного мотора?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Работает без проводов</button>
+        <button type="button" class="quiz-opt">Встаёт на заданный угол 0…180°, а не крутится без конца</button>
+        <button type="button" class="quiz-opt">Крутится быстрее</button>
+        <button type="button" class="quiz-opt">Не нужен ток</button>
+      </div>
+      <div class="quiz-explain">✅ Сигнальный провод задаёт угол импульсами (PWM), но библиотека сама всё считает — пишем «угол 90».</div>
+    </div>
+
+    <div class="quiz-q" data-id="m2-90" data-hash="c947f3a518d3eb8eae3e02223307c3d06926b61343544eb9b2400b530bc48a2b">
+      <p class="quiz-prompt">В какой угол ставят серво ПЕРЕД сборкой сустава?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">90° — середина</button>
+        <button type="button" class="quiz-opt">Любой</button>
+        <button type="button" class="quiz-opt">180°</button>
+        <button type="button" class="quiz-opt">0°</button>
+      </div>
+      <div class="quiz-explain">✅ Тогда сустав повернётся одинаково и влево, и вправо. center.py делает arm.set(0, 90).</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok1.html"><span class="dir">← Назад</span><span class="ttl">Урок 1 — Покупки и тело</span></a>
     <a class="next" href="urok3.html"><span class="dir">Дальше →</span><span class="ttl">Урок 3 — Основание</span></a>
@@ -85,5 +112,6 @@
 </div>
 
 <footer>Урок 2 из 11 · Робот MeArm 🤖</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

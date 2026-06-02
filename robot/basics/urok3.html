@@ -79,6 +79,33 @@
     слушается? Почему — ведь кольцо одно?
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="b3-button" data-hash="f6c9d69ac0d09625a456658b50299160e930452eae206e0688d84b384c067a31">
+      <p class="quiz-prompt">Что делает кнопка в цепи?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Хранит заряд</button>
+        <button type="button" class="quiz-opt">Усиливает ток</button>
+        <button type="button" class="quiz-opt">Меняет цвет светодиода</button>
+        <button type="button" class="quiz-opt">Замыкает и размыкает кольцо цепи</button>
+      </div>
+      <div class="quiz-explain">✅ Кнопка — управляемый разрыв в кольце. Нажал — ток течёт, отпустил — нет.</div>
+    </div>
+
+    <div class="quiz-q" data-id="b3-sensor" data-hash="c2ea7f3b4a0726ff5763a7430ec4c6b94d0efae89b3f85ac0d3b2bc82076344a">
+      <p class="quiz-prompt">Чем кнопка является для робота?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Датчиком: нажато / не нажато, 0 или 1</button>
+        <button type="button" class="quiz-opt">Мотором</button>
+        <button type="button" class="quiz-opt">Источником питания</button>
+        <button type="button" class="quiz-opt">Резистором</button>
+      </div>
+      <div class="quiz-explain">✅ Кнопка даёт 0 или 1. Так же работают датчики линии и концевики у машинки.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Светодиод</span></a>
     <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Транзистор</span></a>
@@ -86,5 +113,6 @@
 </div>
 
 <footer>Урок 3 из 6 · Основы электроники ⚡</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

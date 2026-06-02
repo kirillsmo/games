@@ -84,6 +84,33 @@ screen.<span class="fn">blit</span>(frame, (<span class="num">0</span>, <span cl
     повторять маршруты — и даже показывать видео. Это уже серьёзная робототехника. Поздравляю!
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="car12-stream" data-hash="5d98392538d73530ce4dd073aca4651f027735797f1e047f5d3a1baa80b77292">
+      <p class="quiz-prompt">Как камера ESP32-CAM отдаёт видео?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Потоком картинок JPEG (MJPEG) по Wi-Fi</button>
+        <button type="button" class="quiz-opt">По Bluetooth одним файлом</button>
+        <button type="button" class="quiz-opt">По USB-проводу</button>
+        <button type="button" class="quiz-opt">Не отдаёт видео</button>
+      </div>
+      <div class="quiz-explain">✅ Камера раздаёт поток по адресу вроде http://192.168.4.1:81/stream — ловим кадры и рисуем.</div>
+    </div>
+
+    <div class="quiz-q" data-id="car12-frame" data-hash="7782e03db6bc350d9466cb3176a88692a9a0b054e0cbb92b8d89799c1b21816c">
+      <p class="quiz-prompt">Видео — это по сути что?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Звук</button>
+        <button type="button" class="quiz-opt">Текст</button>
+        <button type="button" class="quiz-opt">Много картинок (кадров) подряд</button>
+        <button type="button" class="quiz-opt">Один большой файл</button>
+      </div>
+      <div class="quiz-explain">✅ Каждый кадр JPEG начинается с байтов FF D8 и кончается FF D9 — вырезаем и показываем blit.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok11.html"><span class="dir">← Назад</span><span class="ttl">Урок 11 — Миссия</span></a>
     <a class="next" href="index.html"><span class="dir">К курсу →</span><span class="ttl">Обзор машины</span></a>
@@ -91,5 +118,6 @@ screen.<span class="fn">blit</span>(frame, (<span class="num">0</span>, <span cl
 </div>
 
 <footer>Урок 12 из 12 · Робомашинка 🚗</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

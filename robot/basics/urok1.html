@@ -91,6 +91,33 @@
     Ток течёт только по замкнутому кольцу. «+» и «−» напрямую соединять нельзя.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="b1-ohm" data-hash="19c3b86cb04ffc7fc20a2556faf013e19c69a0baac705a68d41f4639c833a6db">
+      <p class="quiz-prompt">Как звучит закон Ома?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">U = I + R</button>
+        <button type="button" class="quiz-opt">U = I × R (напряжение = ток × сопротивление)</button>
+        <button type="button" class="quiz-opt">R = U × I</button>
+        <button type="button" class="quiz-opt">I = U × R</button>
+      </div>
+      <div class="quiz-explain">✅ Одна формула на всю электронику. Отсюда же I = U / R: чем меньше сопротивление, тем больше ток.</div>
+    </div>
+
+    <div class="quiz-q" data-id="b1-short" data-hash="c53876beb79ec17799bb75703ab32ffba661e7e7cc568123ff49c115a87be23f">
+      <p class="quiz-prompt">Что такое короткое замыкание?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Слабая батарейка</button>
+        <button type="button" class="quiz-opt">Соединить + и − напрямую: сопротивление ≈ 0, ток огромный</button>
+        <button type="button" class="quiz-opt">Слишком длинный провод</button>
+        <button type="button" class="quiz-opt">Разрыв цепи</button>
+      </div>
+      <div class="quiz-explain">✅ При R ≈ 0 ток скачком огромный — провода греются. Между + и − всегда должна стоять деталь.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="index.html"><span class="dir">← К курсу</span><span class="ttl">Основы электроники</span></a>
     <a class="next" href="urok2.html"><span class="dir">Дальше →</span><span class="ttl">Урок 2 — Светодиод и резистор</span></a>
@@ -98,5 +125,6 @@
 </div>
 
 <footer>Урок 1 из 6 · Основы электроники ⚡</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

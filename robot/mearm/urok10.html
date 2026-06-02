@@ -76,6 +76,33 @@ poses.<span class="fn">append</span>(<span class="fn">list</span>(angles))      
     Запиши 3–4 позы и нажми «Играть» — робот повторит их по кругу.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="m10-pose" data-hash="eaa5e66040198ad06b416cad0e56db36326a3959cf6943329036e6e43606f171">
+      <p class="quiz-prompt">Что такое «поза» робота?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Звук</button>
+        <button type="button" class="quiz-opt">Список из 4 углов [база, плечо, локоть, захват]</button>
+        <button type="button" class="quiz-opt">Картинка</button>
+        <button type="button" class="quiz-opt">Одно число</button>
+      </div>
+      <div class="quiz-explain">✅ Кнопка «Записать позу» делает poses.append(list(angles)) — список поз растёт, как список пуль в игре.</div>
+    </div>
+
+    <div class="quiz-q" data-id="m10-btn" data-hash="1d2cd0a554c9bc09e4b55f5fc17ff62157a1079ed9b50c51da5618d9e5ddf483">
+      <p class="quiz-prompt">Чем проверяют клик по кнопке (как в «Космосе»)?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">RECT.collidepoint(event.pos)</button>
+        <button type="button" class="quiz-opt">random.randint</button>
+        <button type="button" class="quiz-opt">оператор in</button>
+        <button type="button" class="quiz-opt">colliderect</button>
+      </div>
+      <div class="quiz-explain">✅ Кнопка — это pygame.Rect, а collidepoint проверяет, попал ли клик внутрь неё.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok9.html"><span class="dir">← Назад</span><span class="ttl">Урок 9 — Все суставы</span></a>
     <a class="next" href="urok11.html"><span class="dir">Дальше →</span><span class="ttl">Урок 11 — Проект</span></a>
@@ -83,5 +110,6 @@ poses.<span class="fn">append</span>(<span class="fn">list</span>(angles))      
 </div>
 
 <footer>Урок 10 из 11 · Робот MeArm 🤖</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

@@ -83,6 +83,33 @@
     провода и питание. Готово? Идём знакомиться с сервоприводом.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="m1-body" data-hash="6d7c4a2be0a7df0c330da46ac27e3534085443d74d659061f3cdbc3ef93675ea">
+      <p class="quiz-prompt">Что НЕ входит в набор MeArm и делается самим?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Винтики и гайки</button>
+        <button type="button" class="quiz-opt">Сервоприводы</button>
+        <button type="button" class="quiz-opt">Шестигранный ключ</button>
+        <button type="button" class="quiz-opt">Тело — плоские детали (лазер или 3D-печать)</button>
+      </div>
+      <div class="quiz-explain">✅ В наборе «Cut Your Own» есть всё, кроме тела: его режут лазером или печатают на 3D-принтере.</div>
+    </div>
+
+    <div class="quiz-q" data-id="m1-files" data-hash="67e7a31fd43be848b76824996381101b624969cccb5239053f60589f51d26100">
+      <p class="quiz-prompt">По каким файлам режут тело лазером?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">.dxf</button>
+        <button type="button" class="quiz-opt">.mp3</button>
+        <button type="button" class="quiz-opt">.stl</button>
+        <button type="button" class="quiz-opt">.py</button>
+      </div>
+      <div class="quiz-explain">✅ Лазер режет по .dxf из листа 3 мм. Для 3D-принтера — файлы .stl.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="index.html"><span class="dir">← К курсу</span><span class="ttl">Обзор робота</span></a>
     <a class="next" href="urok2.html"><span class="dir">Дальше →</span><span class="ttl">Урок 2 — Сервопривод</span></a>
@@ -90,5 +117,6 @@
 </div>
 
 <footer>Урок 1 из 11 · Робот MeArm 🤖</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

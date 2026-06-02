@@ -84,6 +84,33 @@ sudo rfcomm bind 0 <span class="str">XX:XX:XX:XX:XX:XX</span>   <span class="com
     Дальше дадим машине «глаза».
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="car5-firmware" data-hash="be0ac3b7369e1b4d32c4f09da67c93096bb667f497f35155519a92b33aecf7f1">
+      <p class="quiz-prompt">Нужно ли менять прошивку для работы по Bluetooth?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Да, особую Bluetooth-прошивку</button>
+        <button type="button" class="quiz-opt">Нет — та же Firmata работает и по USB, и по Bluetooth</button>
+        <button type="button" class="quiz-opt">Да, только StandardFirmata</button>
+        <button type="button" class="quiz-opt">Bluetooth вообще не поддерживается</button>
+      </div>
+      <div class="quiz-explain">✅ Bluetooth — тот же serial-канал, только по воздуху. В Python меняем лишь порт подключения.</div>
+    </div>
+
+    <div class="quiz-q" data-id="car5-cross" data-hash="bf91a97bb016a49f9a63156c699f708eb09c9e9c48d82c814b57203786f316a0">
+      <p class="quiz-prompt">Как соединяют провода модуля с Arduino?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Только VCC и GND</button>
+        <button type="button" class="quiz-opt">Через резистор</button>
+        <button type="button" class="quiz-opt">Крест-накрест: TX модуля → RX Arduino</button>
+        <button type="button" class="quiz-opt">Напрямую: TX → TX</button>
+      </div>
+      <div class="quiz-explain">✅ Правило перекрёста: передатчик одного идёт в приёмник другого (TX→RX, RX→TX).</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Моторы из Python</span></a>
     <a class="next" href="urok6.html"><span class="dir">Дальше →</span><span class="ttl">Урок 6 — Глаза машины</span></a>
@@ -91,5 +118,6 @@ sudo rfcomm bind 0 <span class="str">XX:XX:XX:XX:XX:XX</span>   <span class="com
 </div>
 
 <footer>Урок 5 из 12 · Робомашинка 🚗</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

@@ -82,6 +82,33 @@
     кто «глаза»? Тогда собираем машину.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="car1-brain" data-hash="e242c03abcb5a8c2ef9a638c0a8afd6b4a1ca72b45a3cd4da93c57b26b1852ec">
+      <p class="quiz-prompt">Что в машине — «мозг», который выполняет программу?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Bluetooth-модуль</button>
+        <button type="button" class="quiz-opt">Arduino UNO</button>
+        <button type="button" class="quiz-opt">Драйвер моторов L298N</button>
+        <button type="button" class="quiz-opt">Ультразвук HC-SR04</button>
+      </div>
+      <div class="quiz-explain">✅ UNO — мозг, L298N — мускулы, ультразвук — глаза. Каждый отвечает за своё.</div>
+    </div>
+
+    <div class="quiz-q" data-id="car1-link" data-hash="6c14d4e14140297418778e35a7b5799a69b9e8be93c31d53f60f96805e718120">
+      <p class="quiz-prompt">Как машина связана с ноутбуком в этом курсе?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">По Bluetooth — без проводов</button>
+        <button type="button" class="quiz-opt">По Wi-Fi</button>
+        <button type="button" class="quiz-opt">Никак, едет сама</button>
+        <button type="button" class="quiz-opt">Проводом HDMI</button>
+      </div>
+      <div class="quiz-explain">✅ У машины своя батарея, поэтому провод не нужен: код на ноутбуке шлёт команды по Bluetooth.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="index.html"><span class="dir">← К курсу</span><span class="ttl">Обзор машины</span></a>
     <a class="next" href="urok2.html"><span class="dir">Дальше →</span><span class="ttl">Урок 2 — Сборка шасси</span></a>
@@ -89,5 +116,6 @@
 </div>
 
 <footer>Урок 1 из 12 · Робомашинка 🚗</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

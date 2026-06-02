@@ -91,6 +91,33 @@ car.right.trim = <span class="num">1.0</span>     <span class="com"># уводи
     зрелищному уроку — радару.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="car8-bar" data-hash="0efa80f77e18e015f26eaee93019dcd88f40f1523c9eb36b91e1dc7b69cc9297">
+      <p class="quiz-prompt">Полоска скорости на экране — это что?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Текст</button>
+        <button type="button" class="quiz-opt">Звук</button>
+        <button type="button" class="quiz-opt">Прямоугольник, ширина которого равна скорости</button>
+        <button type="button" class="quiz-opt">Картинка</button>
+      </div>
+      <div class="quiz-explain">✅ Как полоска жизней в «Космосе»: прямоугольник, длина которого зависит от числа.</div>
+    </div>
+
+    <div class="quiz-q" data-id="car8-drift" data-hash="ce940c56fef967badabb31f3c6f22fb5a75d3ddd8f5c6d392a1d742bec72839b">
+      <p class="quiz-prompt">Почему машину при «вперёд» уводит в сторону?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Сломан Bluetooth</button>
+        <button type="button" class="quiz-opt">Простые DC-моторы крутятся чуть по-разному + колёса проскальзывают</button>
+        <button type="button" class="quiz-opt">Неверная прошивка</button>
+        <button type="button" class="quiz-opt">Слабый процессор</button>
+      </div>
+      <div class="quiz-explain">✅ Это нормально. Лечится калибровкой: тому борту, что быстрее, чуть убавляем скорость.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok7.html"><span class="dir">← Назад</span><span class="ttl">Урок 7 — Первый заезд</span></a>
     <a class="next" href="urok9.html"><span class="dir">Дальше →</span><span class="ttl">Урок 9 — Радар</span></a>
@@ -98,5 +125,6 @@ car.right.trim = <span class="num">1.0</span>     <span class="com"># уводи
 </div>
 
 <footer>Урок 8 из 12 · Робомашинка 🚗</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

@@ -97,6 +97,33 @@ board.<span class="fn">digital_write</span>(<span class="num">13</span>, <span c
     «полугаз»; Firmata + Python позволяют рулить всем из знакомого кода.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="b6-pwm" data-hash="d5be8bca3264baef41fe64d332562314412e825a861ad4d91ca4428d8c4da6c0">
+      <p class="quiz-prompt">Что такое ШИМ (PWM)?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Постоянные 5 В на ножке</button>
+        <button type="button" class="quiz-opt">Тип батарейки</button>
+        <button type="button" class="quiz-opt">Измерение сопротивления</button>
+        <button type="button" class="quiz-opt">Быстро включать и выключать ножку — получается «полугаз»</button>
+      </div>
+      <div class="quiz-explain">✅ Включена 20% времени → тускло/медленно, 80% → ярко/быстро. В коде это число 0–255.</div>
+    </div>
+
+    <div class="quiz-q" data-id="b6-firmata" data-hash="752215d5dd97bfc34c80a4b097f0e4a18ace6956b485d756ab4c5a9f3436ad51">
+      <p class="quiz-prompt">Что даёт прошивка Firmata?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Паяет провода</button>
+        <button type="button" class="quiz-opt">Заряжает батарейку</button>
+        <button type="button" class="quiz-opt">Рисует на экране</button>
+        <button type="button" class="quiz-opt">Плата слушается команд компьютера по USB</button>
+      </div>
+      <div class="quiz-explain">✅ Залил один раз — и весь ум робота живёт в Python: board.digital_write(13, 1) зажигает ножку.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok5.html"><span class="dir">← Назад</span><span class="ttl">Урок 5 — Мотор и H-мост</span></a>
     <a class="next" href="../mearm/index.html"><span class="dir">К роботам →</span><span class="ttl">Робот MeArm</span></a>
@@ -104,5 +131,6 @@ board.<span class="fn">digital_write</span>(<span class="num">13</span>, <span c
 </div>
 
 <footer>Урок 6 из 6 · Основы электроники ⚡</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

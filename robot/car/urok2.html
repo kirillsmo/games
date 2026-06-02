@@ -72,6 +72,33 @@
     батарейный отсек на месте. Готово? Дадим машине «мозг».
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="car2-turn" data-hash="4995f2503710c2591cd95e6d9b0a250417cd4cc5c7f964d791cf1638d49c7db7">
+      <p class="quiz-prompt">Как машина поворачивает без руля?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Тормозит одним колесом</button>
+        <button type="button" class="quiz-opt">Как танк: левые и правые колёса крутятся в разные стороны</button>
+        <button type="button" class="quiz-opt">Наклоняет корпус</button>
+        <button type="button" class="quiz-opt">Поворачивает передние колёса</button>
+      </div>
+      <div class="quiz-explain">✅ Поворотом управляет разница скоростей бортов — поэтому руль не нужен (команды L и R).</div>
+    </div>
+
+    <div class="quiz-q" data-id="car2-power" data-hash="0d2abb20bd2721287ab78e1b04c3445e926b2f29cdb7ac5cd0135fa4c7494c10">
+      <p class="quiz-prompt">От чего питается машина?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">От розетки</button>
+        <button type="button" class="quiz-opt">От двух аккумуляторов 18650</button>
+        <button type="button" class="quiz-opt">От USB-провода ноутбука</button>
+        <button type="button" class="quiz-opt">От солнечной панели</button>
+      </div>
+      <div class="quiz-explain">✅ Держатель на 2× 18650 — это «бак» машины. Ставить строго по полярности +/−.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok1.html"><span class="dir">← Назад</span><span class="ttl">Урок 1 — Знакомство</span></a>
     <a class="next" href="urok3.html"><span class="dir">Дальше →</span><span class="ttl">Урок 3 — Мозг и провода</span></a>
@@ -79,5 +106,6 @@
 </div>
 
 <footer>Урок 2 из 12 · Робомашинка 🚗</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>

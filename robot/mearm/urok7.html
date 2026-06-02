@@ -90,6 +90,33 @@
     сустава. Запусти снова — сустав встанет иначе. Так в Python мы и будем «командовать» роботом.
   </div>
 
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="m7-once" data-hash="5af9db0c7d2e5c278e69788fe81c893bdf2e5454abd83bcd4cdfd8c1c001a628">
+      <p class="quiz-prompt">Сколько раз заливают Firmata в плату?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Каждый запуск программы</button>
+        <button type="button" class="quiz-opt">Никогда</button>
+        <button type="button" class="quiz-opt">Перед каждой позой</button>
+        <button type="button" class="quiz-opt">Один раз — дальше всё в Python</button>
+      </div>
+      <div class="quiz-explain">✅ После заливки Firmata живёт в плате постоянно. Программу робота меняем в Python, не трогая Arduino.</div>
+    </div>
+
+    <div class="quiz-q" data-id="m7-lib" data-hash="762385042a217ad0f1d7636728102922f0bb68085007a1edf6894eea0b23a33c">
+      <p class="quiz-prompt">Какую библиотеку Arduino ставят для серво и ультразвука?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">pymata4</button>
+        <button type="button" class="quiz-opt">pygame</button>
+        <button type="button" class="quiz-opt">FirmataExpress</button>
+        <button type="button" class="quiz-opt">Adafruit_Servo</button>
+      </div>
+      <div class="quiz-explain">✅ FirmataExpress (автор MrYsLab) ставится в Arduino IDE; вместе с ней — библиотека Servo.</div>
+    </div>
+  </div>
+
   <div class="pager">
     <a href="urok6.html"><span class="dir">← Назад</span><span class="ttl">Урок 6 — Подключение</span></a>
     <a class="next" href="urok8.html"><span class="dir">Дальше →</span><span class="ttl">Урок 8 — pygame ↔ робот</span></a>
@@ -97,5 +124,6 @@
 </div>
 
 <footer>Урок 7 из 11 · Робот MeArm 🤖</footer>
+<script src="../../quiz.js"></script>
 </body>
 </html>
