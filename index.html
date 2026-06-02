@@ -4,97 +4,346 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Игры на Python — школьный курс</title>
-<link rel="stylesheet" href="shared.css">
-<script src="theme.js"></script>
+<!-- Лендинг самостоятельный: свой top-nav вместо docs-сайдбара, без theme.js
+     (эмодзи на лендинге нужны), светлая тема Bright. Внутренние страницы
+     (уроки/курсы) по-прежнему используют shared.css + theme.js. -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root{
+    --paper:#f6f3ec; --panel:#ffffff; --panel-2:#efeae0;
+    --ink:#211f1b; --ink-2:#46443d; --muted:#6c6757; --faint:#9a9484;
+    --line:#e6ded0; --line-2:#d6cdbb;
+    --accent:#1f9d5b; --accent-deep:#177a45; --accent-soft:#e4f4ea;
+    --coral:#f56a45; --amber:#b07400; --purple:#6c5ce7;
+    --screen:#121620;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Manrope",system-ui,sans-serif;line-height:1.65;
+    border-top:4px solid var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  img{max-width:100%;}
+
+  .lp-wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+  /* ---------- top navigation ---------- */
+  .lp-nav{
+    position:sticky;top:0;z-index:50;background:rgba(246,243,236,.88);
+    backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--line);
+  }
+  .lp-nav-in{display:flex;align-items:center;gap:18px;height:76px;}
+  .lp-brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-family:"Onest",sans-serif;
+    font-weight:800;font-size:1.12rem;color:var(--ink);letter-spacing:-.01em;}
+  .lp-mark{width:34px;height:34px;border-radius:10px;background:var(--accent);display:grid;place-items:center;flex:none;}
+  .lp-mark::after{content:"";width:13px;height:13px;border-radius:4px;background:#fff;}
+  .lp-navlinks{display:flex;gap:30px;margin-left:auto;}
+  .lp-navlinks a{text-decoration:none;color:var(--ink-2);font-weight:600;font-size:.98rem;transition:color .15s;}
+  .lp-navlinks a:hover{color:var(--accent-deep);}
+  .lp-cta-top{display:inline-flex;align-items:center;font-family:"Onest",sans-serif;font-weight:700;
+    background:var(--ink);color:#fff;text-decoration:none;padding:11px 22px;border-radius:11px;transition:background .15s,transform .15s;}
+  .lp-cta-top:hover{background:#000;transform:translateY(-1px);}
+
+  /* ---------- buttons ---------- */
+  .lp-btn{display:inline-flex;align-items:center;gap:9px;font-family:"Onest",sans-serif;font-weight:700;
+    font-size:1rem;padding:14px 26px;border-radius:13px;text-decoration:none;border:1px solid transparent;
+    cursor:pointer;transition:transform .15s,background .15s,border-color .15s,box-shadow .15s;}
+  .lp-btn.primary{background:var(--accent);color:#fff;box-shadow:0 12px 26px -12px rgba(31,157,91,.65);}
+  .lp-btn.primary:hover{background:var(--accent-deep);transform:translateY(-2px);}
+  .lp-btn.ghost{background:var(--panel);color:var(--ink);border-color:var(--line-2);}
+  .lp-btn.ghost:hover{border-color:var(--accent);transform:translateY(-2px);}
+
+  /* ---------- shared section bits ---------- */
+  .lp-eyebrow{font-family:"Onest",sans-serif;font-weight:800;color:var(--accent-deep);
+    text-transform:uppercase;letter-spacing:.13em;font-size:.78rem;margin:0 0 12px;}
+  .lp-h2{font-family:"Onest",sans-serif;font-weight:800;font-size:clamp(1.8rem,3.4vw,2.45rem);
+    letter-spacing:-.025em;margin:0 0 12px;color:var(--ink);line-height:1.1;}
+  .lp-sub{color:var(--muted);font-size:1.08rem;max-width:36em;margin:0;}
+  section{scroll-margin-top:90px;}
+
+  /* ---------- hero ---------- */
+  .lp-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;padding:74px 0 30px;}
+  .lp-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-soft);color:var(--accent-deep);
+    font-weight:700;font-size:.9rem;padding:8px 15px;border-radius:999px;margin-bottom:26px;}
+  .lp-badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);}
+  .lp-hero h1{font-family:"Onest",sans-serif;font-weight:800;font-size:clamp(2.6rem,5vw,3.7rem);
+    line-height:1.04;letter-spacing:-.03em;margin:0 0 22px;}
+  .lp-hero h1 .g{color:var(--accent);}
+  .lp-lead{color:var(--ink-2);font-size:1.18rem;max-width:30em;margin:0 0 30px;}
+  .lp-hero-actions{display:flex;flex-wrap:wrap;gap:14px;}
+  .lp-stats{display:flex;flex-wrap:wrap;gap:28px;margin-top:34px;}
+  .lp-stat b{font-family:"Onest",sans-serif;font-weight:800;font-size:1.35rem;color:var(--ink);}
+  .lp-stat span{color:var(--muted);margin-left:5px;}
+
+  /* hero mockup card */
+  .lp-herocard{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:24px;
+    padding:14px 14px 6px;box-shadow:0 30px 60px -34px rgba(33,31,27,.45);}
+  .lp-screen{display:block;width:100%;border-radius:16px;background:var(--screen);overflow:hidden;}
+  .lp-screen img{display:block;width:100%;height:auto;border-radius:16px;}
+  .lp-card-foot{display:flex;align-items:center;justify-content:space-between;padding:12px 8px 6px;}
+  .lp-card-foot .name{font-family:"Onest",sans-serif;font-weight:700;font-size:1.05rem;}
+  .lp-card-foot .n{color:var(--accent-deep);font-weight:700;font-size:.92rem;}
+  .lp-chip{position:absolute;display:inline-flex;align-items:center;gap:9px;background:#fff;color:var(--ink);
+    font-weight:700;font-size:.9rem;padding:9px 14px 9px 9px;border-radius:14px;border:1px solid var(--line);
+    box-shadow:0 14px 30px -14px rgba(33,31,27,.4);}
+  .lp-chip .ic{width:27px;height:27px;border-radius:8px;display:grid;place-items:center;color:#fff;font-size:.82rem;flex:none;}
+  .lp-chip.apple{top:-18px;right:-12px;}
+  .lp-chip.apple .ic{background:var(--coral);}
+  .lp-chip.done{bottom:74px;left:-24px;}
+  .lp-chip.done .ic{background:var(--purple);}
+
+  /* ---------- games ---------- */
+  .lp-section{padding:78px 0;}
+  .lp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:24px;margin-top:34px;}
+  .lp-gamecard{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);
+    border-radius:20px;overflow:hidden;text-decoration:none;color:inherit;transition:transform .18s,box-shadow .18s,border-color .18s;}
+  .lp-gamecard:hover{transform:translateY(-5px);border-color:var(--line-2);box-shadow:0 26px 50px -30px rgba(33,31,27,.45);}
+  .lp-thumb{position:relative;background:var(--screen);height:200px;overflow:hidden;}
+  .lp-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .lp-tag{position:absolute;top:14px;left:14px;background:#fff;color:var(--ink);font-weight:700;font-size:.78rem;
+    padding:6px 12px;border-radius:999px;box-shadow:0 6px 16px -8px rgba(0,0,0,.4);}
+  .lp-gamebody{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1;}
+  .lp-gamebody h3{font-family:"Onest",sans-serif;font-weight:700;font-size:1.4rem;margin:0 0 8px;letter-spacing:-.01em;}
+  .lp-gamebody p{color:var(--muted);font-size:.96rem;margin:0;}
+  .lp-gamefoot{display:flex;align-items:center;justify-content:space-between;margin-top:20px;}
+  .lp-meta{display:flex;align-items:center;gap:12px;}
+  .lp-dots{display:flex;gap:5px;}
+  .lp-dots i{width:18px;height:6px;border-radius:4px;background:var(--line-2);display:block;}
+  .lp-dots i.on{background:var(--accent);}
+  .lp-meta span{color:var(--muted);font-size:.85rem;}
+  .lp-start{font-family:"Onest",sans-serif;font-weight:700;color:var(--accent-deep);font-size:.95rem;}
+  .lp-gamecard:hover .lp-start{text-decoration:underline;}
+
+  /* ---------- how it works ---------- */
+  .lp-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:34px;}
+  .lp-step{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px;}
+  .lp-num{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:#fff;
+    font-family:"Onest",sans-serif;font-weight:800;font-size:1.15rem;margin-bottom:18px;}
+  .lp-num.n1{background:var(--accent);}
+  .lp-num.n2{background:var(--coral);}
+  .lp-num.n3{background:var(--purple);}
+  .lp-step h3{font-family:"Onest",sans-serif;font-weight:700;font-size:1.18rem;margin:0 0 8px;}
+  .lp-step p{color:var(--muted);margin:0;font-size:.97rem;}
+
+  /* ---------- CTA ---------- */
+  .lp-ctablock{background:var(--accent-soft);border:1px solid #cde8d7;border-radius:28px;
+    padding:62px 40px;text-align:center;margin:10px 0 0;}
+  .lp-ctablock h2{font-family:"Onest",sans-serif;font-weight:800;font-size:clamp(1.9rem,3.6vw,2.5rem);
+    letter-spacing:-.025em;margin:0 0 14px;}
+  .lp-ctablock p{color:var(--ink-2);font-size:1.1rem;max-width:34em;margin:0 auto 28px;}
+
+  /* ---------- footer ---------- */
+  .lp-footer{border-top:1px solid var(--line);margin-top:30px;}
+  .lp-footer-in{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:30px;padding:54px 0;}
+  .lp-footer .lp-mark{margin-bottom:14px;}
+  .lp-footer .desc{color:var(--muted);font-size:.95rem;max-width:24em;margin:0;}
+  .lp-fbrand{font-family:"Onest",sans-serif;font-weight:800;font-size:1.05rem;color:var(--ink-2);margin-bottom:6px;}
+  .lp-fcol h4{font-family:"Onest",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.1em;
+    font-size:.72rem;color:var(--faint);margin:4px 0 16px;}
+  .lp-fcol a{display:block;text-decoration:none;color:var(--muted);font-size:.96rem;margin-bottom:11px;transition:color .15s;}
+  .lp-fcol a:hover{color:var(--accent-deep);}
+  .lp-fcol a.strong{color:var(--accent-deep);font-weight:700;}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:920px){
+    .lp-hero{grid-template-columns:1fr;gap:40px;padding-top:48px;}
+    .lp-herocard{order:2;max-width:520px;}
+  }
+  @media(max-width:680px){
+    .lp-wrap{padding:0 20px;}
+    .lp-navlinks{display:none;}
+    .lp-footer-in{grid-template-columns:1fr;gap:26px;}
+    .lp-ctablock,.lp-section{padding-left:0;padding-right:0;}
+    .lp-ctablock{padding:44px 24px;}
+  }
+</style>
 </head>
 <body>
 
-<div class="topbar">
-  <a class="home" href="index.html">🎮 Игры</a>
-</div>
-
-<div class="hero">
-  <h1>🎮 Игры на Python</h1>
-  <p>Учимся программировать, создавая настоящие игры. Выбери игру — и поехали!</p>
-</div>
-
-<div class="wrap">
-
-  <div class="goal">
-    <span class="label">Как это работает</span>
-    Каждая игра — это маленький курс из нескольких уроков. Ты читаешь объяснения,
-    запускаешь код у себя на компьютере и шаг за шагом собираешь рабочую игру.
-    Новые игры мы добавляем постепенно.
+<!-- ===================== TOP NAV ===================== -->
+<header class="lp-nav">
+  <div class="lp-wrap lp-nav-in">
+    <a class="lp-brand" href="index.html"><span class="lp-mark"></span>Игры на Python</a>
+    <nav class="lp-navlinks">
+      <a href="#games">Игры</a>
+      <a href="robot/index.html">Робототехника</a>
+      <a href="#how">Как это устроено</a>
+    </nav>
+    <a class="lp-cta-top" href="start.html">Начать</a>
   </div>
+</header>
 
-  <div class="pipe" style="justify-content:center">
-    <span class="pill">🐍 Python с нуля</span>
-    <span class="pill">🧩 Логика и алгоритмы</span>
-    <span class="pill">🎮 Настоящие игры</span>
-  </div>
-
-  <div class="box idea">
-    <span class="label">🚀 Впервые здесь?</span>
-    Сначала загляни в <b>Подготовку</b> — там по шагам: терминал, Python, VS&nbsp;Code
-    и venv (для Ubuntu). Поймёшь, что к чему и зачем.
-    <div class="dl-row" style="margin-top:12px">
-      <a class="dl" href="start.html">🚀 Открыть «Подготовку»</a>
-      <a class="dl" href="progress.html">📊 Мой прогресс</a>
+<!-- ===================== HERO ===================== -->
+<section class="lp-wrap lp-hero">
+  <div class="lp-hero-text">
+    <span class="lp-badge">Школьный курс · Python с нуля</span>
+    <h1>Учись писать код, <span class="g">создавая игры</span></h1>
+    <p class="lp-lead">Ученики Meine Schule Wiesbaden собирают настоящие игры на Python —
+      урок за уроком, с готовым кодом и понятными объяснениями.</p>
+    <div class="lp-hero-actions">
+      <a class="lp-btn primary" href="#games">Выбрать игру</a>
+      <a class="lp-btn ghost" href="start.html">Сначала подготовка →</a>
+    </div>
+    <div class="lp-stats">
+      <span class="lp-stat"><b>4</b><span>игры</span></span>
+      <span class="lp-stat"><b>23</b><span>урока</span></span>
     </div>
   </div>
 
-  <h2>Игры</h2>
-  <div class="cards">
-
-    <a class="card" href="games/snake/index.html">
-      <img class="preview" src="games/snake/preview.png" alt="Скриншот игры Змейка">
-      <h3>🐍 Змейка</h3>
-      <p>Классическая змейка: ползает, ест яблоки, растёт. Учим списки, циклы и
-         игровой цикл.</p>
-      <span class="meta">7 уроков · готово</span>
-    </a>
-
-    <a class="card" href="games/catch/index.html">
-      <img class="preview" src="games/catch/preview.png" alt="Скриншот игры Ловкий кот">
-      <h3>🐱 Ловкий кот</h3>
-      <p>Кот ловит падающие яблоки. Плавное движение, столкновения, а ещё —
-         картинки и звуки!</p>
-      <span class="meta">6 уроков · готово</span>
-    </a>
-
-    <a class="card" href="games/arkanoid/index.html">
-      <img class="preview" src="games/arkanoid/preview.png" alt="Скриншот игры Арканоид">
-      <h3>🧱 Арканоид</h3>
-      <p>Отбиваем мяч ракеткой и ломаем кирпичи. Новая идея — отскок мяча
-         <code>(dx, dy)</code>.</p>
-      <span class="meta">5 уроков · готово</span>
-    </a>
-
-    <a class="card" href="games/space/index.html">
-      <img class="preview" src="games/space/preview.png" alt="Скриншот игры Космос">
-      <h3>🚀 Космос</h3>
-      <p>Корабль сбивает пришельцев лазером. Новая идея — список объектов: пуль и
-         врагов много сразу.</p>
-      <span class="meta">5 уроков · готово</span>
-    </a>
-
-  </div>
-
-  <h2>Узнать больше</h2>
-  <div class="goal" style="text-align:center">
-    Подробная информация о школе и играх — на сайте школы или по почте:
-    <div class="dl-row" style="justify-content:center; margin-top:14px">
-      <a class="dl" href="https://meine-schule-wiesbaden.de" target="_blank" rel="noopener">🌐 meine-schule-wiesbaden.de</a>
-      <a class="dl ghost" href="mailto:info@meine-schule-wiesbaden.de">✉️ info@meine-schule-wiesbaden.de</a>
+  <div class="lp-herocard">
+    <div class="lp-chip apple"><span class="ic">✦</span>+1 яблоко</div>
+    <div class="lp-chip done"><span class="ic">▶</span>Урок пройден!</div>
+    <div class="lp-screen"><img src="games/snake/preview.png" alt="Игра Змейка"></div>
+    <div class="lp-card-foot">
+      <span class="name">Змейка</span>
+      <span class="n">7&nbsp;уроков</span>
     </div>
   </div>
+</section>
 
-</div>
+<!-- ===================== GAMES ===================== -->
+<section id="games" class="lp-wrap lp-section">
+  <p class="lp-eyebrow">Выбери игру</p>
+  <h2 class="lp-h2">Четыре игры, четыре мини-курса</h2>
+  <p class="lp-sub">Никакого пустого листа: каждый урок — готовый рабочий файл.
+    Читаешь, запускаешь, дописываешь новый кусочек.</p>
 
-<footer>
-  Meine Schule Wiesbaden · Игры на Python 🐍<br>
-  <a href="https://meine-schule-wiesbaden.de" target="_blank" rel="noopener">meine-schule-wiesbaden.de</a>
-  · <a href="mailto:info@meine-schule-wiesbaden.de">info@meine-schule-wiesbaden.de</a>
+  <div class="lp-grid">
+
+    <a class="lp-gamecard" href="games/snake/index.html">
+      <div class="lp-thumb">
+        <span class="lp-tag">Списки · циклы</span>
+        <img src="games/snake/preview.png" alt="Скриншот игры Змейка">
+      </div>
+      <div class="lp-gamebody">
+        <h3>Змейка</h3>
+        <p>Классическая змейка ползает, ест яблоки и растёт. Учим списки, циклы и игровой цикл.</p>
+        <div class="lp-gamefoot">
+          <span class="lp-meta">
+            <span class="lp-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span>
+            <span>7 уроков</span>
+          </span>
+          <span class="lp-start">Начать →</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="lp-gamecard" href="games/catch/index.html">
+      <div class="lp-thumb">
+        <span class="lp-tag">Звук · картинки</span>
+        <img src="games/catch/preview.png" alt="Скриншот игры Ловкий кот">
+      </div>
+      <div class="lp-gamebody">
+        <h3>Ловкий кот</h3>
+        <p>Кот ловит падающие яблоки. Плавное движение, столкновения, а ещё картинки и звуки.</p>
+        <div class="lp-gamefoot">
+          <span class="lp-meta">
+            <span class="lp-dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span>
+            <span>6 уроков</span>
+          </span>
+          <span class="lp-start">Начать →</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="lp-gamecard" href="games/arkanoid/index.html">
+      <div class="lp-thumb">
+        <span class="lp-tag">Физика отскока</span>
+        <img src="games/arkanoid/preview.png" alt="Скриншот игры Арканоид">
+      </div>
+      <div class="lp-gamebody">
+        <h3>Арканоид</h3>
+        <p>Отбиваем мяч ракеткой и ломаем кирпичи. Новая идея — отскок мяча и счёт очков.</p>
+        <div class="lp-gamefoot">
+          <span class="lp-meta">
+            <span class="lp-dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span>
+            <span>5 уроков</span>
+          </span>
+          <span class="lp-start">Начать →</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="lp-gamecard" href="games/space/index.html">
+      <div class="lp-thumb">
+        <span class="lp-tag">Списки объектов</span>
+        <img src="games/space/preview.png" alt="Скриншот игры Космос">
+      </div>
+      <div class="lp-gamebody">
+        <h3>Космос</h3>
+        <p>Корабль сбивает пришельцев лазером. Новая идея — список объектов: пуль и врагов много сразу.</p>
+        <div class="lp-gamefoot">
+          <span class="lp-meta">
+            <span class="lp-dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span>
+            <span>5 уроков</span>
+          </span>
+          <span class="lp-start">Начать →</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ===================== HOW IT WORKS ===================== -->
+<section id="how" class="lp-wrap lp-section">
+  <p class="lp-eyebrow">Как это устроено</p>
+  <h2 class="lp-h2">Три простых шага в каждом уроке</h2>
+  <div class="lp-steps">
+    <div class="lp-step">
+      <div class="lp-num n1">1</div>
+      <h3>Читаешь</h3>
+      <p>Короткое объяснение одной новой идеи — простыми словами, без лишней теории.</p>
+    </div>
+    <div class="lp-step">
+      <div class="lp-num n2">2</div>
+      <h3>Запускаешь</h3>
+      <p>Готовый файл, который сразу работает. Открыл, запустил — и видишь результат на экране.</p>
+    </div>
+    <div class="lp-step">
+      <div class="lp-num n3">3</div>
+      <h3>Дописываешь</h3>
+      <p>Добавляешь новый кусочек кода. У тебя всегда на руках рабочая игра.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section class="lp-wrap lp-section" style="padding-top:0">
+  <div class="lp-ctablock">
+    <h2>Готов написать первую игру?</h2>
+    <p>Начни с подготовки — настроим Python и редактор за 10 минут. Дальше только интересное.</p>
+    <a class="lp-btn primary" href="start.html">Открыть «Подготовку»</a>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="lp-footer">
+  <div class="lp-wrap lp-footer-in">
+    <div>
+      <span class="lp-mark"></span>
+      <div class="lp-fbrand">Игры на Python</div>
+      <p class="desc">Учебный проект Meine Schule Wiesbaden. Пишем код на Python и собираем настоящие игры.</p>
+    </div>
+    <div class="lp-fcol">
+      <h4>Курсы</h4>
+      <a href="#games">Игры на Python</a>
+      <a href="robot/index.html">Робототехника</a>
+      <a href="start.html">Подготовка (Ubuntu)</a>
+      <a href="progress.html">Мой прогресс</a>
+    </div>
+    <div class="lp-fcol">
+      <h4>Школа</h4>
+      <a class="strong" href="https://meine-schule-wiesbaden.de" target="_blank" rel="noopener">meine-schule-wiesbaden.de</a>
+      <a href="mailto:info@meine-schule-wiesbaden.de">info@meine-schule-wiesbaden.de</a>
+    </div>
+  </div>
 </footer>
+
 </body>
 </html>
