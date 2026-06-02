@@ -16,7 +16,7 @@
     <a class="dot" href="urok1.html" title="Знакомство">1</a>
     <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
     <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
-    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok4.html" title="Моторы из Python">4</a>
     <a class="dot" href="urok5.html" title="Bluetooth">5</a>
     <a class="dot" href="urok6.html" title="Глаза машины">6</a>
     <a class="dot" href="urok7.html" title="Первый заезд">7</a>
@@ -36,19 +36,17 @@
 
   <div class="goal">
     <span class="label">Цель урока</span>
-    Прочитать телеметрию <code>"D,угол,см"</code> и нарисовать из неё радар: точки-препятствия
-    вокруг машины, как на экране подводной лодки.
+    Самим качать датчик из Python, мерить расстояние и рисовать радар: точки-препятствия вокруг
+    машины, как на экране подводной лодки.
   </div>
 
-  <h2>📡 Читаем телеметрию</h2>
-  <p>Сначала просим машину качать датчиком: <code>car.send("SCAN,1")</code>. Дальше каждый кадр
-     читаем строку и разбираем её на угол и расстояние:</p>
-  <pre>line = car.<span class="fn">read</span>()                <span class="com"># напр. "D,90,40" или None</span>
-<span class="kw">if</span> line <span class="kw">and</span> line.<span class="fn">startswith</span>(<span class="str">"D,"</span>):
-    parts = line.<span class="fn">split</span>(<span class="str">","</span>)        <span class="com"># ["D", "90", "40"]</span>
-    angle = <span class="fn">int</span>(parts[<span class="num">1</span>])
-    cm = <span class="fn">int</span>(parts[<span class="num">2</span>])
-    blips.<span class="fn">append</span>([angle, cm])      <span class="com"># запомнили точку</span></pre>
+  <h2>📡 Качаем датчик и меряем</h2>
+  <p>Каждый кадр мы поворачиваем «глаз» на новый угол и сразу меряем расстояние. Угол шагает
+     туда-сюда от 0° до 180° — получается «качание». Запоминаем точки в список:</p>
+  <pre>car.radar.<span class="fn">look</span>(beam_angle)        <span class="com"># повернуть датчик</span>
+cm = car.radar.<span class="fn">measure</span>()          <span class="com"># померить расстояние</span>
+blips.<span class="fn">append</span>([beam_angle, cm])     <span class="com"># запомнить точку</span>
+beam_angle += sweep_dir              <span class="com"># шагнуть; на краях развернём</span></pre>
 
   <h2>🧭 Из угла и см — точка на экране</h2>
   <p>Угол говорит, <b>куда</b> смотрел датчик, расстояние — <b>как далеко</b> препятствие. Точку
@@ -61,13 +59,14 @@ y = CY - d * math.<span class="fn">sin</span>(math.<span class="fn">radians</spa
      можно одновременно рулить стрелками и смотреть радар.</p>
   <div class="dl-row">
     <a class="dl" href="code/radar.py" download>⬇️ radar.py</a>
-    <a class="dl ghost" href="code/car_link.py" download>car_link.py</a>
+    <a class="dl ghost" href="code/robot.py" download>robot.py</a>
   </div>
 
   <div class="box idea">
     <span class="label">💡 Радар работает даже без машины</span>
-    В «режиме показа» <code>car_link</code> выдаёт телеметрию понарошку — впереди «стена». Поэтому
-    радар крутится и оживает, даже если машина не подключена. Удобно отлаживать рисование.
+    В «режиме показа» <code>car.radar.measure()</code> выдаёт расстояния понарошку — впереди
+    «стена». Поэтому радар крутится и оживает, даже если машина не подключена. Удобно отлаживать
+    рисование.
   </div>
 
   <div class="box try">

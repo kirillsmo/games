@@ -5,15 +5,21 @@
 + / -  быстрее / медленнее
 ESC — выход.
 
-На экране — «приборы»: текущая команда, скорость (полоской) и состояние связи
+На экране — «приборы»: команда, скорость (полоской) и состояние связи
 (есть машина или режим показа).
+
+Калибровка прямого хода: DC-моторы крутятся чуть по-разному, поэтому машина уводит
+в сторону. Подправь trim бортов (см. ниже): тому борту, что быстрее, поставь меньше 1.0.
 """
 import pygame, sys
-from car_link import connect
+from robot import connect
 
 car = connect()
+car.left.trim = 1.0            # ← если уводит вправо — уменьшай left.trim (напр. 0.9)
+car.right.trim = 1.0           # ← если уводит влево  — уменьшай right.trim
+
 speed = 180                    # скорость моторов 0..255
-command = "S"
+command = "стоп"
 
 pygame.init()
 screen = pygame.display.set_mode((520, 360))
@@ -22,20 +28,11 @@ clock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 40)
 small = pygame.font.SysFont(None, 24)
 
-
-def drive(cmd):
-    global command
-    if cmd != command:
-        command = cmd
-        car.send("S" if cmd == "S" else cmd + "," + str(speed))
-
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (
             event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE
         ):
-            car.send("S")
             car.close()
             pygame.quit()
             sys.exit()
@@ -47,19 +44,19 @@ while True:
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP]:
-        drive("F")
+        car.forward(speed);   command = "вперёд"
     elif keys[pygame.K_DOWN]:
-        drive("B")
+        car.back(speed);      command = "назад"
     elif keys[pygame.K_LEFT]:
-        drive("L")
+        car.left_turn(speed); command = "налево"
     elif keys[pygame.K_RIGHT]:
-        drive("R")
+        car.right_turn(speed); command = "направо"
     else:
-        drive("S")
+        car.stop();           command = "стоп"
 
     # --- приборная панель ---
     screen.fill((30, 30, 46))
-    t1 = font.render("Команда: " + command, True, (22, 196, 127))
+    t1 = font.render("Едем: " + command, True, (22, 196, 127))
     screen.blit(t1, (24, 36))
 
     t2 = small.render("Скорость: " + str(speed), True, (234, 234, 234))

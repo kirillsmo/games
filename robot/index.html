@@ -26,18 +26,28 @@
     <span class="label">Как это работает</span>
     Каждый робот — отдельный курс из нескольких уроков: сначала собираем устройство, потом
     пишем для него программу на Python (pygame). Робот не понимает Python напрямую — между ними
-    стоит плата Arduino, которая слушает наши команды.
+    стоит плата Arduino со стандартной прошивкой <b>Firmata</b>, а из Python мы командуем ей
+    через библиотеку <b>pymata</b>. Никакого своего «протокола» учить не нужно: управляем
+    понятными объектами — <code>motor</code>, <code>servo</code>, <code>radar</code>, <code>button</code>.
   </div>
 
   <div class="box idea">
-    <span class="label">🎮 Сначала пройди игры</span>
-    Эти курсы рассчитаны на тех, кто уже знает основы pygame: игровой цикл, события,
-    <code>get_pressed</code>, списки и экранные кнопки. Если ещё нет —
-    <a href="../index.html" style="color:var(--green);font-weight:700">начни с игр</a>.
+    <span class="label">🎮 Что нужно знать заранее</span>
+    Программы — на Python (pygame): игровой цикл, события, <code>get_pressed</code>, списки,
+    экранные кнопки. Если ещё нет — <a href="../index.html" style="color:var(--green);font-weight:700">начни
+    с игр</a>. А с железом помогает вводный курс <b>«Основы электроники»</b> (ниже).
   </div>
 
   <h2>Курсы</h2>
   <div class="cards">
+
+    <a class="card" href="basics/index.html">
+      <img class="preview" src="basics/img/cover.svg" alt="Основы электроники">
+      <h3>⚡ Основы электроники</h3>
+      <p>С чего начать: ток, напряжение, светодиод и полярность, транзистор-выключатель,
+         мотор и H-мост. Руками на макетке, без программирования.</p>
+      <span class="meta">6 уроков · начни отсюда</span>
+    </a>
 
     <a class="card" href="mearm/index.html">
       <img class="preview" src="mearm/img/arm-joints.svg" alt="Робот-рука MeArm">

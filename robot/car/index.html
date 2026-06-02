@@ -16,7 +16,7 @@
     <a class="dot" href="urok1.html" title="Знакомство">1</a>
     <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
     <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
-    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok4.html" title="Моторы из Python">4</a>
     <a class="dot" href="urok5.html" title="Bluetooth">5</a>
     <a class="dot" href="urok6.html" title="Глаза машины">6</a>
     <a class="dot" href="urok7.html" title="Первый заезд">7</a>
@@ -47,17 +47,25 @@
 
   <div class="box idea">
     <span class="label">💡 Как машина слушается Python</span>
-    Машина не понимает Python напрямую. Поэтому: <b>ноутбук (pygame)</b> по <b>Bluetooth</b>
-    шлёт короткие команды на плату <b>Arduino UNO</b>, та через драйвер <b>L298N</b> крутит
-    моторы. А машина шлёт назад телеметрию — что «видят» её датчики. Цепочка:
+    Машина не понимает Python напрямую. В плату <b>Arduino UNO</b> мы один раз заливаем
+    стандартную прошивку <b>Firmata</b>, и дальше из Python библиотека <b>pymata</b> управляет
+    ножками. Никакого своего «протокола» — командуем понятными объектами: <code>car.forward()</code>,
+    <code>car.radar.measure()</code>. Цепочка:
     <div class="pipe" style="margin-top:10px">
-      <span class="pill">💻 pygame</span><span class="arrow">→ Bluetooth →</span>
-      <span class="pill">🔌 UNO</span><span class="arrow">→ L298N →</span>
+      <span class="pill">💻 pygame</span><span class="arrow">→ pymata · USB/BT →</span>
+      <span class="pill">🔌 UNO (Firmata)</span><span class="arrow">→ L298N →</span>
       <span class="pill">⚙️ моторы</span><span class="arrow">+</span>
       <span class="pill">🔭 датчики</span>
     </div>
-    Главное отличие от руки-робота: <b>у машины своя батарея</b>, поэтому она ездит свободно,
-    а провод не нужен.
+    Главное отличие от руки-робота: <b>у машины своя батарея</b>, поэтому она ездит свободно.
+  </div>
+
+  <div class="box idea">
+    <span class="label">🧰 Перед этим курсом</span>
+    Пройди руку <a href="../mearm/index.html" style="color:var(--green);font-weight:700">MeArm</a>
+    (там мы освоили Firmata и объекты) и желательно
+    <a href="../basics/index.html" style="color:var(--green);font-weight:700">⚡ Основы электроники</a>
+    (мотор, H-мост L298N — это прямо про моторы машинки).
   </div>
 
   <p>Не знаешь, что такое терминал и как запускать Python? →
@@ -78,8 +86,9 @@
   </table>
 
   <h3>Общее на класс:</h3>
-  <p>Компьютер с Ubuntu на группу (Python + <code>pygame-ce</code> + <code>pyserial</code> +
-     Arduino IDE), крестовая отвёртка, коробок/подставка (поднять машину при первых тестах).</p>
+  <p>Компьютер с Ubuntu на группу (Python + <code>pygame-ce</code> + <code>pymata4</code> +
+     Arduino IDE с библиотекой <b>FirmataExpress</b>), крестовая отвёртка, коробок/подставка
+     (поднять машину при первых тестах).</p>
 
   <div class="box warn">
     <span class="label">⚠️ Техника безопасности (читаем со всеми!)</span>
@@ -97,11 +106,11 @@
     <a class="card" href="urok2.html"><div class="n">2</div><h3>Сборка шасси</h3><p>Моторы, колёса, батареи, корпус.</p></a>
     <a class="card" href="urok3.html"><div class="n">3</div><h3>Мозг и провода</h3><p>UNO и L298N. Первый заезд по таймеру.</p></a>
   </div>
-  <p style="margin-top:18px"><b>Часть 2 — прошивка Arduino.</b></p>
+  <p style="margin-top:18px"><b>Часть 2 — Firmata и моторы из Python.</b></p>
   <div class="cards">
-    <a class="card" href="urok4.html"><div class="n">4</div><h3>Команды моторам</h3><p>Едем по буквам F/B/L/R/S из Serial.</p></a>
-    <a class="card" href="urok5.html"><div class="n">5</div><h3>Bluetooth</h3><p>Режем провод: те же команды по воздуху.</p></a>
-    <a class="card" href="urok6.html"><div class="n">6</div><h3>Глаза машины</h3><p>Ультразвук, серво и датчики линии.</p></a>
+    <a class="card" href="urok4.html"><div class="n">4</div><h3>Моторы из Python</h3><p>Заливаем Firmata, крутим моторы объектами.</p></a>
+    <a class="card" href="urok5.html"><div class="n">5</div><h3>Bluetooth</h3><p>Режем провод: та же Firmata по воздуху.</p></a>
+    <a class="card" href="urok6.html"><div class="n">6</div><h3>Глаза машины</h3><p>Ультразвук-радар и датчики линии в Python.</p></a>
   </div>
   <p style="margin-top:18px"><b>Часть 3 — кокпит на pygame.</b></p>
   <div class="cards">
@@ -118,10 +127,10 @@
 
   <h2>📦 Скачать код</h2>
   <div class="dl-list">
+    <a href="code/arduino/README.txt" download><span class="fname">arduino/README.txt</span><span class="ficon">↓ Firmata</span></a>
     <a href="code/arduino/drive_test.ino" download><span class="fname">arduino/drive_test.ino</span><span class="ficon">↓ проверка</span></a>
-    <a href="code/arduino/serial_drive.ino" download><span class="fname">arduino/serial_drive.ino</span><span class="ficon">↓ команды</span></a>
-    <a href="code/arduino/car_firmware.ino" download><span class="fname">arduino/car_firmware.ino</span><span class="ficon">↓ прошивка</span></a>
-    <a href="code/car_link.py" download><span class="fname">car_link.py</span><span class="ficon">↓ связь</span></a>
+    <a href="code/robot.py" download><span class="fname">robot.py</span><span class="ficon">↓ связь+объекты</span></a>
+    <a href="code/drive_keys.py" download><span class="fname">drive_keys.py</span><span class="ficon">↓ пульт</span></a>
     <a href="code/cockpit.py" download><span class="fname">cockpit.py</span><span class="ficon">↓ кокпит</span></a>
     <a href="code/radar.py" download><span class="fname">radar.py</span><span class="ficon">↓ радар</span></a>
     <a href="code/autopilot.py" download><span class="fname">autopilot.py</span><span class="ficon">↓ автопилот</span></a>

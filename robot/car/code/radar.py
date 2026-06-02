@@ -1,26 +1,25 @@
 """
-Урок 9: РАДАР. Машина крутит ультразвуковой датчик и шлёт нам "D,угол,см".
-Мы рисуем эти точки на экране — как у подводной лодки.
+Урок 9: РАДАР. Python сам качает датчик и меряет расстояние — как у подлодки.
+
+Каждый кадр мы поворачиваем серво на новый угол (car.radar.look) и меряем
+расстояние (car.radar.measure). Точки рисуем на экране: близкие — красные,
+далёкие — зелёные. Луч «прожектора» бежит туда, куда сейчас смотрит датчик.
 
 ↑↓ ←→ — едем (можно рулить и смотреть радар одновременно)
 ESC — выход.
-
-Близкие препятствия — красные, далёкие — зелёные. Луч «прожектора» бежит
-туда, куда сейчас смотрит датчик.
 """
 import pygame, sys, math
-from car_link import connect
+from robot import connect
 
 car = connect()
-car.send("SCAN,1")             # просим машину качать датчиком и слать "D,угол,см"
 
 SPEED = 180
 MAX_CM = 100                   # дальше этого не рисуем
 R = 240                        # радиус радара в пикселях
 CX, CY = 300, 330              # точка машины — внизу по центру, полукруг идёт вверх
 
-command = "S"
 beam_angle = 90                # куда сейчас смотрит датчик
+sweep_dir = 6                  # шаг качания (туда-сюда)
 blips = []                     # точки на радаре: [угол, см]
 
 pygame.init()
@@ -38,47 +37,37 @@ def to_xy(angle, cm):
     return int(x), int(y)
 
 
-def drive(cmd):
-    global command
-    if cmd != command:
-        command = cmd
-        car.send("S" if cmd == "S" else cmd + "," + str(SPEED))
-
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (
             event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE
         ):
-            car.send("S")
-            car.send("SCAN,0")
             car.close()
             pygame.quit()
             sys.exit()
 
-    # --- читаем телеметрию ---
-    line = car.read()
-    if line and line.startswith("D,"):
-        parts = line.split(",")
-        if len(parts) == 3:
-            beam_angle = int(parts[1])
-            cm = int(parts[2])
-            blips.append([beam_angle, cm])
-            if len(blips) > 70:           # помним только свежие точки
-                blips.pop(0)
+    # --- качаем датчик и меряем (это делает Python, не Arduino) ---
+    car.radar.look(beam_angle)
+    cm = car.radar.measure()
+    blips.append([beam_angle, cm])
+    if len(blips) > 70:                   # помним только свежие точки
+        blips.pop(0)
+    beam_angle += sweep_dir
+    if beam_angle >= 174 or beam_angle <= 6:
+        sweep_dir = -sweep_dir
 
     # --- управление ---
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP]:
-        drive("F")
+        car.forward(SPEED)
     elif keys[pygame.K_DOWN]:
-        drive("B")
+        car.back(SPEED)
     elif keys[pygame.K_LEFT]:
-        drive("L")
+        car.left_turn(SPEED)
     elif keys[pygame.K_RIGHT]:
-        drive("R")
+        car.right_turn(SPEED)
     else:
-        drive("S")
+        car.stop()
 
     # --- рисуем радар ---
     screen.fill((8, 16, 12))

@@ -16,7 +16,7 @@
     <a class="dot" href="urok1.html" title="Знакомство">1</a>
     <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
     <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
-    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok4.html" title="Моторы из Python">4</a>
     <a class="dot active" href="urok5.html" title="Bluetooth">5</a>
     <a class="dot" href="urok6.html" title="Глаза машины">6</a>
     <a class="dot" href="urok7.html" title="Первый заезд">7</a>
@@ -30,26 +30,26 @@
 
 <div class="wrap">
   <div class="lesson-head">
-    <span class="eyebrow">Урок 5 · прошивка</span>
+    <span class="eyebrow">Урок 5 · связь</span>
     <h1>Bluetooth — режем провод</h1>
   </div>
 
   <div class="goal">
     <span class="label">Цель урока</span>
-    Подключить Bluetooth-модуль и слать машине те же команды, но <b>без провода</b>. Понять
-    главную мысль: Bluetooth — это тот же serial, только по воздуху.
+    Подключить Bluetooth-модуль и управлять машиной <b>без провода</b>. Понять: Bluetooth — это
+    тот же serial-канал, только по воздуху, а Firmata по нему работает так же, как по USB.
   </div>
 
   <div class="box idea">
     <span class="label">💡 Главная мысль урока</span>
-    Мы ничего не меняем в «языке» команд! <b>Bluetooth = serial по воздуху.</b> Модуль
-    подключается к тем же пинам <code>RX/TX</code>, что и USB. Машина по-прежнему читает строки
-    <code>"F,200"</code> — ей всё равно, пришли они по проводу или по радио.
+    Прошивку менять не нужно! Та же <b>Firmata</b> общается и по USB, и по Bluetooth. Модуль
+    подключается к тем же пинам <code>RX/TX</code>, что и USB. В Python мы лишь укажем, что плата
+    теперь на беспроводном порту.
   </div>
 
   <h2>🔌 Подключение модуля</h2>
-  <p>Bluetooth-модуль ставится на пины <b>RX/TX</b> платы (через плату-расширение это обычно
-     просто «воткнуть в гнездо»). Важное правило перекрёста:</p>
+  <p>Bluetooth-модуль ставится на пины <b>RX/TX</b> платы (через плату-расширение — обычно просто
+     «воткнуть в гнездо»). Правило перекрёста:</p>
   <ul>
     <li><b>TX</b> модуля → <b>RX</b> Arduino;</li>
     <li><b>RX</b> модуля → <b>TX</b> Arduino;</li>
@@ -58,28 +58,34 @@
   <div class="box warn">
     <span class="label">⚠️ Снимай модуль на время заливки</span>
     Bluetooth-модуль занимает те же пины <code>RX/TX</code>, что и загрузка по USB. Когда
-    заливаешь скетч — <b>вынь модуль</b>, потом вставь обратно. Прошивка нужна та же, что
-    дальше: <code>car_firmware.ino</code> (зальём её в уроке 6, она умеет всё).
+    заливаешь Firmata — <b>вынь модуль</b>, потом вставь обратно. Прошивка остаётся прежней.
   </div>
 
   <h2>🔗 Спариваем с ноутбуком</h2>
-  <p>В системе включи Bluetooth и найди устройство (имя вроде <code>HC-06</code>,
-     PIN обычно <code>1234</code> или <code>0000</code>). После спаривания на Ubuntu появится
-     порт — привяжем его командой:</p>
+  <p>В системе включи Bluetooth и найди устройство (имя вроде <code>HC-06</code>, PIN обычно
+     <code>1234</code> или <code>0000</code>). После спаривания привяжем порт:</p>
   <pre><span class="com"># привязать спаренный модуль к порту /dev/rfcomm0</span>
 sudo rfcomm bind 0 <span class="str">XX:XX:XX:XX:XX:XX</span>   <span class="com"># адрес модуля</span></pre>
-  <p>Теперь машина видна как <code>/dev/rfcomm0</code> — наш Python-код сам найдёт её
-     (это уже делает <code>car_link.py</code> в следующих уроках).</p>
+  <p>Теперь в Python укажем этот порт при подключении:</p>
+  <pre>board = pymata4.<span class="fn">Pymata4</span>(com_port=<span class="str">"/dev/rfcomm0"</span>)</pre>
+  <p>В <code>robot.py</code> это одна строчка в функции <code>connect()</code> — раскомментируй
+     вариант с Bluetooth.</p>
+
+  <div class="box warn">
+    <span class="label">⚠️ Честно про Bluetooth</span>
+    Firmata «болтливая»: по Bluetooth она работает, но может <b>подтормаживать</b>, особенно когда
+    радар постоянно опрашивает датчик. Для первых заездов надёжнее <b>USB-кабель</b>, а
+    беспроводной режим включай как улучшение, когда всё уже работает по проводу.
+  </div>
 
   <div class="box try">
     <span class="label">✅ Проверка</span>
-    Машина спарена, появился порт <code>/dev/rfcomm0</code>. Можно даже открыть его в программе
-    последовательного порта и отправить <code>F,200</code> — машина поедет без провода. Дальше —
-    дадим ей «глаза».
+    Появился порт <code>/dev/rfcomm0</code>, и программа из урока 4 рулит машиной без провода.
+    Дальше дадим машине «глаза».
   </div>
 
   <div class="pager">
-    <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Команды моторам</span></a>
+    <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Моторы из Python</span></a>
     <a class="next" href="urok6.html"><span class="dir">Дальше →</span><span class="ttl">Урок 6 — Глаза машины</span></a>
   </div>
 </div>

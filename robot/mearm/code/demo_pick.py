@@ -9,9 +9,9 @@
 Углы — примерные! Подбери их под свою сборку в уроках 9–10 и впиши сюда.
 """
 import time
-from robot_link import connect
+from arm import connect
 
-robot = connect()
+arm = connect()
 
 # [база, плечо, локоть, захват]   (захват: больше = более открыт)
 PROGRAM = [
@@ -32,7 +32,7 @@ def play(program):
     for step, pose in enumerate(program, start=1):
         print(f"Шаг {step}: {pose}")
         for joint in range(4):
-            robot.send(joint, pose[joint])
+            arm.set(joint, pose[joint])
         time.sleep(PAUSE)
 
 
@@ -40,4 +40,4 @@ if __name__ == "__main__":
     print("▶ Запускаю программу робота…")
     play(PROGRAM)
     print("✅ Готово!")
-    robot.close()
+    arm.close()

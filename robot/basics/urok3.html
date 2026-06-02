@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 3 — Кнопка и выключатель</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">🤖 Робототехника</a>
+  <a class="home" href="index.html">⚡ Основы электроники</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Электричество">1</a>
+    <a class="dot" href="urok2.html" title="Светодиод и резистор">2</a>
+    <a class="dot active" href="urok3.html" title="Кнопка">3</a>
+    <a class="dot" href="urok4.html" title="Транзистор">4</a>
+    <a class="dot" href="urok5.html" title="Мотор и H-мост">5</a>
+    <a class="dot" href="urok6.html" title="Мостик к Arduino">6</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 3 · управляем цепью</span>
+    <h1>Кнопка и выключатель</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Научиться <b>замыкать и размыкать</b> цепь — зажигать светодиод по нажатию. Это первый шаг
+    к управлению: пока пальцем, дальше — программой.
+  </div>
+
+  <h2>🔘 Что делает кнопка</h2>
+  <p>Помнишь: ток течёт только по <b>замкнутому</b> кольцу. Кнопка (или выключатель) — это
+     «разрыв» в кольце, которым мы управляем:</p>
+  <ul>
+    <li><b>Нажата</b> — контакты соединились, кольцо замкнуто → ток течёт → LED горит.</li>
+    <li><b>Отпущена</b> — контакты разомкнуты, кольцо разорвано → тока нет → LED не горит.</li>
+  </ul>
+
+  <h2>🛠️ Добавляем кнопку в цепь со светодиодом</h2>
+  <p>Берём цепь из урока 2 и вставляем кнопку в любое место кольца — например, между резистором
+     и светодиодом:</p>
+  <div class="pipe">
+    <span class="pill">🔋 «+»</span><span class="arrow">→</span>
+    <span class="pill">🧱 резистор</span><span class="arrow">→</span>
+    <span class="pill">🔘 кнопка</span><span class="arrow">→</span>
+    <span class="pill">💡 LED</span><span class="arrow">→</span>
+    <span class="pill">🔋 «−»</span>
+  </div>
+  <p>Теперь светодиод горит <b>только пока кнопка нажата</b>. Поздравляю — ты управляешь током.</p>
+
+  <div class="box idea">
+    <span class="label">💡 У тактовой кнопки 4 ножки</span>
+    У маленькой «тактовой» кнопки 4 ноги, но это две пары: внутри ножки соединены попарно.
+    Если кнопка «не работает» — скорее всего ты подключился к двум ножкам, которые и так
+    всегда соединены. Поверни кнопку на 90° или используй ножки по диагонали.
+  </div>
+
+  <h2>🤔 А если нужно «помнить» нажатие?</h2>
+  <p>Наша кнопка действует, только пока её держат. Чтобы свет оставался гореть после отпускания,
+     нужен <b>выключатель</b> (он фиксируется) или <b>программа</b>, которая запомнит нажатие.
+     Именно так делает Arduino: плата читает кнопку и решает, что делать дальше.</p>
+
+  <div class="box idea">
+    <span class="label">💡 Связь с роботами</span>
+    Кнопка — это <b>датчик</b>: «нажато / не нажато», 0 или 1. У машинки так же работают
+    датчики линии и концевики. Дальше мы будем читать состояние кнопки <b>из Python</b> и
+    реагировать на него в игровом цикле.
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Попробуй сам</span>
+    Переставь кнопку в другое место кольца (например, перед резистором). Светодиод всё равно
+    слушается? Почему — ведь кольцо одно?
+  </div>
+
+  <div class="pager">
+    <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Светодиод</span></a>
+    <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Транзистор</span></a>
+  </div>
+</div>
+
+<footer>Урок 3 из 6 · Основы электроники ⚡</footer>
+</body>
+</html>

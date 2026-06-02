@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 6 — Мостик к Arduino и Python</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">🤖 Робототехника</a>
+  <a class="home" href="index.html">⚡ Основы электроники</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Электричество">1</a>
+    <a class="dot" href="urok2.html" title="Светодиод и резистор">2</a>
+    <a class="dot" href="urok3.html" title="Кнопка">3</a>
+    <a class="dot" href="urok4.html" title="Транзистор">4</a>
+    <a class="dot" href="urok5.html" title="Мотор и H-мост">5</a>
+    <a class="dot active" href="urok6.html" title="Мостик к Arduino">6</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 6 · от железа к программе</span>
+    <h1>Мостик к Arduino и Python</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Понять, что плата Arduino — это <b>набор управляемых ножек</b>, и что вместо пальца ими
+    «нажимает» наша программа. Узнать про <b>ШИМ</b> (плавная скорость) и про то, как Python
+    будет управлять ножками через <b>Firmata</b>.
+  </div>
+
+  <h2>🔌 Arduino = ножки, которыми управляет программа</h2>
+  <p>Всё, что мы делали руками (замыкать цепь кнопкой, подавать ток на базу транзистора),
+     умеет делать плата. У Arduino есть <b>ножки (пины)</b>, и каждую программа может:</p>
+  <ul>
+    <li><b>включить или выключить</b> (подать 5 В или 0 В) — это «цифровой выход», как выключатель;</li>
+    <li><b>прочитать</b>, есть ли на ней напряжение (кнопка нажата?) — это «цифровой вход», датчик;</li>
+    <li><b>измерить</b> напряжение числом 0–1023 — «аналоговый вход» (например, яркость, поворот ручки).</li>
+  </ul>
+  <div class="pipe">
+    <span class="pill">🧠 программа</span><span class="arrow">→</span>
+    <span class="pill">🔌 ножка платы</span><span class="arrow">→</span>
+    <span class="pill">⚡ транзистор / H-мост</span><span class="arrow">→</span>
+    <span class="pill">⚙️ мотор / 💡 LED</span>
+  </div>
+  <p>Ножка — это «слабый палец» из урока 4: сама она тянет только светодиод, а мотор включает
+     <b>через транзистор или H-мост</b>. Всё как мы разобрали — только выключателем теперь рулит код.</p>
+
+  <h2>🌊 ШИМ — как сделать «полугаз»</h2>
+  <p>Ножка умеет только 5 В или 0 В — «включено» или «выключено». А как сделать светодиод
+     <b>наполовину</b> ярким или мотор <b>помедленнее</b>? Хитрость: очень быстро включать и
+     выключать ножку — сотни раз в секунду. Если она включена половину времени — в среднем
+     получается «полмощности». Это и есть <b>ШИМ</b> (широтно-импульсная модуляция, по-английски PWM).</p>
+  <div class="box idea">
+    <span class="label">💡 ШИМ на пальцах</span>
+    Как мигать лампочкой так быстро, что глаз видит просто «приглушённый свет». Включена 20%
+    времени → тускло/медленно; 80% → ярко/быстро. В коде это число <b>0–255</b>. На машинке
+    именно так задаётся скорость моторов (ножка EN у H-моста, урок 5).
+  </div>
+
+  <h2>🐍 Как Python будет управлять ножками: Firmata</h2>
+  <p>Сама Arduino понимает только свой язык. Но есть готовая прошивка <b>Firmata</b>: заливаешь
+     её в плату <b>один раз</b> — и дальше плата просто слушается компьютера. Со стороны Python
+     есть библиотека (<b>pymata</b>), которая командует ножками по USB:</p>
+  <pre><span class="kw">from</span> pymata4 <span class="kw">import</span> pymata4
+board = pymata4.<span class="fn">Pymata4</span>()            <span class="com"># подключились к плате</span>
+
+board.<span class="fn">set_pin_mode_digital_output</span>(<span class="num">13</span>)
+board.<span class="fn">digital_write</span>(<span class="num">13</span>, <span class="num">1</span>)        <span class="com"># зажгли светодиод на ножке 13</span>
+board.<span class="fn">digital_write</span>(<span class="num">13</span>, <span class="num">0</span>)        <span class="com"># погасили</span></pre>
+
+  <div class="box idea">
+    <span class="label">💡 Почему это удобно для нас</span>
+    Не нужно учить язык Arduino и писать «прошивку» под каждый проект. Заливаем Firmata —
+    и <b>весь ум робота живёт в Python</b>, который ты уже знаешь по играм. В курсах роботов
+    мы спрячем даже ножки за понятные объекты: <code>motor</code>, <code>servo</code>,
+    <code>radar</code>, <code>button</code> — командуешь объектами, а не проводами.
+  </div>
+
+  <h2>🚀 Что дальше</h2>
+  <p>Фундамент готов. Теперь то же железо оживёт под управлением программы:</p>
+  <div class="cards">
+    <a class="card" href="../mearm/index.html"><div class="n">🦾</div><h3>Робот MeArm</h3><p>Рука с 4 суставами, управление из Python по USB.</p></a>
+    <a class="card" href="../car/index.html"><div class="n">🚗</div><h3>Робомашинка</h3><p>Моторы, H-мост, ультразвук-радар, движение по комнате.</p></a>
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Запомнить с курса</span>
+    Ток течёт по замкнутому кольцу; светодиод — через резистор; мотор — через транзистор/H-мост и
+    от своей батарейки; ножка платы — слабый «палец», которым управляет программа; ШИМ задаёт
+    «полугаз»; Firmata + Python позволяют рулить всем из знакомого кода.
+  </div>
+
+  <div class="pager">
+    <a href="urok5.html"><span class="dir">← Назад</span><span class="ttl">Урок 5 — Мотор и H-мост</span></a>
+    <a class="next" href="../mearm/index.html"><span class="dir">К роботам →</span><span class="ttl">Робот MeArm</span></a>
+  </div>
+</div>
+
+<footer>Урок 6 из 6 · Основы электроники ⚡</footer>
+</body>
+</html>

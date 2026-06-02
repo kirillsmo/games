@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="-apple-system, Segoe UI, sans-serif">
   <rect x="0" y="0" width="640" height="360" rx="14" fill="#0a140e"/>
-  <text x="22" y="30" fill="#16c47f" font-size="17" font-weight="700">Как из "D,угол,см" получается точка на радаре</text>
+  <text x="22" y="30" fill="#16c47f" font-size="17" font-weight="700">Как из угла и расстояния получается точка на радаре</text>
 
   <!-- кольца -->
   <g fill="none" stroke="#1e4630" stroke-width="2">

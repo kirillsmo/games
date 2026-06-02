@@ -16,7 +16,7 @@
     <a class="dot" href="urok1.html" title="Знакомство">1</a>
     <a class="dot" href="urok2.html" title="Сборка шасси">2</a>
     <a class="dot" href="urok3.html" title="Мозг и провода">3</a>
-    <a class="dot" href="urok4.html" title="Команды моторам">4</a>
+    <a class="dot" href="urok4.html" title="Моторы из Python">4</a>
     <a class="dot" href="urok5.html" title="Bluetooth">5</a>
     <a class="dot" href="urok6.html" title="Глаза машины">6</a>
     <a class="dot" href="urok7.html" title="Первый заезд">7</a>
@@ -60,7 +60,7 @@ link = <span class="str">"есть связь"</span> <span class="kw">if</span>
   <p>Запусти <span class="run">cockpit.py</span>: <code>↑↓ ←→</code> руль, <code>+/-</code> скорость.</p>
   <div class="dl-row">
     <a class="dl" href="code/cockpit.py" download>⬇️ cockpit.py</a>
-    <a class="dl ghost" href="code/car_link.py" download>car_link.py</a>
+    <a class="dl ghost" href="code/robot.py" download>robot.py</a>
   </div>
 
   <div class="box idea">
@@ -69,10 +69,26 @@ link = <span class="str">"есть связь"</span> <span class="kw">if</span>
     числа. Ничего нового — просто рисуем по числам.
   </div>
 
+  <h2>🛠️ Честно: почему машину уводит в сторону</h2>
+  <p>Ты заметишь, что при «вперёд» машина едет не идеально прямо, а забирает влево или вправо.
+     Это <b>нормально</b>: у неё простые DC-моторы без датчиков оборотов, и каждый крутится чуть
+     по-своему — одинаковая команда даёт чуть разную скорость. Колёса ещё и проскальзывают.</p>
+  <p>Лечится <b>калибровкой</b>: тому борту, что быстрее, чуть убавим скорость. В
+     <code>robot.py</code> у каждого мотора есть множитель <code>trim</code>:</p>
+  <pre>car.left.trim  = <span class="num">1.0</span>     <span class="com"># уводит вправо → уменьшай left.trim (напр. 0.9)</span>
+car.right.trim = <span class="num">1.0</span>     <span class="com"># уводит влево  → уменьшай right.trim</span></pre>
+  <div class="box warn">
+    <span class="label">⚠️ Идеально прямо не поедет</span>
+    Даже с калибровкой DC-моторы дают <b>приблизительный</b> прямой ход — это особенность дешёвых
+    моторов, а не ошибка. Точное движение требует <b>датчиков оборотов (энкодеров) с регулятором</b>
+    или <b>шаговых моторов</b> — это продвинутый уровень (честно поговорим в уроке 11).
+  </div>
+
   <div class="box try">
     <span class="label">✅ Проверка</span>
     На экране видно команду, скорость-полоску и состояние связи. <code>+/-</code> реально меняют
-    резвость машины. Готов к самому зрелищному уроку — радару.
+    резвость машины. Подобрал <code>trim</code> так, что машина едет почти прямо? Готов к самому
+    зрелищному уроку — радару.
   </div>
 
   <div class="pager">

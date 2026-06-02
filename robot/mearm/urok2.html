@@ -19,8 +19,8 @@
     <a class="dot" href="urok4.html" title="Плечо и локоть">4</a>
     <a class="dot" href="urok5.html" title="Захват">5</a>
     <a class="dot" href="urok6.html" title="Подключение">6</a>
-    <a class="dot" href="urok7.html" title="Первый скетч">7</a>
-    <a class="dot" href="urok8.html" title="pygame ↔ Arduino">8</a>
+    <a class="dot" href="urok7.html" title="Заливаем Firmata">7</a>
+    <a class="dot" href="urok8.html" title="pygame ↔ робот">8</a>
     <a class="dot" href="urok9.html" title="Все суставы">9</a>
     <a class="dot" href="urok10.html" title="Пульт и запись">10</a>
     <a class="dot" href="urok11.html" title="Проект">11</a>
@@ -54,36 +54,28 @@
   </div>
 
   <h2>🔌 Ставим серво в 90°</h2>
-  <p>Нам понадобится драйвер <b>PCA9685</b>, подключённый к Nano (4 провода + питание —
-     подробная схема в <a href="urok6.html" style="color:var(--green)">уроке 6</a>). Воткни
-     проверяемый серво в <b>канал 0</b> и залей скетч (как заливать — урок 7):</p>
-  <pre><span class="com">#include &lt;Wire.h&gt;</span>
-<span class="com">#include &lt;Adafruit_PWMServoDriver.h&gt;</span>
-Adafruit_PWMServoDriver pwm;        <span class="com">// драйвер серво</span>
-
-<span class="kw">void</span> <span class="fn">setup</span>() {
-  pwm.<span class="fn">begin</span>();
-  pwm.<span class="fn">setPWMFreq</span>(<span class="num">50</span>);          <span class="com">// серво работают на 50 Гц</span>
-  pwm.<span class="fn">setPWM</span>(<span class="num">0</span>, <span class="num">0</span>, <span class="num">375</span>);      <span class="com">// канал 0 в центр (~90°)</span>
-}
-<span class="kw">void</span> <span class="fn">loop</span>() { }</pre>
+  <p>Чтобы центрировать серво, нам понадобится Nano с залитой прошивкой <b>Firmata</b> (как её
+     залить — <a href="urok7.html" style="color:var(--green)">урок 7</a>, делается один раз).
+     Воткни сигнальный провод серво в ножку <b>D9</b>, питание — на 5V и GND, и запусти из
+     терминала маленькую программу:</p>
+  <pre>python center.py</pre>
   <div class="dl-row">
-    <a class="dl" href="code/arduino/one_servo_test.ino" download>⬇️ one_servo_test.ino</a>
+    <a class="dl" href="code/center.py" download>⬇️ center.py</a>
   </div>
-  <p>Серво дёрнется и встанет в среднее положение. Теперь его можно ставить в сустав.
-     Повтори это с каждым сервоприводом перед установкой.</p>
+  <p>Серво дёрнется и встанет в среднее положение (90°). Теперь его можно ставить в сустав.
+     Повтори это с каждым сервоприводом перед установкой качалки.</p>
 
   <div class="box idea">
-    <span class="label">💡 Откуда число 375</span>
-    PCA9685 задаёт угол длиной импульса (числом из 4096). Примерно: ~150 = 0°, ~600 = 180°,
-    середина ~375 = 90°. В основной прошивке это посчитает функция <code>angleToPulse</code>,
-    и мы будем писать просто «угол 90».
+    <span class="label">💡 Почему просто «90»</span>
+    Раньше угол серво задавали хитрым числом импульса. С Firmata об этом думать не нужно:
+    в Python мы пишем понятный угол <code>0…180</code>, а библиотека сама превращает его в
+    правильный импульс. Внутри <code>center.py</code> — всего одна строка: <code>arm.set(0, 90)</code>.
   </div>
 
   <div class="box try">
     <span class="label">🎮 Попробуй</span>
-    Поставь <code>150</code> (0°), потом <code>600</code> (180°) — крайние положения.
-    Перед сборкой верни центр (<code>375</code>).
+    Открой <code>center.py</code> и поменяй <code>90</code> на <code>40</code>, потом на
+    <code>140</code> — крайние положения. Перед сборкой верни центр (<code>90</code>).
   </div>
 
   <div class="pager">
