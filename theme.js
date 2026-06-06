@@ -190,20 +190,46 @@
   }
 
   /* ---------- copy buttons ---------- */
+  // Fallback for non-secure contexts (file://, plain http) and old browsers,
+  // where navigator.clipboard is missing or its promise rejects. Must run inside
+  // the click handler so the browser still sees a user gesture.
+  function legacyCopy(text) {
+    var ta = el("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.cssText = "position:fixed;top:-9999px;left:-9999px;opacity:0;";
+    document.body.appendChild(ta);
+    ta.select();
+    try { ta.setSelectionRange(0, text.length); } catch (e) {}
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
   function addCopyButtons(root) {
     var blocks = root.querySelectorAll("pre");
     for (var i = 0; i < blocks.length; i++) {
       (function (pre) {
-        var text = pre.innerText;
+        var text = pre.textContent; // captured before the button is appended
         var btn = el("button", "copy-btn", "Копировать");
         btn.type = "button";
+        var reset;
+        function flash(label, cls) {
+          btn.textContent = label;
+          btn.classList.remove("copied", "failed");
+          btn.classList.add(cls);
+          clearTimeout(reset);
+          reset = setTimeout(function () {
+            btn.textContent = "Копировать"; btn.classList.remove("copied", "failed");
+          }, 1400);
+        }
+        var ok = function () { flash("Скопировано ✓", "copied"); };
+        // Only fall back to legacy copy on real failure, and only claim success if it worked.
+        var fail = function () { if (legacyCopy(text)) ok(); else flash("Не получилось", "failed"); };
         btn.addEventListener("click", function () {
-          var done = function () {
-            btn.textContent = "Скопировано ✓"; btn.classList.add("copied");
-            setTimeout(function () { btn.textContent = "Копировать"; btn.classList.remove("copied"); }, 1400);
-          };
-          if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, done);
-          else done();
+          if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fail);
+          else fail();
         });
         pre.appendChild(btn);
       })(blocks[i]);
