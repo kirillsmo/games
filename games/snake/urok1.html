@@ -23,6 +23,7 @@
     <a class="dot" href="urok5.html" title="Стрелки">5</a>
     <a class="dot" href="urok6.html" title="Еда и рост">6</a>
     <a class="dot" href="urok7.html" title="Игра окончена">7</a>
+    <a class="dot" href="urok8.html" title="Функции">8</a>
   </div>
 </div>
 
@@ -104,9 +105,24 @@ clock = pygame.time.<span class="fn">Clock</span>()
      <code>QUIT</code> (крестик), мы закрываем игру.</p>
 
   <div class="box idea">
+    <span class="label">🌍 Как у настоящих программистов</span>
+    Этот «бесконечный цикл» есть в <b>каждом</b> движке игр — и в Minecraft, и в
+    Roblox, и в больших играх на PlayStation. Он называется <b>game loop</b>.
+    Ты только что написал сердце любой игры.
+  </div>
+
+  <div class="box idea">
     <span class="label">💡 Зачем нужен flip()</span>
     pygame рисует «втихаря» на невидимом холсте. <code>pygame.display.flip()</code>
     показывает готовую картинку на экране. Без неё окно так и останется серым!
+  </div>
+
+  <div class="box warn">
+    <span class="label">🐞 Сломалось! Почини</span>
+    Скачай <a href="code/bugs/bug1_no_flip.py" download>bug1_no_flip.py</a> и запусти.
+    Окно должно быть тёмно-синим, а оно серое и пустое! Спрятан один баг — найди
+    строчку и почини. Подсказка: что показывает картинку на экране? Застрял? →
+    <a href="../../errors.html">словарь ошибок</a>.
   </div>
 
   <div class="box warn">
@@ -155,7 +171,7 @@ clock = pygame.time.<span class="fn">Clock</span>()
   </div>
 </div>
 
-<footer>Урок 1 из 7 · Змейка на Python 🐍</footer>
+<footer>Урок 1 из 8 · Змейка на Python 🐍</footer>
 <script src="../../quiz.js"></script>
 </body>
 </html>

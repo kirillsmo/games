@@ -60,6 +60,14 @@ window.QUIZ_MANIFEST = {
             "snake7-flag",
             "snake7-self"
           ]
+        },
+        {
+          "url": "games/snake/urok8.html",
+          "title": "Урок 8 — Функции",
+          "ids": [
+            "snake8-why",
+            "snake8-same"
+          ]
         }
       ]
     },

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 8 — Функции</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../../index.html">🏠 Главная</a>
+  <a class="home" href="index.html">🐍 Змейка</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Окно">1</a>
+    <a class="dot" href="urok2.html" title="Квадрат">2</a>
+    <a class="dot" href="urok3.html" title="Змейка-список">3</a>
+    <a class="dot" href="urok4.html" title="Движение">4</a>
+    <a class="dot" href="urok5.html" title="Стрелки">5</a>
+    <a class="dot" href="urok6.html" title="Еда и рост">6</a>
+    <a class="dot" href="urok7.html" title="Игра окончена">7</a>
+    <a class="dot active" href="urok8.html" title="Функции">8</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 8 · наводим порядок</span>
+    <h1>Функции — даём кускам имена</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Точно ту же игру, что и в уроке 7 — но код стал короче и понятнее. Это
+    называется «навести порядок» (по-взрослому — рефакторинг). Файл:
+    <span class="run">step8_functions.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/step8_functions.py" download>⬇️ Скачать код урока</a>
+  </div>
+
+  <h2>🔍 Зачем это нужно</h2>
+  <p>Игра работает, но главный цикл стал длинным: в нём и движение, и
+     столкновения, и рисование — всё в одной куче. Когда кода много в одном
+     месте, его трудно читать и легко запутаться. Профессионалы так не
+     оставляют: они <b>вырезают</b> кусок и дают ему <b>имя</b> — заводят функцию.</p>
+
+  <h2>🧩 Вырезаем рисование змейки</h2>
+  <p>Вот шесть строк, которые рисуют змейку. Дадим им имя <code>draw_snake</code>:</p>
+  <pre><span class="kw">def</span> <span class="fn">draw_snake</span>(screen, snake):
+    head_rect = pygame.<span class="fn">Rect</span>(snake[<span class="num">0</span>][<span class="num">0</span>] * CELL, snake[<span class="num">0</span>][<span class="num">1</span>] * CELL, CELL, CELL)
+    pygame.draw.<span class="fn">rect</span>(screen, GREEN, head_rect)
+    <span class="kw">for</span> segment <span class="kw">in</span> snake[<span class="num">1</span>:]:
+        rect = pygame.<span class="fn">Rect</span>(segment[<span class="num">0</span>] * CELL, segment[<span class="num">1</span>] * CELL, CELL, CELL)
+        pygame.draw.<span class="fn">rect</span>(screen, DARK_GREEN, rect)</pre>
+  <p>И так же вынесем рисование яблока в <code>draw_food</code>. Теперь в главном
+     цикле рисование занимает <b>три строки</b> вместо восьми:</p>
+  <pre>screen.<span class="fn">fill</span>(BLACK)
+<span class="fn">draw_food</span>(screen, food)
+<span class="fn">draw_snake</span>(screen, snake)</pre>
+  <p>Код читается как рассказ: «залей фон, нарисуй еду, нарисуй змейку».</p>
+
+  <div class="pipe">
+    <span class="pill">было: 8 строк рисования в цикле</span>
+    <span class="arrow">→</span>
+    <span class="pill">стало: draw_food() + draw_snake()</span>
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Зачем давать имена кускам</span>
+    Названный кусок легко найти, починить и переиспользовать. Имя
+    <code>draw_snake</code> говорит, <b>что</b> код делает, — и не нужно читать все
+    строки внутри. Из таких маленьких функций собрана любая большая программа:
+    и игра, и сайт, и приложение в телефоне.
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ Поведение игры не изменилось!</span>
+    Мы <b>не добавили</b> ничего нового — змейка играет точно так же. Мы только
+    переставили код красивее. Это и есть «навести порядок»: тот же результат, но
+    чище. Запусти и сравни с уроком 7 — игра одинаковая.
+  </div>
+
+  <div class="box try">
+    <span class="label">🎮 Попробуй сам (со звёздочкой)</span>
+    Вынеси подсчёт новой головы в свою функцию
+    <code>next_head(snake, direction)</code>, которая возвращает новую голову.
+    Подсказка: проверки на стену и на себя должны остаться <b>до</b> того, как
+    голова вставится в список.
+  </div>
+
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="snake8-why" data-hash="61659b1bbefe54089aa4966db41831d9b4095fe6057f9bf97db648ea4ce5ad0a">
+      <p class="quiz-prompt">Зачем выносить кусок кода в функцию с именем?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Чтобы игра шла быстрее</button>
+        <button type="button" class="quiz-opt">Чтобы змейка поменяла цвет</button>
+        <button type="button" class="quiz-opt">Чтобы код было легче читать, чинить и переиспользовать</button>
+        <button type="button" class="quiz-opt">Чтобы строк стало больше</button>
+      </div>
+      <div class="quiz-explain">✅ Имя функции (draw_snake) говорит, ЧТО она делает. Из таких маленьких функций собрана любая большая программа.</div>
+    </div>
+
+    <div class="quiz-q" data-id="snake8-same" data-hash="eae48a2fe70a66cad212ecbbb19c4753fb1b9b9736ae21ce0e205d1f83702c3c">
+      <p class="quiz-prompt">Что изменилось в самой игре после того, как мы завели функции?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Появились новые враги</button>
+        <button type="button" class="quiz-opt">Змейка стала быстрее</button>
+        <button type="button" class="quiz-opt">Ничего — игра играет так же, просто код стал чище</button>
+        <button type="button" class="quiz-opt">Очки растут вдвое</button>
+      </div>
+      <div class="quiz-explain">✅ Это «навести порядок» (рефакторинг): тот же результат, но короче и понятнее. Поведение игры не меняем.</div>
+    </div>
+  </div>
+
+  <div class="pager">
+    <a href="urok7.html"><span class="dir">← Назад</span><span class="ttl">Урок 7 — Игра окончена</span></a>
+    <a class="next" href="../catch/index.html"><span class="dir">Дальше →</span><span class="ttl">Игра 2 — Ловкий кот</span></a>
+  </div>
+</div>
+
+<footer>Урок 8 из 8 · Змейка на Python 🐍</footer>
+<script src="../../quiz.js"></script>
+</body>
+</html>

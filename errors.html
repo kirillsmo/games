@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Словарь ошибок — как читать и чинить</title>
+<link rel="stylesheet" href="shared.css">
+<script src="theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="index.html">🏠 Главная</a>
+  <a class="home" href="errors.html">🐞 Словарь ошибок</a>
+</div>
+
+<div class="hero">
+  <h1>🐞 Словарь ошибок</h1>
+  <p>Красный текст в терминале — это не провал, а <b>подсказка</b>. Python всегда
+     пишет, ЧТО его смутило и ГДЕ. Научишься читать ошибки — будешь чинить
+     программы за минуту. Это умеют все настоящие программисты.</p>
+</div>
+
+<div class="wrap">
+
+  <div class="goal">
+    <span class="label">Главное правило: читай снизу вверх</span>
+    Самая <b>последняя</b> строчка — ЧТО сломалось (название ошибки). Строчка
+    <code>File "…", line N</code> — ГДЕ это случилось (номер строки!). Всё
+    остальное — путь, как Python туда добрался. Смотри сначала на низ.
+  </div>
+
+  <h2>🔍 Как выглядит ошибка</h2>
+  <p>Разберём по частям типичный «traceback» (так называется отчёт об ошибке):</p>
+  <div class="grid-demo">Traceback (most recent call last):
+  File "snake.py", line 17, in &lt;module&gt;     ← ГДЕ: файл snake.py, строка 17
+    scren.fill(BLACK)                          ← сама строка с проблемой
+NameError: name 'scren' is not defined         ← ЧТО: вот это и сломалось</div>
+  <p>Видишь? Низ говорит «не знаю слова <code>scren</code>», а строчка
+     <code>line 17</code> показывает, куда смотреть. Дальше — словарик частых
+     ошибок.</p>
+
+  <h2>NameError: name '…' is not defined</h2>
+  <div class="grid-demo">NameError: name 'scren' is not defined</div>
+  <p><b>Что значит:</b> Python встретил слово, которого не знает. Почти всегда это
+     <b>опечатка</b> в имени: переменную ты заводил как <code>screen</code>, а
+     написал <code>scren</code>.</p>
+  <p><b>Как починить:</b> сравни написание буква в букву с тем местом, где ты
+     создавал эту переменную.</p>
+
+  <h2>SyntaxError: expected ':'</h2>
+  <div class="grid-demo">  File "snake.py", line 22
+    while True
+              ^
+SyntaxError: expected ':'</div>
+  <p><b>Что значит:</b> «синтаксис» — это грамматика языка. После
+     <code>while</code>, <code>if</code>, <code>for</code> и <code>def</code> в
+     конце строки нужно <b>двоеточие</b>. Стрелочка <code>^</code> показывает, где
+     Python запутался.</p>
+  <p><b>Как починить:</b> добавь <code>:</code> в конец строки →
+     <code>while True:</code></p>
+
+  <h2>IndentationError: expected an indented block</h2>
+  <div class="grid-demo">  File "snake.py", line 23
+    screen.fill(BLACK)
+    ^
+IndentationError: expected an indented block after 'while' statement on line 22</div>
+  <p><b>Что значит:</b> в Python <b>отступы</b> (пробелы слева) показывают, что
+     находится внутри цикла или <code>if</code>. Строки внутри <code>while</code>
+     должны быть сдвинуты вправо.</p>
+  <p><b>Как починить:</b> поставь курсор в начало строки и нажми Tab (или 4
+     пробела), чтобы код «зашёл внутрь» цикла.</p>
+
+  <h2>IndexError: list index out of range</h2>
+  <div class="grid-demo">  File "snake.py", line 76, in &lt;module&gt;
+    head = snake[5]
+IndexError: list index out of range</div>
+  <p><b>Что значит:</b> ты просишь у списка элемент, которого нет. Если в
+     <code>snake</code> три клетки — есть номера <code>0</code>, <code>1</code>,
+     <code>2</code>, а <code>snake[5]</code> уже за краем.</p>
+  <p><b>Как починить:</b> помни — счёт с нуля. Голова — <code>snake[0]</code>,
+     самый последний элемент — <code>snake[-1]</code>.</p>
+
+  <h2>TypeError: can only concatenate …</h2>
+  <div class="grid-demo">  File "snake.py", line 35, in &lt;module&gt;
+    new_head = snake[0] + 1
+TypeError: can only concatenate tuple (not "int") to tuple</div>
+  <p><b>Что значит:</b> ты складываешь разные «типы»: кортеж <code>(5, 10)</code> и
+     число <code>1</code> — так нельзя. Числа складываются с числами, текст с
+     текстом.</p>
+  <p><b>Как починить:</b> сложи по отдельности x и y:
+     <code>(snake[0][0] + 1, snake[0][1])</code>.</p>
+
+  <h2>ModuleNotFoundError: No module named 'pygame'</h2>
+  <div class="grid-demo">  File "snake.py", line 6, in &lt;module&gt;
+    import pygame, sys
+ModuleNotFoundError: No module named 'pygame'</div>
+  <p><b>Что значит:</b> Python не нашёл библиотеку pygame. Чаще всего ты <b>не в
+     «коробке» venv</b> или ещё не поставил pygame.</p>
+  <p><b>Как починить:</b> в терминале набери
+     <code>source .venv/bin/activate</code>, потом
+     <code>pip install pygame-ce</code>. Подробно — на странице
+     <a href="start.html">Подготовка</a>.</p>
+
+  <div class="box idea">
+    <span class="label">🗣️ Ошибки нет, но игра ведёт себя странно?</span>
+    Программа запускается, но что-то не так? Прочитай свой код <b>вслух</b>, по
+    одной строчке. 9 из 10 багов находятся именно так: глаз «проскакивает», а
+    голос — нет. А ещё помогает <code>print(…)</code> — вставь его, чтобы увидеть,
+    что лежит в переменной прямо сейчас.
+  </div>
+
+  <div class="pager">
+    <a href="index.html"><span class="dir">← Назад</span><span class="ttl">Главная</span></a>
+    <a class="next" href="games/snake/index.html"><span class="dir">К играм →</span><span class="ttl">Змейка</span></a>
+  </div>
+
+</div>
+
+<footer>Словарь ошибок · Игры на Python 🐞</footer>
+</body>
+</html>

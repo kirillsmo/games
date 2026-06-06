@@ -23,6 +23,7 @@
     <a class="dot" href="urok5.html" title="Стрелки">5</a>
     <a class="dot" href="urok6.html" title="Еда и рост">6</a>
     <a class="dot" href="urok7.html" title="Игра окончена">7</a>
+    <a class="dot" href="urok8.html" title="Функции">8</a>
   </div>
 </div>
 
@@ -62,6 +63,13 @@
 Шаг 1:   [Н][Г][.][.][.]   ← snake.insert(0, new_head)   добавили голову
 Шаг 2:   [Н][Г][.][.]      ← snake.pop()                 убрали хвост</div>
 
+  <div class="box idea">
+    <span class="label">🔮 Сначала подумай, потом запусти</span>
+    Сейчас <code>direction = (1, 0)</code>. Куда поедет змейка — вправо, влево,
+    вверх или вниз? А если поставить <code>(0, -1)</code>? Скажи ответ вслух,
+    <b>потом</b> запусти и проверь. Угадал?
+  </div>
+
   <h2>📝 Код урока</h2>
   <pre>direction = (<span class="num">1</span>, <span class="num">0</span>)   <span class="com"># едем вправо</span>
 
@@ -97,6 +105,14 @@
     <span class="label">⚠️ Самая частая ошибка</span>
     Если забыть <code>clock.tick(10)</code>, змейка будет лететь 60 клеток в
     секунду — ты даже не успеешь моргнуть. Число 10 значит «10 шагов в секунду».
+  </div>
+
+  <div class="box warn">
+    <span class="label">🐞 Сломалось! Почини</span>
+    Скачай <a href="code/bugs/bug2_pop_order.py" download>bug2_pop_order.py</a> и
+    запусти. Змейка не ползёт, а растёт без конца! Вспомни: обычный шаг — вставить
+    голову <b>и</b> убрать хвост. Чего не хватает? Почини одной строчкой. Застрял? →
+    <a href="../../errors.html">словарь ошибок</a>.
   </div>
 
   <div class="box try">
@@ -139,7 +155,7 @@
   </div>
 </div>
 
-<footer>Урок 4 из 7 · Змейка на Python 🐍</footer>
+<footer>Урок 4 из 8 · Змейка на Python 🐍</footer>
 <script src="../../quiz.js"></script>
 </body>
 </html>
