@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 7 — ESP32 по WiFi</title>
+<link rel="stylesheet" href="../../shared.css">
+<script src="../../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">🤖 Робототехника</a>
+  <a class="home" href="index.html">⚡ Основы электроники</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Электричество">1</a>
+    <a class="dot" href="urok2.html" title="Светодиод и резистор">2</a>
+    <a class="dot" href="urok3.html" title="Кнопка">3</a>
+    <a class="dot" href="urok4.html" title="Транзистор">4</a>
+    <a class="dot" href="urok5.html" title="Мотор и H-мост">5</a>
+    <a class="dot" href="urok6.html" title="Мостик к Arduino">6</a>
+    <a class="dot active" href="urok7.html" title="ESP32 по WiFi">7</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 7 · бонус: без провода</span>
+    <h1>ESP32 по WiFi</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Цель урока</span>
+    Тот же вентилятор и тот же пульт в <b>окне pygame</b>, что в уроке 6, но плата теперь — <b>ESP32</b>,
+    и команды летят к ней <b>по WiFi</b>, без провода к ноутбуку. Поймём, что меняется совсем чуть-чуть.
+  </div>
+
+  <p>Это <b>бонус-урок</b> поверх урока 6. Железо и код почти те же — другая плата и связь «по воздуху».
+     Если урок 6 ещё не собран, сначала пройди его.</p>
+
+  <h2>🔄 Что меняется по сравнению с уроком 6</h2>
+  <table>
+    <tr><th></th><th>Урок 6</th><th>Урок 7</th></tr>
+    <tr><td><b>Плата</b></td><td>Arduino UNO R3 (5 В)</td><td>ESP32 (3.3 В)</td></tr>
+    <tr><td><b>Связь</b></td><td>провод USB</td><td><b>WiFi</b> (по воздуху)</td></tr>
+    <tr><td><b>Прошивка</b></td><td>Telemetrix4Arduino</td><td>Telemetrix4Esp32</td></tr>
+    <tr><td><b>Библиотека</b></td><td><code>telemetrix</code></td><td><code>telemetrix-esp32</code></td></tr>
+    <tr><td><b>Подключение в коде</b></td><td><code>Telemetrix()</code></td><td><code>TelemetrixEsp32(transport_address="IP")</code></td></tr>
+  </table>
+  <p>Команды (<code>forward</code>/<code>back</code>/<code>stop</code>), ШИМ, чтение кнопок и окно
+     pygame — <b>остаются прежними</b>. Меняются только плата, способ связи и номера ножек.</p>
+
+  <div class="pipe">
+    <span class="pill">🖥️ окно pygame</span><span class="arrow">→</span>
+    <span class="pill">🐍 telemetrix-esp32</span><span class="arrow">→</span>
+    <span class="pill">📡 WiFi</span><span class="arrow">→</span>
+    <span class="pill">🔌 ESP32</span><span class="arrow">→</span>
+    <span class="pill">⚡ L293D</span><span class="arrow">→</span>
+    <span class="pill">⚙️ вентилятор</span>
+  </div>
+  <p>«Ум» по-прежнему в <b>Python на ноутбуке</b>. Новое — между ноутбуком и платой нет провода:
+     ноутбук шлёт команды ESP32 по WiFi. ESP32 при этом всё равно надо <b>питать</b> (от USB-зарядки,
+     повербанка или от модуля питания).</p>
+
+  <div class="box warn">
+    <span class="label">⚠️ ESP32 — 3.3 В, и важна общая земля</span>
+    • Ножки ESP32 — <b>3.3 В</b> (не 5 В). Их сигнал L293D понимает как «1», это нормально.<br>
+    • Мотор и L293D питай <b>через модуль MB102</b> (9 В батарейка → 5 В), как в уроке 6.<br>
+    • Соедини <b>все «−» вместе</b>: GND ESP32, GND модуля, GND L293D — без общей земли не заработает.<br>
+    • ESP32 ловит только сети <b>2.4 ГГц</b> (не 5 ГГц). Ноутбук — в той же сети.
+  </div>
+
+  <h2>🔌 Шаг 1. Подключаем провода</h2>
+  <p>Схема как в уроке 6, только вместо UNO — <b>ESP32</b>, и на IN1/IN2/EN, светодиоды и кнопки идут
+     её ножки (GPIO). Кнопки — между ножкой и GND (у ESP32 тоже есть внутренняя подтяжка):</p>
+
+  <div class="diagram" style="padding:14px;max-width:600px">
+  <svg viewBox="0 0 600 330" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+    <style>
+      .ep{stroke:#e5564e;stroke-width:3;fill:none;stroke-linecap:round}
+      .en{stroke:#4f7cf0;stroke-width:3;fill:none;stroke-linecap:round}
+      .ew{stroke:#aeb4bf;stroke-width:2.6;fill:none;stroke-linecap:round}
+      .ebox{fill:#222838;stroke:#6cb2ff;stroke-width:2}
+      .echip{fill:#2a2f45;stroke:#6cb2ff;stroke-width:2}
+      .ebat{fill:#2c2620;stroke:#e0a050;stroke-width:2}
+      .elbl{fill:#cfd3e0;font:10px sans-serif}
+      .eblade{fill:#6cb2ff;opacity:.9}
+    </style>
+    <rect x="0" y="0" width="600" height="330" rx="14" fill="#161a23"/>
+    <text x="20" y="28" fill="#5fd296" font-size="14" font-weight="700">Подключение: ESP32 + MB102 (9 В) → L293D → вентилятор</text>
+    <text x="42" y="58" fill="#5fd296" font-size="10" font-weight="700">связь по WiFi (без провода)</text>
+
+    <rect class="ebox" x="40" y="66" width="110" height="140" rx="12"/>
+    <text x="95" y="130" text-anchor="middle" fill="#cfe3ff" font-size="18" font-weight="700">ESP32</text>
+    <text x="95" y="149" text-anchor="middle" fill="#8fa0c0" font-size="9">3.3 В · WiFi</text>
+
+    <rect class="echip" x="320" y="66" width="110" height="140" rx="12"/>
+    <text x="375" y="128" text-anchor="middle" fill="#cfe3ff" font-size="18" font-weight="700">L293D</text>
+    <text x="375" y="147" text-anchor="middle" fill="#8fa0c0" font-size="9">H-мост</text>
+
+    <line class="ew" x1="150" y1="92" x2="320" y2="92"/>
+    <text class="elbl" x="235" y="86" text-anchor="middle">GPIO25 → EN (ШИМ)</text>
+    <line class="ew" x1="150" y1="122" x2="320" y2="122"/>
+    <text class="elbl" x="235" y="116" text-anchor="middle">GPIO26 → IN1</text>
+    <line class="ew" x1="150" y1="152" x2="320" y2="152"/>
+    <text class="elbl" x="235" y="146" text-anchor="middle">GPIO27 → IN2</text>
+
+    <line class="ew" x1="430" y1="100" x2="481" y2="100"/>
+    <text class="elbl" x="450" y="93" text-anchor="middle">OUT1/OUT2</text>
+    <circle class="echip" cx="505" cy="100" r="24"/>
+    <path class="eblade" d="M505 100 C 497 94 499 82 505 80 C 511 82 513 94 505 100 Z"/>
+    <path class="eblade" d="M505 100 C 497 94 499 82 505 80 C 511 82 513 94 505 100 Z" transform="rotate(90 505 100)"/>
+    <path class="eblade" d="M505 100 C 497 94 499 82 505 80 C 511 82 513 94 505 100 Z" transform="rotate(180 505 100)"/>
+    <path class="eblade" d="M505 100 C 497 94 499 82 505 80 C 511 82 513 94 505 100 Z" transform="rotate(270 505 100)"/>
+    <circle cx="505" cy="100" r="3.5" fill="#cfe3ff"/>
+    <text x="505" y="140" text-anchor="middle" fill="#cfd3e0" font-size="10">вентилятор</text>
+
+    <rect class="ebat" x="168" y="232" width="80" height="42" rx="10"/>
+    <text x="208" y="251" text-anchor="middle" fill="#e8c79a" font-size="13" font-weight="700">9 В</text>
+    <text x="208" y="265" text-anchor="middle" fill="#b99a6a" font-size="9">батарейка</text>
+    <rect class="ebat" x="258" y="232" width="150" height="42" rx="10"/>
+    <text x="333" y="250" text-anchor="middle" fill="#e8c79a" font-size="12" font-weight="700">Модуль MB102</text>
+    <text x="333" y="265" text-anchor="middle" fill="#b99a6a" font-size="9">выход 5 В</text>
+    <line x1="248" y1="253" x2="258" y2="253" stroke="#e0a050" stroke-width="3" stroke-linecap="round"/>
+
+    <line class="ep" x1="350" y1="232" x2="350" y2="206"/>
+    <text class="elbl" x="343" y="219" text-anchor="end" fill="#e5564e">5 В → VCC1, VCC2</text>
+
+    <line class="en" x1="70" y1="298" x2="410" y2="298"/>
+    <line class="en" x1="70" y1="206" x2="70" y2="298"/>
+    <line class="en" x1="410" y1="206" x2="410" y2="298"/>
+    <line class="en" x1="310" y1="274" x2="310" y2="298"/>
+    <text class="elbl" x="78" y="222" text-anchor="start" fill="#4f7cf0">GND</text>
+    <text class="elbl" x="416" y="222" text-anchor="start" fill="#4f7cf0">GND</text>
+    <text x="84" y="315" text-anchor="start" fill="#4f7cf0" font-size="10" font-weight="700">общая земля — соедини все «−» вместе!</text>
+
+    <text x="500" y="315" text-anchor="middle" fill="#8fa0c0" font-size="10">2 светодиода и кнопки → таблица ↓</text>
+  </svg>
+  </div>
+
+  <p>Полная таблица — что куда воткнуть:</p>
+  <table>
+    <tr><th>Откуда</th><th>Куда</th><th>Зачем</th></tr>
+    <tr><td><b>ESP32 GPIO25</b></td><td>L293D EN (пин 1)</td><td>включение + скорость (ШИМ)</td></tr>
+    <tr><td><b>ESP32 GPIO26</b></td><td>L293D IN1 (пин 2)</td><td>направление «вперёд»</td></tr>
+    <tr><td><b>ESP32 GPIO27</b></td><td>L293D IN2 (пин 7)</td><td>направление «назад»</td></tr>
+    <tr><td><b>ESP32 GPIO13</b></td><td>150–220 Ом → светодиод → GND</td><td>лампочка «вперёд»</td></tr>
+    <tr><td><b>ESP32 GPIO14</b></td><td>150–220 Ом → светодиод → GND</td><td>лампочка «назад»</td></tr>
+    <tr><td><b>ESP32 GPIO32 / GPIO33</b></td><td>кнопки → GND (внутренняя подтяжка)</td><td>читать «вперёд» / «назад»</td></tr>
+    <tr><td><b>ESP32 GND</b></td><td>общая земля (см. ниже)</td><td>общий ноль</td></tr>
+    <tr><td><b>9 В батарейка</b></td><td>вход модуля MB102</td><td>источник энергии</td></tr>
+    <tr><td><b>MB102: выход 5 В</b></td><td>L293D VCC1 (пин 16) и VCC2 (пин 8)</td><td>питание чипа и мотора</td></tr>
+    <tr><td><b>MB102: GND («−»)</b></td><td>L293D GND (пины 4, 5, 12, 13) <b>и</b> ESP32 GND</td><td>общая земля</td></tr>
+    <tr><td><b>L293D OUT1 (пин 3), OUT2 (пин 6)</b></td><td>два провода вентилятора</td><td>мотор крутится</td></tr>
+  </table>
+  <p style="color:var(--muted);font-size:.85rem">У разных ESP32 надписи на ножках чуть отличаются —
+     сверь со своей платой. <b>Не бери для этого ножки GPIO 0, 2, 12, 15</b> — это «загрузочные», они
+     мешают плате стартовать. <b>Распиновку L293D</b> (где какой пин) смотри в уроке 5.</p>
+
+  <h2>🛰️ Шаг 2. Заливаем прошивку Telemetrix4Esp32 и настраиваем WiFi</h2>
+  <p>Как и в уроке 6 — один раз заливаем готовую прошивку, но теперь её <b>esp32-версию</b>, и
+     вписываем в неё имя и пароль твоей WiFi-сети:</p>
+  <ol>
+    <li>В <b>Arduino IDE</b> добавь поддержку плат ESP32: <b>Инструменты → Плата → Менеджер плат</b>,
+        найди «<b>esp32</b>» (от Espressif), установи.</li>
+    <li>Поставь библиотеку прошивки: <b>Инструменты → Управлять библиотеками</b>, найди
+        «<b>Telemetrix4Esp32</b>» и установи.</li>
+    <li>Открой <b>WiFi-пример</b>: <b>Файл → Примеры → Telemetrix4Esp32</b> (вариант для WiFi).</li>
+    <li>Впиши в скетч свои <b>имя сети (SSID)</b> и <b>пароль</b> WiFi (сеть должна быть <b>2.4 ГГц</b>).</li>
+    <li>Подключи ESP32 по USB, выбери плату <b>«ESP32 Dev Module»</b> и порт, нажми <b>Загрузить</b>.</li>
+    <li>Открой <b>Serial Monitor</b> — ESP32 подключится к WiFi и напечатает свой <b>IP-адрес</b>
+        (например, <code>192.168.1.50</code>). <b>Запиши его</b> — он нужен в коде.</li>
+  </ol>
+
+  <div class="box idea">
+    <span class="label">💡 Если не подключается по WiFi</span>
+    • Нет IP в Serial Monitor → проверь имя сети и пароль; ESP32 любит только <b>2.4 ГГц</b>.<br>
+    • Python не находит плату → ноутбук и ESP32 должны быть <b>в одной сети</b>; мешать может брандмауэр.<br>
+    • Для заливки по USB у дешёвых плат нужен драйвер чипа <b>CP2102</b> или <b>CH340</b>.
+  </div>
+
+  <h2>🐍 Шаг 3. Ноутбук и код</h2>
+  <p>Поставь библиотеку: <code>pip install telemetrix-esp32</code> (pygame у тебя уже есть). Ноутбук
+     должен быть в <b>той же WiFi-сети</b>, что и ESP32. Дальше — почти код урока 6. Меняется только
+     <b>подключение</b>: вместо «найди плату по USB» пишем «соединись по IP»:</p>
+  <pre><span class="com"># Было (урок 6, UNO по проводу USB):</span>
+<span class="kw">from</span> telemetrix <span class="kw">import</span> telemetrix
+board = telemetrix.<span class="fn">Telemetrix</span>()
+
+<span class="com"># Стало (урок 7, ESP32 по WiFi):</span>
+<span class="kw">from</span> telemetrix_esp32 <span class="kw">import</span> telemetrix_esp32
+IP = <span class="str">"192.168.1.50"</span>                                   <span class="com"># IP из Serial Monitor</span>
+board = telemetrix_esp32.<span class="fn">TelemetrixEsp32</span>(transport_address=IP)   <span class="com"># связь по WiFi!</span></pre>
+
+  <p>Ножки теперь — <b>GPIO ESP32</b>, а команды — те же:</p>
+  <pre>IN1, IN2, EN = <span class="num">26</span>, <span class="num">27</span>, <span class="num">25</span>      <span class="com"># GPIO ESP32 → входы L293D</span>
+LED_FWD, LED_BACK = <span class="num">13</span>, <span class="num">14</span>     <span class="com"># лампочки вперёд/назад</span>
+board.<span class="fn">set_pin_mode_digital_output</span>(IN1)
+board.<span class="fn">set_pin_mode_digital_output</span>(IN2)
+board.<span class="fn">set_pin_mode_analog_output</span>(EN)    <span class="com"># EN — это ШИМ (скорость)</span>
+board.<span class="fn">set_pin_mode_digital_output</span>(LED_FWD)
+board.<span class="fn">set_pin_mode_digital_output</span>(LED_BACK)
+
+<span class="kw">def</span> <span class="fn">forward</span>():
+    board.<span class="fn">digital_write</span>(IN1, <span class="num">1</span>); board.<span class="fn">digital_write</span>(IN2, <span class="num">0</span>)
+    board.<span class="fn">analog_write</span>(EN, <span class="num">220</span>)
+    board.<span class="fn">digital_write</span>(LED_FWD, <span class="num">1</span>); board.<span class="fn">digital_write</span>(LED_BACK, <span class="num">0</span>)
+
+<span class="kw">def</span> <span class="fn">back</span>():
+    board.<span class="fn">digital_write</span>(IN1, <span class="num">0</span>); board.<span class="fn">digital_write</span>(IN2, <span class="num">1</span>)
+    board.<span class="fn">analog_write</span>(EN, <span class="num">220</span>)
+    board.<span class="fn">digital_write</span>(LED_FWD, <span class="num">0</span>); board.<span class="fn">digital_write</span>(LED_BACK, <span class="num">1</span>)
+
+<span class="kw">def</span> <span class="fn">stop</span>():
+    board.<span class="fn">analog_write</span>(EN, <span class="num">0</span>)
+    board.<span class="fn">digital_write</span>(LED_FWD, <span class="num">0</span>); board.<span class="fn">digital_write</span>(LED_BACK, <span class="num">0</span>)</pre>
+
+  <p>А <b>окно pygame</b> (пульт со стрелками) — точь-в-точь из урока 6: просто скопируй его, оно
+     вызывает те же <code>forward</code> / <code>back</code> / <code>stop</code>. И физические кнопки
+     читаются так же (на ножках GPIO32 / GPIO33):</p>
+  <pre><span class="kw">def</span> <span class="fn">on_button</span>(data):                  <span class="com"># telemetrix зовёт это при нажатии/отпускании</span>
+    <span class="kw">if</span> data[<span class="num">2</span>] == <span class="num">0</span> <span class="kw">and</span> data[<span class="num">1</span>] == <span class="num">32</span>:   <span class="com"># кнопка «вперёд» (GPIO32, нажато = 0)</span>
+        <span class="fn">forward</span>()
+    <span class="kw">if</span> data[<span class="num">2</span>] == <span class="num">0</span> <span class="kw">and</span> data[<span class="num">1</span>] == <span class="num">33</span>:   <span class="com"># кнопка «назад» (GPIO33)</span>
+        <span class="fn">back</span>()
+    <span class="kw">if</span> data[<span class="num">2</span>] == <span class="num">1</span>:                     <span class="com"># любую кнопку отпустили</span>
+        <span class="fn">stop</span>()
+
+board.<span class="fn">set_pin_mode_digital_input_pullup</span>(<span class="num">32</span>, on_button)   <span class="com"># кнопка «вперёд»</span>
+board.<span class="fn">set_pin_mode_digital_input_pullup</span>(<span class="num">33</span>, on_button)   <span class="com"># кнопка «назад»</span></pre>
+  <p>Запусти программу — и рули вентилятором стрелками <b>по WiFi</b>, без провода к плате. 🎉</p>
+
+  <div class="box idea">
+    <span class="label">💡 Куда расти дальше</span>
+    • <b>Дальность:</b> ноутбук может стоять в другой комнате — лишь бы та же WiFi-сеть.<br>
+    • <b>Совсем без проводов:</b> ESP32 можно питать и от модуля MB102 — тогда к ноутбуку не идёт
+      ни один провод, только WiFi.<br>
+    • <b>Без роутера:</b> telemetrix-esp32 умеет и по <b>Bluetooth (BLE)</b> — связь напрямую с ноутбуком.<br>
+    • Это тот же приём, что у настоящих роботов: ум в Python, плата слушается — хоть по проводу, хоть по воздуху.
+  </div>
+
+  <div class="box try">
+    <span class="label">✅ Проверь себя</span>
+    Что в коде поменялось по сравнению с уроком 6, а что осталось? Откуда взять IP-адрес ESP32?
+    Почему важно, чтобы ноутбук и ESP32 были в одной сети?
+  </div>
+
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="b7-wifi"
+         data-hash="1836b50818f7a9ebe2b4f6680b0d56ad2ec38d91962146543ba91715dc0642fb">
+      <p class="quiz-prompt">Чем урок 7 отличается от урока 6?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Связь с платой по WiFi, а не по проводу USB</button>
+        <button type="button" class="quiz-opt">Пишем на другом языке, не на Python</button>
+        <button type="button" class="quiz-opt">Мотор больше не нужен</button>
+        <button type="button" class="quiz-opt">Программа теперь живёт внутри платы</button>
+      </div>
+      <div class="quiz-explain">✅ Ум остаётся в Python на ноутбуке, команды те же — меняется только связь: вместо USB-провода WiFi.</div>
+    </div>
+
+    <div class="quiz-q" data-id="b7-ip"
+         data-hash="d527a424acfa73dfbffdbfc95c4052f607c6f4f700f71c8a9d7666202fd9ebc7">
+      <p class="quiz-prompt">Откуда узнать IP-адрес ESP32 для подключения?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">ESP32 печатает его в Serial Monitor после подключения к WiFi</button>
+        <button type="button" class="quiz-opt">Его придумываешь сам любым</button>
+        <button type="button" class="quiz-opt">Он написан на корпусе L293D</button>
+        <button type="button" class="quiz-opt">IP не нужен — плата находится сама</button>
+      </div>
+      <div class="quiz-explain">✅ ESP32 подключается к WiFi и печатает свой IP в Serial Monitor — его и пишем в transport_address.</div>
+    </div>
+  </div>
+
+  <div class="pager">
+    <a href="urok6.html"><span class="dir">← Назад</span><span class="ttl">Урок 6 — Мостик к Arduino</span></a>
+    <a class="next" href="../mearm/index.html"><span class="dir">К роботам →</span><span class="ttl">Робот MeArm</span></a>
+  </div>
+</div>
+
+<footer>Урок 7 из 7 · Основы электроники ⚡</footer>
+<script src="../../quiz.js"></script>
+</body>
+</html>
