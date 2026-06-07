@@ -233,12 +233,115 @@ board.<span class="fn">set_pin_mode_digital_input_pullup</span>(<span class="num
 board.<span class="fn">set_pin_mode_digital_input_pullup</span>(<span class="num">33</span>, on_button)   <span class="com"># кнопка «назад»</span></pre>
   <p>Запусти программу — и рули вентилятором стрелками <b>по WiFi</b>, без провода к плате. 🎉</p>
 
+  <h2>🖥️ Дополнение: маленький экран с IP-адресом</h2>
+  <p>Помнишь шаг 2 — IP приходилось искать в <b>Serial Monitor</b> и переписывать руками? От этого можно
+     избавиться: подключим к ESP32 маленький экранчик <b>0.96″ OLED</b>, и плата будет показывать свой IP
+     сама. Подал питание — через пару секунд адрес горит прямо на плате. Ни ноутбук, ни Serial Monitor,
+     чтобы его прочитать, больше не нужны.</p>
+
+  <div class="box idea">
+    <span class="label">💡 Это единственное, что плата делает «сама»</span>
+    Весь «ум» по-прежнему в Python. Но <b>свой IP знает только сама плата</b> — она только что получила его
+    от WiFi. Поэтому показ IP живёт в <b>прошивке</b> (в том самом скетче, что мы заливаем), а не в Python.
+    Управление вентилятором при этом не меняется ни на строчку.
+  </div>
+
+  <p>Такой экранчик — это <b>128×64 точки</b>, внутри контроллер <b>SSD1306</b>, общается по <b>I²C</b>
+     (всего два сигнальных провода — <code>SDA</code> и <code>SCL</code>). Питание <b>3.3 В</b> — как раз
+     «родное» для ESP32. Всего 4 ножки:</p>
+
+  <div class="diagram" style="padding:14px;max-width:560px">
+  <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+    <style>
+      .owire{stroke-width:3;fill:none;stroke-linecap:round}
+      .opwr{stroke:#e5564e}.ognd{stroke:#4f7cf0}.osig{stroke:#aeb4bf}
+      .obx{fill:#222838;stroke:#6cb2ff;stroke-width:2}
+      .olbl{fill:#cfd3e0;font:10px sans-serif}
+    </style>
+    <rect x="0" y="0" width="560" height="200" rx="14" fill="#161a23"/>
+    <text x="20" y="28" fill="#5fd296" font-size="13" font-weight="700">4 провода: ESP32 → OLED 0.96″ (по I²C)</text>
+
+    <rect class="obx" x="40" y="58" width="120" height="114" rx="12"/>
+    <text x="100" y="118" text-anchor="middle" fill="#cfe3ff" font-size="17" font-weight="700">ESP32</text>
+    <text x="100" y="136" text-anchor="middle" fill="#8fa0c0" font-size="9">3.3 В</text>
+
+    <rect class="obx" x="395" y="58" width="145" height="114" rx="12"/>
+    <rect x="410" y="74" width="115" height="54" rx="5" fill="#0d1320" stroke="#2a3550"/>
+    <text x="467" y="96" text-anchor="middle" fill="#7fe6ff" font-size="10" font-weight="700">IP adres:</text>
+    <text x="467" y="116" text-anchor="middle" fill="#7fe6ff" font-size="12" font-weight="700">192.168…</text>
+    <text x="467" y="158" text-anchor="middle" fill="#cfe3ff" font-size="12" font-weight="700">OLED 128×64</text>
+
+    <line class="owire opwr" x1="160" y1="80" x2="395" y2="80"/>
+    <text class="olbl" x="278" y="74" text-anchor="middle">3V3 → VCC</text>
+    <line class="owire ognd" x1="160" y1="104" x2="395" y2="104"/>
+    <text class="olbl" x="278" y="98" text-anchor="middle">GND → GND</text>
+    <line class="owire osig" x1="160" y1="128" x2="395" y2="128"/>
+    <text class="olbl" x="278" y="122" text-anchor="middle">GPIO21 → SDA</text>
+    <line class="owire osig" x1="160" y1="152" x2="395" y2="152"/>
+    <text class="olbl" x="278" y="146" text-anchor="middle">GPIO22 → SCL</text>
+  </svg>
+  </div>
+
+  <table>
+    <tr><th>Ножка экрана</th><th>Куда на ESP32</th><th>Зачем</th></tr>
+    <tr><td><b>VCC</b></td><td>3V3 (3.3 В)</td><td>питание экрана</td></tr>
+    <tr><td><b>GND</b></td><td>GND (та же общая земля)</td><td>общий ноль</td></tr>
+    <tr><td><b>SDA</b></td><td>GPIO21</td><td>данные I²C</td></tr>
+    <tr><td><b>SCL</b></td><td>GPIO22</td><td>такт I²C</td></tr>
+  </table>
+  <p style="color:var(--muted);font-size:.85rem">GPIO21/22 — «штатные» ножки I²C у классической ESP32, и они
+     <b>не пересекаются</b> с ножками вентилятора (25/26/27/13/14/32/33). Если на экране есть пины с
+     подписями <code>SDA</code> и <code>SCL</code> — это I²C-версия (самая частая), инструкция для неё.</p>
+
+  <p>Берём <b>тот же скетч</b>, в который на шаге 2 вписывали SSID и пароль, и добавляем в него показ IP:</p>
+  <ol>
+    <li>Поставь библиотеку: <b>Инструменты → Управлять библиотеками</b>, найди «<b>Adafruit SSD1306</b>» и
+        установи (предложит заодно «<b>Adafruit GFX</b>» — соглашайся).</li>
+    <li><b>Сверху скетча</b> подключи экран:</li>
+  </ol>
+  <pre><span class="com">// сверху скетча — подключаем экранчик</span>
+<span class="kw">#include</span> <span class="str">&lt;Adafruit_SSD1306.h&gt;</span>
+Adafruit_SSD1306 screen(<span class="num">128</span>, <span class="num">64</span>, &amp;Wire, <span class="num">-1</span>);   <span class="com">// 128×64, по I²C, без отдельного reset</span></pre>
+  <ol start="3">
+    <li>Внутри <code>setup()</code>, <b>сразу после</b> того как плата узнала IP (там, где он печатается в
+        Serial Monitor), добавь несколько строк — нарисовать его на экране:</li>
+  </ol>
+  <pre><span class="com">// ...внутри setup(), сразу ПОСЛЕ того как плата узнала IP:</span>
+screen.<span class="fn">begin</span>(SSD1306_SWITCHCAPVCC, <span class="num">0x3C</span>);   <span class="com">// 0x3C — обычный адрес экранчика</span>
+screen.<span class="fn">clearDisplay</span>();
+screen.<span class="fn">setTextColor</span>(SSD1306_WHITE);
+screen.<span class="fn">setTextSize</span>(<span class="num">1</span>);
+screen.<span class="fn">setCursor</span>(<span class="num">0</span>, <span class="num">0</span>);
+screen.<span class="fn">println</span>(<span class="str">"ESP32 na svyazi!"</span>);   <span class="com">// латиницей — экран не знает русских букв</span>
+screen.<span class="fn">println</span>(<span class="str">"IP adres:"</span>);
+screen.<span class="fn">setTextSize</span>(<span class="num">2</span>);                  <span class="com">// крупнее</span>
+screen.<span class="fn">println</span>(WiFi.<span class="fn">localIP</span>());         <span class="com">// тот же IP, что и в Serial Monitor</span>
+screen.<span class="fn">display</span>();                           <span class="com">// показать на экране</span></pre>
+
+  <div class="box warn">
+    <span class="label">⚠️ Экран не знает русских букв</span>
+    Дешёвый OLED умеет показывать только латиницу и цифры. Поэтому подписи на экране пишем
+    <b>латиницей</b> (<code>"IP adres:"</code>), а не по-русски. Сам IP — это цифры, он покажется как есть.
+  </div>
+
+  <p>Залей скетч как обычно (шаг 2). Теперь при каждом включении ESP32 через пару секунд показывает свой IP
+     прямо на экранчике — остаётся переписать его в строку <code>IP = "…"</code> в Python. 🎉</p>
+
+  <div class="box idea">
+    <span class="label">💡 Если экран не загорелся</span>
+    • Чёрный экран → у части модулей адрес <b>0x3D</b>, а не 0x3C; поменяй число в <code>screen.begin(...)</code>.<br>
+    • Ошибка при компиляции → проверь, что стоят <b>обе</b> библиотеки: Adafruit SSD1306 и Adafruit GFX.<br>
+    • Каша вместо текста → перепутаны <code>SDA</code> и <code>SCL</code> (надо SDA→21, SCL→22).<br>
+    • Текст не появляется → в самом конце обязательно вызови <code>screen.display()</code> — без него экран не обновится.
+  </div>
+
   <div class="box idea">
     <span class="label">💡 Куда расти дальше</span>
     • <b>Дальность:</b> ноутбук может стоять в другой комнате — лишь бы та же WiFi-сеть.<br>
     • <b>Совсем без проводов:</b> ESP32 можно питать и от модуля MB102 — тогда к ноутбуку не идёт
       ни один провод, только WiFi.<br>
     • <b>Без роутера:</b> telemetrix-esp32 умеет и по <b>Bluetooth (BLE)</b> — связь напрямую с ноутбуком.<br>
+    • <b>Экранчик:</b> может показывать не только IP при старте, но и статус (вперёд/назад) — правда, этот текст уже пришлось бы слать на плату из Python, это сложнее.<br>
     • Это тот же приём, что у настоящих роботов: ум в Python, плата слушается — хоть по проводу, хоть по воздуху.
   </div>
 
