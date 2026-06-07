@@ -35,7 +35,8 @@
     <span class="label">Цель урока</span>
     Понять, что плата Arduino — это <b>набор управляемых ножек</b>, и что вместо пальца ими
     «нажимает» наша программа. Узнать про <b>ШИМ</b> (плавная скорость) и про то, как Python
-    будет управлять ножками через <b>Firmata</b>.
+    будет управлять ножками через <b>Telemetrix</b>. А в конце — соберём управляемый <b>вентилятор на
+    Arduino UNO</b> и порулим им из <b>окна pygame</b> (как в играх).
   </div>
 
   <h2>🔌 Arduino = ножки, которыми управляет программа</h2>
@@ -67,12 +68,13 @@
     именно так задаётся скорость моторов (ножка EN у H-моста, урок 5).
   </div>
 
-  <h2>🐍 Как Python будет управлять ножками: Firmata</h2>
-  <p>Сама Arduino понимает только свой язык. Но есть готовая прошивка <b>Firmata</b>: заливаешь
-     её в плату <b>один раз</b> — и дальше плата просто слушается компьютера. Со стороны Python
-     есть библиотека (<b>pymata</b>), которая командует ножками по USB:</p>
-  <pre><span class="kw">from</span> pymata4 <span class="kw">import</span> pymata4
-board = pymata4.<span class="fn">Pymata4</span>()            <span class="com"># подключились к плате</span>
+  <h2>🐍 Как Python будет управлять ножками: Telemetrix</h2>
+  <p>Сама Arduino понимает только свой язык. Но есть готовая прошивка <b>Telemetrix4Arduino</b>:
+     заливаешь её в плату <b>один раз</b> — и дальше плата просто слушается компьютера (<b>как именно</b>
+     залить — покажем по шагам ниже, в практике). Со стороны Python есть библиотека
+     <b>telemetrix</b>, которая командует ножками по USB:</p>
+  <pre><span class="kw">from</span> telemetrix <span class="kw">import</span> telemetrix
+board = telemetrix.<span class="fn">Telemetrix</span>()         <span class="com"># подключились к плате</span>
 
 board.<span class="fn">set_pin_mode_digital_output</span>(<span class="num">13</span>)
 board.<span class="fn">digital_write</span>(<span class="num">13</span>, <span class="num">1</span>)        <span class="com"># зажгли светодиод на ножке 13</span>
@@ -80,10 +82,265 @@ board.<span class="fn">digital_write</span>(<span class="num">13</span>, <span c
 
   <div class="box idea">
     <span class="label">💡 Почему это удобно для нас</span>
-    Не нужно учить язык Arduino и писать «прошивку» под каждый проект. Заливаем Firmata —
+    Не нужно учить язык Arduino и писать «прошивку» под каждый проект. Заливаем Telemetrix —
     и <b>весь ум робота живёт в Python</b>, который ты уже знаешь по играм. В курсах роботов
     мы спрячем даже ножки за понятные объекты: <code>motor</code>, <code>servo</code>,
     <code>radar</code>, <code>button</code> — командуешь объектами, а не проводами.
+  </div>
+
+  <h2>🌬️ Практика: рулим вентилятором из окна pygame (Arduino UNO)</h2>
+  <p>Соберём всё вместе. Возьмём схему из урока 5 (L293D + вентилятор + кнопки + лампочка) и подключим
+     к ней плату <b>Arduino UNO R3</b>. Теперь «пальцем» на H-мосте будет не рука, а <b>код</b>, а командовать
+     вентилятором будем из <b>окна pygame</b> — как в играх, которые ты уже писал.</p>
+
+  <div class="pipe">
+    <span class="pill">🖥️ окно pygame</span><span class="arrow">→</span>
+    <span class="pill">🐍 telemetrix</span><span class="arrow">→</span>
+    <span class="pill">🔌 UNO (Telemetrix)</span><span class="arrow">→</span>
+    <span class="pill">⚡ L293D</span><span class="arrow">→</span>
+    <span class="pill">⚙️ вентилятор</span>
+  </div>
+  <p>«Ум» по-прежнему живёт в <b>Python на ноутбуке</b> — как в курсах MeArm и машинки. UNO просто
+     слушается (на ней прошивка Telemetrix). Новое — это <b>окошко pygame</b> с управлением стрелками,
+     знакомое тебе по играм. Вся программа — в одном файле на ноутбуке.</p>
+
+  <p><b>Arduino UNO R3 — стандартная плата курса</b> (на ней же будут MeArm и машинка). Она работает
+     на <b>5 В</b>, поэтому никаких преобразований уровней не нужно. Пара важных моментов:</p>
+
+  <div class="box idea">
+    <span class="label">💡 Питание и земля — это главное</span>
+    • UNO работает на <b>5 В</b> — сигналы 5 В микросхема L293D понимает напрямую.<br>
+    • Мотор и L293D питай <b>не от ножки UNO</b>, а от модуля питания (9 В батарейка → 5 В): мотор питается отдельно — этот принцип из уроков 4–5.<br>
+    • Соедини <b>все «−» вместе</b>: GND UNO, GND модуля, GND L293D — без общей земли ничего не заработает.<br>
+    • Кнопки — между ножкой и GND: у UNO есть <b>встроенные подтяжки</b>, лишние резисторы не нужны (нажата = 0).
+  </div>
+
+  <p><b>Шаг 1. Подключаем провода.</b> Питание для L293D и мотора берём через <b>модуль питания</b>
+     (Power Supply, например MB102): вставляешь в него <b>9 В батарейку</b> (или адаптер), а он выдаёт
+     ровные <b>5 В</b> на макетку. UNO при этом питается от <b>USB</b>. Новое по сравнению с уроком 5 —
+     на IN1, IN2, EN, светодиод и кнопки теперь идут ножки <b>Arduino UNO</b> (а не твои руки); кнопки
+     переподключаем чуть иначе — между ножкой и GND (подтяжка уже внутри UNO). Самое важное:
+     <b>«−» модуля и GND UNO должны быть соединены</b> — без общей земли ничего не заработает:</p>
+
+  <div class="diagram" style="padding:14px;max-width:600px">
+  <svg viewBox="0 0 600 330" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+    <style>
+      .ep{stroke:#e5564e;stroke-width:3;fill:none;stroke-linecap:round}
+      .en{stroke:#4f7cf0;stroke-width:3;fill:none;stroke-linecap:round}
+      .ew{stroke:#aeb4bf;stroke-width:2.6;fill:none;stroke-linecap:round}
+      .ebox{fill:#222838;stroke:#6cb2ff;stroke-width:2}
+      .echip{fill:#2a2f45;stroke:#6cb2ff;stroke-width:2}
+      .ebat{fill:#2c2620;stroke:#e0a050;stroke-width:2}
+      .elbl{fill:#cfd3e0;font:10px sans-serif}
+      .eblade{fill:#6cb2ff;opacity:.9}
+    </style>
+    <rect x="0" y="0" width="600" height="330" rx="14" fill="#161a23"/>
+    <text x="20" y="28" fill="#5fd296" font-size="14" font-weight="700">Подключение: UNO + MB102 (9 В) → L293D → вентилятор</text>
+
+    <rect class="ebox" x="40" y="66" width="110" height="140" rx="12"/>
+    <text x="95" y="116" text-anchor="middle" fill="#cfe3ff" font-size="15" font-weight="700">Arduino</text>
+    <text x="95" y="135" text-anchor="middle" fill="#cfe3ff" font-size="14" font-weight="700">UNO R3</text>
+    <text x="95" y="153" text-anchor="middle" fill="#8fa0c0" font-size="9">питание: USB</text>
+
+    <rect class="echip" x="320" y="66" width="110" height="140" rx="12"/>
+    <text x="375" y="128" text-anchor="middle" fill="#cfe3ff" font-size="18" font-weight="700">L293D</text>
+    <text x="375" y="147" text-anchor="middle" fill="#8fa0c0" font-size="9">H-мост</text>
+
+    <line class="ew" x1="150" y1="92" x2="320" y2="92"/>
+    <text class="elbl" x="235" y="86" text-anchor="middle">D5 → EN (ШИМ)</text>
+    <line class="ew" x1="150" y1="122" x2="320" y2="122"/>
+    <text class="elbl" x="235" y="116" text-anchor="middle">D7 → IN1</text>
+    <line class="ew" x1="150" y1="152" x2="320" y2="152"/>
+    <text class="elbl" x="235" y="146" text-anchor="middle">D8 → IN2</text>
+
+    <line class="ew" x1="430" y1="100" x2="481" y2="100"/>
+    <text class="elbl" x="450" y="93" text-anchor="middle">OUT1/OUT2</text>
+    <circle class="echip" cx="505" cy="100" r="24"/>
+    <path class="eblade" d="M505 100 C 497 94 499 82 505 80 C 511 82 513 94 505 100 Z"/>
+    <path class="eblade" d="M505 100 C 497 94 499 82 505 80 C 511 82 513 94 505 100 Z" transform="rotate(90 505 100)"/>
+    <path class="eblade" d="M505 100 C 497 94 499 82 505 80 C 511 82 513 94 505 100 Z" transform="rotate(180 505 100)"/>
+    <path class="eblade" d="M505 100 C 497 94 499 82 505 80 C 511 82 513 94 505 100 Z" transform="rotate(270 505 100)"/>
+    <circle cx="505" cy="100" r="3.5" fill="#cfe3ff"/>
+    <text x="505" y="140" text-anchor="middle" fill="#cfd3e0" font-size="10">вентилятор</text>
+
+    <rect class="ebat" x="168" y="232" width="80" height="42" rx="10"/>
+    <text x="208" y="251" text-anchor="middle" fill="#e8c79a" font-size="13" font-weight="700">9 В</text>
+    <text x="208" y="265" text-anchor="middle" fill="#b99a6a" font-size="9">батарейка</text>
+    <rect class="ebat" x="258" y="232" width="150" height="42" rx="10"/>
+    <text x="333" y="250" text-anchor="middle" fill="#e8c79a" font-size="12" font-weight="700">Модуль MB102</text>
+    <text x="333" y="265" text-anchor="middle" fill="#b99a6a" font-size="9">выход 5 В</text>
+    <line x1="248" y1="253" x2="258" y2="253" stroke="#e0a050" stroke-width="3" stroke-linecap="round"/>
+
+    <line class="ep" x1="350" y1="232" x2="350" y2="206"/>
+    <text class="elbl" x="343" y="219" text-anchor="end" fill="#e5564e">5 В → VCC1, VCC2</text>
+
+    <line class="en" x1="70" y1="298" x2="410" y2="298"/>
+    <line class="en" x1="70" y1="206" x2="70" y2="298"/>
+    <line class="en" x1="410" y1="206" x2="410" y2="298"/>
+    <line class="en" x1="300" y1="274" x2="300" y2="298"/>
+    <text class="elbl" x="78" y="222" text-anchor="start" fill="#4f7cf0">GND</text>
+    <text class="elbl" x="416" y="222" text-anchor="start" fill="#4f7cf0">GND</text>
+    <text x="84" y="315" text-anchor="start" fill="#4f7cf0" font-size="10" font-weight="700">общая земля — соедини все «−» вместе!</text>
+
+    <text x="500" y="315" text-anchor="middle" fill="#8fa0c0" font-size="10">2 светодиода и кнопки → таблица ↓</text>
+  </svg>
+  </div>
+
+  <p>Полная таблица — что куда воткнуть:</p>
+  <table>
+    <tr><th>Откуда</th><th>Куда</th><th>Зачем</th></tr>
+    <tr><td><b>UNO D5</b></td><td>L293D EN (пин 1)</td><td>включение + скорость (ШИМ)</td></tr>
+    <tr><td><b>UNO D7</b></td><td>L293D IN1 (пин 2)</td><td>направление «вперёд»</td></tr>
+    <tr><td><b>UNO D8</b></td><td>L293D IN2 (пин 7)</td><td>направление «назад»</td></tr>
+    <tr><td><b>UNO D13</b></td><td>150–220 Ом → светодиод → GND</td><td>лампочка «вперёд» (на D13 есть и встроенный LED)</td></tr>
+    <tr><td><b>UNO D12</b></td><td>150–220 Ом → светодиод → GND</td><td>лампочка «назад»</td></tr>
+    <tr><td><b>UNO D2 / D4</b></td><td>кнопки → GND (встроенная подтяжка)</td><td>читать «вперёд» / «назад»</td></tr>
+    <tr><td><b>UNO GND</b></td><td>общая земля (см. ниже)</td><td>общий ноль</td></tr>
+    <tr><td><b>9 В батарейка</b></td><td>вход модуля MB102</td><td>источник энергии</td></tr>
+    <tr><td><b>MB102: выход 5 В</b></td><td>L293D VCC1 (пин 16) и VCC2 (пин 8)</td><td>питание чипа и мотора</td></tr>
+    <tr><td><b>MB102: GND («−»)</b></td><td>L293D GND (пины 4, 5, 12, 13) <b>и</b> UNO GND</td><td>общая земля</td></tr>
+    <tr><td><b>L293D OUT1 (пин 3), OUT2 (пин 6)</b></td><td>два провода вентилятора</td><td>мотор крутится</td></tr>
+  </table>
+  <p style="color:var(--muted);font-size:.85rem"><b>Главное правило питания:</b> UNO — от USB;
+     L293D и мотор — от модуля <b>MB102</b> (его кормит 9 В батарейка): выход 5 В идёт и на VCC1, и на
+     VCC2. Все «минусы» (GND) <b>соединены вместе</b>. Кнопки — просто между ножкой и <b>GND</b>
+     (у UNO внутренняя подтяжка, нажата = 0). <b>Распиновку L293D</b> (где какой пин) смотри в уроке 5.</p>
+
+  <div class="box warn">
+    <span class="label">⚡ Почему вентилятор крутится небыстро</span>
+    Питаем мотор через модуль <b>MB102</b> (удобно — одна точка питания), но он выдаёт максимум
+    <b>5 В</b>, а сама <b>L293D «съедает» ещё ~2–3 В</b> — до мотора доходит лишь ~2–3 В. Отсюда
+    вялость, и ШИМ 220 тут почти не спасает. Что делать:<br>
+    • <b>Проверь модуль:</b> перемычка рейла должна стоять на <b>5 В</b> (а не 3,3 В), и батарейка не села.<br>
+    • <b>Хочешь бодрее на тех же 5 В</b> — поставь вместо L293D драйвер с малыми потерями:
+      <b>TB6612</b> или <b>DRV8833</b> (теряют ~0,1–0,3 В вместо 2–3 В) — мотор оживёт.<br>
+    • Для учебного вентилятора «вяло» — это нормально: главное, что им рулит твоя программа.
+  </div>
+
+  <p><b>Шаг 2. Заливаем в Arduino прошивку Telemetrix.</b> С этим мы встречаемся <b>впервые</b>, поэтому
+     медленно. Чтобы плата слушалась Python, в неё надо один раз положить готовую программу —
+     <b>прошивку</b>. Прошивка живёт <b>внутри платы</b>; мы её <b>не пишем сами</b>, а берём готовую
+     <b>Telemetrix4Arduino</b> (ту самую, из раздела выше). Заливают прошивку бесплатной программой
+     <b>Arduino IDE</b> — это делается <b>один раз</b>, потом можно про неё забыть.</p>
+  <ol>
+    <li>Установи <b>Arduino IDE</b> (с сайта arduino.cc) и запусти.</li>
+    <li>Поставь библиотеку прошивки: <b>Инструменты → Управлять библиотеками</b>, найди
+        «<b>Telemetrix4Arduino</b>» (автор Alan Yorinks) и нажми «Установить».</li>
+    <li>Подключи Arduino UNO к ноутбуку <b>кабелем USB</b>.</li>
+    <li>Выбери плату и порт: <b>Инструменты → Плата → Arduino UNO</b> и
+        <b>Инструменты → Порт →</b> твой порт (например, <code>/dev/ttyACM0</code>).</li>
+    <li>Открой готовый пример (писать ничего не надо!):
+        <b>Файл → Примеры → Telemetrix4Arduino → Telemetrix4Arduino</b>.</li>
+    <li>Нажми кнопку <b>Загрузить</b> (стрелка «→» сверху слева) и дождись надписи
+        <b>«Done uploading»</b>. Всё — прошивка внутри платы.</li>
+  </ol>
+
+  <div class="box idea">
+    <span class="label">💡 Если залить не получается</span>
+    • <b>Порта нет в списке / ошибка связи</b> → у обычного UNO драйвер не нужен; у дешёвого «клона»
+      бывает чип <b>CH340</b> — тогда поставь его драйвер и переподключи кабель.<br>
+    • Закрой программы, которые могли занять порт (Serial Monitor, другой запущенный Python).<br>
+    • В курсах MeArm и машинки плату готовят похоже — готовая прошивка, которой рулит Python.
+  </div>
+
+  <p>Осталась обычная подготовка ноутбука: поставь библиотеку <code>pip install telemetrix</code>
+     (pygame у тебя уже есть с курса игр). UNO оставь подключённой по <b>USB</b> — по нему же
+     Python будет ей командовать.</p>
+
+  <p><b>Шаг 3. Первая команда из кода.</b> Проверим, что вентилятор слушается Python:</p>
+  <pre><span class="kw">from</span> telemetrix <span class="kw">import</span> telemetrix
+board = telemetrix.<span class="fn">Telemetrix</span>()        <span class="com"># UNO с прошивкой Telemetrix, по USB</span>
+
+IN1, IN2, EN = <span class="num">7</span>, <span class="num">8</span>, <span class="num">5</span>        <span class="com"># пины UNO D7, D8, D5 → входы L293D</span>
+board.<span class="fn">set_pin_mode_digital_output</span>(IN1)
+board.<span class="fn">set_pin_mode_digital_output</span>(IN2)
+board.<span class="fn">set_pin_mode_analog_output</span>(EN)    <span class="com"># EN — это ШИМ (скорость)</span>
+
+board.<span class="fn">digital_write</span>(IN1, <span class="num">1</span>)            <span class="com"># одно направление...</span>
+board.<span class="fn">digital_write</span>(IN2, <span class="num">0</span>)
+board.<span class="fn">analog_write</span>(EN, <span class="num">220</span>)            <span class="com"># ...скорость 220/255 → вентилятор закрутился!</span></pre>
+  <p>Построчно: <code>Telemetrix()</code> — подключились к плате. <code>set_pin_mode_…</code> — говорим,
+     что IN1/IN2 будут «выходами-выключателями», а EN — «полугазом» (ШИМ; в коде это <code>analog</code>).
+     Дальше <code>digital_write</code> ставит направление (1,0 — вперёд), а <code>analog_write(EN, 220)</code>
+     задаёт скорость. Это та же таблица IN1/IN2 из урока 5 — только нажимает уже код.</p>
+
+  <p><b>Шаг 4. Делаем команды «вперёд / назад / стоп»</b> и зажигаем свою лампочку на каждое направление:</p>
+  <pre>LED_FWD, LED_BACK = <span class="num">13</span>, <span class="num">12</span>     <span class="com"># пины D13, D12 — лампочки вперёд/назад</span>
+board.<span class="fn">set_pin_mode_digital_output</span>(LED_FWD)
+board.<span class="fn">set_pin_mode_digital_output</span>(LED_BACK)
+
+<span class="kw">def</span> <span class="fn">forward</span>():
+    board.<span class="fn">digital_write</span>(IN1, <span class="num">1</span>); board.<span class="fn">digital_write</span>(IN2, <span class="num">0</span>)
+    board.<span class="fn">analog_write</span>(EN, <span class="num">220</span>)
+    board.<span class="fn">digital_write</span>(LED_FWD, <span class="num">1</span>); board.<span class="fn">digital_write</span>(LED_BACK, <span class="num">0</span>)   <span class="com"># горит «вперёд»</span>
+
+<span class="kw">def</span> <span class="fn">back</span>():
+    board.<span class="fn">digital_write</span>(IN1, <span class="num">0</span>); board.<span class="fn">digital_write</span>(IN2, <span class="num">1</span>)
+    board.<span class="fn">analog_write</span>(EN, <span class="num">220</span>)
+    board.<span class="fn">digital_write</span>(LED_FWD, <span class="num">0</span>); board.<span class="fn">digital_write</span>(LED_BACK, <span class="num">1</span>)   <span class="com"># горит «назад»</span>
+
+<span class="kw">def</span> <span class="fn">stop</span>():
+    board.<span class="fn">analog_write</span>(EN, <span class="num">0</span>)
+    board.<span class="fn">digital_write</span>(LED_FWD, <span class="num">0</span>); board.<span class="fn">digital_write</span>(LED_BACK, <span class="num">0</span>)</pre>
+
+  <p><b>Шаг 5. Делаем пульт в окне pygame.</b> Откроем окно (как в играх) и будем рулить вентилятором
+     стрелками: <b>↑</b> вперёд, <b>↓</b> назад, <b>пробел</b> — стоп:</p>
+  <pre><span class="kw">import</span> pygame
+
+pygame.<span class="fn">init</span>()
+screen = pygame.display.<span class="fn">set_mode</span>((<span class="num">460</span>, <span class="num">220</span>))
+pygame.display.<span class="fn">set_caption</span>(<span class="str">"Пульт вентилятора"</span>)
+big = pygame.font.<span class="fn">SysFont</span>(<span class="kw">None</span>, <span class="num">44</span>)
+small = pygame.font.<span class="fn">SysFont</span>(<span class="kw">None</span>, <span class="num">26</span>)
+clock = pygame.time.<span class="fn">Clock</span>()
+
+state = <span class="str">"стоп"</span>            <span class="com"># что показываем на экране</span>
+running = <span class="kw">True</span>
+<span class="kw">while</span> running:
+    <span class="kw">for</span> event <span class="kw">in</span> pygame.event.<span class="fn">get</span>():
+        <span class="kw">if</span> event.type == pygame.QUIT:
+            running = <span class="kw">False</span>
+        <span class="kw">if</span> event.type == pygame.KEYDOWN:
+            <span class="kw">if</span> event.key == pygame.K_UP:
+                <span class="fn">forward</span>();  state = <span class="str">"вперёд"</span>
+            <span class="kw">if</span> event.key == pygame.K_DOWN:
+                <span class="fn">back</span>();     state = <span class="str">"назад"</span>
+            <span class="kw">if</span> event.key == pygame.K_SPACE:
+                <span class="fn">stop</span>();     state = <span class="str">"стоп"</span>
+
+    screen.<span class="fn">fill</span>((<span class="num">20</span>, <span class="num">24</span>, <span class="num">35</span>))
+    screen.<span class="fn">blit</span>(big.<span class="fn">render</span>(<span class="str">"Вентилятор: "</span> + state, <span class="kw">True</span>, (<span class="num">235</span>, <span class="num">235</span>, <span class="num">235</span>)), (<span class="num">30</span>, <span class="num">80</span>))
+    screen.<span class="fn">blit</span>(small.<span class="fn">render</span>(<span class="str">"стрелки = направление, пробел = стоп"</span>, <span class="kw">True</span>, (<span class="num">150</span>, <span class="num">160</span>, <span class="num">180</span>)), (<span class="num">30</span>, <span class="num">140</span>))
+    pygame.display.<span class="fn">flip</span>()
+    clock.<span class="fn">tick</span>(<span class="num">30</span>)
+
+<span class="fn">stop</span>()
+pygame.<span class="fn">quit</span>()</pre>
+  <p>Это знакомый <b>игровой цикл</b>: ловим события (нажатия стрелок), на каждое — вызываем нашу
+     команду <code>forward</code> / <code>back</code> / <code>stop</code>, и рисуем на экране текущее
+     состояние. Запусти файл — откроется окошко, жми стрелки, и вентилятор слушается. 🎉</p>
+
+  <p><b>(По желанию) читаем и физические кнопки</b> из урока 5 — тогда вентилятором можно рулить и руками.
+     У нас две кнопки: <b>D2 → «вперёд»</b> и <b>D4 → «назад»</b>. Telemetrix сам зовёт нашу функцию при
+     нажатии и отпускании (у UNO встроенная подтяжка: нажато = 0, отпущено = 1) — прямо в ней и
+     командуем мотором:</p>
+  <pre><span class="kw">def</span> <span class="fn">on_button</span>(data):               <span class="com"># telemetrix зовёт это при нажатии/отпускании</span>
+    <span class="kw">if</span> data[<span class="num">2</span>] == <span class="num">0</span> <span class="kw">and</span> data[<span class="num">1</span>] == <span class="num">2</span>:   <span class="com"># D2 нажата (подтяжка: нажато = 0)</span>
+        <span class="fn">forward</span>()
+    <span class="kw">if</span> data[<span class="num">2</span>] == <span class="num">0</span> <span class="kw">and</span> data[<span class="num">1</span>] == <span class="num">4</span>:   <span class="com"># D4 нажата</span>
+        <span class="fn">back</span>()
+    <span class="kw">if</span> data[<span class="num">2</span>] == <span class="num">1</span>:                    <span class="com"># любую кнопку отпустили</span>
+        <span class="fn">stop</span>()
+
+board.<span class="fn">set_pin_mode_digital_input_pullup</span>(<span class="num">2</span>, on_button)   <span class="com"># кнопка «вперёд» (D2)</span>
+board.<span class="fn">set_pin_mode_digital_input_pullup</span>(<span class="num">4</span>, on_button)   <span class="com"># кнопка «назад» (D4)</span></pre>
+
+  <div class="box idea">
+    <span class="label">💡 Куда расти дальше</span>
+    • <b>Читай датчики:</b> Telemetrix умеет не только командовать, но и читать (кнопки, расстояние,
+      свет) — это пригодится в роботах.<br>
+    • <b>Управляй и рукой, и из окна</b> одновременно: код читает кнопки и ловит стрелки в pygame.<br>
+    • Это ровно то, что делают MeArm и машинка: ум — в Python, плата слушается. Ты готов к настоящим роботам!
   </div>
 
   <h2>🚀 Что дальше</h2>
@@ -97,7 +354,7 @@ board.<span class="fn">digital_write</span>(<span class="num">13</span>, <span c
     <span class="label">✅ Запомнить с курса</span>
     Ток течёт по замкнутому кольцу; светодиод — через резистор; мотор — через транзистор/H-мост и
     от своей батарейки; ножка платы — слабый «палец», которым управляет программа; ШИМ задаёт
-    «полугаз»; Firmata + Python позволяют рулить всем из знакомого кода.
+    «полугаз»; готовая прошивка (Telemetrix) + Python позволяют рулить всем из знакомого кода.
   </div>
 
   <div class="quiz" data-iter="2000" data-cooldown="30">
@@ -116,7 +373,7 @@ board.<span class="fn">digital_write</span>(<span class="num">13</span>, <span c
     </div>
 
     <div class="quiz-q" data-id="b6-firmata" data-hash="752215d5dd97bfc34c80a4b097f0e4a18ace6956b485d756ab4c5a9f3436ad51">
-      <p class="quiz-prompt">Что даёт прошивка Firmata?</p>
+      <p class="quiz-prompt">Что даёт прошивка Telemetrix4Arduino?</p>
       <div class="quiz-options">
         <button type="button" class="quiz-opt">Паяет провода</button>
         <button type="button" class="quiz-opt">Заряжает батарейку</button>
@@ -124,6 +381,18 @@ board.<span class="fn">digital_write</span>(<span class="num">13</span>, <span c
         <button type="button" class="quiz-opt">Плата слушается команд компьютера по USB</button>
       </div>
       <div class="quiz-explain">✅ Залил один раз — и весь ум робота живёт в Python: board.digital_write(13, 1) зажигает ножку.</div>
+    </div>
+
+    <div class="quiz-q" data-id="b6-uno-brain"
+         data-hash="e795ae58dc542cb1e1033018aabe75812d612415a80f7b835c85ae9365d51243">
+      <p class="quiz-prompt">Рулим вентилятором из окна pygame (UNO + Telemetrix). Где находится «ум» — программа?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">В Python на ноутбуке; UNO через Telemetrix только слушается</button>
+        <button type="button" class="quiz-opt">В самой плате UNO</button>
+        <button type="button" class="quiz-opt">В самой микросхеме L293D</button>
+        <button type="button" class="quiz-opt">В кнопке</button>
+      </div>
+      <div class="quiz-explain">✅ Ум — в Python на ноутбуке (это и есть наш пульт на pygame). UNO с Telemetrix просто слушается, как и в курсах MeArm и машинки.</div>
     </div>
   </div>
 

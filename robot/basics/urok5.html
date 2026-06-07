@@ -34,7 +34,8 @@
   <div class="goal">
     <span class="label">Цель урока</span>
     Разобраться с DC-моторчиком: как он крутится, почему его нельзя втыкать как попало, и как
-    заставить его крутиться <b>в обе стороны</b> — для этого есть схема «H-мост».
+    заставить его крутиться <b>в обе стороны</b> — для этого есть схема «H-мост». А под конец
+    соберём вентилятор, которым рулят две кнопки.
   </div>
 
   <h2>⚙️ DC-моторчик — простой и капризный</h2>
@@ -112,8 +113,326 @@
     <li><b>IN1, IN2</b> — направление: <code>1,0</code> вперёд · <code>0,1</code> назад · <code>0,0</code> стоп;</li>
     <li><b>EN</b> (enable) — включён ли мотор; на него же подают <b>ШИМ</b> для скорости (урок 6).</li>
   </ul>
+
+  <p>А вот как эти ножки <b>расположены на самой микросхеме</b> — пригодится, когда будешь искать
+     нужный пин на реальной L293D. Ключ-выемка смотрит вверх; <b>пин 1</b> — слева от неё, дальше
+     по левой стороне вниз до 8, потом по правой снизу вверх до 16:</p>
+
+  <div class="diagram" style="padding:14px;max-width:480px">
+  <svg viewBox="0 0 460 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+    <style>
+      .pchip{fill:#2a2f45;stroke:#6cb2ff;stroke-width:2}
+      .ppin{stroke:#aeb4bf;stroke-width:2.4;stroke-linecap:round}
+      .pnum{fill:#cfe3ff;font:10px sans-serif}
+      .psig{fill:#7fe0b0;font:12px sans-serif}
+      .ppwr{fill:#f0907e;font:12px sans-serif}
+      .pgnd{fill:#8fb6ff;font:12px sans-serif}
+      .pmut{fill:#8b91a0;font:12px sans-serif}
+      .pcap{fill:#9aa0b4;font:11px sans-serif}
+    </style>
+    <rect x="0" y="0" width="460" height="340" rx="14" fill="#161a23"/>
+    <text x="20" y="28" fill="#5fd296" font-size="14" font-weight="700">Распиновка L293D: где какая ножка (пин)</text>
+    <rect class="pchip" x="170" y="46" width="120" height="250" rx="10"/>
+    <path d="M218 46 a12 12 0 0 0 24 0 z" fill="#161a23" stroke="#6cb2ff" stroke-width="1.5"/>
+    <circle cx="184" cy="64" r="3" fill="#8fa0c0"/>
+    <text x="230" y="175" text-anchor="middle" fill="#7c879b" font-size="15" font-weight="700">L293D</text>
+    <!-- левая сторона: пины 1..8 -->
+    <line class="ppin" x1="170" y1="72" x2="150" y2="72"/><text class="pnum" x="178" y="76">1</text><text class="psig" x="146" y="76" text-anchor="end">EN1,2</text>
+    <line class="ppin" x1="170" y1="100" x2="150" y2="100"/><text class="pnum" x="178" y="104">2</text><text class="psig" x="146" y="104" text-anchor="end">IN1</text>
+    <line class="ppin" x1="170" y1="128" x2="150" y2="128"/><text class="pnum" x="178" y="132">3</text><text class="psig" x="146" y="132" text-anchor="end">OUT1</text>
+    <line class="ppin" x1="170" y1="156" x2="150" y2="156"/><text class="pnum" x="178" y="160">4</text><text class="pgnd" x="146" y="160" text-anchor="end">GND</text>
+    <line class="ppin" x1="170" y1="184" x2="150" y2="184"/><text class="pnum" x="178" y="188">5</text><text class="pgnd" x="146" y="188" text-anchor="end">GND</text>
+    <line class="ppin" x1="170" y1="212" x2="150" y2="212"/><text class="pnum" x="178" y="216">6</text><text class="psig" x="146" y="216" text-anchor="end">OUT2</text>
+    <line class="ppin" x1="170" y1="240" x2="150" y2="240"/><text class="pnum" x="178" y="244">7</text><text class="psig" x="146" y="244" text-anchor="end">IN2</text>
+    <line class="ppin" x1="170" y1="268" x2="150" y2="268"/><text class="pnum" x="178" y="272">8</text><text class="ppwr" x="146" y="272" text-anchor="end">VCC2 +мот</text>
+    <!-- правая сторона: пины 16..9 -->
+    <line class="ppin" x1="290" y1="72" x2="310" y2="72"/><text class="pnum" x="282" y="76" text-anchor="end">16</text><text class="ppwr" x="314" y="76">VCC1 +лог</text>
+    <line class="ppin" x1="290" y1="100" x2="310" y2="100"/><text class="pnum" x="282" y="104" text-anchor="end">15</text><text class="pmut" x="314" y="104">IN4</text>
+    <line class="ppin" x1="290" y1="128" x2="310" y2="128"/><text class="pnum" x="282" y="132" text-anchor="end">14</text><text class="pmut" x="314" y="132">OUT4</text>
+    <line class="ppin" x1="290" y1="156" x2="310" y2="156"/><text class="pnum" x="282" y="160" text-anchor="end">13</text><text class="pgnd" x="314" y="160">GND</text>
+    <line class="ppin" x1="290" y1="184" x2="310" y2="184"/><text class="pnum" x="282" y="188" text-anchor="end">12</text><text class="pgnd" x="314" y="188">GND</text>
+    <line class="ppin" x1="290" y1="212" x2="310" y2="212"/><text class="pnum" x="282" y="216" text-anchor="end">11</text><text class="pmut" x="314" y="216">OUT3</text>
+    <line class="ppin" x1="290" y1="240" x2="310" y2="240"/><text class="pnum" x="282" y="244" text-anchor="end">10</text><text class="pmut" x="314" y="244">IN3</text>
+    <line class="ppin" x1="290" y1="268" x2="310" y2="268"/><text class="pnum" x="282" y="272" text-anchor="end">9</text><text class="pmut" x="314" y="272">EN3,4</text>
+    <text x="20" y="316" class="pcap">Зелёным — для одного мотора: EN, IN1, IN2, OUT1, OUT2.</text>
+    <text x="20" y="332" class="pcap">Красным — питание (VCC), синим — GND. Серые 9–15 — 2-й H-мост (не нужен).</text>
+  </svg>
+  </div>
+
   <p>Эти IN1/IN2/EN и будут «пальцами», которыми Arduino нажимает на выключатели H-моста. Мы их
      встретим прямо в курсе про машинку.</p>
+
+  <h2>🌬️ Соберём пример: вентилятор на двух кнопках</h2>
+  <p>Помнишь четыре выключателя <b>S1–S4</b>? Теперь не нужно щёлкать ими руками: <b>IN1 и IN2</b> —
+     это и есть «пальцы» на H-мосте, а нажимать на них будем <b>двумя кнопками</b>. Чтобы крутящийся
+     вал было видно, наденем на него лёгкую <b>вертушку</b> — получится настоящий вентилятор: одна
+     кнопка дует от тебя, другая — на тебя.</p>
+
+  <div class="diagram" style="padding:14px;max-width:600px">
+  <svg viewBox="0 0 560 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+    <style>
+      .fp{stroke:#e5564e;stroke-width:3.2;fill:none;stroke-linecap:round}
+      .fn{stroke:#4f7cf0;stroke-width:3.2;fill:none;stroke-linecap:round}
+      .fw{stroke:#aeb4bf;stroke-width:3;fill:none;stroke-linecap:round}
+      .fpin{fill:#cfe3ff;font:9px sans-serif}
+      .flbl{fill:#9aa0b4;font:10px sans-serif}
+      .fdot{fill:#aeb4bf}
+      .fres{fill:#d9c28d;stroke:#b59a5b;stroke-width:1.3}
+      .fbtn{fill:#3a4a63;stroke:#5a6884;stroke-width:1.5}
+      .fcap{fill:#aebfda;stroke:#7c8aa6;stroke-width:1.5}
+      .fchip{fill:#2a2f45;stroke:#6cb2ff;stroke-width:2}
+      .fblade{fill:#6cb2ff;opacity:.9}
+    </style>
+    <rect x="0" y="0" width="560" height="380" rx="14" fill="#161a23"/>
+    <text x="20" y="30" fill="#5fd296" font-size="14" font-weight="700">Схема: две кнопки крутят вентилятор через L293D</text>
+
+    <!-- рельсы питания + батарейка 6 В слева -->
+    <line class="fp" x1="40" y1="70" x2="500" y2="70"/>
+    <line class="fn" x1="40" y1="346" x2="500" y2="346"/>
+    <text x="505" y="74" fill="#e5564e" font-size="13" font-weight="700">＋</text>
+    <text x="505" y="351" fill="#4f7cf0" font-size="13" font-weight="700">−</text>
+    <line class="fp" x1="40" y1="70" x2="40" y2="158"/>
+    <line class="fn" x1="40" y1="188" x2="40" y2="346"/>
+    <line x1="26" y1="160" x2="54" y2="160" stroke="#cfd3e0" stroke-width="2"/>
+    <line x1="33" y1="178" x2="47" y2="178" stroke="#cfd3e0" stroke-width="4"/>
+    <text x="9" y="176" fill="#9aa0b4" font-size="10">6 В</text>
+
+    <!-- микросхема -->
+    <rect class="fchip" x="250" y="120" width="150" height="170" rx="10"/>
+    <path d="M313 120 a12 12 0 0 0 24 0 z" fill="#161a23" stroke="#6cb2ff" stroke-width="1.5"/>
+    <text x="325" y="210" text-anchor="middle" fill="#cfe3ff" font-size="22" font-weight="700">L293D</text>
+    <text x="325" y="230" text-anchor="middle" fill="#8fa0c0" font-size="10">H-мост в микросхеме</text>
+
+    <!-- верхние ножки EN/VCC1/VCC2 → «+» -->
+    <line class="fp" x1="280" y1="120" x2="280" y2="70"/>
+    <line class="fp" x1="325" y1="120" x2="325" y2="70"/>
+    <line class="fp" x1="370" y1="120" x2="370" y2="70"/>
+    <text x="280" y="140" text-anchor="middle" class="fpin">EN</text>
+    <text x="325" y="140" text-anchor="middle" class="fpin">VCC1</text>
+    <text x="370" y="140" text-anchor="middle" class="fpin">VCC2</text>
+
+    <!-- нижняя ножка GND → «−» -->
+    <line class="fn" x1="325" y1="290" x2="325" y2="346"/>
+    <text x="325" y="282" text-anchor="middle" class="fpin">GND</text>
+
+    <!-- входы слева, выходы справа -->
+    <line class="fw" x1="250" y1="185" x2="232" y2="185"/>
+    <line class="fw" x1="250" y1="255" x2="232" y2="255"/>
+    <text x="256" y="189" text-anchor="start" class="fpin">IN1</text>
+    <text x="256" y="259" text-anchor="start" class="fpin">IN2</text>
+    <line class="fw" x1="400" y1="185" x2="418" y2="185"/>
+    <line class="fw" x1="400" y1="255" x2="418" y2="255"/>
+    <text x="394" y="189" text-anchor="end" class="fpin">OUT1</text>
+    <text x="394" y="259" text-anchor="end" class="fpin">OUT2</text>
+
+    <!-- кнопка ВПЕРЁД → IN1 -->
+    <line class="fp" x1="120" y1="70" x2="120" y2="104"/>
+    <rect class="fbtn" x="98" y="104" width="44" height="32" rx="6"/>
+    <circle class="fcap" cx="120" cy="120" r="10"/>
+    <line class="fw" x1="120" y1="136" x2="120" y2="185"/>
+    <line class="fw" x1="120" y1="185" x2="232" y2="185"/>
+    <line class="fw" x1="120" y1="185" x2="120" y2="250"/>
+    <rect class="fres" x="111" y="250" width="18" height="22" rx="5"/>
+    <rect x="111" y="254" width="18" height="2.6" fill="#8a5a2b"/>
+    <rect x="111" y="259" width="18" height="2.6" fill="#1c2030"/>
+    <rect x="111" y="264" width="18" height="2.6" fill="#c9a227"/>
+    <line class="fw" x1="120" y1="272" x2="120" y2="346"/>
+    <circle class="fdot" cx="120" cy="185" r="3.5"/>
+    <text x="94" y="99" text-anchor="end" fill="#5fd296" font-size="10" font-weight="700">ВПЕРЁД</text>
+    <text x="135" y="265" text-anchor="start" class="flbl">10 кОм</text>
+
+    <!-- кнопка НАЗАД → IN2 -->
+    <line class="fp" x1="175" y1="70" x2="175" y2="104"/>
+    <rect class="fbtn" x="153" y="104" width="44" height="32" rx="6"/>
+    <circle class="fcap" cx="175" cy="120" r="10"/>
+    <line class="fw" x1="175" y1="136" x2="175" y2="255"/>
+    <line class="fw" x1="175" y1="255" x2="232" y2="255"/>
+    <line class="fw" x1="175" y1="255" x2="175" y2="290"/>
+    <rect class="fres" x="166" y="290" width="18" height="22" rx="5"/>
+    <rect x="166" y="294" width="18" height="2.6" fill="#8a5a2b"/>
+    <rect x="166" y="299" width="18" height="2.6" fill="#1c2030"/>
+    <rect x="166" y="304" width="18" height="2.6" fill="#c9a227"/>
+    <line class="fw" x1="175" y1="312" x2="175" y2="346"/>
+    <circle class="fdot" cx="175" cy="255" r="3.5"/>
+    <text x="201" y="99" text-anchor="start" fill="#e0a050" font-size="10" font-weight="700">НАЗАД</text>
+    <text x="190" y="305" text-anchor="start" class="flbl">10 кОм</text>
+
+    <!-- вентилятор: мотор + вертушка -->
+    <line class="fw" x1="418" y1="185" x2="470" y2="185"/>
+    <line class="fw" x1="470" y1="185" x2="470" y2="193"/>
+    <line class="fw" x1="418" y1="255" x2="470" y2="255"/>
+    <line class="fw" x1="470" y1="255" x2="470" y2="247"/>
+    <circle class="fchip" cx="470" cy="220" r="28"/>
+    <path class="fblade" d="M470 220 C 461 213 463 200 470 198 C 477 200 479 213 470 220 Z"/>
+    <path class="fblade" d="M470 220 C 461 213 463 200 470 198 C 477 200 479 213 470 220 Z" transform="rotate(90 470 220)"/>
+    <path class="fblade" d="M470 220 C 461 213 463 200 470 198 C 477 200 479 213 470 220 Z" transform="rotate(180 470 220)"/>
+    <path class="fblade" d="M470 220 C 461 213 463 200 470 198 C 477 200 479 213 470 220 Z" transform="rotate(270 470 220)"/>
+    <circle cx="470" cy="220" r="4.5" fill="#cfe3ff"/>
+    <text x="470" y="268" text-anchor="middle" fill="#cfd3e0" font-size="11">вентилятор</text>
+    <text x="470" y="281" text-anchor="middle" fill="#8fa0c0" font-size="9">мотор + вертушка</text>
+  </svg>
+  </div>
+  <p style="color:var(--muted);font-size:.85rem;margin-top:-6px">Сигнал течёт слева направо: кнопка
+     подаёт «1» на вход (IN1 или IN2) → микросхема гонит ток на выходы OUT1/OUT2 → крутится вентилятор.
+     Ножки нарисованы по смыслу (входы слева, выходы справа); номера пинов — в распиновке выше и в
+     шагах сборки. Линии, что пересекаются <b>без точки</b>, — не соединены.
+     Одна батарейка 6 В питает и логику (VCC1, пин 16), и мотор (VCC2, пин 8); все «−» — общие.</p>
+
+  <p>Логика простая — две кнопки как два «пальца» на H-мосте:</p>
+  <table>
+    <tr><th>Что нажал</th><th>IN1</th><th>IN2</th><th>Вентилятор</th></tr>
+    <tr><td><b>ВПЕРЁД</b></td><td>1</td><td>0</td><td>крутится вперёд (дует от тебя)</td></tr>
+    <tr><td><b>НАЗАД</b></td><td>0</td><td>1</td><td>крутится назад (дует на тебя)</td></tr>
+    <tr><td>ничего</td><td>0</td><td>0</td><td>стоит</td></tr>
+    <tr><td>обе сразу</td><td>1</td><td>1</td><td>стоит — «тормоз» (это <b>не</b> КЗ!)</td></tr>
+  </table>
+
+  <p><b>Собираем по шагам</b> (номера ножек сверяй с реальной микросхемой):</p>
+  <ol>
+    <li><b>Питание:</b> «+» батарейки → VCC1 (пин 16) и VCC2 (пин 8); «−» → GND (пины 4, 5, 12, 13).</li>
+    <li><b>Включаем мотор:</b> EN1,2 (пин 1) → «+» (мотор разрешён; позже сюда подадут ШИМ для скорости).</li>
+    <li><b>Вентилятор:</b> два провода моторчика → OUT1 (пин 3) и OUT2 (пин 6).</li>
+    <li><b>Кнопка «вперёд»:</b> «+» → кнопка → IN1 (пин 2); от IN1 — подтяжка 10 кОм на «−».</li>
+    <li><b>Кнопка «назад»:</b> «+» → кнопка → IN2 (пин 7); от IN2 — подтяжка 10 кОм на «−».</li>
+  </ol>
+
+  <div class="box idea">
+    <span class="label">💡 Зачем подтяжка (резистор на «−»)</span>
+    Вход микросхемы нельзя бросать «висеть в воздухе»: пока кнопка отпущена, на нём должен быть
+    чёткий ноль. Подтяжка вниз — большой резистор (10 кОм) — тихо держит вход на «−», а нажатая
+    кнопка легко её пересиливает и даёт «1». Без подтяжки вентилятор может включаться сам от наводок.
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ Чтобы вентилятор был безопасным</span>
+    • Вертушку делай из лёгкой бумаги или пластика, держи пальцы подальше от лопастей.<br>
+    • «−» батарейки, «−» стяжек и GND микросхемы — это <b>одна общая земля</b>; забыл соединить —
+      ничего не закрутится.<br>
+    • Нажал обе кнопки разом — не страшно: внутри L293D это «тормоз», а <b>не</b> короткое замыкание
+      (в отличие от ручной пары S1+S3).<br>
+    • Здесь одна батарейка 6 В тянет и логику, и мотор. У сильных моторов (машинка) — <b>своя</b>
+      батарея, так правильнее.
+  </div>
+
+  <h2>💡 Лампочка-индикатор: видно, какое вращение включено</h2>
+  <p>Добавим к каждой кнопке <b>лампочку</b> (светодиод): загорелась — значит, на этот вход пришла
+     «1» и мотор крутится в эту сторону. Лампочку вешаем <b>параллельно</b> — на тот же провод-сигнал
+     (к IN1) и на «−» (GND), обязательно через резистор <b>150–220 Ом</b> (чтобы не сжечь её, как в
+     уроке 2):</p>
+
+  <div class="diagram" style="padding:14px;max-width:560px">
+  <svg viewBox="0 0 560 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+    <style>
+      .ip{stroke:#e5564e;stroke-width:3;fill:none;stroke-linecap:round}
+      .ig{stroke:#4f7cf0;stroke-width:3;fill:none;stroke-linecap:round}
+      .iw{stroke:#aeb4bf;stroke-width:2.6;fill:none;stroke-linecap:round}
+      .im{fill:#9aa0b4;font:12px sans-serif}
+      .idt{fill:#aeb4bf}
+      .ir{fill:#2a2f45;stroke:#aeb4bf;stroke-width:2}
+      .ic{fill:#222838;stroke:#6cb2ff;stroke-width:2}
+    </style>
+    <rect x="0" y="0" width="560" height="360" rx="14" fill="#161a23"/>
+    <text x="20" y="30" fill="#5fd296" font-size="14" font-weight="700">Лампочка-индикатор: видно, что вход включён</text>
+    <line class="ip" x1="70" y1="64" x2="430" y2="64"/>
+    <text x="70" y="50" fill="#e5564e" font-size="13" font-weight="700">+6 В</text>
+    <line class="ig" x1="70" y1="312" x2="430" y2="312"/>
+    <text x="70" y="332" fill="#4f7cf0" font-size="13" font-weight="700">GND</text>
+    <!-- кнопка -->
+    <line class="iw" x1="130" y1="64" x2="130" y2="120"/>
+    <circle class="idt" cx="130" cy="120" r="4"/>
+    <line class="iw" x1="130" y1="158" x2="151" y2="127"/>
+    <circle class="idt" cx="130" cy="158" r="4"/>
+    <line class="iw" x1="130" y1="158" x2="130" y2="210"/>
+    <text class="im" x="112" y="144" text-anchor="end">кнопка</text>
+    <!-- провод-сигнал к IN1 -->
+    <line class="iw" x1="130" y1="210" x2="360" y2="210"/>
+    <text class="im" x="356" y="202" text-anchor="end">пин 2 (IN1)</text>
+    <!-- подтяжка 10 кОм -->
+    <circle class="idt" cx="190" cy="210" r="4"/>
+    <line class="iw" x1="190" y1="210" x2="190" y2="238"/>
+    <rect class="ir" x="181" y="238" width="18" height="42" rx="3"/>
+    <line class="iw" x1="190" y1="280" x2="190" y2="312"/>
+    <text class="im" x="172" y="256" text-anchor="end">10 кОм</text>
+    <text class="im" x="172" y="272" text-anchor="end">подтяжка</text>
+    <!-- лампочка + резистор -->
+    <circle class="idt" cx="270" cy="210" r="4"/>
+    <line class="iw" x1="270" y1="210" x2="270" y2="236"/>
+    <rect class="ir" x="261" y="236" width="18" height="36" rx="3"/>
+    <line class="iw" x1="270" y1="272" x2="270" y2="280"/>
+    <path d="M258 280 L282 280 L270 298 Z" fill="#1c2233" stroke="#5fd296" stroke-width="2"/>
+    <line x1="258" y1="299" x2="282" y2="299" stroke="#5fd296" stroke-width="2.6" stroke-linecap="round"/>
+    <line class="iw" x1="270" y1="299" x2="270" y2="312"/>
+    <line x1="286" y1="284" x2="297" y2="275" stroke="#5fd296" stroke-width="1.6" stroke-linecap="round"/>
+    <line x1="286" y1="292" x2="297" y2="283" stroke="#5fd296" stroke-width="1.6" stroke-linecap="round"/>
+    <text class="im" x="270" y="230" text-anchor="middle">150–220 Ом</text>
+    <text x="288" y="296" fill="#5fd296" font-size="12">лампочка</text>
+    <!-- L293D -->
+    <rect class="ic" x="360" y="150" width="160" height="120" rx="16"/>
+    <text x="440" y="216" text-anchor="middle" fill="#cfe3ff" font-size="22" font-weight="700">L293D</text>
+  </svg>
+  </div>
+  <p style="color:var(--muted);font-size:.85rem;margin-top:-6px">Лампочка с резистором 150–220 Ом
+     стоит <b>параллельно</b>: одной ножкой на провод-сигнал (к IN1), другой — на GND. Нажал кнопку →
+     на входе «1» → лампочка горит и мотор едет «вперёд». Отпустил → подтяжка 10 кОм вернёт вход в «0»,
+     лампочка погаснет. (6 В для светодиода с резистором 150–220 Ом — нормально.)</p>
+
+  <p>Это ветка только для кнопки «вперёд» (вход IN1, пин 2). Для кнопки «назад» собери <b>точно такую
+     же</b> на вход IN2 (пин 7) со своей лампочкой (например, жёлтой) — будет по лампочке на каждое
+     направление.</p>
+
+  <h2>🔧 Что такое «параллельно» и как это на breadboard</h2>
+  <p><b>Параллельно</b> — это когда несколько деталей подключены к <b>одним и тем же</b> двум точкам.
+     У нас эти две точки — «провод-сигнал к IN1» и «GND». К ним мы и цепляем сразу четыре вещи: кнопку,
+     подтяжку, лампочку и перемычку к микросхеме. Все они «висят» на одном и том же сигнале.</p>
+  <p>На макетной плате (breadboard) сделать это <b>очень просто</b>. Дырочки в одном вертикальном
+     <b>столбике</b> соединены между собой <b>внутри</b> платы — металлической пластинкой. Значит,
+     достаточно воткнуть ножки в <b>один столбик</b> — и они уже соединены. Никаких лишних проводов:</p>
+
+  <div class="diagram" style="padding:14px;max-width:540px">
+  <svg viewBox="0 0 540 262" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+    <style>
+      .bbl{fill:#cfd3e0;font:12px sans-serif}
+      .bbm{fill:#9aa0b4;font:11px sans-serif}
+    </style>
+    <rect x="0" y="0" width="540" height="262" rx="14" fill="#161a23"/>
+    <text x="20" y="28" fill="#5fd296" font-size="14" font-weight="700">Breadboard: один столбик соединён внутри = параллельно</text>
+    <rect x="170" y="70" width="200" height="150" rx="10" fill="#e7e1cf" stroke="#b7b09a" stroke-width="2"/>
+    <text x="330" y="62" text-anchor="middle" fill="#3fb985" font-size="11" font-weight="700">этот столбик</text>
+    <text x="210" y="62" text-anchor="middle" fill="#9aa0b4" font-size="10">другой столбик</text>
+    <rect x="316" y="84" width="28" height="124" rx="8" fill="rgba(95,210,150,.16)" stroke="#3fb985" stroke-width="1.4"/>
+    <line x1="330" y1="96" x2="330" y2="208" stroke="#3fb985" stroke-width="3" opacity=".5"/>
+    <circle cx="210" cy="96" r="4" fill="#6a6450"/><circle cx="210" cy="124" r="4" fill="#6a6450"/><circle cx="210" cy="152" r="4" fill="#6a6450"/><circle cx="210" cy="180" r="4" fill="#6a6450"/><circle cx="210" cy="208" r="4" fill="#6a6450"/>
+    <circle cx="270" cy="96" r="4" fill="#6a6450"/><circle cx="270" cy="124" r="4" fill="#6a6450"/><circle cx="270" cy="152" r="4" fill="#6a6450"/><circle cx="270" cy="180" r="4" fill="#6a6450"/><circle cx="270" cy="208" r="4" fill="#6a6450"/>
+    <circle cx="330" cy="96" r="4" fill="#6a6450"/><circle cx="330" cy="124" r="4" fill="#6a6450"/><circle cx="330" cy="152" r="4" fill="#6a6450"/><circle cx="330" cy="180" r="4" fill="#6a6450"/><circle cx="330" cy="208" r="4" fill="#6a6450"/>
+    <circle cx="330" cy="96" r="4.5" fill="#e5564e"/>
+    <circle cx="330" cy="124" r="4.5" fill="#4f7cf0"/>
+    <circle cx="330" cy="152" r="4.5" fill="#5fd296"/>
+    <circle cx="330" cy="180" r="4.5" fill="#aeb4bf"/>
+    <line x1="336" y1="96" x2="372" y2="96" stroke="#9aa0b4" stroke-width="1.4" stroke-dasharray="3 3"/>
+    <line x1="336" y1="124" x2="372" y2="124" stroke="#9aa0b4" stroke-width="1.4" stroke-dasharray="3 3"/>
+    <line x1="336" y1="152" x2="372" y2="152" stroke="#9aa0b4" stroke-width="1.4" stroke-dasharray="3 3"/>
+    <line x1="336" y1="180" x2="372" y2="180" stroke="#9aa0b4" stroke-width="1.4" stroke-dasharray="3 3"/>
+    <text class="bbl" x="378" y="100">от кнопки (сигнал +)</text>
+    <text class="bbl" x="378" y="128">подтяжка 10 кОм → GND</text>
+    <text class="bbl" x="378" y="156">лампочка + резистор → GND</text>
+    <text class="bbl" x="378" y="184">перемычка → IN1 (пин 2)</text>
+    <text class="bbm" x="20" y="246">Дырочки разных столбиков между собой не соединены.</text>
+  </svg>
+  </div>
+  <p style="color:var(--muted);font-size:.85rem;margin-top:-6px">В один столбик воткнуты сразу: провод
+     от кнопки, ножка подтяжки 10 кОм, ножка «резистор + лампочка» и перемычка на пин 2 (IN1). Они уже
+     соединены друг с другом — это и есть параллельное подключение. Для «−» удобно взять длинную боковую
+     шину платы и тоже завести в неё все «земляные» ножки.</p>
+
+  <div class="box idea">
+    <span class="label">💡 Запомни про breadboard</span>
+    <b>Один столбик = одна точка соединения.</b> Всё, что воткнуто в него, соединено вместе. Хочешь
+    подключить деталь параллельно — просто воткни её в тот же столбик. Столбики ты уже видел в
+    уроках 2–4.
+  </div>
+
+  <p>А теперь представь, что обе кнопки заменила одна <b>ножка Arduino</b> — и ты получил ровно то,
+     чем рулит машинка в следующем курсе. Кнопка → ножка платы, а H-мост тот же.</p>
 
   <div class="box try">
     <span class="label">✅ Проверь себя</span>
@@ -159,6 +478,18 @@
         <button type="button" class="quiz-opt">NPN</button>
       </div>
       <div class="quiz-explain">✅ Верно — <b>L293D</b> (или <b>L298N</b> на машинке): два H-моста в одной микросхеме.</div>
+    </div>
+
+    <div class="quiz-q" data-id="basics5-fanboth"
+         data-hash="55dc36dd9ca37b3f83b348854cefb8c681ecd0c1af05e9f758035653307cd707">
+      <p class="quiz-prompt">В схеме с вентилятором нажали обе кнопки сразу (IN1 и IN2 — единицы). Будет короткое замыкание, как с S1+S3?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Нет, внутри L293D защита — мотор просто затормозит</button>
+        <button type="button" class="quiz-opt">Да, такое же короткое замыкание, как S1+S3</button>
+        <button type="button" class="quiz-opt">Микросхема сразу сгорит</button>
+        <button type="button" class="quiz-opt">Вентилятор закрутится вдвое быстрее</button>
+      </div>
+      <div class="quiz-explain">✅ Верно — «запретную» пару внутри L293D не пропустит логика: обе единицы это «тормоз», а не КЗ. Ради этого H-мост и прячут в микросхему.</div>
     </div>
   </div>
 
