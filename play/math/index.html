@@ -96,6 +96,8 @@ button:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
 .result{text-align:center;display:flex;flex-direction:column;gap:6px}
 .result .score{font:900 3rem var(--display);color:var(--accent)}
 .small{font-size:.85rem;color:var(--muted)}
+.allgames{font:700 .85rem var(--body);color:var(--muted);text-decoration:none;align-self:center;margin-top:auto;padding:8px}
+.allgames:hover{color:var(--accent)}
 .reset{font:700 .85rem var(--body);background:transparent;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;align-self:center}
 /* fractions */
 .fr{display:inline-flex;flex-direction:column;align-items:center;line-height:1.05;vertical-align:middle;font-variant-numeric:tabular-nums}
@@ -155,6 +157,7 @@ button:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
     <button role="tab" id="tabTable" aria-selected="false"></button>
   </div>
   <main id="view"></main>
+  <a class="allgames" id="allGames" href="../index.html"></a>
 </div>
 
 <script>
@@ -162,7 +165,7 @@ button:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
 const ruPl=(n,one,few,many)=>{const m=n%10,h=n%100;if(m===1&&h!==11)return one;if(m>=2&&m<=4&&(h<12||h>14))return few;return many;};
 const fr=(p,q,c='')=>`<span class="fr ${c}"><span>${p}</span><span>${q}</span></span>`;
 const T={
- ru:{logo:'Умнож<span>айка</span>',stars:'Звёзды',play:'Тренировка',table:'Моя таблица',which:'Какие таблицы учим?',all:'Все',
+ ru:{logo:'Умнож<span>айка</span>',allGames:'← Все игры',stars:'Звёзды',play:'Тренировка',table:'Моя таблица',which:'Какие таблицы учим?',all:'Все',
    howMany:'Сколько примеров?',go:'Поехали!',
    learned:(n)=>`Выучено ${n} из 100 примеров. Пример считается выученным после 3 верных ответов подряд.`,
    of:(i,n)=>`${i} из ${n}`,hint:'Подсказка',hintDots:'Подсказка: нарисовать точками',
@@ -191,7 +194,7 @@ const T={
    hSub:'Знаменатель не меняется. Вычитаем только числители:',
    hCommon:(L)=>`Сначала разделим обе полоски на ${L} ${ruPl(L,'часть','части','частей')} — это общий знаменатель:`,
    simp:'Можно сократить:',shaded:(c,n)=>`Закрашено ${c} из ${n}`},
- en:{logo:'Times<span>Tables</span>',stars:'Stars',play:'Practice',table:'My table',which:'Which tables?',all:'All',
+ en:{logo:'Times<span>Tables</span>',allGames:'← All games',stars:'Stars',play:'Practice',table:'My table',which:'Which tables?',all:'All',
    howMany:'How many questions?',go:'Let’s go!',
    learned:(n)=>`You know ${n} of 100 facts. A fact counts as learned after 3 right answers in a row.`,
    of:(i,n)=>`${i} of ${n}`,hint:'Hint',hintDots:'Hint: show me with dots',
@@ -220,7 +223,7 @@ const T={
    hSub:'The denominator stays the same. Subtract only the numerators:',
    hCommon:(L)=>`First split both bars into ${L} parts. That is the common denominator:`,
    simp:'You can simplify:',shaded:(c,n)=>`${c} of ${n} shaded`},
- de:{logo:'Einmal<span>eins</span>',stars:'Sterne',play:'Üben',table:'Meine Tabelle',which:'Welche Reihen üben wir?',all:'Alle',
+ de:{logo:'Einmal<span>eins</span>',allGames:'← Alle Spiele',stars:'Sterne',play:'Üben',table:'Meine Tabelle',which:'Welche Reihen üben wir?',all:'Alle',
    howMany:'Wie viele Aufgaben?',go:'Los geht’s!',
    learned:(n)=>`Du kannst ${n} von 100 Aufgaben. Eine Aufgabe gilt als gelernt nach 3 richtigen Antworten hintereinander.`,
    of:(i,n)=>`${i} von ${n}`,hint:'Tipp',hintDots:'Tipp: mit Punkten zeigen',
@@ -276,6 +279,7 @@ function chrome(){
   const t=L();
   document.documentElement.lang=S.lang;
   document.getElementById('logo').innerHTML=t.logo;
+  document.getElementById('allGames').textContent=t.allGames;
   document.getElementById('starsBox').setAttribute('aria-label',t.stars);
   document.getElementById('tabPlay').textContent=t.play;
   document.getElementById('tabTable').textContent=t.table;
