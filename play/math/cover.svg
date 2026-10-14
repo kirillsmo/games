@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" font-family="Rubik, system-ui, sans-serif">
+  <rect width="600" height="400" fill="#EAF4F2"/>
+  <g font-weight="900" text-anchor="middle">
+    <g transform="translate(60 70)">
+      <rect width="140" height="140" rx="22" fill="#fff" stroke="#CFE3DF" stroke-width="4"/>
+      <text x="70" y="88" font-size="48" fill="#16323A">×7</text>
+    </g>
+    <g transform="translate(230 70)">
+      <rect width="140" height="140" rx="22" fill="#FFB627"/>
+      <text x="70" y="88" font-size="48" fill="#16323A">×8</text>
+    </g>
+    <g transform="translate(400 70)">
+      <rect width="140" height="140" rx="22" fill="#fff" stroke="#CFE3DF" stroke-width="4"/>
+      <text x="70" y="88" font-size="48" fill="#16323A">½</text>
+    </g>
+    <rect x="60" y="250" width="480" height="90" rx="22" fill="#0F8C7E"/>
+    <text x="300" y="311" font-size="46" fill="#fff">6 × 8 = 48 ★</text>
+  </g>
+</svg>
