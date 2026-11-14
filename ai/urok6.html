@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 6 — ИИ и баги</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">🏠 Главная</a>
+  <a class="home" href="index.html">🧠 ИИ и игры</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Что такое ИИ">1</a>
+    <a class="dot" href="urok2.html" title="Где ИИ ошибается">2</a>
+    <a class="dot" href="urok3.html" title="Правила и безопасность">3</a>
+    <a class="dot" href="urok4.html" title="Как правильно спрашивать">4</a>
+    <a class="dot" href="urok5.html" title="ИИ объясняет код">5</a>
+    <a class="dot active" href="urok6.html" title="ИИ и баги">6</a>
+    <a class="dot" href="urok7.html" title="ИИ-геймдизайнер">7</a>
+    <a class="dot" href="urok8.html" title="ИИ внутри игры">8</a>
+    <a class="dot" href="urok9.html" title="Финальный проект">9</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 6</span>
+    <h1>ИИ и баги: подсказка, а не ответ</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Зачем этот урок</span>
+    Искать баги — половина работы любого программиста. Если сразу отдавать каждую
+    ошибку ИИ, ты так и не научишься их находить. Мы используем ИИ как <b>лестницу
+    подсказок</b>: каждая ступенька чуть ближе к ответу, но идёшь ты сам.
+  </div>
+
+  <h2>🪜 Порядок действий при баге</h2>
+  <div class="pipe">
+    <span class="pill">1. Прочитай ошибку</span><span class="arrow">→</span>
+    <span class="pill">2. 5 минут сам</span><span class="arrow">→</span>
+    <span class="pill">3. Расскажи уточке</span><span class="arrow">→</span>
+    <span class="pill">4. ИИ: подсказка</span><span class="arrow">→</span>
+    <span class="pill">5. Чини руками</span>
+  </div>
+  <ol>
+    <li><b>Прочитай ошибку.</b> Последняя строчка красного текста — самая важная. Посмотри в <a href="../errors.html">словарь ошибок</a>.</li>
+    <li><b>5 минут сам.</b> Поставь <code>print(...)</code>, посмотри, что лежит в переменных.</li>
+    <li><b>Метод уточки:</b> объясни проблему вслух игрушке (или другу) — строчку за строчкой. Часто ответ находится прямо во время рассказа.</li>
+    <li><b>ИИ — за подсказкой</b>, не за решением (шаблон ниже).</li>
+    <li><b>Исправь своими руками</b> и проверь, что понял, <i>почему</i> было сломано.</li>
+  </ol>
+
+  <h2>📋 Шаблон «дай подсказку»</h2>
+  <pre>Я учусь программировать. В моей игре баг.
+Что я ожидал: [например: змейка ползёт]
+Что происходит: [например: змейка растёт без конца]
+Текст ошибки (если есть): [скопируй целиком]
+Вот код: [вставь]
+
+НЕ исправляй код и не показывай ответ.
+Дай самую маленькую подсказку, где искать. Если я попрошу «ещё» — дай подсказку побольше.</pre>
+
+  <div class="box warn">
+    <span class="label">⚠️ Когда ИИ «чинит», переписав всё</span>
+    Если ИИ вернул совсем другой код — не вставляй. Напиши: «Не переписывай. Покажи
+    одну строчку, которую нужно изменить, и объясни почему». Маленькая правка — понятная правка.
+  </div>
+
+  <h2>🎯 Задания</h2>
+
+  <div class="box try">
+    <span class="label">Задание 1 — Три бага, лестница подсказок</span>
+    Скачай сломанные файлы из курса «Змейка». В каждом спрятан <b>один</b> баг:
+    <div class="dl-list">
+      <a href="../games/snake/code/bugs/bug1_no_flip.py" download><span class="fname">bug1_no_flip.py</span><span class="ficon">окно пустое</span></a>
+      <a href="../games/snake/code/bugs/bug2_pop_order.py" download><span class="fname">bug2_pop_order.py</span><span class="ficon">растёт без конца</span></a>
+      <a href="../games/snake/code/bugs/bug3_keys_dead.py" download><span class="fname">bug3_keys_dead.py</span><span class="ficon">стрелки не работают</span></a>
+    </div>
+    Для каждого: 5 минут сам → потом ИИ по шаблону «дай подсказку». Заполни таблицу:
+    <table>
+      <tr><th>Баг</th><th>Нашёл сам?</th><th>Сколько подсказок понадобилось</th><th>В чём была причина (своими словами)</th></tr>
+      <tr><td>bug1</td><td></td><td></td><td></td></tr>
+      <tr><td>bug2</td><td></td><td></td><td></td></tr>
+      <tr><td>bug3</td><td></td><td></td><td></td></tr>
+    </table>
+    Меньше подсказок — больше очков. Соревнуйтесь в классе!
+  </div>
+
+  <div class="box try">
+    <span class="label">Задание 2 — Подложи баг другу (и ИИ)</span>
+    Возьми свою рабочую игру и <b>сломай одну строчку</b> (например, поменяй <code>+</code>
+    на <code>-</code> или <code>&lt;</code> на <code>&gt;</code>). Отдай файл другу. Друг
+    ищет по лестнице подсказок. Потом отдайте тот же файл ИИ <b>без подсказок</b>:
+    нашёл ли он? С первого раза? Не придумал ли он ещё «баги», которых нет?
+  </div>
+
+  <div class="box idea">
+    <span class="label">💡 Почему это важно</span>
+    ИИ тоже ошибается в поиске багов: иногда «находит» то, чего нет, или чинит не то.
+    Только ты можешь <b>запустить</b> игру и убедиться, что баг правда исчез.
+  </div>
+
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="ai6-order" data-hash="1620e53a0c6aab4a5b06374d4ca961f587a615de3cb28a0c7b2a95f8c0116974">
+      <p class="quiz-prompt">Что делать первым, когда в игре баг?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Удалить файл и начать заново</button>
+        <button type="button" class="quiz-opt">Сразу отдать весь код ИИ</button>
+        <button type="button" class="quiz-opt">Перезагрузить компьютер</button>
+        <button type="button" class="quiz-opt">Прочитать ошибку и 5 минут поискать самому</button>
+      </div>
+      <div class="quiz-explain">✅ Сначала сам: ошибка, print, уточка. ИИ — потом, и за подсказкой, а не за ответом.</div>
+    </div>
+
+    <div class="quiz-q" data-id="ai6-hint" data-hash="e20e027a84f63c52d3daf9dc32247ce3a0a6235ee073253c9ace17b7fcd9b9f9">
+      <p class="quiz-prompt">Зачем просить ИИ «не исправляй, дай подсказку»?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Так быстрее</button>
+        <button type="button" class="quiz-opt">Чтобы научиться находить баги самому</button>
+        <button type="button" class="quiz-opt">Чтобы ИИ работал меньше</button>
+        <button type="button" class="quiz-opt">Подсказки точнее кода</button>
+      </div>
+      <div class="quiz-explain">✅ Лестница подсказок: каждая ступенька ближе к ответу, но находишь его ты.</div>
+    </div>
+  </div>
+
+  <div class="pager">
+    <a href="urok5.html"><span class="dir">← Назад</span><span class="ttl">Урок 5 — ИИ объясняет код</span></a>
+    <a class="next" href="urok7.html"><span class="dir">Дальше →</span><span class="ttl">Урок 7 — ИИ-геймдизайнер</span></a>
+  </div>
+</div>
+
+<footer>Урок 6 из 9 · ИИ и игры 🧠</footer>
+<script src="../quiz.js"></script>
+</body>
+</html>

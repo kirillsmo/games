@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 7 — ИИ-геймдизайнер</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">🏠 Главная</a>
+  <a class="home" href="index.html">🧠 ИИ и игры</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Что такое ИИ">1</a>
+    <a class="dot" href="urok2.html" title="Где ИИ ошибается">2</a>
+    <a class="dot" href="urok3.html" title="Правила и безопасность">3</a>
+    <a class="dot" href="urok4.html" title="Как правильно спрашивать">4</a>
+    <a class="dot" href="urok5.html" title="ИИ объясняет код">5</a>
+    <a class="dot" href="urok6.html" title="ИИ и баги">6</a>
+    <a class="dot active" href="urok7.html" title="ИИ-геймдизайнер">7</a>
+    <a class="dot" href="urok8.html" title="ИИ внутри игры">8</a>
+    <a class="dot" href="urok9.html" title="Финальный проект">9</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 7</span>
+    <h1>ИИ-геймдизайнер: идеи, уровни, тексты</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Зачем этот урок</span>
+    ИИ отлично выдаёт <b>много</b> идей быстро. А хорошую игру делает тот, кто умеет
+    <b>выбирать</b>. В этом уроке ты — главный геймдизайнер, а ИИ — команда стажёров,
+    которые накидывают варианты.
+  </div>
+
+  <h2>💡 Мозговой штурм: много идей → одна лучшая</h2>
+  <pre>Ты — геймдизайнер. Вот моя игра: Арканоид на Python (ракетка, мяч, кирпичи, 3 жизни).
+Придумай 10 идей, как сделать её интереснее.
+Каждая идея — одна фраза. Только такие, которые новичок может сделать за один урок.</pre>
+  <p>Теперь <b>ты</b> выбираешь. Оцени каждую идею от 0 до 2 по трём вопросам:</p>
+  <table>
+    <tr><th>Вопрос</th><th>0</th><th>2</th></tr>
+    <tr><td>Будет интереснее играть?</td><td>скучно</td><td>хочу сыграть!</td></tr>
+    <tr><td>Я смогу это сделать?</td><td>нет идей как</td><td>примерно понимаю</td></tr>
+    <tr><td>Это видно и понятно игроку?</td><td>никто не заметит</td><td>сразу видно</td></tr>
+  </table>
+  <p>Идея с самой большой суммой — твоя фича для финального проекта.</p>
+
+  <h2>🧱 Уровни как текст</h2>
+  <p>ИИ хорошо придумывает <b>уровни</b>, если попросить их в простом виде — строчками
+     символов. Вот как в Арканоиде читать уровень из списка строк (замени функцию
+     <code>make_bricks</code> в <a href="../games/arkanoid/code/arkanoid.py" download>arkanoid.py</a>):</p>
+  <pre><span class="com"># # — кирпич, . — пусто. 5 строк по 10 символов.</span>
+LEVEL = [
+    <span class="str">"##########"</span>,
+    <span class="str">"#........#"</span>,
+    <span class="str">"#.######.#"</span>,
+    <span class="str">"#........#"</span>,
+    <span class="str">"##########"</span>,
+]
+
+
+<span class="kw">def</span> <span class="fn">make_bricks</span>():
+    <span class="str">"""Кирпичи там, где в LEVEL стоит #."""</span>
+    bricks = []
+    <span class="kw">for</span> row <span class="kw">in</span> <span class="fn">range</span>(ROWS):
+        <span class="kw">for</span> col <span class="kw">in</span> <span class="fn">range</span>(COLS):
+            <span class="kw">if</span> LEVEL[row][col] == <span class="str">"#"</span>:
+                x = col * BRICK_W + GAP
+                y = TOP + row * BRICK_H + GAP
+                bricks.<span class="fn">append</span>(pygame.<span class="fn">Rect</span>(x, y, BRICK_W - GAP * <span class="num">2</span>, BRICK_H - GAP * <span class="num">2</span>))
+    <span class="kw">return</span> bricks</pre>
+  <p>Теперь попроси ИИ:</p>
+  <pre>Придумай 3 уровня для Арканоида. Каждый — список из 5 строк по 10 символов: # — кирпич, . — пусто. Первый лёгкий, третий сложный. Пусть один уровень будет похож на смайлик.</pre>
+  <div class="box warn">
+    <span class="label">⚠️ Проверь размеры!</span>
+    ИИ часто ошибается в подсчёте символов (помнишь урок 2?). Если в строке 9 или 11
+    символов — игра упадёт с <code>IndexError</code> или кирпичи съедут. Посчитай
+    сам или проверь кодом: <code>print([len(s) for s in LEVEL])</code> — должно быть пять десяток.
+  </div>
+
+  <h2>✍️ Тексты и сюжет</h2>
+  <p>ИИ поможет с названием игры, коротким сюжетом, надписями «Победа!» и «Игра окончена».
+     Но выбирай и правь сам — пусть текст звучит как <b>ты</b>, а не как робот.</p>
+
+  <h2>🎨 Картинки и звуки</h2>
+  <ul>
+    <li><b>Нарисуй сам</b> — в любом редакторе, даже квадратиками. Это самый «твой» вариант.</li>
+    <li><b>Свободные ресурсы:</b> например, <a href="https://kenney.nl/assets" target="_blank" rel="noopener">kenney.nl</a> — тысячи игровых картинок и звуков с лицензией CC0 (можно брать бесплатно).</li>
+    <li><b>Звуки «пиу-пиу»</b> можно сделать в генераторах вроде jsfxr.</li>
+    <li><b>ИИ-картинки</b> — только по правилам урока 3: свой персонаж, без чужих героев и стилей конкретных художников, с разрешения взрослых.</li>
+  </ul>
+
+  <h2>🎯 Задания</h2>
+
+  <div class="box try">
+    <span class="label">Задание 1 — Дизайн-документ за 15 минут</span>
+    Попроси ИИ провести с тобой интервью:
+    <pre>Помоги мне составить дизайн-документ моей игры. Задавай мне по ОДНОМУ вопросу. Сам ничего не придумывай — только спрашивай и записывай мои ответы. В конце собери всё на одну страницу: название, цель игрока, управление, как выиграть, как проиграть, одна новая фича.</pre>
+    Сохрани документ в файл <code>design.txt</code>. Обрати внимание: все идеи в нём — <b>твои</b>.
+  </div>
+
+  <div class="box try">
+    <span class="label">Задание 2 — Три уровня</span>
+    Получи от ИИ три уровня для Арканоида, <b>проверь длины строк</b>, исправь, если надо,
+    и сыграй в каждый. Какой уровень правда интересный? Какой ИИ сделал скучным? Поправь его сам.
+  </div>
+
+  <div class="box try">
+    <span class="label">Задание 3 — Плейтест (без ИИ!)</span>
+    ИИ не может поиграть в твою игру. Дай поиграть <b>двум людям</b> и молча смотри.
+    Запиши: где они застряли? Что их рассмешило? Что непонятно? Это самая честная проверка дизайна.
+  </div>
+
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="ai7-role" data-hash="b14082c6ac13995bf4d13e5face70f13428f6d033648f50cb4c381d48cdc3d62">
+      <p class="quiz-prompt">Кто выбирает идеи для игры, когда ИИ накидал 10 вариантов?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Я — главный геймдизайнер</button>
+        <button type="button" class="quiz-opt">Первая идея — самая лучшая</button>
+        <button type="button" class="quiz-opt">ИИ — у него больше опыта</button>
+        <button type="button" class="quiz-opt">Случайный выбор</button>
+      </div>
+      <div class="quiz-explain">✅ ИИ — команда стажёров: много вариантов. Выбираешь по критериям ты.</div>
+    </div>
+
+    <div class="quiz-q" data-id="ai7-level" data-hash="28cb9fa2e51dc3db34bbe86dde01945e1cf5e60541993d388d784e495d07ea6b">
+      <p class="quiz-prompt">ИИ дал уровень Арканоида, а в строке 11 символов вместо 10. Что будет?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">ИИ так не ошибается</button>
+        <button type="button" class="quiz-opt">Уровень станет сложнее</button>
+        <button type="button" class="quiz-opt">Кирпичи съедут или будет ошибка — надо проверить длины</button>
+        <button type="button" class="quiz-opt">Ничего страшного, pygame исправит</button>
+      </div>
+      <div class="quiz-explain">✅ ИИ часто ошибается в подсчёте символов. Проверка: print([len(s) for s in LEVEL]).</div>
+    </div>
+  </div>
+
+  <div class="pager">
+    <a href="urok6.html"><span class="dir">← Назад</span><span class="ttl">Урок 6 — ИИ и баги</span></a>
+    <a class="next" href="urok8.html"><span class="dir">Дальше →</span><span class="ttl">Урок 8 — ИИ внутри игры</span></a>
+  </div>
+</div>
+
+<footer>Урок 7 из 9 · ИИ и игры 🧠</footer>
+<script src="../quiz.js"></script>
+</body>
+</html>

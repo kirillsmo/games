@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 8 — ИИ внутри игры</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">🏠 Главная</a>
+  <a class="home" href="index.html">🧠 ИИ и игры</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Что такое ИИ">1</a>
+    <a class="dot" href="urok2.html" title="Где ИИ ошибается">2</a>
+    <a class="dot" href="urok3.html" title="Правила и безопасность">3</a>
+    <a class="dot" href="urok4.html" title="Как правильно спрашивать">4</a>
+    <a class="dot" href="urok5.html" title="ИИ объясняет код">5</a>
+    <a class="dot" href="urok6.html" title="ИИ и баги">6</a>
+    <a class="dot" href="urok7.html" title="ИИ-геймдизайнер">7</a>
+    <a class="dot active" href="urok8.html" title="ИИ внутри игры">8</a>
+    <a class="dot" href="urok9.html" title="Финальный проект">9</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 8</span>
+    <h1>ИИ внутри игры: Змейка играет сама</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что ты увидишь</span>
+    Змейку, которая сама охотится за яблоками. Её «мозг» — это три простых правила
+    и обычный <code>if</code>. Так ты поймёшь разницу между <b>игровым ИИ</b> и чат-ботом.
+    Файл: <span class="run">snake_bot.py</span>
+  </div>
+  <div class="dl-row">
+    <a class="dl" href="code/snake_bot.py" download>⬇️ Скачать snake_bot.py</a>
+  </div>
+  <p>Запуск: <code>python snake_bot.py</code>. Клавиша <b>B</b> — переключить: играет бот
+     или ты. Пробел — заново.</p>
+
+  <h2>🧠 Как думает бот</h2>
+  <p>Каждый ход бот смотрит на три клетки вокруг головы и выбирает:</p>
+  <div class="grid-demo">
+      [?]            1) Варианты: вперёд, налево, направо (назад нельзя).
+   [?][Г][#][#]      2) Выкинуть опасные: стену и своё тело.
+      [?]       🍎   3) Из оставшихся — ближайшую к яблоку.</div>
+
+  <h2>📝 Мозг бота — весь код</h2>
+  <pre><span class="kw">def</span> <span class="fn">is_safe</span>(cell, snake):
+    <span class="str">"""Клетка безопасна, если она в поле и в ней нет тела змейки."""</span>
+    x, y = cell
+    inside = <span class="num">0</span> &lt;= x &lt; COLS <span class="kw">and</span> <span class="num">0</span> &lt;= y &lt; ROWS
+    <span class="kw">return</span> inside <span class="kw">and</span> cell <span class="kw">not in</span> snake
+
+
+<span class="kw">def</span> <span class="fn">distance</span>(a, b):
+    <span class="str">"""Сколько шагов до цели, если ходить только по клеткам (без диагоналей)."""</span>
+    <span class="kw">return</span> <span class="fn">abs</span>(a[<span class="num">0</span>] - b[<span class="num">0</span>]) + <span class="fn">abs</span>(a[<span class="num">1</span>] - b[<span class="num">1</span>])
+
+
+<span class="kw">def</span> <span class="fn">bot_choose</span>(snake, direction, food):
+    <span class="str">"""МОЗГ БОТА: выбирает направление на этот ход."""</span>
+    head_x, head_y = snake[<span class="num">0</span>]
+    dx, dy = direction
+    options = [(dx, dy), (dy, -dx), (-dy, dx)]   <span class="com"># вперёд, налево, направо</span>
+
+    best = direction          <span class="com"># если хороших ходов нет — едем прямо (и проиграем)</span>
+    best_dist = <span class="kw">None</span>
+    <span class="kw">for</span> d <span class="kw">in</span> options:
+        cell = (head_x + d[<span class="num">0</span>], head_y + d[<span class="num">1</span>])
+        <span class="kw">if not</span> <span class="fn">is_safe</span>(cell, snake):
+            <span class="kw">continue</span>                              <span class="com"># туда нельзя — пропускаем</span>
+        dist = <span class="fn">distance</span>(cell, food)
+        <span class="kw">if</span> best_dist <span class="kw">is None or</span> dist &lt; best_dist:
+            best, best_dist = d, dist
+    <span class="kw">return</span> best</pre>
+  <p>А в главном цикле — всего одна новая строчка: бот <b>вместо стрелок</b> выбирает <code>direction</code>.</p>
+  <pre>    <span class="kw">if</span> bot_on <span class="kw">and not</span> game_over:
+        direction = <span class="fn">bot_choose</span>(snake, direction, food)</pre>
+
+  <h2>🔍 Что тут интересного</h2>
+  <h3>Поворот «налево» и «направо» без if</h3>
+  <p>Если едем вправо <code>(1, 0)</code>, то <code>(dy, -dx)</code> = <code>(0, -1)</code> —
+     это вверх, то есть налево от нас. А <code>(-dy, dx)</code> = <code>(0, 1)</code> — вниз,
+     направо. Трюк работает для любого направления — проверь на бумажке!</p>
+  <h3>Расстояние «как такси»</h3>
+  <p><code>distance</code> складывает шаги по x и по y. Так считают расстояние в городе
+     с кварталами, где нельзя срезать по диагонали, — его называют «манхэттенским».</p>
+
+  <h2>🆚 Игровой ИИ и чат-бот</h2>
+  <table>
+    <tr><th></th><th>Бот в Змейке</th><th>Чат-бот</th></tr>
+    <tr><td>Откуда «ум»</td><td>правила написал человек (ты!)</td><td>выучил на огромной куче текстов</td></tr>
+    <tr><td>Можно понять каждое решение?</td><td>да, читай код</td><td>почти нет — внутри миллиарды чисел</td></tr>
+    <tr><td>Ошибается?</td><td>всегда одинаково, по правилам</td><td>по-разному, иногда выдумывает</td></tr>
+  </table>
+  <p>Бывает и третий путь: змейку можно <b>обучить</b> — тысячи раз дать ей играть и
+     «награждать» за яблоки. Это называется <b>обучение с подкреплением</b>. Так
+     компьютеры научились играть в го и в видеоигры лучше людей.</p>
+
+  <h2>🎯 Задания</h2>
+
+  <div class="box try">
+    <span class="label">Задание 1 — Посмотри, как бот проигрывает</span>
+    Запусти и понаблюдай пару минут. Бот хорошо начинает, но потом… Как именно он
+    проигрывает? Опиши своими словами, <b>до того как читать дальше</b>.
+    <details><summary>Ответ</summary>
+      Бот видит только на <b>один шаг</b> вперёд. Он сворачивает к яблоку и заезжает в
+      «мешок» — закрытый карман из своего же тела, откуда нет выхода. В среднем он
+      набирает около 28 очков.
+    </details>
+  </div>
+
+  <div class="box try">
+    <span class="label">Задание 2 — Сделай бота умнее (с ИИ-помощником)</span>
+    Используй всё, что выучил в уроках 4–6. Пример запроса:
+    <pre>Ты — учитель программирования для школьника 12 лет.
+Вот бот для моей Змейки: [вставь is_safe, distance и bot_choose].
+Бот проигрывает, потому что заезжает в «мешок» из своего тела.
+Объясни идею, как проверить, сколько свободного места за клеткой.
+НЕ пиши код целиком — объясни идею и дай подсказку, с чего начать функцию.
+Используй только списки, циклы, if и функции.</pre>
+    Скорее всего, ИИ расскажет про «заливку» (flood fill): от клетки расползаемся
+    во все стороны, как краска, и считаем, сколько клеток залилось. Если места меньше,
+    чем длина змейки, — туда лучше не ехать.<br>
+    Напиши функцию <code>free_space(start, snake)</code> сам и встрои в <code>bot_choose</code>.
+    Застрял надолго — сравни с решением:
+    <a href="code/snake_bot_smart.py" download>snake_bot_smart.py</a>.
+  </div>
+
+  <div class="box try">
+    <span class="label">Задание 3 — Измерь, а не «на глаз»</span>
+    Как понять, что новый бот правда лучше? Сыграть много раз и посчитать <b>среднее</b>.
+    Мы проверили на 30 играх: простой бот — <b>~28 очков</b>, умный с заливкой — <b>~91</b>.
+    Попроси ИИ помочь написать «тестовый прогон» без окна: 30 игр подряд, печатать
+    средний счёт. Совпали ли твои числа? Это и есть научный подход: ИИ предложил
+    идею — <b>числа</b> показали, сработала ли она.
+  </div>
+
+  <div class="box try">
+    <span class="label">Задание 4 — Бот с характером</span>
+    Поменяй правила: бот-трус (держится подальше от стен), бот-лентяй (чаще едет
+    прямо), бот-хулиган (иногда поворачивает случайно — <code>random.random() &lt; 0.1</code>).
+    Как меняется его счёт? Какой бот смешнее смотреть?
+  </div>
+
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="ai8-brain" data-hash="679db3866f91c920fe45e5ac228aa78658cc0399ae0cf77ece2d7e980a068dab">
+      <p class="quiz-prompt">Из чего состоит «мозг» бота в Змейке?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Из интернета</button>
+        <button type="button" class="quiz-opt">Из случайных чисел</button>
+        <button type="button" class="quiz-opt">Из нейросети</button>
+        <button type="button" class="quiz-opt">Из правил, которые написал человек</button>
+      </div>
+      <div class="quiz-explain">✅ Три правила и if: варианты хода → выкинуть опасные → ближайший к яблоку.</div>
+    </div>
+
+    <div class="quiz-q" data-id="ai8-lose" data-hash="e42b5918a9d66e6a71292284469dc78125222c395548087d9365bccdf5ccaf78">
+      <p class="quiz-prompt">Почему простой бот в итоге проигрывает?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Он специально поддаётся</button>
+        <button type="button" class="quiz-opt">Он слишком медленный</button>
+        <button type="button" class="quiz-opt">Он не видит яблоко</button>
+        <button type="button" class="quiz-opt">Видит только на шаг вперёд и заезжает в «мешок»</button>
+      </div>
+      <div class="quiz-explain">✅ Нужна проверка свободного места (заливка) — так бот набирает ~91 вместо ~28.</div>
+    </div>
+  </div>
+
+  <div class="pager">
+    <a href="urok7.html"><span class="dir">← Назад</span><span class="ttl">Урок 7 — ИИ-геймдизайнер</span></a>
+    <a class="next" href="urok9.html"><span class="dir">Дальше →</span><span class="ttl">Урок 9 — Финальный проект</span></a>
+  </div>
+</div>
+
+<footer>Урок 8 из 9 · ИИ и игры 🧠</footer>
+<script src="../quiz.js"></script>
+</body>
+</html>

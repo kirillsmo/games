@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 5 — ИИ объясняет код</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">🏠 Главная</a>
+  <a class="home" href="index.html">🧠 ИИ и игры</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Что такое ИИ">1</a>
+    <a class="dot" href="urok2.html" title="Где ИИ ошибается">2</a>
+    <a class="dot" href="urok3.html" title="Правила и безопасность">3</a>
+    <a class="dot" href="urok4.html" title="Как правильно спрашивать">4</a>
+    <a class="dot active" href="urok5.html" title="ИИ объясняет код">5</a>
+    <a class="dot" href="urok6.html" title="ИИ и баги">6</a>
+    <a class="dot" href="urok7.html" title="ИИ-геймдизайнер">7</a>
+    <a class="dot" href="urok8.html" title="ИИ внутри игры">8</a>
+    <a class="dot" href="urok9.html" title="Финальный проект">9</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 5</span>
+    <h1>ИИ объясняет код</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Зачем этот урок</span>
+    Самое полезное, что ИИ умеет для ученика, — <b>объяснять</b>. Его можно спрашивать
+    «а почему?» сто раз подряд, и он не устанет. Но объяснение работает, только если
+    потом <b>ты сам</b> можешь пересказать его своими словами.
+  </div>
+
+  <h2>📋 Шаблон «объясни мой код»</h2>
+  <pre>Ты — учитель программирования для школьника 12 лет.
+Вот функция из моей игры Змейка (Python, pygame-ce):
+
+[вставь код]
+
+Объясни, что делает каждая строчка, простыми словами.
+Потом задай мне 2 вопроса, чтобы проверить, понял ли я.</pre>
+
+  <h2>🧠 Три приёма, чтобы правда понять</h2>
+  <h3>1. «Объясни обратно»</h3>
+  <p>Прочитал объяснение — <b>закрой чат</b> и расскажи другу (или запиши), как работает
+     код. Потом вставь своё объяснение в ИИ: «Вот как я понял. Где я ошибся?»
+     Это самый сильный способ: если не можешь объяснить — значит, ещё не понял.</p>
+  <h3>2. «Предскажи»</h3>
+  <p>Перед тем как что-то поменять и запустить, <b>угадай</b>, что произойдёт. Запиши.
+     Потом запусти. Угадал — ты понимаешь код. Не угадал — самое время спросить «почему?».</p>
+  <h3>3. «Что, если…?»</h3>
+  <p>Спрашивай про крайние случаи: «Что, если змейка займёт всё поле?», «Что, если
+     число будет отрицательным?». Так находятся настоящие баги.</p>
+
+  <h2>🎯 Задания</h2>
+
+  <div class="box try">
+    <span class="label">Задание 1 — Разбираем spawn_food</span>
+    Это функция из урока 8 курса «Змейка»
+    (<a href="../games/snake/code/step8_functions.py" download>step8_functions.py</a>):
+    <pre><span class="kw">def</span> <span class="fn">spawn_food</span>(snake):
+    <span class="str">"""Случайная клетка, в которой нет змейки."""</span>
+    <span class="kw">while</span> <span class="kw">True</span>:
+        pos = (random.<span class="fn">randint</span>(<span class="num">0</span>, COLS - <span class="num">1</span>), random.<span class="fn">randint</span>(<span class="num">0</span>, ROWS - <span class="num">1</span>))
+        <span class="kw">if</span> pos <span class="kw">not in</span> snake:
+            <span class="kw">return</span> pos</pre>
+    <ol>
+      <li><b>Сначала сам:</b> запиши, что, по-твоему, делает каждая строчка.</li>
+      <li>Спроси ИИ по шаблону выше. Сравни со своим.</li>
+      <li>Ответь на 2 вопроса, которые он задал.</li>
+      <li>Спроси: <i>«Что будет, если змейка займёт всё поле?»</i></li>
+    </ol>
+    <details><summary>Что должно получиться в пункте 4</summary>
+      Свободных клеток не останется, условие <code>pos not in snake</code> никогда не
+      выполнится, и <code>while True</code> будет крутиться вечно — игра зависнет.
+      Это настоящий (редкий) баг! Ты нашёл его вопросом «что, если…?».
+    </details>
+  </div>
+
+  <div class="box try">
+    <span class="label">Задание 2 — Предскажи и проверь</span>
+    Возьми <a href="../games/snake/code/snake.py" download>snake.py</a>. Для каждого
+    изменения <b>сначала запиши прогноз</b>, потом запусти:
+    <ul>
+      <li><code>clock.tick(10)</code> → <code>clock.tick(3)</code></li>
+      <li>в <code>new_game</code> сделать змейку из 6 клеток вместо 3</li>
+      <li>убрать строчку <code>snake.pop()</code></li>
+    </ul>
+    Где прогноз не сбылся — спроси ИИ «почему так?» и вставь кусок кода.
+  </div>
+
+  <div class="box try">
+    <span class="label">Задание 3 — Экзамен от ИИ</span>
+    <pre>Вот код моей игры: [код]. Сделай для меня тест из 5 вопросов по этому коду с вариантами ответа. Ответы не показывай, пока я не отвечу.</pre>
+    Пройди тест. Сколько из 5?
+  </div>
+
+  <div class="box">
+    <span class="label">📌 Запомни</span>
+    <b>Не понимаю — не вставляю.</b> Цель — не код в файле, а понимание у тебя в голове.
+  </div>
+
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="ai5-back" data-hash="815784685fb7d7fd0dc21cdc4044a0a28c302dab5d4aaa3d686e577847d31a7a">
+      <p class="quiz-prompt">Как проверить, что ты правда понял объяснение ИИ?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Скопировать ответ в тетрадь</button>
+        <button type="button" class="quiz-opt">Попросить ответ длиннее</button>
+        <button type="button" class="quiz-opt">Закрыть чат и объяснить своими словами</button>
+        <button type="button" class="quiz-opt">Перечитать ответ ещё раз</button>
+      </div>
+      <div class="quiz-explain">✅ Приём «объясни обратно»: не можешь рассказать сам — значит, ещё не понял.</div>
+    </div>
+
+    <div class="quiz-q" data-id="ai5-full" data-hash="fcfa6ddd9c826628a420b26be65c27265e0986ba83b08c9f58a23f5cd8b9f7f2">
+      <p class="quiz-prompt">Что случится в spawn_food, если змейка займёт всё поле?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Цикл while True станет вечным, игра зависнет</button>
+        <button type="button" class="quiz-opt">Игра выиграна</button>
+        <button type="button" class="quiz-opt">Яблоко появится на змейке</button>
+        <button type="button" class="quiz-opt">Python сам остановит цикл</button>
+      </div>
+      <div class="quiz-explain">✅ Свободных клеток нет — условие pos not in snake никогда не выполнится. Нашли вопросом «что, если…?».</div>
+    </div>
+  </div>
+
+  <div class="pager">
+    <a href="urok4.html"><span class="dir">← Назад</span><span class="ttl">Урок 4 — Как правильно спрашивать</span></a>
+    <a class="next" href="urok6.html"><span class="dir">Дальше →</span><span class="ttl">Урок 6 — ИИ и баги</span></a>
+  </div>
+</div>
+
+<footer>Урок 5 из 9 · ИИ и игры 🧠</footer>
+<script src="../quiz.js"></script>
+</body>
+</html>

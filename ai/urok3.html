@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 3 — Правила и безопасность</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">🏠 Главная</a>
+  <a class="home" href="index.html">🧠 ИИ и игры</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Что такое ИИ">1</a>
+    <a class="dot" href="urok2.html" title="Где ИИ ошибается">2</a>
+    <a class="dot active" href="urok3.html" title="Правила и безопасность">3</a>
+    <a class="dot" href="urok4.html" title="Как правильно спрашивать">4</a>
+    <a class="dot" href="urok5.html" title="ИИ объясняет код">5</a>
+    <a class="dot" href="urok6.html" title="ИИ и баги">6</a>
+    <a class="dot" href="urok7.html" title="ИИ-геймдизайнер">7</a>
+    <a class="dot" href="urok8.html" title="ИИ внутри игры">8</a>
+    <a class="dot" href="urok9.html" title="Финальный проект">9</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 3</span>
+    <h1>Правила: безопасность и честность</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Зачем этот урок</span>
+    ИИ — это сервис в интернете. Всё, что ты пишешь, улетает на чужой компьютер и
+    может там храниться. А ещё ИИ легко использовать нечестно. Здесь — правила,
+    которые защищают <b>тебя</b> и делают твою работу <b>по-настоящему твоей</b>.
+  </div>
+
+  <h2>👨‍👩‍👧 Аккаунт и возраст</h2>
+  <p>У большинства ИИ-сервисов есть <b>возрастные ограничения</b> (часто 13+ с согласия
+     родителей, иногда 18+). Пользуйся ИИ только так, как разрешили родители и школа:
+     школьный аккаунт, общий компьютер в классе или вместе со взрослым.</p>
+
+  <h2>🔒 Никогда не пиши ИИ</h2>
+  <ul>
+    <li>свою фамилию, адрес, телефон, название школы и класс;</li>
+    <li>пароли — <b>в том числе пароль от WiFi</b> в коде (помнишь ESP32 в курсе
+        электроники? Перед тем как вставить такой код в чат, замени пароль на <code>"***"</code>);</li>
+    <li>фото и данные друзей и родных;</li>
+    <li>секреты — свои и чужие.</li>
+  </ul>
+  <div class="box idea">
+    <span class="label">💡 Правило открытки</span>
+    Пиши в ИИ только то, что ты спокойно написал бы на открытке, которую
+    по дороге может прочитать кто угодно.
+  </div>
+
+  <h2>🤝 Честность: ИИ — напарник, а не автор</h2>
+  <ul>
+    <li><b>Если задание «сделай сам»</b> — ИИ не пишет за тебя. Можно попросить объяснить или подсказку.</li>
+    <li><b>Говори, где помогал ИИ.</b> В коде — комментарий:
+      <pre><span class="com"># Эту функцию я написал с подсказкой ИИ. Как она работает: ...</span></pre></li>
+    <li><b>Не понимаю — не вставляю.</b> Если ты не можешь объяснить строчку, она не твоя.</li>
+  </ul>
+
+  <h2>🎨 Чужое творчество</h2>
+  <p>Нельзя брать в свою игру <b>чужих персонажей</b> (из известных игр, мультфильмов),
+     даже если их нарисовал ИИ. Не проси «нарисуй в стиле художника N» — это нечестно
+     по отношению к живому человеку. Лучше: придумай своего героя, нарисуй сам или
+     возьми картинки со свободной лицензией (урок 7).</p>
+
+  <h2>💻 Команды для терминала</h2>
+  <div class="box warn">
+    <span class="label">⚠️ Опасно!</span>
+    ИИ может посоветовать команду вроде <code>sudo …</code> или <code>rm -rf …</code>.
+    Такие команды могут <b>удалить файлы</b> или сломать компьютер. Правило:
+    <b>не запускай команду, если не понимаешь, что она делает.</b> Спроси взрослого.
+    Безопасно: <code>python игра.py</code>, <code>pip install pygame-ce</code> из наших уроков.
+  </div>
+
+  <h2>🎯 Задания</h2>
+
+  <div class="box try">
+    <span class="label">Задание 1 — Можно или нельзя?</span>
+    Для каждой ситуации реши: ✅ можно, ❌ нельзя или 🙋 спросить взрослого.
+    <ol>
+      <li>Вставить в чат код Змейки и спросить, что делает функция <code>spawn_food</code>.</li>
+      <li>Попросить ИИ написать целиком домашнее задание «напиши программу сам» и сдать.</li>
+      <li>Вставить код с ESP32, где написан пароль от домашнего WiFi.</li>
+      <li>Попросить ИИ придумать 10 названий для своей игры.</li>
+      <li>Нарисовать с ИИ героя, очень похожего на персонажа известной игры, и выложить свою игру в интернет.</li>
+      <li>ИИ предлагает ввести в терминал команду с <code>sudo</code>, которую ты не понимаешь.</li>
+      <li>Попросить ИИ объяснить ошибку <code>IndentationError</code>.</li>
+      <li>Рассказать ИИ, как зовут твоего друга и в какой он школе.</li>
+    </ol>
+    <details><summary>Проверить себя</summary>
+      1 ✅ · 2 ❌ (нечестно; можно просить подсказки) · 3 ❌ (сначала замени пароль на ***) ·
+      4 ✅ · 5 ❌ (чужой персонаж) · 6 🙋 · 7 ✅ · 8 ❌ (чужие личные данные).
+    </details>
+  </div>
+
+  <div class="box try">
+    <span class="label">Задание 2 — Мой договор с ИИ</span>
+    Напиши на листке или в файле <code>ai_rules.txt</code> <b>5 своих правил</b>
+    работы с ИИ — своими словами. Например: «Я не пишу ИИ пароли». Подпиши. Повесь
+    рядом с компьютером. В финальном проекте мы будем к ним возвращаться.
+  </div>
+
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="ai3-wifi" data-hash="b029f9f1c6c9cfd97618abfa64f74796c2e4d74a6021871ae0342caf9945bd31">
+      <p class="quiz-prompt">Ты хочешь показать ИИ код с паролем от WiFi. Что сделать?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Отправить как есть</button>
+        <button type="button" class="quiz-opt">Написать пароль задом наперёд</button>
+        <button type="button" class="quiz-opt">Заменить пароль на *** перед отправкой</button>
+        <button type="button" class="quiz-opt">Отправить, но попросить никому не говорить</button>
+      </div>
+      <div class="quiz-explain">✅ Всё, что пишешь в чат, уходит на чужой сервер. Пароли и личные данные — никогда.</div>
+    </div>
+
+    <div class="quiz-q" data-id="ai3-rule" data-hash="5088b4b94be1866ab3886780ff0f55dd2b1f9b1fc7648d84cf416c68833e5905">
+      <p class="quiz-prompt">Какое главное правило про код от ИИ?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Никогда не спрашивать ИИ</button>
+        <button type="button" class="quiz-opt">Чем длиннее код, тем лучше</button>
+        <button type="button" class="quiz-opt">Вставлять всё, что он дал</button>
+        <button type="button" class="quiz-opt">Не понимаю — не вставляю</button>
+      </div>
+      <div class="quiz-explain">✅ Если ты не можешь объяснить строчку, она не твоя. Сначала разберись, потом вставляй.</div>
+    </div>
+  </div>
+
+  <div class="pager">
+    <a href="urok2.html"><span class="dir">← Назад</span><span class="ttl">Урок 2 — Где ИИ ошибается</span></a>
+    <a class="next" href="urok4.html"><span class="dir">Дальше →</span><span class="ttl">Урок 4 — Как правильно спрашивать</span></a>
+  </div>
+</div>
+
+<footer>Урок 3 из 9 · ИИ и игры 🧠</footer>
+<script src="../quiz.js"></script>
+</body>
+</html>

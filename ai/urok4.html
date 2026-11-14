@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 4 — Как правильно спрашивать</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">🏠 Главная</a>
+  <a class="home" href="index.html">🧠 ИИ и игры</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Что такое ИИ">1</a>
+    <a class="dot" href="urok2.html" title="Где ИИ ошибается">2</a>
+    <a class="dot" href="urok3.html" title="Правила и безопасность">3</a>
+    <a class="dot active" href="urok4.html" title="Как правильно спрашивать">4</a>
+    <a class="dot" href="urok5.html" title="ИИ объясняет код">5</a>
+    <a class="dot" href="urok6.html" title="ИИ и баги">6</a>
+    <a class="dot" href="urok7.html" title="ИИ-геймдизайнер">7</a>
+    <a class="dot" href="urok8.html" title="ИИ внутри игры">8</a>
+    <a class="dot" href="urok9.html" title="Финальный проект">9</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 4</span>
+    <h1>Как правильно спрашивать</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Зачем этот урок</span>
+    ИИ не читает мысли: он отвечает на то, что <b>написано</b>. Короткий запрос —
+    случайный ответ. Хороший запрос (его называют <b>промпт</b>) — ответ, который
+    подходит именно тебе и твоей игре.
+  </div>
+
+  <h2>🧩 Формула хорошего запроса</h2>
+  <table>
+    <tr><th>Часть</th><th>Вопрос себе</th><th>Пример</th></tr>
+    <tr><td><b>1. Роль</b></td><td>Кем ему быть?</td><td>«Ты — терпеливый учитель программирования для школьника 12 лет.»</td></tr>
+    <tr><td><b>2. Контекст</b></td><td>Что у меня есть?</td><td>«Я пишу Змейку на Python и pygame-ce. Вот мой код: …»</td></tr>
+    <tr><td><b>3. Задача</b></td><td>Что конкретно нужно?</td><td>«Хочу, чтобы иногда появлялось золотое яблоко за 3 очка.»</td></tr>
+    <tr><td><b>4. Рамки</b></td><td>Чего НЕ надо?</td><td>«Только списки, if и функции — без классов. Не переписывай всю игру.»</td></tr>
+    <tr><td><b>5. Формат</b></td><td>Как ответить?</td><td>«Объясни по шагам и покажи только изменённые строчки.»</td></tr>
+  </table>
+
+  <h2>😕 Плохо → 😃 Хорошо</h2>
+  <div class="grid-demo">
+😕 «сделай золотое яблоко»
+
+😃 «Ты — учитель программирования для школьника 12 лет.
+   Я пишу Змейку на Python (pygame-ce). Вот мой код: [вставляю код].
+   Хочу, чтобы с шансом 1 из 5 появлялось золотое яблоко за 3 очка.
+   Используй только то, что уже есть в коде: списки, if, функции, без классов.
+   Объясни по шагам и покажи только строчки, которые надо добавить или изменить.»</div>
+  <p>Первый запрос тоже даст ответ — но ИИ сам придумает твои переменные, выберет
+     сложный способ и, скорее всего, перепишет всё. Второй даст ответ, который ты
+     сможешь понять и вставить.</p>
+
+  <h2>🔁 Это разговор, а не один вопрос</h2>
+  <p>Редко бывает, что первый ответ идеален. Уточняй:</p>
+  <ul>
+    <li>«Слишком сложно. Объясни проще, на примере.»</li>
+    <li>«Что значит строчка <code>random.randint(1, 5) == 1</code>?»</li>
+    <li>«Покажи только функцию <code>draw_food</code>, остальное не нужно.»</li>
+    <li>«Ты использовал переменную <code>apple</code>, а у меня она называется <code>food</code>.»</li>
+  </ul>
+
+  <h2>🪄 Волшебные фразы</h2>
+  <table>
+    <tr><th>Фраза</th><th>Что даёт</th></tr>
+    <tr><td>«Сначала задай мне вопросы, потом отвечай.»</td><td>ИИ уточнит, а не будет гадать.</td></tr>
+    <tr><td>«Не давай готовый код, дай подсказку.»</td><td>Ты учишься, а не копируешь.</td></tr>
+    <tr><td>«Объясни как для 12-летнего.»</td><td>Без сложных слов.</td></tr>
+    <tr><td>«Что может пойти не так?»</td><td>ИИ ищет слабые места.</td></tr>
+    <tr><td>«Покажи только изменения.»</td><td>Не перепишет всю игру.</td></tr>
+  </table>
+
+  <h2>🎯 Задания</h2>
+
+  <div class="box try">
+    <span class="label">Задание 1 — Почини запросы</span>
+    Перепиши по формуле (все 5 частей) три плохих запроса:
+    <ol>
+      <li>«почини»</li>
+      <li>«сделай чтобы было круто»</li>
+      <li>«напиши арканоид»</li>
+    </ol>
+    Подсказка к третьему: тебе правда нужна готовая игра? Или ты хочешь понять,
+    как сделать отскок мяча? Хороший запрос начинается с вопроса «а что мне на самом деле нужно?».
+  </div>
+
+  <div class="box try">
+    <span class="label">Задание 2 — Эксперимент «А/Б»</span>
+    Задай в двух <b>разных</b> чатах плохой и хороший вариант запроса про золотое
+    яблоко. Сравни ответы по чек-листу (поставь ✔ или ✘):
+    <ul>
+      <li>Использованы мои имена переменных?</li>
+      <li>Нет незнакомых мне вещей (классов, библиотек)?</li>
+      <li>Я понимаю каждую строчку?</li>
+      <li>Можно вставить в мою игру, не переписывая всё?</li>
+    </ul>
+    У какого варианта больше ✔?
+  </div>
+
+  <div class="box try">
+    <span class="label">Задание 3 — Пусть он спросит тебя</span>
+    Напиши: <pre>Я хочу добавить в свою игру что-то новое, но не знаю что. Задавай мне по одному вопросу, чтобы помочь выбрать. Не больше 5 вопросов.</pre>
+    Это приём «перевёрнутого интервью» — пригодится в уроке 7.
+  </div>
+
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="ai4-parts" data-hash="cd24342b947c9dac1c80faf83c157148cf1ac6b97c4c03cd66e11be723dad5c9">
+      <p class="quiz-prompt">Какой набор частей у хорошего запроса?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Роль, контекст, задача, рамки, формат</button>
+        <button type="button" class="quiz-opt">Только задача</button>
+        <button type="button" class="quiz-opt">Код без объяснений</button>
+        <button type="button" class="quiz-opt">Привет и спасибо</button>
+      </div>
+      <div class="quiz-explain">✅ Кем быть, что у тебя есть, что нужно, чего не надо и как ответить.</div>
+    </div>
+
+    <div class="quiz-q" data-id="ai4-limit" data-hash="5db8bc8eb1d4fc942ee49f613b68ecc3f8d65010878639d09497173f9308af84">
+      <p class="quiz-prompt">Зачем писать в запросе «без классов, покажи только изменения»?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Чтобы ответ подходил к моему коду и был понятен мне</button>
+        <button type="button" class="quiz-opt">Чтобы ИИ запомнил меня</button>
+        <button type="button" class="quiz-opt">Чтобы ИИ ответил быстрее</button>
+        <button type="button" class="quiz-opt">Это вежливость</button>
+      </div>
+      <div class="quiz-explain">✅ Это «рамки»: без них ИИ может выбрать сложный способ и переписать всю игру.</div>
+    </div>
+  </div>
+
+  <div class="pager">
+    <a href="urok3.html"><span class="dir">← Назад</span><span class="ttl">Урок 3 — Правила и безопасность</span></a>
+    <a class="next" href="urok5.html"><span class="dir">Дальше →</span><span class="ttl">Урок 5 — ИИ объясняет код</span></a>
+  </div>
+</div>
+
+<footer>Урок 4 из 9 · ИИ и игры 🧠</footer>
+<script src="../quiz.js"></script>
+</body>
+</html>

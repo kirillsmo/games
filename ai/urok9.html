@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 9 — Финальный проект</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">🏠 Главная</a>
+  <a class="home" href="index.html">🧠 ИИ и игры</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Что такое ИИ">1</a>
+    <a class="dot" href="urok2.html" title="Где ИИ ошибается">2</a>
+    <a class="dot" href="urok3.html" title="Правила и безопасность">3</a>
+    <a class="dot" href="urok4.html" title="Как правильно спрашивать">4</a>
+    <a class="dot" href="urok5.html" title="ИИ объясняет код">5</a>
+    <a class="dot" href="urok6.html" title="ИИ и баги">6</a>
+    <a class="dot" href="urok7.html" title="ИИ-геймдизайнер">7</a>
+    <a class="dot" href="urok8.html" title="ИИ внутри игры">8</a>
+    <a class="dot active" href="urok9.html" title="Финальный проект">9</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 9</span>
+    <h1>Финальный проект: фича вместе с ИИ</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Что у тебя получится</span>
+    Твоя игра из любого курса — с <b>новой фичей</b>, которую ты придумал и сделал вместе
+    с ИИ. И <b>дневник</b>, где видно, как ты работал: что спрашивал, что проверял и где
+    поймал ИИ на ошибке. Главное — ты сможешь объяснить <b>каждую строчку</b>.
+  </div>
+
+  <h2>🗺️ План проекта</h2>
+  <h3>Шаг 1. Выбери игру и фичу</h3>
+  <p>Возьми игру из курсов: <a href="../games/snake/index.html">Змейка</a>,
+     <a href="../games/catch/index.html">Ловкий кот</a>,
+     <a href="../games/arkanoid/index.html">Арканоид</a>,
+     <a href="../games/space/index.html">Космос</a>. Фичу — из урока 7 (дизайн-документ) или из списка:</p>
+  <table>
+    <tr><th>Игра</th><th>Идеи фич</th></tr>
+    <tr><td>🐍 Змейка</td><td>золотое яблоко за 3 очка · стены-препятствия · рекорд · ускорение с каждым яблоком · вторая змейка-бот</td></tr>
+    <tr><td>🐱 Ловкий кот</td><td>«плохие» предметы, которые нельзя ловить · бонус-магнит · уровни сложности</td></tr>
+    <tr><td>🧱 Арканоид</td><td>уровни из строк (урок 7) · кирпичи с 2 жизнями · бонус «широкая ракетка»</td></tr>
+    <tr><td>🚀 Космос</td><td>враги стреляют в ответ · щит · босс с полоской здоровья</td></tr>
+  </table>
+
+  <h3>Шаг 2. Разбей на маленькие шаги (с ИИ)</h3>
+  <pre>Вот моя игра: [код]. Я хочу добавить: [фича].
+Не пиши код. Разбей работу на 3–5 маленьких шагов, чтобы после каждого шага игра запускалась и было видно результат.</pre>
+  <p>Проверь план: каждый шаг правда маленький? Понятно, как проверить, что он готов?</p>
+
+  <h3>Шаг 3. Для каждого шага — рабочий цикл</h3>
+  <div class="pipe">
+    <span class="pill">Спроси</span><span class="arrow">→</span>
+    <span class="pill">Прочитай и пойми</span><span class="arrow">→</span>
+    <span class="pill">Предскажи</span><span class="arrow">→</span>
+    <span class="pill">Вставь</span><span class="arrow">→</span>
+    <span class="pill">Запусти</span><span class="arrow">→</span>
+    <span class="pill">Сохрани копию</span>
+  </div>
+  <p>Сохраняй рабочую версию после каждого шага — как <code>step1.py</code>,
+     <code>step2.py</code> в наших курсах. Сломал — откатился на прошлую.</p>
+
+  <h3>Шаг 4. Веди дневник запросов</h3>
+  <p>Файл <code>ai_diary.txt</code> или таблица в тетради. Минимум 5 записей:</p>
+  <table>
+    <tr><th>#</th><th>Что я спросил</th><th>Что ответил ИИ (коротко)</th><th>Что я взял / поменял</th><th>Как проверил</th><th>ИИ ошибся?</th></tr>
+    <tr><td>1</td><td>Разбей «золотое яблоко» на шаги</td><td>4 шага</td><td>взял 3, четвёртый лишний</td><td>—</td><td>нет</td></tr>
+    <tr><td>2</td><td>Как выбрать случайно 1 из 5?</td><td><code>random.randint(1, 5) == 1</code></td><td>вставил в spawn_food</td><td>запустил 10 раз</td><td>назвал переменную apple, а у меня food</td></tr>
+  </table>
+
+  <h3>Шаг 5. Защита</h3>
+  <p>Покажи игру классу или учителю (2–3 минуты):</p>
+  <ol>
+    <li>Что за фича и почему именно она?</li>
+    <li>Учитель показывает на <b>любую</b> новую строчку — ты объясняешь, что она делает.</li>
+    <li>Где ИИ помог больше всего? Где ошибся и как ты это заметил?</li>
+    <li>Что ты сделал <b>сам</b>, без ИИ?</li>
+  </ol>
+
+  <h2>✅ Как оценивается</h2>
+  <table>
+    <tr><th>Критерий</th><th>Баллы</th></tr>
+    <tr><td>Фича работает и её видно в игре</td><td>3</td></tr>
+    <tr><td>Объясняет любую новую строчку</td><td>3</td></tr>
+    <tr><td>Дневник: 5+ записей, есть проверки</td><td>2</td></tr>
+    <tr><td>Нашёл и описал хотя бы одну ошибку ИИ</td><td>1</td></tr>
+    <tr><td>Соблюдены правила урока 3 (нет личных данных, чужих персонажей, честно указано, где помогал ИИ)</td><td>1</td></tr>
+    <tr><td><b>Итого</b></td><td><b>10</b></td></tr>
+  </table>
+  <div class="box idea">
+    <span class="label">💡 Обрати внимание</span>
+    Баллы дают за <b>понимание и проверку</b>, а не за то, «как много кода». Игра,
+    в которой ИИ написал 200 строк, а ты не можешь объяснить ни одной, получит меньше,
+    чем маленькая фича, которую ты понимаешь насквозь.
+  </div>
+
+  <h2>🏁 Чему ты научился в курсе</h2>
+  <ul>
+    <li>ИИ-чат <b>угадывает правдоподобный ответ</b> — поэтому его нужно проверять.</li>
+    <li>Главные проверки: <b>запустить</b>, посмотреть в <b>документацию</b>, спросить <b>человека</b>.</li>
+    <li>Хороший запрос = роль + контекст + задача + рамки + формат.</li>
+    <li>ИИ лучше всего как <b>учитель и напарник</b>: объясняет, подсказывает, предлагает идеи.</li>
+    <li><b>Не понимаю — не вставляю.</b> Твоя игра — это то, что ты понимаешь.</li>
+    <li>Игровой ИИ — это правила, которые можешь написать ты сам.</li>
+  </ul>
+
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="ai9-step" data-hash="817055a2ea5a96b991e9f4ccf24eddfa52e93da80ee9ede0e3df4a294bc0d709">
+      <p class="quiz-prompt">Как работать над фичей вместе с ИИ?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Не запускать до самого конца</button>
+        <button type="button" class="quiz-opt">Маленькими шагами: спросил, понял, запустил, сохранил</button>
+        <button type="button" class="quiz-opt">Вставить весь ответ сразу</button>
+        <button type="button" class="quiz-opt">Попросить всю фичу одним запросом</button>
+      </div>
+      <div class="quiz-explain">✅ После каждого шага игра должна запускаться. Сломал — откатился на сохранённую копию.</div>
+    </div>
+
+    <div class="quiz-q" data-id="ai9-grade" data-hash="8e55abc0480f141f24839cbcaa483b323f4853f45ded16f36feba6b8da8c3ea2">
+      <p class="quiz-prompt">За что больше всего баллов в финальном проекте?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">За длинный дневник</button>
+        <button type="button" class="quiz-opt">За количество строк</button>
+        <button type="button" class="quiz-opt">За понимание и проверку кода</button>
+        <button type="button" class="quiz-opt">За то, что весь код написал ИИ</button>
+      </div>
+      <div class="quiz-explain">✅ Маленькая фича, которую понимаешь насквозь, лучше 200 строк, которые не можешь объяснить.</div>
+    </div>
+  </div>
+
+  <div class="pager">
+    <a href="urok8.html"><span class="dir">← Назад</span><span class="ttl">Урок 8 — ИИ внутри игры</span></a>
+    <a class="next" href="index.html"><span class="dir">Готово 🎉</span><span class="ttl">К началу курса</span></a>
+  </div>
+</div>
+
+<footer>Урок 9 из 9 · ИИ и игры 🧠</footer>
+<script src="../quiz.js"></script>
+</body>
+</html>

@@ -264,7 +264,8 @@ window.QUIZ_MANIFEST = {
           "ids": [
             "basics5-forward",
             "basics5-short",
-            "basics5-chip"
+            "basics5-chip",
+            "basics5-fanboth"
           ]
         },
         {
@@ -272,7 +273,16 @@ window.QUIZ_MANIFEST = {
           "title": "Урок 6 — Мостик к Arduino и Python",
           "ids": [
             "b6-pwm",
-            "b6-firmata"
+            "b6-firmata",
+            "b6-uno-brain"
+          ]
+        },
+        {
+          "url": "robot/basics/urok7.html",
+          "title": "Урок 7 — ESP32 по WiFi",
+          "ids": [
+            "b7-wifi",
+            "b7-ip"
           ]
         }
       ]
@@ -471,6 +481,85 @@ window.QUIZ_MANIFEST = {
           "ids": [
             "car12-stream",
             "car12-frame"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ai",
+      "title": "🧠 ИИ и игры",
+      "section": "ИИ",
+      "lessons": [
+        {
+          "url": "ai/urok1.html",
+          "title": "Урок 1 — Что такое ИИ",
+          "ids": [
+            "ai1-how",
+            "ai1-see"
+          ]
+        },
+        {
+          "url": "ai/urok2.html",
+          "title": "Урок 2 — Где ИИ ошибается",
+          "ids": [
+            "ai2-hall",
+            "ai2-check"
+          ]
+        },
+        {
+          "url": "ai/urok3.html",
+          "title": "Урок 3 — Правила и безопасность",
+          "ids": [
+            "ai3-wifi",
+            "ai3-rule"
+          ]
+        },
+        {
+          "url": "ai/urok4.html",
+          "title": "Урок 4 — Как правильно спрашивать",
+          "ids": [
+            "ai4-parts",
+            "ai4-limit"
+          ]
+        },
+        {
+          "url": "ai/urok5.html",
+          "title": "Урок 5 — ИИ объясняет код",
+          "ids": [
+            "ai5-back",
+            "ai5-full"
+          ]
+        },
+        {
+          "url": "ai/urok6.html",
+          "title": "Урок 6 — ИИ и баги",
+          "ids": [
+            "ai6-order",
+            "ai6-hint"
+          ]
+        },
+        {
+          "url": "ai/urok7.html",
+          "title": "Урок 7 — ИИ-геймдизайнер",
+          "ids": [
+            "ai7-role",
+            "ai7-level"
+          ]
+        },
+        {
+          "url": "ai/urok8.html",
+          "title": "Урок 8 — ИИ внутри игры",
+          "ids": [
+            "ai8-brain",
+            "ai8-lose"
+          ]
+        },
+        {
+          "url": "ai/urok9.html",
+          "title": "Урок 9 — Финальный проект",
+          "ids": [
+            "ai9-step",
+            "ai9-grade"
           ]
         }
       ]

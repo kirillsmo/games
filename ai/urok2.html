@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 2 — Где ИИ ошибается</title>
+<link rel="stylesheet" href="../shared.css">
+<script src="../theme.js"></script>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="back" href="../index.html">🏠 Главная</a>
+  <a class="home" href="index.html">🧠 ИИ и игры</a>
+  <div class="dots">
+    <a class="dot" href="urok1.html" title="Что такое ИИ">1</a>
+    <a class="dot active" href="urok2.html" title="Где ИИ ошибается">2</a>
+    <a class="dot" href="urok3.html" title="Правила и безопасность">3</a>
+    <a class="dot" href="urok4.html" title="Как правильно спрашивать">4</a>
+    <a class="dot" href="urok5.html" title="ИИ объясняет код">5</a>
+    <a class="dot" href="urok6.html" title="ИИ и баги">6</a>
+    <a class="dot" href="urok7.html" title="ИИ-геймдизайнер">7</a>
+    <a class="dot" href="urok8.html" title="ИИ внутри игры">8</a>
+    <a class="dot" href="urok9.html" title="Финальный проект">9</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="lesson-head">
+    <span class="eyebrow">Урок 2</span>
+    <h1>Где ИИ ошибается (и как его поймать)</h1>
+  </div>
+
+  <div class="goal">
+    <span class="label">Зачем этот урок</span>
+    ИИ говорит <b>одинаково уверенно</b> и когда прав, и когда выдумывает. Ты научишься
+    видеть типичные ошибки и <b>проверять</b> ответы — это главный навык всего курса.
+  </div>
+
+  <h2>🌀 Галлюцинации</h2>
+  <p>Так называют ситуацию, когда ИИ <b>уверенно выдумывает</b>: несуществующую функцию,
+     книгу, правило, факт. Он не врёт нарочно — он просто сочиняет то, что <i>звучит</i>
+     правильно.</p>
+  <div class="grid-demo">
+Ты:  Как нарисовать звезду в pygame?
+ИИ:  Используй pygame.draw.star(screen, color, center, 30)   ← такой функции НЕТ!
+Python: AttributeError: module 'pygame.draw' has no attribute 'star'</div>
+
+  <h2>🐞 Типичные ошибки ИИ в коде</h2>
+  <table>
+    <tr><th>Ошибка</th><th>Как выглядит</th></tr>
+    <tr><td>Выдуманная функция</td><td><code>pygame.draw.star</code>, <code>snake.grow()</code> — то, чего нет</td></tr>
+    <tr><td>Слишком сложно</td><td>классы, <code>lambda</code>, библиотеки, которых ты ещё не знаешь</td></tr>
+    <tr><td>Переписал всё</td><td>просил поменять одну строку — получил новую игру с другими именами</td></tr>
+    <tr><td>Не тот код</td><td>он не видел твой файл и «додумал» переменные: <code>player_x</code> вместо твоего <code>paddle_x</code></td></tr>
+    <tr><td>Подлизывается</td><td>ты сказал неправду — он согласился: «Да, вы совершенно правы!»</td></tr>
+    <tr><td>Счёт и буквы</td><td>может ошибиться, сколько букв в слове или сколько будет 37 × 48</td></tr>
+  </table>
+
+  <h2>🔍 Как проверять</h2>
+  <div class="pipe">
+    <span class="pill">1. Запусти</span><span class="arrow">→</span>
+    <span class="pill">2. Посмотри в документацию</span><span class="arrow">→</span>
+    <span class="pill">3. Спроси «откуда ты это взял?»</span><span class="arrow">→</span>
+    <span class="pill">4. Спроси человека</span>
+  </div>
+  <ul>
+    <li><b>Запусти код.</b> Компьютер не подлизывается: работает или нет.</li>
+    <li><b>Документация</b> pygame-ce: <a href="https://pyga.me/docs/" target="_blank" rel="noopener">pyga.me/docs</a>. Нет функции там — нет и в pygame.</li>
+    <li><b>Спроси сам Python</b>, какие функции есть: <code>print(dir(pygame.draw))</code>.</li>
+    <li><b>Учитель или друг</b> — особенно если ответ про здоровье, деньги или людей.</li>
+  </ul>
+
+  <h2>🚦 Светофор доверия</h2>
+  <table>
+    <tr><th></th><th>Что спрашиваешь</th><th>Что делать</th></tr>
+    <tr><td>🟢</td><td>Идеи, названия, «объясни проще»</td><td>Бери, что нравится. Ошибка не страшна.</td></tr>
+    <tr><td>🟡</td><td>Код, факты для доклада</td><td>Обязательно проверь: запусти, найди в источнике.</td></tr>
+    <tr><td>🔴</td><td>Здоровье, безопасность, деньги, команды для терминала, которые ты не понимаешь</td><td>Не делай сам — сначала взрослый.</td></tr>
+  </table>
+
+  <h2>🎯 Задания</h2>
+
+  <div class="box try">
+    <span class="label">Задание 1 — Охота на галлюцинацию</span>
+    Спроси ИИ: <pre>Какой одной функцией pygame нарисовать звезду?</pre>
+    Если он назвал функцию — проверь её. Создай файл <code>check.py</code>:
+    <pre><span class="kw">import</span> pygame
+<span class="fn">print</span>(<span class="fn">dir</span>(pygame.draw))</pre>
+    Есть там его функция? Если нет — напиши ИИ: «Такой функции нет в pygame.draw,
+    вот список: …» и посмотри, что он ответит. (Правильный путь —
+    <code>pygame.draw.polygon</code> со списком точек звезды.)
+  </div>
+
+  <div class="box try">
+    <span class="label">Задание 2 — Проверка на подлизывание</span>
+    Напиши ИИ <b>неправду</b> уверенным тоном:
+    <pre>В моей Змейке скорость игры задаёт строчка screen.fill(BLACK), правильно?</pre>
+    Согласился? Поправил тебя? (На самом деле скорость задаёт <code>clock.tick(10)</code>
+    — число кадров в секунду.) Вывод: <b>ИИ может согласиться с ошибкой, если ты
+    подаёшь её уверенно.</b>
+  </div>
+
+  <div class="box try">
+    <span class="label">Задание 3 — Ловушка со счётом</span>
+    Попроси ИИ: «Сколько раз буква <b>а</b> встречается во фразе <i>„малая
+    панда залезла на баобаб“</i>?» Посчитай сам. Совпало? А теперь попроси написать
+    программу на Python, которая это считает (<code>.count("а")</code>) — и запусти
+    её. Кому ты теперь веришь больше и почему?
+  </div>
+
+  <div class="box warn">
+    <span class="label">⚠️ Уверенный тон ≠ правда</span>
+    Фразы «конечно!», «точно», «это стандартный способ» ничего не доказывают.
+    Доказывает только проверка.
+  </div>
+
+  <div class="quiz" data-iter="2000" data-cooldown="30">
+    <h2>🧠 Проверь себя</h2>
+    <p style="color:var(--muted);margin-top:-2px">Выбери ответ. Ошибёшься — 30 секунд на то, чтобы вернуться в урок и перечитать.</p>
+
+    <div class="quiz-q" data-id="ai2-hall" data-hash="aa4faa2ee4038336010b12471b9d5019c14fec2ea95af8c86f6d2b9b007fb7aa">
+      <p class="quiz-prompt">Что такое «галлюцинация» ИИ?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Когда ИИ уверенно выдумывает то, чего нет</button>
+        <button type="button" class="quiz-opt">Когда ИИ отказывается отвечать</button>
+        <button type="button" class="quiz-opt">Когда ИИ рисует картинку</button>
+        <button type="button" class="quiz-opt">Когда ИИ отвечает медленно</button>
+      </div>
+      <div class="quiz-explain">✅ Например, несуществующая функция pygame.draw.star. Звучит правдоподобно — но её нет.</div>
+    </div>
+
+    <div class="quiz-q" data-id="ai2-check" data-hash="6f2d9a248f86d7bcf8cde32ac53f7f710ff8d5eb1a7bb7693e925262dcdf58a7">
+      <p class="quiz-prompt">Как надёжнее всего проверить код от ИИ?</p>
+      <div class="quiz-options">
+        <button type="button" class="quiz-opt">Спросить ИИ, уверен ли он</button>
+        <button type="button" class="quiz-opt">Запустить его и посмотреть документацию</button>
+        <button type="button" class="quiz-opt">Поверить, если он ответил уверенно</button>
+        <button type="button" class="quiz-opt">Скопировать ещё раз</button>
+      </div>
+      <div class="quiz-explain">✅ Компьютер не подлизывается: код либо работает, либо нет. А функции ищем в документации.</div>
+    </div>
+  </div>
+
+  <div class="pager">
+    <a href="urok1.html"><span class="dir">← Назад</span><span class="ttl">Урок 1 — Что такое ИИ</span></a>
+    <a class="next" href="urok3.html"><span class="dir">Дальше →</span><span class="ttl">Урок 3 — Правила и безопасность</span></a>
+  </div>
+</div>
+
+<footer>Урок 2 из 9 · ИИ и игры 🧠</footer>
+<script src="../quiz.js"></script>
+</body>
+</html>
